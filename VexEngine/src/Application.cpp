@@ -1,11 +1,16 @@
 #include "Application.hpp"
+#include "Assets/AssetManager.hpp"
+
 #include <utility>
 #include <string>
+#include <iostream>
 
 namespace VexEngine
 {
 	Application::Application(unsigned int windowWidth, unsigned int windowHeight, const std::string& title) :
 		m_graphicsFactory(),
+        m_assetPathProvider(),
+        m_assetManager(m_assetPathProvider),
 		m_window(std::move(m_graphicsFactory.CreateWindow(windowWidth, windowHeight, title))),
 		m_renderer(std::move(m_graphicsFactory.CreateRenderer(*m_window))),
 		m_sceneManager(),

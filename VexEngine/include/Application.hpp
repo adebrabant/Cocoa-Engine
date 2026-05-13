@@ -5,6 +5,8 @@
 #include "Graphics/GraphicsFactory.hpp"
 #include "Scenes/SceneManager.hpp"
 #include "Chronos/FrameClock.hpp"
+#include "Assets/AssetManager.hpp"
+#include "Assets/AssetPathProvider.hpp"
 
 #include <string>
 #include <memory>
@@ -31,6 +33,8 @@ namespace VexEngine
 
 	private:
 		Graphics::GraphicsFactory m_graphicsFactory;
+		Assets::AssetPathProvider m_assetPathProvider;
+		Assets::AssetManager m_assetManager;
 		std::unique_ptr<Graphics::IWindow> m_window;
 		std::unique_ptr<Graphics::IRenderer> m_renderer;
 		Chronos::FrameClock m_frameClock;

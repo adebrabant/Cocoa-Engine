@@ -16,6 +16,20 @@ add_library(${VEXENGINE_TARGET_NAME}
     include/Graphics/GraphicsFactory.hpp
     src/Graphics/GraphicsFactory.cpp
 
+    include/Assets/AssetManager.hpp
+    src/Assets/AssetManager.cpp
+
+    include/Assets/ImageLoader.hpp
+    src/Assets/ImageLoader.cpp
+
+    include/Assets/IPathProvider.hpp
+
+    include/Assets/Asset.hpp
+    src/Assets/Asset.cpp
+
+    include/Assets/AssetPathProvider.hpp
+    src/Assets/AssetPathProvider.cpp
+
     include/Scenes/SceneManager.hpp
     src/Scenes/SceneManager.cpp
 
