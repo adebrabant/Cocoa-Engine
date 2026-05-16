@@ -20,3 +20,7 @@ add_subdirectory(${VEXENGINE_TARGET_NAME})
 add_subdirectory(${VEXXUS_TARGET_NAME})
 
 add_subdirectory(${VEXENGINE_TESTS_TARGET_NAME})
+
+if (CMAKE_GENERATOR MATCHES "Visual Studio")
+    set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT ${VEXXUS_TARGET_NAME})
+endif()

@@ -1,4 +1,6 @@
 find_package(SFML 3 COMPONENTS Graphics Window System Audio REQUIRED)
+find_package(glfw3 3.4 REQUIRED)
+find_package(GLEW REQUIRED)
 
 add_library(${VEXENGINE_TARGET_NAME}
     include/Application.hpp
@@ -84,4 +86,6 @@ target_link_libraries(${VEXENGINE_TARGET_NAME} PRIVATE
     SFML::Window
     SFML::System
     SFML::Audio
+    glfw
+    GLEW::GLEW
 )
