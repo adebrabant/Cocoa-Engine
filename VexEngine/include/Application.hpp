@@ -7,14 +7,10 @@
 #include "Chronos/FrameClock.hpp"
 #include "Assets/AssetManager.hpp"
 #include "Assets/AssetPathProvider.hpp"
+#include "Platforms/IWindow.hpp"
 
 #include <string>
 #include <memory>
-
-namespace VexEngine::Graphics
-{
-	struct Pseudo3DRenderer;
-}
 
 namespace VexEngine
 {
@@ -37,6 +33,7 @@ namespace VexEngine
 		Assets::AssetManager m_assetManager;
 		std::unique_ptr<Graphics::IWindow> m_window;
 		std::unique_ptr<Graphics::IRenderer> m_renderer;
+		std::unique_ptr<Platforms::IWindow> m_platformWindow;
 		Chronos::FrameClock m_frameClock;
 	};
 }

@@ -1,5 +1,7 @@
 #include "Application.hpp"
 #include "Assets/AssetManager.hpp"
+#include "Platforms/WindowProperties.hpp"
+#include "Platforms/GLFW/GLFWWindow.hpp"
 
 #include <utility>
 #include <string>
@@ -13,10 +15,18 @@ namespace VexEngine
         m_assetManager(m_assetPathProvider),
 		m_window(std::move(m_graphicsFactory.CreateWindow(windowWidth, windowHeight, title))),
 		m_renderer(std::move(m_graphicsFactory.CreateRenderer(*m_window))),
+        m_platformWindow(nullptr),
 		m_sceneManager(),
 		m_frameClock(0.25f, 1.0f / 60.0f)
 	{
+        Platforms::WindowProperties windowProps(
+            static_cast<uint32_t>(windowWidth), 
+            static_cast<uint32_t>(windowHeight), 
+            title
+        );
 
+        m_platformWindow = std::make_unique<Platforms::GLFWWindow>();
+        m_platformWindow->OnInit(windowProps);
 	}
 
     void Application::Run()
@@ -40,6 +50,7 @@ namespace VexEngine
             Render(alpha);
             m_renderer->Display();
 
+            m_platformWindow->OnUpdate();
             m_frameClock.SleepNextFrame();
         }
     }
