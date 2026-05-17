@@ -51,6 +51,17 @@ namespace VexEngine::Tests
         EXPECT_LT(clock.GetAlpha(), alphaBefore + 0.001f);
     }
 
+    TEST(FrameClockTests, GetDelta_ShouldReturnDelta_WhenPositive)
+    {
+        FrameClock clock(0.25f, 1.0f / 60.0f);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        clock.Tick();
+
+        EXPECT_GT(clock.GetDelta(), 0.0f);
+        EXPECT_LE(clock.GetDelta(), 0.25f);
+    }
+
     TEST(FrameClockTests, GetFixedDelta_ShouldReturnFixedDelta_WhenPositive)
     {
         FrameClock clock(0.25f, 0.1f);

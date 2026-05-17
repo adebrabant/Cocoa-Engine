@@ -12,6 +12,7 @@ namespace VexEngine::Chronos
 		void Tick();
 		bool CanUpdate() const;
 		void ConsumeUpdate();
+		float GetDelta() const;
 		float GetFixedDelta() const;
 		float GetAlpha() const;
 		void SleepNextFrame() const;

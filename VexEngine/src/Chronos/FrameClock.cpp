@@ -43,6 +43,11 @@ namespace VexEngine::Chronos
             m_accumulator -= m_fixedDelta;
     }
 
+    float FrameClock::GetDelta() const
+    {
+        return m_deltaTime;
+    }
+
     float FrameClock::GetFixedDelta() const
     {
         return (m_fixedDelta > 0.0f) ? m_fixedDelta : m_deltaTime;
