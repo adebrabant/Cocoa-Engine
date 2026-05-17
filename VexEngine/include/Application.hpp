@@ -1,13 +1,11 @@
 #pragma once
 
-#include "Graphics/IWindow.hpp"
-#include "Graphics/IRenderer.hpp"
-#include "Graphics/GraphicsFactory.hpp"
+#include "Platforms/IWindow.hpp"
 #include "Scenes/SceneManager.hpp"
 #include "Chronos/FrameClock.hpp"
 #include "Assets/AssetManager.hpp"
 #include "Assets/AssetPathProvider.hpp"
-#include "Platforms/IWindow.hpp"
+#include "Platforms/WindowProperties.hpp"
 
 #include <string>
 #include <memory>
@@ -17,10 +15,11 @@ namespace VexEngine
 	class Application
 	{
 	public:
-		Application(unsigned int windowWidth, unsigned int windowHeight, const std::string& title);
+		Application(uint32_t windowWidth, uint32_t windowHeight, const std::string& title);
 		void Run();
 
 	protected:
+		void FixedUpdate(float fixedDeltaTime);
 		void Update(float deltaTime);
 		void Render(float alpha);
 
@@ -28,12 +27,10 @@ namespace VexEngine
 		Scenes::SceneManager m_sceneManager;
 
 	private:
-		Graphics::GraphicsFactory m_graphicsFactory;
+		std::unique_ptr<Platforms::IWindow> m_window;
 		Assets::AssetPathProvider m_assetPathProvider;
 		Assets::AssetManager m_assetManager;
-		std::unique_ptr<Graphics::IWindow> m_window;
-		std::unique_ptr<Graphics::IRenderer> m_renderer;
-		std::unique_ptr<Platforms::IWindow> m_platformWindow;
 		Chronos::FrameClock m_frameClock;
+		Platforms::WindowProperties m_windowProps;
 	};
 }

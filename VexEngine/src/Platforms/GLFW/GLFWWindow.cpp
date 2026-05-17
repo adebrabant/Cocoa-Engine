@@ -21,6 +21,9 @@ namespace VexEngine::Platforms
 
 	void GLFWWindow::OnInit(const WindowProperties& properties)
 	{
+		if (m_window)
+			throw std::logic_error("GLFWWindow is already initialized.");
+
 		m_width = properties.GetWidth();
 		m_height = properties.GetHeight();
 		m_title = properties.GetTitle();
@@ -45,11 +48,16 @@ namespace VexEngine::Platforms
 			throw std::runtime_error("Failed to create GLFW window.");
 		}
 
+		CenterWindow();
+
 		glfwMakeContextCurrent(m_window);
 	}
 
 	void GLFWWindow::OnUpdate()
 	{
+		if (!m_window)
+			throw std::logic_error("GLFWWindow must be initialized before OnUpdate.");
+
 		glfwPollEvents();
 		glfwSwapBuffers(m_window);
 	}
@@ -62,6 +70,26 @@ namespace VexEngine::Platforms
 	void* GLFWWindow::GetNative() const
 	{
 		return m_window;
+	}
+
+	void GLFWWindow::CenterWindow()
+	{
+		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+		if (!monitor)
+			return;
+
+		const GLFWvidmode* videoMode = glfwGetVideoMode(monitor);
+		if (!videoMode)
+			return;
+
+		int windowWidth = 0;
+		int windowHeight = 0;
+		glfwGetWindowSize(m_window, &windowWidth, &windowHeight);
+
+		const int x = (videoMode->width - windowWidth) / 2;
+		const int y = (videoMode->height - windowWidth) / 2;
+
+		glfwSetWindowPos(m_window, x, y);
 	}
 
 	void GLFWWindow::Shutdown()

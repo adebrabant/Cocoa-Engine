@@ -23,6 +23,7 @@ namespace VexEngine::Platforms
 		void* GetNative() const override;
 
 	private:
+		void CenterWindow();
 		void Shutdown();
 
 	private:

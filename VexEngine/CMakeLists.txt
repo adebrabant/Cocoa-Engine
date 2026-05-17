@@ -1,4 +1,3 @@
-find_package(SFML 3 COMPONENTS Graphics Window System Audio REQUIRED)
 find_package(glfw3 3.4 REQUIRED)
 find_package(GLEW REQUIRED)
 
@@ -6,17 +5,11 @@ add_library(${VEXENGINE_TARGET_NAME}
     include/Application.hpp
     src/Application.cpp
 
-    include/Graphics/IWindow.hpp
-    include/Graphics/IRenderer.hpp
+    include/Platforms/IWindow.hpp
+    include/Platforms/WindowProperties.hpp
 
-    include/Graphics/SFMLRenderer.hpp
-    src/Graphics/SFMLRenderer.cpp
-
-    include/Graphics/SFMLWindow.hpp
-    src/Graphics/SFMLWindow.cpp
-
-    include/Graphics/GraphicsFactory.hpp
-    src/Graphics/GraphicsFactory.cpp
+    src/Platforms/GLFW/GLFWWindow.hpp
+    src/Platforms/GLFW/GLFWWindow.cpp
 
     include/Assets/AssetManager.hpp
     src/Assets/AssetManager.cpp
@@ -75,12 +68,6 @@ add_library(${VEXENGINE_TARGET_NAME}
 
     include/Inputs/InputHandler.hpp
     src/Inputs/InputHandler.cpp
-
-    include/Platforms/IWindow.hpp
-    include/Platforms/WindowProperties.hpp
-
-    src/Platforms/GLFW/GLFWWindow.hpp
-    src/Platforms/GLFW/GLFWWindow.cpp
 )
 
 target_include_directories(${VEXENGINE_TARGET_NAME}
@@ -89,10 +76,6 @@ target_include_directories(${VEXENGINE_TARGET_NAME}
 )
 
 target_link_libraries(${VEXENGINE_TARGET_NAME} PRIVATE
-    SFML::Graphics
-    SFML::Window
-    SFML::System
-    SFML::Audio
     glfw
     GLEW::GLEW
 )

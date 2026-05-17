@@ -9,6 +9,11 @@ namespace VexEngine::Scenes
 		return m_currentScene;
 	}
 
+	void SceneManager::FixedUpdate(float fixedDeltaTime)
+	{
+		// ToDo: Handle when physics is ready
+	}
+
 	void SceneManager::Update(float deltaTime)
 	{
 		if (m_currentScene)

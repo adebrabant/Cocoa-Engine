@@ -14,6 +14,7 @@ namespace VexEngine::Scenes
 		SceneManager() = default;
 		~SceneManager() = default;
 		Scene* GetCurrentScene();
+		void FixedUpdate(float fixedDeltaTime);
 		void Update(float deltaTime);
 		void Render(Graphics::IRenderer & renderer, float alpha);
 		template<typename TScene> void SetScene();

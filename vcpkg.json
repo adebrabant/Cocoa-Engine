@@ -4,10 +4,6 @@
   "builtin-baseline": "0d5cae153065957df7f382de7c1549ccc88027e5",
   "dependencies": [
     {
-      "name": "sfml",
-      "version>=": "3.0.0#1"
-    },
-    {
       "name": "gtest",
       "version>=": "1.15.0"
     },
