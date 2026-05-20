@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Graphics/IRenderer.hpp"
+#include "Graphics/Renderer2D.hpp"
 #include "Scenes/ECS/Entity.hpp"
 #include "Scenes/ECS/ComponentStorage.hpp"
 #include "Scenes/ECS/ComponentType.hpp"
@@ -19,7 +19,7 @@ namespace VexEngine::Scenes
 		World();
 		~World() = default;
 		void Update(float deltaTime);
-		void Render(Graphics::IRenderer& renderer, float alpha);
+		void Render(Graphics::Renderer2D& renderer, float alpha);
 		Entity CreateEntity();
 		void DestroyEntity(const Entity& entity);
 

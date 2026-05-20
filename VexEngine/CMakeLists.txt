@@ -7,7 +7,8 @@ set(VEXENGINE_PUBLIC_HEADERS
     include/Platforms/IWindow.hpp
     include/Platforms/WindowProperties.hpp
 
-    include/Graphics/IRenderer.hpp
+    include/Graphics/Renderer2D.hpp
+    include/Graphics/IGraphicsDevice.hpp
 
     include/Assets/AssetManager.hpp
     include/Assets/ImageLoader.hpp
@@ -44,10 +45,11 @@ set(VEXENGINE_PRIVATE_SOURCES
     src/Platforms/GLFW/GLFWWindow.hpp
     src/Platforms/GLFW/GLFWWindow.cpp
 
+    src/Graphics/Renderer2D.cpp
     src/Graphics/OpenGL/OpenGLContext.hpp
     src/Graphics/OpenGL/OpenGLContext.cpp
-    src/Graphics/OpenGL/OpenGLRenderer.hpp
-    src/Graphics/OpenGL/OpenGLRenderer.cpp
+    src/Graphics/OpenGL/OpenGLGraphicsDevice.hpp
+    src/Graphics/OpenGL/OpenGLGraphicsDevice.cpp
 
     src/Assets/AssetManager.cpp
     src/Assets/ImageLoader.cpp

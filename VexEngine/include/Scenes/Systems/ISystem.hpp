@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Graphics/IRenderer.hpp"
+#include "Graphics/Renderer2D.hpp"
 
 namespace VexEngine::Scenes
 {
@@ -11,6 +11,6 @@ namespace VexEngine::Scenes
 	public:
 		virtual ~ISystem() = default;
 		virtual void Update(World& world, float deltaTime) = 0;
-		virtual void Render(World& world, Graphics::IRenderer& renderer, float alpha) = 0;
+		virtual void Render(World& world, Graphics::Renderer2D& renderer, float alpha) = 0;
 	};
 }

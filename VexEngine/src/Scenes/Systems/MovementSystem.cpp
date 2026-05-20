@@ -1,6 +1,6 @@
 #include "Scenes/Systems/MovementSystem.hpp"
 #include "Scenes/Systems/ISystem.hpp"
-#include "Graphics/IRenderer.hpp"
+#include "Graphics/Renderer2D.hpp"
 
 namespace VexEngine::Scenes
 {
@@ -9,7 +9,7 @@ namespace VexEngine::Scenes
 
 	}
 
-	void MovementSystem::Render(World& world, Graphics::IRenderer& renderer, float alpha)
+	void MovementSystem::Render(World& world, Graphics::Renderer2D& renderer, float alpha)
 	{
 
 	}

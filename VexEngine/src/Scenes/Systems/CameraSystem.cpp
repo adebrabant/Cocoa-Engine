@@ -3,7 +3,7 @@
 #include "Scenes/ECS/View.hpp"
 #include "Scenes/Components/TransformComponent.hpp"
 #include "Scenes/Components/CameraComponent.hpp"
-#include "Graphics/IRenderer.hpp"
+#include "Graphics/Renderer2D.hpp"
 
 #include <iostream> 
 
@@ -29,7 +29,7 @@ namespace VexEngine::Scenes
 		}
 	}
 
-	void CameraSystem::Render(World& world, Graphics::IRenderer& renderer, float alpha)
+	void CameraSystem::Render(World& world, Graphics::Renderer2D& renderer, float alpha)
 	{
 
 	}

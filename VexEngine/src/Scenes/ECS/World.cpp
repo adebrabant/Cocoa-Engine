@@ -1,6 +1,6 @@
 #include "Scenes/ECS/World.hpp"
 #include "Scenes/ECS/Entity.hpp"
-#include "Graphics/IRenderer.hpp"
+#include "Graphics/Renderer2D.hpp"
 #include "Scenes/Systems/ISystem.hpp"
 
 #include <cstdint>
@@ -25,7 +25,7 @@ namespace VexEngine::Scenes
 		}
 	}
 
-	void World::Render(Graphics::IRenderer& renderer, float alpha)
+	void World::Render(Graphics::Renderer2D& renderer, float alpha)
 	{ 
 		for (auto& system : m_systems)
 		{

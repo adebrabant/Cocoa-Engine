@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Scenes/ECS/World.hpp"
-#include "Graphics/IRenderer.hpp"
+#include "Graphics/Renderer2D.hpp"
 
 namespace VexEngine::Scenes
 {
@@ -13,7 +13,7 @@ namespace VexEngine::Scenes
 		virtual void Load() = 0;
 		virtual void Unload() = 0;
 		virtual void Update(float deltaTime);
-		virtual void Render(Graphics::IRenderer& renderer, float alpha);
+		virtual void Render(Graphics::Renderer2D& renderer, float alpha);
 
 	protected:
 		World m_world;

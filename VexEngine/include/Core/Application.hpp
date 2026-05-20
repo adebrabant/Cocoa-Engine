@@ -9,8 +9,14 @@
 #include <string>
 #include <memory>
 
+namespace VexEngine::Graphics
+{
+	class Renderer2D;
+}
+
 namespace VexEngine::Core
 {
+
 	class Application
 	{
 	public:
@@ -20,7 +26,7 @@ namespace VexEngine::Core
 	protected:
 		void FixedUpdate(float fixedDeltaTime);
 		void Update(float deltaTime);
-		void Render(Graphics::IRenderer& renderer, float alpha);
+		void Render(Graphics::Renderer2D& renderer, float alpha);
 
 	protected:
 		Scenes::SceneManager m_sceneManager;

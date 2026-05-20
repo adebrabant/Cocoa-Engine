@@ -1,5 +1,5 @@
 #include "Scenes/SceneManager.hpp"
-#include "Graphics/IRenderer.hpp"
+#include "Graphics/Renderer2D.hpp"
 #include "Scenes/Scene.hpp"
 
 namespace VexEngine::Scenes
@@ -22,7 +22,7 @@ namespace VexEngine::Scenes
 		}
 	}
 
-	void SceneManager::Render(Graphics::IRenderer& renderer, float alpha)
+	void SceneManager::Render(Graphics::Renderer2D& renderer, float alpha)
 	{
 		if (m_currentScene)
 		{

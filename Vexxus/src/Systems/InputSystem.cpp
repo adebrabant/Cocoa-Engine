@@ -1,7 +1,7 @@
 #include "Systems/InputSystem.hpp"
 #include "Scenes/ECS/World.hpp"
 #include "Scenes/ECS/View.hpp"
-#include "Graphics/IRenderer.hpp"
+#include "Graphics/Renderer2D.hpp"
 #include "Scenes/Components/VelocityComponent.hpp"	
 
 namespace Vexxus::Systems
@@ -41,7 +41,7 @@ namespace Vexxus::Systems
 		}
 	}
 
-	void InputSystem::Render(VexEngine::Scenes::World& world, VexEngine::Graphics::IRenderer& renderer, float alpha)
+	void InputSystem::Render(VexEngine::Scenes::World& world, VexEngine::Graphics::Renderer2D& renderer, float alpha)
 	{
 
 	}

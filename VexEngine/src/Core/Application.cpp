@@ -3,8 +3,8 @@
 #include "Platforms/WindowProperties.hpp"
 #include "Platforms/GLFW/GLFWWindow.hpp"
 #include "Graphics/OpenGL/OpenGLContext.hpp"
-#include "Graphics/OpenGL/OpenGLRenderer.hpp"
-#include "Graphics/IRenderer.hpp"
+#include "Graphics/OpenGL/OpenGLGraphicsDevice.hpp"
+#include "Graphics/Renderer2D.hpp"
 
 #include <utility>
 #include <string>
@@ -26,12 +26,10 @@ namespace VexEngine::Core
     {
         Platforms::GLFWWindow window(m_windowProps);
         Graphics::OpenGLContext openGLContext;
-        Graphics::OpenGLRenderProps renderProps
-        {
-            .Width = window.GetWidth(),
-            .Height = window.GetHeight(),
-        };
-        Graphics::OpenGLRenderer renderer(renderProps);
+        Graphics::OpenGLGraphicsDevice graphicsDevice;
+        graphicsDevice.SetViewport(window.GetWidth(), window.GetHeight());
+        graphicsDevice.SetClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        Graphics::Renderer2D renderer2d(graphicsDevice);
 
         m_frameClock.Reset();
 
@@ -45,7 +43,7 @@ namespace VexEngine::Core
             }
 
             Update(m_frameClock.GetDelta());
-            Render(renderer, m_frameClock.GetAlpha());
+            Render(renderer2d, m_frameClock.GetAlpha());
 
             window.OnUpdate();
             m_frameClock.SleepNextFrame();
@@ -63,7 +61,7 @@ namespace VexEngine::Core
 	}
 
     // ToDo: Will revisit this
-	void Application::Render(Graphics::IRenderer& renderer, float alpha)
+	void Application::Render(Graphics::Renderer2D& renderer, float alpha)
 	{
         renderer.Clear();
 		//m_sceneManager.Render(*m_renderer, alpha);

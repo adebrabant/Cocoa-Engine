@@ -1,5 +1,5 @@
 #include "Scenes/Scene.hpp"
-#include "Graphics/IRenderer.hpp"
+#include "Graphics/Renderer2D.hpp"
 
 namespace VexEngine::Scenes
 {
@@ -14,7 +14,7 @@ namespace VexEngine::Scenes
 		m_world.Update(deltaTime);
 	}
 
-	void Scene::Render(Graphics::IRenderer & renderer, float alpha)
+	void Scene::Render(Graphics::Renderer2D& renderer, float alpha)
 	{
 		m_world.Render(renderer, alpha);
 	}

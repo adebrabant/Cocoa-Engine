@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Scenes/Scene.hpp"
-#include "Graphics/IRenderer.hpp"
+#include "Graphics/Renderer2D.hpp"
 #include <vector>
 #include <memory>
 #include <type_traits>
@@ -16,7 +16,7 @@ namespace VexEngine::Scenes
 		Scene* GetCurrentScene();
 		void FixedUpdate(float fixedDeltaTime);
 		void Update(float deltaTime);
-		void Render(Graphics::IRenderer & renderer, float alpha);
+		void Render(Graphics::Renderer2D& renderer, float alpha);
 		template<typename TScene> void SetScene();
 		template<typename TScene> void AddScene();
 		template<typename TScene> TScene* GetScene();
