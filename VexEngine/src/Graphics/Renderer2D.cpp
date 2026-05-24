@@ -8,8 +8,14 @@ namespace VexEngine::Graphics
 
 	}
 
-	void Renderer2D::Clear()
+	void Renderer2D::BeginScene()
 	{
-		m_graphicsDevice.Clear();
+		//ToDo: Store camera/view-projection data
+		//ToDo: Reset batch/queue state
+	}
+
+	void Renderer2D::EndScene()
+	{
+		// ToDo: Flush queued 2D draw commands
 	}
 }

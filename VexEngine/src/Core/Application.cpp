@@ -43,7 +43,13 @@ namespace VexEngine::Core
             }
 
             Update(m_frameClock.GetDelta());
+
+            graphicsDevice.BeginFrame();
+            graphicsDevice.Clear();
+
             Render(renderer2d, m_frameClock.GetAlpha());
+
+            graphicsDevice.EndFrame();
 
             window.OnUpdate();
             m_frameClock.SleepNextFrame();
@@ -60,11 +66,10 @@ namespace VexEngine::Core
 		m_sceneManager.Update(deltaTime);
 	}
 
-    // ToDo: Will revisit this
 	void Application::Render(Graphics::Renderer2D& renderer, float alpha)
 	{
-        renderer.Clear();
+        renderer.BeginScene();
 		//m_sceneManager.Render(*m_renderer, alpha);
-        //m_renderer->Display();
+        renderer.EndScene();
 	}
 }

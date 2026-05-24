@@ -4,6 +4,16 @@
 
 namespace VexEngine::Graphics
 {
+	void OpenGLGraphicsDevice::BeginFrame()
+	{
+		// ToDo: Reserved for per-frame graphics device setup
+	}
+
+	void OpenGLGraphicsDevice::EndFrame()
+	{
+		// ToDo: Reserved for per-frame graphics device cleanup/submission
+	}
+
 	void OpenGLGraphicsDevice::SetViewport(uint32_t width, uint32_t height)
 	{
 		glViewport(

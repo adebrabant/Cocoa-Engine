@@ -9,7 +9,8 @@ namespace VexEngine::Graphics
 	public:
 		Renderer2D(IGraphicsDevice& graphicsDevice);
 		~Renderer2D() = default;
-		void Clear();
+		void BeginScene();
+		void EndScene();
 
 	private:
 		IGraphicsDevice& m_graphicsDevice;
