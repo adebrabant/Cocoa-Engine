@@ -46,7 +46,7 @@ namespace VexEngine::Core
 
             graphicsDevice.BeginFrame();
             graphicsDevice.Clear();
-
+            graphicsDevice.RenderTempTriangle();
             Render(renderer2d, m_frameClock.GetAlpha());
 
             graphicsDevice.EndFrame();
