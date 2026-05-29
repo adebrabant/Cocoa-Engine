@@ -7,15 +7,15 @@
 
 namespace Vexxus::Systems
 {
-	class InputSystem : public VexEngine::Scenes::ISystem
+	class InputSystem : public Cocoa::Scenes::ISystem
 	{
 	public:
 		InputSystem();
 		~InputSystem() = default;
-		void Update(VexEngine::Scenes::World& world, float deltaTime) override;
-		void Render(VexEngine::Scenes::World& world, VexEngine::Graphics::Renderer2D& renderer, float alpha) override;
+		void Update(Cocoa::Scenes::World& world, float deltaTime) override;
+		void Render(Cocoa::Scenes::World& world, Cocoa::Graphics::Renderer2D& renderer, float alpha) override;
 
 	private:
-		VexEngine::Inputs::InputHandler m_inputHandler;
+		Cocoa::Inputs::InputHandler m_inputHandler;
 	};
 }

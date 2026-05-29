@@ -4,7 +4,7 @@
 
 namespace Vexxus
 {
-	class TestScene : public VexEngine::Scenes::Scene
+	class TestScene : public Cocoa::Scenes::Scene
 	{
 	public:
 		TestScene() = default;

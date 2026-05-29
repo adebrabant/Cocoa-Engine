@@ -12,9 +12,9 @@ namespace Vexxus::Systems
 
 	}
 
-	void InputSystem::Update(VexEngine::Scenes::World& world, float deltaTime)
+	void InputSystem::Update(Cocoa::Scenes::World& world, float deltaTime)
 	{
-		VexEngine::Scenes::View<VexEngine::Scenes::VelocityComponent> view(world);
+		Cocoa::Scenes::View<Cocoa::Scenes::VelocityComponent> view(world);
 		for (auto [velocity] : view)
 		{
 			if (m_inputHandler.IsUpPressed())
@@ -41,7 +41,7 @@ namespace Vexxus::Systems
 		}
 	}
 
-	void InputSystem::Render(VexEngine::Scenes::World& world, VexEngine::Graphics::Renderer2D& renderer, float alpha)
+	void InputSystem::Render(Cocoa::Scenes::World& world, Cocoa::Graphics::Renderer2D& renderer, float alpha)
 	{
 
 	}

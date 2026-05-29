@@ -14,7 +14,7 @@ add_executable(${VEXXUS_TARGET_NAME}
 target_include_directories(${VEXXUS_TARGET_NAME} PUBLIC include)
 
 target_link_libraries(${VEXXUS_TARGET_NAME} PRIVATE
-    ${VEXENGINE_TARGET_NAME}
+    ${COCOA_TARGET_NAME}
 )
 
 add_custom_command(TARGET ${VEXXUS_TARGET_NAME} POST_BUILD

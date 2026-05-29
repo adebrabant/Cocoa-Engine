@@ -4,7 +4,7 @@
 
 namespace Vexxus
 {
-	class GameApplication : public VexEngine::Core::Application
+	class GameApplication : public Cocoa::Core::Application
 	{
 	public:
 		GameApplication();
