@@ -3,6 +3,8 @@
 #include "Graphics/OpenGL/OpenGLVertexBuffer.hpp"
 #include "Graphics/OpenGL/OpenGLVertexArray.hpp"
 #include "Graphics/OpenGL/OpenGLIndexBuffer.hpp"
+#include "Graphics/OpenGL/OpenGLTexture2D.hpp"
+#include "Graphics/TextureSpec.hpp"
 
 #include <GL/glew.h>
 #include <iostream>
@@ -11,6 +13,9 @@ namespace Cocoa::Graphics
 {
 	OpenGLGraphicsDevice::~OpenGLGraphicsDevice()
 	{
+		delete m_texture;
+		m_texture = nullptr;
+
 		delete m_vao;
 		m_vao = nullptr;
 
@@ -68,6 +73,8 @@ namespace Cocoa::Graphics
 		}
 
 		m_shader->Bind();
+		m_texture->Bind(0);
+		m_shader->SetInt("u_Texture", 0);
 		m_vao->Bind();
 
 		glDrawElements(
@@ -86,12 +93,15 @@ namespace Cocoa::Graphics
 		const char* vertexShaderSource = R"(
 			#version 330 core
 
-			layout(location = 0) in vec3 a_Position;
+			layout(location = 0) in vec2 a_Position;
 			layout(location = 1) in vec2 a_TexCoord;
+
+			out vec2 TexCoord;
 			
 			void main()
 			{
-				gl_Position = vec4(a_Position, 1.0);
+				gl_Position = vec4(a_Position, 0.0, 1.0);
+				TexCoord = a_TexCoord;
 			}
 		)";
 
@@ -99,10 +109,14 @@ namespace Cocoa::Graphics
 			#version 330 core
 			
 			out vec4 FragColor;
+
+			in vec2 TexCoord;
+
+			uniform sampler2D u_Texture;
 			
 			void main()
 			{
-				FragColor = vec4(1.0, 0.4, 0.2, 1.0);
+				FragColor = texture(u_Texture, TexCoord);
 			}
 		)";
 
@@ -128,5 +142,30 @@ namespace Cocoa::Graphics
 		m_ibo = new OpenGLIndexBuffer(indices, static_cast<uint32_t>(std::size(indices)));
 		m_vao->AddVertexBuffer(*m_vbo);
 		m_vao->SetIndexBuffer(*m_ibo);
+
+		TextureSpec textureSpec
+		{
+			.Width = 2,
+			.Height = 2,
+			.Format = TextureFormat::RGBA8,
+			.MinFilter = TextureFilter::Nearest,
+			.MagFilter = TextureFilter::Nearest,
+			.WrapS = TextureWrap::ClampToEdge,
+			.WrapT = TextureWrap::ClampToEdge,
+			.GenerateMipmaps = true
+		};
+
+		unsigned char pixels[] =
+		{
+			// top row
+			255, 255, 255, 255,   // white
+			0,   0,   0,   255,   // black
+
+			// bottom row
+			0,   0,   0,   255,   // black
+			255, 255, 255, 255    // white
+		};
+
+		m_texture = new OpenGLTexture2D(textureSpec, pixels);
 	}
 }

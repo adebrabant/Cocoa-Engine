@@ -9,6 +9,7 @@ set(COCOA_PUBLIC_HEADERS
 
     include/Graphics/Renderer2D.hpp
     include/Graphics/IGraphicsDevice.hpp
+    include/Graphics/TextureSpec.hpp
 
     include/Assets/AssetManager.hpp
     include/Assets/ImageLoader.hpp
@@ -58,6 +59,8 @@ set(COCOA_PRIVATE_SOURCES
     src/Graphics/OpenGL/OpenGLVertexArray.cpp
     src/Graphics/OpenGL/OpenGLIndexBuffer.hpp
     src/Graphics/OpenGL/OpenGLIndexBuffer.cpp
+    src/Graphics/OpenGL/OpenGLTexture2D.hpp
+    src/Graphics/OpenGL/OpenGLTexture2D.cpp
 
     src/Assets/AssetManager.cpp
     src/Assets/ImageLoader.cpp

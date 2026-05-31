@@ -33,6 +33,7 @@ namespace Cocoa::Graphics
 		glBindVertexArray(0);
 	}
 
+	// ToDo: Remove hardcoded values
 	void OpenGLVertexArray::AddVertexBuffer(const OpenGLVertexBuffer& vertexBuffer)
 	{
 		Bind();
