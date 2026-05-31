@@ -10,6 +10,7 @@ namespace Cocoa::Graphics
 	class OpenGLVertexBuffer;
 	class OpenGLVertexArray;
 	class OpenGLIndexBuffer;
+	class OpenGLTexture2D;
 
 	class OpenGLGraphicsDevice : public IGraphicsDevice
 	{
@@ -34,6 +35,7 @@ namespace Cocoa::Graphics
 		OpenGLVertexBuffer* m_vbo;
 		OpenGLVertexArray* m_vao;
 		OpenGLIndexBuffer* m_ibo;
+		OpenGLTexture2D* m_texture;
 		bool m_isTempTriangleInit = false;
 	};
 }
