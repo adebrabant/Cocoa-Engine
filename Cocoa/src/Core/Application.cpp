@@ -32,6 +32,7 @@ namespace Cocoa::Core
         Graphics::Renderer2D renderer2d(graphicsDevice);
 
         m_frameClock.Reset();
+        graphicsDevice.InitTemp(m_assetManager);
 
         while (window.IsOpen())
         {

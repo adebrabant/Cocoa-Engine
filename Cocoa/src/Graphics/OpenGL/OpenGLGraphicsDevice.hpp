@@ -4,6 +4,12 @@
 
 #include <cstdint>
 
+// Temp for image loading remove after tests
+namespace Cocoa::Assets
+{
+	class AssetManager;
+}
+
 namespace Cocoa::Graphics
 {
 	class OpenGLShader;
@@ -15,7 +21,7 @@ namespace Cocoa::Graphics
 	class OpenGLGraphicsDevice : public IGraphicsDevice
 	{
 	public:
-		OpenGLGraphicsDevice() = default;
+		OpenGLGraphicsDevice();
 		~OpenGLGraphicsDevice();
 		void BeginFrame() override;
 		void EndFrame() override;
@@ -25,10 +31,10 @@ namespace Cocoa::Graphics
 
 		// Temporary rendering checkpoint
 		// Remove once Shader / VertexBuffer / VertexArray abstractions exist
+		void InitTemp(Cocoa::Assets::AssetManager assetManager);
 		void RenderTemp();
 
 	private:
-		void InitTemp();
 
 	private:
 		OpenGLShader* m_shader{ nullptr };
@@ -36,6 +42,5 @@ namespace Cocoa::Graphics
 		OpenGLVertexArray* m_vao{ nullptr };
 		OpenGLIndexBuffer* m_ibo{ nullptr };
 		OpenGLTexture2D* m_texture{ nullptr };
-		bool m_isTempTriangleInit = false;
 	};
 }

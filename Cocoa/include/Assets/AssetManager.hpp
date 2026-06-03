@@ -15,6 +15,7 @@ namespace Cocoa::Assets
 	public:
 		AssetManager(IPathProvider& pathProvider);
 		Asset LoadTexture(const std::string& path);
+		Image LoadImage(const std::string& path);
 
 	private:
 		IPathProvider& m_pathProvider;

@@ -7,12 +7,20 @@
 #include "Graphics/TextureSpec.hpp"
 #include "Graphics/BufferElement.hpp"
 #include "Graphics/BufferLayout.hpp"
+//Temp include for now
+#include "Assets/AssetManager.hpp"
 
 #include <GL/glew.h>
 #include <iostream>
 
 namespace Cocoa::Graphics
 {
+	OpenGLGraphicsDevice::OpenGLGraphicsDevice()
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
+
 	OpenGLGraphicsDevice::~OpenGLGraphicsDevice()
 	{
 		delete m_texture;
@@ -66,31 +74,7 @@ namespace Cocoa::Graphics
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
-	void OpenGLGraphicsDevice::RenderTemp()
-	{
-		if (!m_isTempTriangleInit)
-		{
-			InitTemp();
-			m_isTempTriangleInit = true;
-		}
-
-		m_shader->Bind();
-		m_texture->Bind(0);
-		m_shader->SetInt("u_Texture", 0);
-		m_vao->Bind();
-
-		glDrawElements(
-			GL_TRIANGLES,
-			m_ibo->GetCount(),
-			GL_UNSIGNED_INT,
-			nullptr
-		);
-
-		m_vao->Unbind();
-		m_shader->Unbind();
-	}
-
-	void OpenGLGraphicsDevice::InitTemp()
+	void OpenGLGraphicsDevice::InitTemp(Cocoa::Assets::AssetManager assetManager)
 	{
 		const char* vertexShaderSource = R"(
 			#version 330 core
@@ -174,6 +158,38 @@ namespace Cocoa::Graphics
 			255, 255, 255, 255    // white
 		};
 
-		m_texture = new OpenGLTexture2D(textureSpec, pixels);
+		auto image = assetManager.LoadImage("Fighter.png");
+
+		TextureSpec imageTextureSpec
+		{
+			.Width = static_cast<uint32_t>(image.Width),
+			.Height = static_cast<uint32_t>(image.Height),
+			.Format = TextureFormat::RGBA8,
+			.MinFilter = TextureFilter::Nearest,
+			.MagFilter = TextureFilter::Nearest,
+			.WrapS = TextureWrap::ClampToEdge,
+			.WrapT = TextureWrap::ClampToEdge,
+			.GenerateMipmaps = true
+		};
+
+		m_texture = new OpenGLTexture2D(imageTextureSpec, image.Pixels.data());
+	}
+
+	void OpenGLGraphicsDevice::RenderTemp()
+	{
+		m_shader->Bind();
+		m_texture->Bind(0);
+		m_shader->SetInt("u_Texture", 0);
+		m_vao->Bind();
+
+		glDrawElements(
+			GL_TRIANGLES,
+			m_ibo->GetCount(),
+			GL_UNSIGNED_INT,
+			nullptr
+		);
+
+		m_vao->Unbind();
+		m_shader->Unbind();
 	}
 }

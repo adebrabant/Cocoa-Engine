@@ -36,4 +36,12 @@ namespace Cocoa::Assets
 
 		return asset;
 	}
+
+	Image AssetManager::LoadImage(const std::string& path)
+	{
+		auto basePath = m_pathProvider.GetAssetsPath();
+		auto fullPath = basePath / path;
+
+		return m_imageLoader.Load(fullPath);
+	}
 }
