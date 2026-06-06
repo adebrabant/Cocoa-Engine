@@ -62,7 +62,7 @@ namespace Cocoa::Graphics
 		return m_count;
 	}
 
-	void OpenGLIndexBuffer::Destroy()
+	void OpenGLIndexBuffer::Destroy() const
 	{
 		if (m_ibo <= 0)
 			return;
