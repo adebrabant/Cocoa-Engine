@@ -25,7 +25,7 @@ namespace Cocoa::Graphics
 
 	private:
 		GraphicsDevice& m_graphicsDevice;
-		Assets::AssetManager& m_assetManager; // Temp
+		Assets::AssetManager& m_tempAssetManager;
 		Unique<Shader> m_shader{ nullptr };
 		Unique<VertexArray> m_vao{ nullptr };
 		Unique<VertexBuffer> m_vbo{ nullptr };
