@@ -3,19 +3,25 @@ find_package(GLEW REQUIRED)
 
 set(COCOA_PUBLIC_HEADERS
     include/Core/Application.hpp
+    include/Core/Memory.hpp
 
-    include/Platforms/IWindow.hpp
+    include/Platforms/Window.hpp
     include/Platforms/WindowProperties.hpp
 
     include/Graphics/Renderer2D.hpp
-    include/Graphics/IGraphicsDevice.hpp
+    include/Graphics/GraphicsDevice.hpp
     include/Graphics/TextureSpec.hpp
     include/Graphics/BufferLayout.hpp
     include/Graphics/BufferElement.hpp
+    include/Graphics/IndexBuffer.hpp
+    include/Graphics/Shader.hpp
+    include/Graphics/Texture2D.hpp
+    include/Graphics/VertexArray.hpp
+    include/Graphics/VertexBuffer.hpp
 
     include/Assets/AssetManager.hpp
     include/Assets/ImageLoader.hpp
-    include/Assets/IPathProvider.hpp
+    include/Assets/PathProvider.hpp
     include/Assets/Asset.hpp
     include/Assets/AssetPathProvider.hpp
 

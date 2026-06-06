@@ -4,10 +4,10 @@
 
 namespace Cocoa::Assets
 {
-	class IPathProvider
+	class PathProvider
 	{
 	public:
-		virtual ~IPathProvider() = default;
+		virtual ~PathProvider() = default;
 		virtual std::filesystem::path GetAssetsPath() const = 0;
 	};
 }

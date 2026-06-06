@@ -1,5 +1,5 @@
 #include "Assets/AssetManager.hpp"
-#include "Assets/IPathProvider.hpp"
+#include "Assets/PathProvider.hpp"
 #include "Assets/ImageLoader.hpp"
 #include "Assets/Asset.hpp"
 
@@ -11,9 +11,11 @@
 
 namespace Cocoa::Assets
 {
-	AssetManager::AssetManager(IPathProvider& pathProvider) :
+	AssetManager::AssetManager(PathProvider& pathProvider) :
 		m_pathProvider(pathProvider),
 		m_imageLoader(),
+		m_rootPath(m_pathProvider.GetAssetsPath()),
+		m_nextId{ 1 },
 		m_texturePathCache(),
 		m_texturePaths()
 	{
@@ -25,8 +27,7 @@ namespace Cocoa::Assets
 		if (auto it = m_texturePathCache.find(path); it != m_texturePathCache.end())
 			return it->second;
 
-		auto basePath = m_pathProvider.GetAssetsPath();
-		auto fullPath = basePath / path;
+		auto fullPath = m_rootPath / path;
 
 		uint32_t idValue = m_nextId++;
 		Asset asset(idValue, AssetType::Texture);
@@ -39,8 +40,7 @@ namespace Cocoa::Assets
 
 	Image AssetManager::LoadImage(const std::string& path)
 	{
-		auto basePath = m_pathProvider.GetAssetsPath();
-		auto fullPath = basePath / path;
+		auto fullPath = m_rootPath / path;
 
 		return m_imageLoader.Load(fullPath);
 	}

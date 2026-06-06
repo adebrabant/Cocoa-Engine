@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Assets/IPathProvider.hpp"
+#include "Assets/PathProvider.hpp"
 #include <string>
 #include <filesystem>
 
 namespace Cocoa::Assets
 {
-	class AssetPathProvider : public IPathProvider
+	class AssetPathProvider : public PathProvider
 	{
 	public:
 		AssetPathProvider() = default;

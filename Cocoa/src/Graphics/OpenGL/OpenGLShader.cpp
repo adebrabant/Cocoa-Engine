@@ -91,7 +91,7 @@ namespace Cocoa::Graphics
 		glUseProgram(0);
 	}
 
-	void OpenGLShader::SetInt(const std::string& name, int value) const
+	void OpenGLShader::SetInt(const std::string& name, int value)
 	{
 		GLint location = glGetUniformLocation(
 			static_cast<GLuint>(m_rendererId),
@@ -101,7 +101,7 @@ namespace Cocoa::Graphics
 		glUniform1i(location, value);
 	}
 
-	void OpenGLShader::SetFloat(const std::string& name, float value) const
+	void OpenGLShader::SetFloat(const std::string& name, float value)
 	{
 		GLint location = glGetUniformLocation(
 			static_cast<GLuint>(m_rendererId),
@@ -111,7 +111,7 @@ namespace Cocoa::Graphics
 		glUniform1f(location, value);
 	}
 
-	void OpenGLShader::Destroy()
+	void OpenGLShader::Destroy() const
 	{
 		if (m_rendererId <= 0)
 			return;

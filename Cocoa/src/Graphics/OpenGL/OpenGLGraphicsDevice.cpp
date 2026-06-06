@@ -7,8 +7,7 @@
 #include "Graphics/TextureSpec.hpp"
 #include "Graphics/BufferElement.hpp"
 #include "Graphics/BufferLayout.hpp"
-//Temp include for now
-#include "Assets/AssetManager.hpp"
+#include "Core/Memory.hpp"
 
 #include <GL/glew.h>
 #include <iostream>
@@ -23,20 +22,7 @@ namespace Cocoa::Graphics
 
 	OpenGLGraphicsDevice::~OpenGLGraphicsDevice()
 	{
-		delete m_texture;
-		m_texture = nullptr;
 
-		delete m_vao;
-		m_vao = nullptr;
-
-		delete m_ibo;
-		m_ibo = nullptr;
-
-		delete m_vbo;
-		m_vbo = nullptr;
-
-		delete m_shader;
-		m_shader = nullptr;
 	}
 
 	void OpenGLGraphicsDevice::BeginFrame()
@@ -74,122 +60,42 @@ namespace Cocoa::Graphics
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
-	void OpenGLGraphicsDevice::InitTemp(Cocoa::Assets::AssetManager assetManager)
+	Unique<Shader> OpenGLGraphicsDevice::CreateShader(const std::string& vertexSource, const std::string& fragmentSource)
 	{
-		const char* vertexShaderSource = R"(
-			#version 330 core
-
-			layout(location = 0) in vec2 a_Position;
-			layout(location = 1) in vec2 a_TexCoord;
-
-			out vec2 TexCoord;
-			
-			void main()
-			{
-				gl_Position = vec4(a_Position, 0.0, 1.0);
-				TexCoord = a_TexCoord;
-			}
-		)";
-
-		const char* fragmentShaderSource = R"(
-			#version 330 core
-			
-			out vec4 FragColor;
-
-			in vec2 TexCoord;
-
-			uniform sampler2D u_Texture;
-			
-			void main()
-			{
-				FragColor = texture(u_Texture, TexCoord);
-			}
-		)";
-
-		m_shader = new OpenGLShader(vertexShaderSource, fragmentShaderSource);
-
-		float vertices[] =
-		{
-			// position      // tex coord
-			-0.5f, -0.5f,    0.0f, 0.0f,
-			 0.5f, -0.5f,    1.0f, 0.0f,
-			 0.5f,  0.5f,    1.0f, 1.0f,
-			-0.5f,  0.5f,    0.0f, 1.0f
-		};
-
-		uint32_t indices[] =
-		{
-			0, 1, 2,
-			2, 3, 0
-		};
-
-		BufferLayout layout =
-		{
-			{ 0, ShaderDataType::Float2, "a_Position" },
-			{ 1, ShaderDataType::Float2, "a_TexCoord" },
-		};
-
-		m_vao = new OpenGLVertexArray();
-		m_vbo = new OpenGLVertexBuffer(vertices, sizeof(vertices), layout);
-		m_ibo = new OpenGLIndexBuffer(indices, static_cast<uint32_t>(std::size(indices)));
-		m_vao->AddVertexBuffer(*m_vbo);
-		m_vao->SetIndexBuffer(*m_ibo);
-
-		TextureSpec textureSpec
-		{
-			.Width = 2,
-			.Height = 2,
-			.Format = TextureFormat::RGBA8,
-			.MinFilter = TextureFilter::Nearest,
-			.MagFilter = TextureFilter::Nearest,
-			.WrapS = TextureWrap::ClampToEdge,
-			.WrapT = TextureWrap::ClampToEdge,
-			.GenerateMipmaps = true
-		};
-
-		unsigned char pixels[] =
-		{
-			// top row
-			255, 255, 255, 255,   // white
-			0,   0,   0,   255,   // black
-
-			// bottom row
-			0,   0,   0,   255,   // black
-			255, 255, 255, 255    // white
-		};
-
-		auto image = assetManager.LoadImage("Fighter.png");
-
-		TextureSpec imageTextureSpec
-		{
-			.Width = static_cast<uint32_t>(image.Width),
-			.Height = static_cast<uint32_t>(image.Height),
-			.Format = TextureFormat::RGBA8,
-			.MinFilter = TextureFilter::Nearest,
-			.MagFilter = TextureFilter::Nearest,
-			.WrapS = TextureWrap::ClampToEdge,
-			.WrapT = TextureWrap::ClampToEdge,
-			.GenerateMipmaps = true
-		};
-
-		m_texture = new OpenGLTexture2D(imageTextureSpec, image.Pixels.data());
+		return CreateUnique<OpenGLShader>(vertexSource, fragmentSource);
 	}
 
-	void OpenGLGraphicsDevice::RenderTemp()
+	Unique<VertexArray> OpenGLGraphicsDevice::CreateVertexArray()
 	{
-		m_shader->Bind();
-		m_texture->Bind(0);
-		m_shader->SetInt("u_Texture", 0);
-		m_vao->Bind();
+		return CreateUnique<OpenGLVertexArray>();
+	}
+
+	Unique<VertexBuffer> OpenGLGraphicsDevice::CreateVertexBuffer(const float* vertices, uint32_t size, const BufferLayout& bufferLayout)
+	{
+		return CreateUnique<OpenGLVertexBuffer>(vertices, size, bufferLayout);
+	}
+
+	Unique<IndexBuffer> OpenGLGraphicsDevice::CreateIndexBuffer(const uint32_t* indices, uint32_t count)
+	{
+		return CreateUnique<OpenGLIndexBuffer>(indices, count);
+	}
+
+	Unique<Texture2D> OpenGLGraphicsDevice::CreateTexture2D(TextureSpec textureSpec, const unsigned char* pixels)
+	{
+		return CreateUnique<OpenGLTexture2D>(textureSpec, pixels);
+	}
+
+	void OpenGLGraphicsDevice::DrawIndexed(const VertexArray& vertexArray, uint32_t indexCount)
+	{
+		vertexArray.Bind();
 
 		glDrawElements(
 			GL_TRIANGLES,
-			m_ibo->GetCount(),
+			static_cast<GLsizei>(indexCount),
 			GL_UNSIGNED_INT,
 			nullptr
 		);
 
-		m_vao->Unbind();
-		m_shader->Unbind();
+		vertexArray.Unbind();
 	}
 }

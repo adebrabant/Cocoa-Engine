@@ -1,46 +1,30 @@
 #pragma once
 
-#include "Graphics/IGraphicsDevice.hpp"
+#include "Graphics/GraphicsDevice.hpp"
+#include "Core/Memory.hpp"
 
+#include <memory>
 #include <cstdint>
-
-// Temp for image loading remove after tests
-namespace Cocoa::Assets
-{
-	class AssetManager;
-}
 
 namespace Cocoa::Graphics
 {
-	class OpenGLShader;
-	class OpenGLVertexBuffer;
-	class OpenGLVertexArray;
-	class OpenGLIndexBuffer;
-	class OpenGLTexture2D;
-
-	class OpenGLGraphicsDevice : public IGraphicsDevice
+	class OpenGLGraphicsDevice : public GraphicsDevice
 	{
 	public:
 		OpenGLGraphicsDevice();
-		~OpenGLGraphicsDevice();
+		~OpenGLGraphicsDevice() override;
 		void BeginFrame() override;
 		void EndFrame() override;
 		void SetViewport(uint32_t width, uint32_t height) override;
 		void SetClearColor(float red, float green, float blue, float alpha) override;
 		void Clear() override;
 
-		// Temporary rendering checkpoint
-		// Remove once Shader / VertexBuffer / VertexArray abstractions exist
-		void InitTemp(Cocoa::Assets::AssetManager assetManager);
-		void RenderTemp();
+		Unique<Shader> CreateShader(const std::string& vertexSource, const std::string& fragmentSource) override;
+		Unique<VertexArray> CreateVertexArray() override;
+		Unique<VertexBuffer> CreateVertexBuffer(const float* vertices, uint32_t size, const BufferLayout& bufferLayout) override;
+		Unique<IndexBuffer> CreateIndexBuffer(const uint32_t* indices, uint32_t count) override;
+		Unique<Texture2D> CreateTexture2D(TextureSpec textureSpec, const unsigned char* pixels) override;
 
-	private:
-
-	private:
-		OpenGLShader* m_shader{ nullptr };
-		OpenGLVertexBuffer* m_vbo{ nullptr };
-		OpenGLVertexArray* m_vao{ nullptr };
-		OpenGLIndexBuffer* m_ibo{ nullptr };
-		OpenGLTexture2D* m_texture{ nullptr };
+		void DrawIndexed(const VertexArray& vertexArray, uint32_t indexCount) override;
 	};
 }

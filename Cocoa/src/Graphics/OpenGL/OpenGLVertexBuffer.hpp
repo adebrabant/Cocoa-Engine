@@ -1,16 +1,17 @@
 #pragma once
 
 #include "Graphics/BufferLayout.hpp"
+#include "Graphics/VertexBuffer.hpp"
 
 #include <cstdint>
 
 namespace Cocoa::Graphics
 {
-	class OpenGLVertexBuffer
+	class OpenGLVertexBuffer : public VertexBuffer
 	{
 	public:
 		OpenGLVertexBuffer(const float* vertices, uint32_t size, const BufferLayout& bufferLayout);
-		~OpenGLVertexBuffer();
+		~OpenGLVertexBuffer() override;
 
 		OpenGLVertexBuffer(const OpenGLVertexBuffer&) = delete;
 		OpenGLVertexBuffer& operator=(const OpenGLVertexBuffer&) = delete;
@@ -18,10 +19,10 @@ namespace Cocoa::Graphics
 		OpenGLVertexBuffer(OpenGLVertexBuffer&& other) noexcept;
 		OpenGLVertexBuffer& operator=(OpenGLVertexBuffer&& other) noexcept;
 
-		void Bind() const;
-		void Unbind() const;
+		void Bind() const override;
+		void Unbind() const override;
 
-		const BufferLayout& GetLayout() const { return m_bufferLayout; }
+		const BufferLayout& GetLayout() const override { return m_bufferLayout; }
 
 	private:
 		void Destroy();

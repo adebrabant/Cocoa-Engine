@@ -29,10 +29,9 @@ namespace Cocoa::Core
         Graphics::OpenGLGraphicsDevice graphicsDevice;
         graphicsDevice.SetViewport(window.GetWidth(), window.GetHeight());
         graphicsDevice.SetClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        Graphics::Renderer2D renderer2d(graphicsDevice);
+        Graphics::Renderer2D renderer2d(graphicsDevice, m_assetManager);
 
         m_frameClock.Reset();
-        graphicsDevice.InitTemp(m_assetManager);
 
         while (window.IsOpen())
         {
@@ -47,9 +46,7 @@ namespace Cocoa::Core
 
             graphicsDevice.BeginFrame();
             graphicsDevice.Clear();
-            graphicsDevice.RenderTemp();
             Render(renderer2d, m_frameClock.GetAlpha());
-
             graphicsDevice.EndFrame();
 
             window.OnUpdate();
