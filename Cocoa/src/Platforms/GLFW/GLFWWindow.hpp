@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Platforms/IWindow.hpp"
+#include "Platforms/Window.hpp"
 #include "Platforms/WindowProperties.hpp"
 
 struct GLFWwindow;
 
 namespace Cocoa::Platforms
 {
-	class GLFWWindow : public IWindow
+	class GLFWWindow : public Window
 	{
 	public:
 		GLFWWindow(const WindowProperties& properties);
