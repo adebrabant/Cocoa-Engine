@@ -1,16 +1,16 @@
 #pragma once
+
+#include "Graphics/VertexArray.hpp"
+
 #include <cstdint>
 
 namespace Cocoa::Graphics
 {
-	class OpenGLVertexBuffer;
-	class OpenGLIndexBuffer;
-
-	class OpenGLVertexArray
+	class OpenGLVertexArray : public VertexArray
 	{
 	public:
 		OpenGLVertexArray();
-		~OpenGLVertexArray();
+		~OpenGLVertexArray() override;
 
 		OpenGLVertexArray(const OpenGLVertexArray&) = delete;
 		OpenGLVertexArray& operator=(const OpenGLVertexArray&) = delete;
@@ -18,11 +18,11 @@ namespace Cocoa::Graphics
 		OpenGLVertexArray(OpenGLVertexArray&& other) noexcept;
 		OpenGLVertexArray& operator=(OpenGLVertexArray&& other) noexcept;
 
-		void Bind() const;
-		void Unbind() const;
+		void Bind() const override;
+		void Unbind() const override;
 
-		void AddVertexBuffer(const OpenGLVertexBuffer& vertexBuffer);
-		void SetIndexBuffer(const OpenGLIndexBuffer& indexBuffer);
+		void AddVertexBuffer(const VertexBuffer& vertexBuffer) override;
+		void SetIndexBuffer(const IndexBuffer& indexBuffer) override;
 
 	private:
 		void Destroy();

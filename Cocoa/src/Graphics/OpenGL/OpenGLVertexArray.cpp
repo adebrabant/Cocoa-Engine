@@ -1,6 +1,8 @@
 #include "Graphics/OpenGL/OpenGLVertexArray.hpp"
 #include "Graphics/OpenGL/OpenGLVertexBuffer.hpp"
 #include "Graphics/OpenGL/OpenGLIndexBuffer.hpp"
+#include "Graphics/IndexBuffer.hpp"
+#include "Graphics/VertexBuffer.hpp"
 
 #include <GL/glew.h>
 #include <cstdint>
@@ -80,7 +82,7 @@ namespace Cocoa::Graphics
 		glBindVertexArray(0);
 	}
 
-	void OpenGLVertexArray::AddVertexBuffer(const OpenGLVertexBuffer& vertexBuffer)
+	void OpenGLVertexArray::AddVertexBuffer(const VertexBuffer& vertexBuffer)
 	{
 		Bind();
 		vertexBuffer.Bind();
@@ -102,7 +104,7 @@ namespace Cocoa::Graphics
 		Unbind();
 	}
 
-	void OpenGLVertexArray::SetIndexBuffer(const OpenGLIndexBuffer& indexBuffer)
+	void OpenGLVertexArray::SetIndexBuffer(const IndexBuffer& indexBuffer)
 	{
 		Bind();
 		indexBuffer.Bind();
