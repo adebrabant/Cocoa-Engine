@@ -1,0 +1,11 @@
+{
+  "werewolf-idle1": {
+    "path": "Textures/werewolf-idle1.png",
+    "format": "RGBA8",
+    "minFilter": "Linear",
+    "magFilter": "Linear",
+    "wrapS": "ClampToEdge",
+    "wrapT": "ClampToEdge",
+    "generateMipmaps": false
+  }
+}

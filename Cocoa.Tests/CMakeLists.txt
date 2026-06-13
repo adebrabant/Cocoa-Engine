@@ -1,7 +1,28 @@
-add_executable(${COCOA_TESTS_TARGET_NAME}
+find_package(GTest CONFIG REQUIRED)
+
+set(COCOA_TEST_SOURCES
     src/Chronos/FrameClockTests.cpp
     src/Scenes/SceneManagerTests.cpp
     src/Platforms/WindowPropertiesTests.cpp
+    src/Assets/JsonDatabaseTests.cpp
+)
+
+set(COCOA_TEST_DATA
+    src/TestData/Metadata/textures.json
+    src/TestData/Metadata/badtextures.json
+)
+
+add_executable(${COCOA_TESTS_TARGET_NAME}
+    ${COCOA_TEST_SOURCES}
+    ${COCOA_TEST_DATA}
+)
+
+source_group(
+    TREE ${CMAKE_CURRENT_SOURCE_DIR}/src
+    PREFIX "Source Files"
+    FILES
+        ${COCOA_TEST_SOURCES}
+        ${COCOA_TEST_DATA}
 )
 
 target_include_directories(${COCOA_TESTS_TARGET_NAME}
@@ -10,13 +31,17 @@ target_include_directories(${COCOA_TESTS_TARGET_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-find_package(GTest CONFIG REQUIRED)
-
 target_link_libraries(${COCOA_TESTS_TARGET_NAME}
     PRIVATE
         ${COCOA_TARGET_NAME}
         GTest::gtest
         GTest::gtest_main
+)
+
+add_custom_command(TARGET ${COCOA_TESTS_TARGET_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/TestData
+        $<TARGET_FILE_DIR:${COCOA_TESTS_TARGET_NAME}>/TestData
 )
 
 add_test(NAME Cocoa.Tests COMMAND ${COCOA_TESTS_TARGET_NAME})
