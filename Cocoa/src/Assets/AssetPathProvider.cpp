@@ -1,22 +1,30 @@
 #include "Assets/AssetPathProvider.hpp"
 
 #include <iostream>
-#include <vector>
+#include <array>
 
 namespace Cocoa::Assets
 {
-    std::filesystem::path AssetPathProvider::GetAssetsPath() const
+    AssetPathProvider::AssetPathProvider()
+    {
+        m_assetPath = FindPath("Assets");
+
+        if (!m_assetPath.empty())
+            m_metadataPath = m_assetPath / "Metadata";
+    }
+
+    std::filesystem::path AssetPathProvider::FindPath(const std::string& path)
     {
         try
         {
             auto exePath = std::filesystem::canonical(std::filesystem::current_path());
 
-            std::vector<std::filesystem::path> candidates =
+            std::array<std::filesystem::path, 4> candidates =
             {
-                exePath / m_assetPathName,
-                exePath.parent_path() / m_assetPathName,
-                exePath / "Debug" / m_assetPathName,
-                exePath / "Release" / m_assetPathName
+                exePath / path,
+                exePath.parent_path() / path,
+                exePath / "Debug" / path,
+                exePath / "Release" / path
             };
 
             for (auto& path : candidates)
@@ -25,7 +33,7 @@ namespace Cocoa::Assets
                     return path;
             }
 
-            std::cerr << "Warning: Assets folder not found! Using default textures." << std::endl;
+            std::cerr << "Warning: Assets folder not found! Using default values." << std::endl;
             return {};
         }
         catch (const std::filesystem::filesystem_error& e)

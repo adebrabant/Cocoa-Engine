@@ -2,7 +2,6 @@
 
 #include "Scenes/SceneManager.hpp"
 #include "Chronos/FrameClock.hpp"
-#include "Assets/AssetManager.hpp"
 #include "Assets/AssetPathProvider.hpp"
 #include "Platforms/WindowProperties.hpp"
 
@@ -33,7 +32,6 @@ namespace Cocoa::Core
 
 	private:
 		Assets::AssetPathProvider m_assetPathProvider;
-		Assets::AssetManager m_assetManager;
 		Chronos::FrameClock m_frameClock;
 		Platforms::WindowProperties m_windowProps;
 	};

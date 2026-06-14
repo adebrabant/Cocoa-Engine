@@ -1,10 +1,12 @@
 #include "Core/Application.hpp"
 #include "Assets/AssetManager.hpp"
+#include "Assets/JsonAssetDatabase.hpp"
 #include "Platforms/WindowProperties.hpp"
 #include "Platforms/GLFW/GLFWWindow.hpp"
 #include "Graphics/OpenGL/OpenGLContext.hpp"
 #include "Graphics/OpenGL/OpenGLGraphicsDevice.hpp"
 #include "Graphics/Renderer2D.hpp"
+#include "Graphics/TextureManager.hpp"
 
 #include <utility>
 #include <string>
@@ -14,7 +16,6 @@ namespace Cocoa::Core
 {
 	Application::Application(uint32_t windowWidth, uint32_t windowHeight, const std::string& title) :
         m_assetPathProvider(),
-        m_assetManager(m_assetPathProvider),
 		m_sceneManager(),
 		m_frameClock(0.25f, 1.0f / 60.0f),
         m_windowProps(windowWidth, windowHeight, title)
@@ -29,7 +30,11 @@ namespace Cocoa::Core
         Graphics::OpenGLGraphicsDevice graphicsDevice;
         graphicsDevice.SetViewport(window.GetWidth(), window.GetHeight());
         graphicsDevice.SetClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        Graphics::Renderer2D renderer2d(graphicsDevice, m_assetManager);
+
+        Assets::AssetManager assetManager(m_assetPathProvider.GetAssetsPath());
+        Assets::JsonAssetDatabase jsonAssetDatabase(m_assetPathProvider.GetMetaDataPath());
+        Graphics::TextureManager textureManger(graphicsDevice);
+        Graphics::Renderer2D renderer2d(graphicsDevice, textureManger, assetManager, jsonAssetDatabase);
 
         m_frameClock.Reset();
 

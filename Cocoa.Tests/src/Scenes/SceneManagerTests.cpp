@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 #include <Scenes/Scene.hpp>
 
-namespace Cocoa::Tests
+namespace Cocoa::Scenes::Tests
 {
 	struct TestScene : public Scenes::Scene
 	{

@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 #include <string>
 
-namespace Cocoa::Tests
+namespace Cocoa::Platforms::Tests
 {
     TEST(WindowPropertiesTests, GetWidth_ShouldReturnConstructorWidth_WhenCreated)
     {

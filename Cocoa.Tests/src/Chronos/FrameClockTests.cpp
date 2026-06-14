@@ -3,13 +3,11 @@
 #include <thread>
 #include <chrono>
 
-using namespace Cocoa::Chronos;
-
-namespace Cocoa::Tests
+namespace Cocoa::Chronos::Tests
 {
     TEST(FrameClockTests, Tick_ShouldIncreaseAccumulator_WhenCalled)
     {
-        FrameClock clock(0.25f, 0.1f);
+        Chronos::FrameClock clock(0.25f, 0.1f);
         float alphaBefore = clock.GetAlpha();
 
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -20,7 +18,7 @@ namespace Cocoa::Tests
 
     TEST(FrameClockTests, CanUpdate_ShouldReturnTrue_WhenAccumulatorExceedsFixedDelta)
     {
-        FrameClock clock(0.25f, 0.05f);
+        Chronos::FrameClock clock(0.25f, 0.05f);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(60));
         clock.Tick();
@@ -30,7 +28,7 @@ namespace Cocoa::Tests
 
     TEST(FrameClockTests, CanUpdate_ShouldReturnFalse_WhenAccumulatorIsBelowFixedDelta)
     {
-        FrameClock clock(0.25f, 0.5f);
+        Chronos::FrameClock clock(0.25f, 0.5f);
 
         clock.Tick();
 
@@ -39,7 +37,7 @@ namespace Cocoa::Tests
 
     TEST(FrameClockTests, ConsumeUpdate_ShouldReduceAccumulator_WhenCanUpdate)
     {
-        FrameClock clock(0.25f, 0.05f);
+        Chronos::FrameClock clock(0.25f, 0.05f);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(60));
         clock.Tick();
@@ -53,7 +51,7 @@ namespace Cocoa::Tests
 
     TEST(FrameClockTests, GetDelta_ShouldReturnDelta_WhenPositive)
     {
-        FrameClock clock(0.25f, 1.0f / 60.0f);
+        Chronos::FrameClock clock(0.25f, 1.0f / 60.0f);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
         clock.Tick();
@@ -64,14 +62,14 @@ namespace Cocoa::Tests
 
     TEST(FrameClockTests, GetFixedDelta_ShouldReturnFixedDelta_WhenPositive)
     {
-        FrameClock clock(0.25f, 0.1f);
+        Chronos::FrameClock clock(0.25f, 0.1f);
 
         EXPECT_FLOAT_EQ(clock.GetFixedDelta(), 0.1f);
     }
 
     TEST(FrameClockTests, GetFixedDelta_ShouldReturnDeltaTime_WhenFixedDeltaZero)
     {
-        FrameClock clock(0.25f, 0.0f);
+        Chronos::FrameClock clock(0.25f, 0.0f);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
         clock.Tick();
@@ -81,7 +79,7 @@ namespace Cocoa::Tests
 
     TEST(FrameClockTests, GetAlpha_ShouldClampBetweenZeroAndOne)
     {
-        FrameClock clock(0.25f, 0.05f);
+        Chronos::FrameClock clock(0.25f, 0.05f);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         clock.Tick();
@@ -93,7 +91,7 @@ namespace Cocoa::Tests
 
     TEST(FrameClockTests, Reset_ShouldZeroAccumulatorAndDeltaTime)
     {
-        FrameClock clock(0.25f, 0.05f);
+        Chronos::FrameClock clock(0.25f, 0.05f);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
         clock.Tick();
@@ -105,7 +103,7 @@ namespace Cocoa::Tests
 
     TEST(FrameClockTests, GetElapsed_ShouldIncreaseOverTime)
     {
-        FrameClock clock(0.25f, 0.05f);
+        Chronos::FrameClock clock(0.25f, 0.05f);
 
         auto elapsed1 = clock.GetElapsed();
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -116,7 +114,7 @@ namespace Cocoa::Tests
 
     TEST(FrameClockTests, SleepNextFrame_ShouldSleepAtLeastTargetTime_WhenDeltaLessThanTarget)
     {
-        FrameClock clock(0.25f, 0.05f, 1.0f / 60.0f);
+        Chronos::FrameClock clock(0.25f, 0.05f, 1.0f / 60.0f);
 
         auto start = std::chrono::high_resolution_clock::now();
         clock.SleepNextFrame();

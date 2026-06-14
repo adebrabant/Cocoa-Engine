@@ -1,18 +1,22 @@
 #pragma once
 
-#include "Assets/PathProvider.hpp"
 #include <string>
 #include <filesystem>
 
 namespace Cocoa::Assets
 {
-	class AssetPathProvider : public PathProvider
+	class AssetPathProvider
 	{
 	public:
-		AssetPathProvider() = default;
-		std::filesystem::path GetAssetsPath() const override;
+		AssetPathProvider();
+		const std::filesystem::path& GetAssetsPath() const { return m_assetPath; }
+		const std::filesystem::path& GetMetaDataPath() const { return m_metadataPath; };
 
 	private:
-		const std::string& m_assetPathName{ "Assets" };
+		std::filesystem::path FindPath(const std::string& path);
+
+	private:
+		std::filesystem::path m_assetPath;
+		std::filesystem::path m_metadataPath;
 	};
 }

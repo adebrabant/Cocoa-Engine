@@ -6,15 +6,20 @@
 #include "Graphics/Texture2D.hpp"
 #include "Graphics/BufferLayout.hpp"
 #include "Graphics/TextureSpec.hpp"
+#include "Graphics/TextureManager.hpp"
 
-// ToDo: Needs to be removed once real workflow is in place
+// ToDo: Remove after DrawQuad is added
 #include "Assets/AssetManager.hpp" 
+#include "Assets/AssetDatabase.hpp"
+#include "Assets/Image.hpp"
 
 namespace Cocoa::Graphics
 {
-	Renderer2D::Renderer2D(GraphicsDevice& graphicsDevice, Assets::AssetManager& assetManager) :
+	Renderer2D::Renderer2D(GraphicsDevice& graphicsDevice, TextureManager& textureManager, Assets::AssetManager& assetManager, Assets::AssetDatabase& database) :
 		m_graphicsDevice(graphicsDevice),
-		m_tempAssetManager(assetManager)
+		m_textureManager(textureManager),
+		m_tempAssetManager(assetManager),
+		m_tempAssetDatabase(database)
 	{
 		// ToDo: Refactor all this temp into a real workflow
 		const char* vertexShaderSource = R"(
@@ -76,44 +81,27 @@ namespace Cocoa::Graphics
 		m_vao->AddVertexBuffer(*m_vbo);
 		m_vao->SetIndexBuffer(*m_ibo);
 
-		TextureSpec textureSpec
+		const auto& shaderRecord = m_tempAssetDatabase.GetShaderInfo("sprite_default_shader");
+		const auto& materialRecord = m_tempAssetDatabase.GetMaterialInfo("werewolf_material");
+
+		const auto& werewolfTextureRecord = m_tempAssetDatabase.GetTextureInfo("werewolf-idle1");
+		const auto& werewolfImage = m_tempAssetManager.LoadImage(werewolfTextureRecord.Path);
+
+		const TextureSpec werewolfTextureSpec
 		{
-			.Width = 2,
-			.Height = 2,
-			.Format = TextureFormat::RGBA8,
-			.MinFilter = TextureFilter::Nearest,
-			.MagFilter = TextureFilter::Nearest,
-			.WrapS = TextureWrap::ClampToEdge,
-			.WrapT = TextureWrap::ClampToEdge,
-			.GenerateMipmaps = true
+			.Id = werewolfTextureRecord.Id,
+			.Width = static_cast<uint32_t>(werewolfImage.Width),
+			.Height = static_cast<uint32_t>(werewolfImage.Height),
+			.Format = Graphics::TextureSpec::ParseFormat(werewolfTextureRecord.Format, werewolfImage.Channels),
+			.MinFilter = Graphics::TextureSpec::ParseFilter(werewolfTextureRecord.MinFilter),
+			.MagFilter = Graphics::TextureSpec::ParseFilter(werewolfTextureRecord.MagFilter),
+			.WrapS = Graphics::TextureSpec::ParseWrap(werewolfTextureRecord.WrapS),
+			.WrapT = Graphics::TextureSpec::ParseWrap(werewolfTextureRecord.WrapT),
+			.GenerateMipmaps = werewolfTextureRecord.GenerateMipmaps
 		};
 
-		unsigned char pixels[] =
-		{
-			// top row
-			255, 255, 255, 255,   // white
-			0,   0,   0,   255,   // black
-
-			// bottom row
-			0,   0,   0,   255,   // black
-			255, 255, 255, 255    // white
-		};
-
-		auto image = m_tempAssetManager.LoadImage("Fighter.png");
-
-		TextureSpec imageTextureSpec
-		{
-			.Width = static_cast<uint32_t>(image.Width),
-			.Height = static_cast<uint32_t>(image.Height),
-			.Format = TextureFormat::RGBA8,
-			.MinFilter = TextureFilter::Nearest,
-			.MagFilter = TextureFilter::Nearest,
-			.WrapS = TextureWrap::ClampToEdge,
-			.WrapT = TextureWrap::ClampToEdge,
-			.GenerateMipmaps = true
-		};
-
-		m_texture = m_graphicsDevice.CreateTexture2D(imageTextureSpec, image.Pixels.data());
+		auto handle = m_textureManager.Load(werewolfTextureSpec, werewolfImage.Pixels.data());
+		m_texture = &m_textureManager.Get(handle);
 	}
 
 	Renderer2D::~Renderer2D() = default;

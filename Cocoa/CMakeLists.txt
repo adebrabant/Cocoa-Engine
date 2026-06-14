@@ -19,15 +19,15 @@ set(COCOA_PUBLIC_HEADERS
     include/Graphics/Texture2D.hpp
     include/Graphics/VertexArray.hpp
     include/Graphics/VertexBuffer.hpp
+    include/Graphics/TextureManager.hpp
 
     include/Assets/AssetManager.hpp
-    include/Assets/ImageLoader.hpp
-    include/Assets/PathProvider.hpp
-    include/Assets/Asset.hpp
+    include/Assets/AssetLoader.hpp
     include/Assets/AssetPathProvider.hpp
-
+    include/Assets/Image.hpp
     include/Assets/AssetDatabase.hpp
     include/Assets/JsonAssetDatabase.hpp
+
     include/Scenes/SceneManager.hpp
     include/Scenes/Scene.hpp
     include/Scenes/ECS/World.hpp
@@ -58,6 +58,7 @@ set(COCOA_PRIVATE_SOURCES
     src/Platforms/GLFW/GLFWWindow.cpp
 
     src/Graphics/Renderer2D.cpp
+    src/Graphics/TextureSpec.cpp
     src/Graphics/BufferLayout.cpp
     src/Graphics/OpenGL/OpenGLContext.hpp
     src/Graphics/OpenGL/OpenGLContext.cpp
@@ -73,10 +74,10 @@ set(COCOA_PRIVATE_SOURCES
     src/Graphics/OpenGL/OpenGLIndexBuffer.cpp
     src/Graphics/OpenGL/OpenGLTexture2D.hpp
     src/Graphics/OpenGL/OpenGLTexture2D.cpp
+    src/Graphics/TextureManager.cpp
 
     src/Assets/AssetManager.cpp
-    src/Assets/ImageLoader.cpp
-    src/Assets/Asset.cpp
+    src/Assets/AssetLoader.cpp
     src/Assets/AssetPathProvider.cpp
     src/Assets/JsonAssetDatabase.cpp
 
