@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
 
 namespace Cocoa::Graphics
 {
@@ -29,6 +30,8 @@ namespace Cocoa::Graphics
 
 	struct TextureSpec
 	{
+		std::string Id{ "" };
+
 		uint32_t Width{ 0 };
 		uint32_t Height{ 0 };
 
@@ -41,5 +44,9 @@ namespace Cocoa::Graphics
 		TextureWrap WrapT{ TextureWrap::ClampToEdge };
 
 		bool GenerateMipmaps{ false };
+
+		static TextureFormat ParseFormat(std::string_view value, uint32_t channels);
+		static TextureFilter ParseFilter(std::string_view value);
+		static TextureWrap ParseWrap(std::string_view value);
 	};
 }

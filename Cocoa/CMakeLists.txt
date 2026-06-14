@@ -56,6 +56,7 @@ set(COCOA_PRIVATE_SOURCES
     src/Platforms/GLFW/GLFWWindow.cpp
 
     src/Graphics/Renderer2D.cpp
+    src/Graphics/TextureSpec.cpp
     src/Graphics/BufferLayout.cpp
     src/Graphics/OpenGL/OpenGLContext.hpp
     src/Graphics/OpenGL/OpenGLContext.cpp

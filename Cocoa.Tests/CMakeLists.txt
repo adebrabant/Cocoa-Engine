@@ -5,6 +5,7 @@ set(COCOA_TEST_SOURCES
     src/Scenes/SceneManagerTests.cpp
     src/Platforms/WindowPropertiesTests.cpp
     src/Assets/JsonDatabaseTests.cpp
+    src/Graphics/TextureSpecTests.cpp
 )
 
 set(COCOA_TEST_DATA

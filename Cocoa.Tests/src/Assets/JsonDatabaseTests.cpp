@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <filesystem>
 
-namespace Cocoa::Tests
+namespace Cocoa::Assets::Tests
 {
 	const std::filesystem::path testMetadataPath = "TestData/Metadata";
 
