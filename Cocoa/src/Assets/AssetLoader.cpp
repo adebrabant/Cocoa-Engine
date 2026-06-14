@@ -1,4 +1,5 @@
-#include "Assets/ImageLoader.hpp"
+#include "Assets/AssetLoader.hpp"
+#include "Assets/Image.hpp"
 
 #include <string>
 #include <filesystem>
@@ -8,7 +9,7 @@
 
 namespace Cocoa::Assets
 {
-	Image ImageLoader::Load(const std::filesystem::path& path)
+	Image AssetLoader::Load(const std::filesystem::path& path) const
 	{
 		Image image;
 		int width = 0;
