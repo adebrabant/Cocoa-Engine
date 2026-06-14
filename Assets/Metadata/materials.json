@@ -1,0 +1,7 @@
+{
+  "werewolf_material": {
+    "shader": "sprite_default_shader",
+    "texture": "werewolf-idle1",
+    "tint": [ 1.0, 1.0, 1.0, 1.0 ]
+  }
+}

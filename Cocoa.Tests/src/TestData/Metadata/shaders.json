@@ -1,0 +1,6 @@
+{
+  "dummy_shader": {
+    "vertexPath": "Shaders/Dummy.vert",
+    "fragmentPath": "Shaders/Dummy.frag"
+  }
+}

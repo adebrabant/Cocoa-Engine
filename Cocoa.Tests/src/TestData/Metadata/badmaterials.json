@@ -1,0 +1,6 @@
+{
+  "bad_material": {
+    "shader": "dummy_shader",
+    "texture": "dummy_texture"
+  }
+}

@@ -4,6 +4,7 @@ find_package(GLEW REQUIRED)
 set(COCOA_PUBLIC_HEADERS
     include/Core/Application.hpp
     include/Core/Memory.hpp
+    include/Core/Color.hpp
 
     include/Platforms/Window.hpp
     include/Platforms/WindowProperties.hpp
@@ -25,6 +26,8 @@ set(COCOA_PUBLIC_HEADERS
     include/Assets/Asset.hpp
     include/Assets/AssetPathProvider.hpp
 
+    include/Assets/AssetDatabase.hpp
+    include/Assets/JsonAssetDatabase.hpp
     include/Scenes/SceneManager.hpp
     include/Scenes/Scene.hpp
     include/Scenes/ECS/World.hpp
@@ -75,6 +78,7 @@ set(COCOA_PRIVATE_SOURCES
     src/Assets/ImageLoader.cpp
     src/Assets/Asset.cpp
     src/Assets/AssetPathProvider.cpp
+    src/Assets/JsonAssetDatabase.cpp
 
     src/Scenes/SceneManager.cpp
     src/Scenes/Scene.cpp

@@ -1,0 +1,10 @@
+{
+  "bad_texture": {
+    "format": "RGBA8",
+    "minFilter": "Linear",
+    "magFilter": "Linear",
+    "wrapS": "ClampToEdge",
+    "wrapT": "ClampToEdge",
+    "generateMipmaps": false
+  }
+}

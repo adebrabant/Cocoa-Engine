@@ -1,0 +1,6 @@
+{
+  "sprite_default_shader": {
+    "vertexPath": "Shaders/Sprite.vert",
+    "fragmentPath": "Shaders/Sprite.frag"
+  }
+}
