@@ -1,47 +1,32 @@
 #include "Assets/AssetManager.hpp"
-#include "Assets/PathProvider.hpp"
-#include "Assets/ImageLoader.hpp"
-#include "Assets/Asset.hpp"
+#include "Assets/AssetLoader.hpp"
 
 #include <string>
 #include <filesystem>
-#include <utility>
-#include <stdexcept>
-#include <cstdint>
 
 namespace Cocoa::Assets
 {
-	AssetManager::AssetManager(PathProvider& pathProvider) :
-		m_pathProvider(pathProvider),
-		m_imageLoader(),
-		m_rootPath(m_pathProvider.GetAssetsPath()),
-		m_nextId{ 1 },
-		m_texturePathCache(),
-		m_texturePaths()
+	AssetManager::AssetManager(const std::filesystem::path& rootPath) :
+		m_assetLoader(),
+		m_rootPath(rootPath),
+		m_images()
 	{
 
 	}
 
-	Asset AssetManager::LoadTexture(const std::string& path)
+	const Image& AssetManager::LoadImage(const std::string& path)
 	{
-		if (auto it = m_texturePathCache.find(path); it != m_texturePathCache.end())
+		if (auto it = m_images.find(path); it != m_images.end())
+		{
 			return it->second;
+		}
 
 		auto fullPath = m_rootPath / path;
 
-		uint32_t idValue = m_nextId++;
-		Asset asset(idValue, AssetType::Texture);
+		Image image = m_assetLoader.Load(fullPath);
 
-		m_texturePathCache.emplace(path, asset);
-		m_texturePaths.emplace(idValue, fullPath);
+		auto [it, inserted] = m_images.emplace(path, std::move(image));
 
-		return asset;
-	}
-
-	Image AssetManager::LoadImage(const std::string& path)
-	{
-		auto fullPath = m_rootPath / path;
-
-		return m_imageLoader.Load(fullPath);
+		return it->second;
 	}
 }
