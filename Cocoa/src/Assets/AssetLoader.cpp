@@ -2,6 +2,7 @@
 #include "Assets/Image.hpp"
 
 #include <string>
+#include <fstream>
 #include <filesystem>
 #include <string.h>
 #define STB_IMAGE_IMPLEMENTATION
@@ -47,5 +48,23 @@ namespace Cocoa::Assets
 		stbi_image_free(data);
 
 		return image;
+	}
+
+	//ToDo: Add unit tests
+	std::string AssetLoader::LoadTextFile(const std::filesystem::path& path) const
+	{
+		std::ifstream file(path, std::ios::in | std::ios::binary);
+
+		if (!file)
+		{
+			throw std::runtime_error("Failed to open text file: " +
+				path.string()
+			);
+		}
+
+		std::ostringstream contents;
+		contents << file.rdbuf();
+
+		return contents.str();
 	}
 }

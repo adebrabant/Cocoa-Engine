@@ -13,5 +13,6 @@ namespace Cocoa::Assets
 		AssetLoader();
 		~AssetLoader() = default;
 		Image Load(const std::filesystem::path& path) const;
+		std::string LoadTextFile(const std::filesystem::path& path) const;
 	};
 }
