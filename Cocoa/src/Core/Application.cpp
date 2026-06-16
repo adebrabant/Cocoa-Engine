@@ -6,6 +6,7 @@
 #include "Graphics/OpenGL/OpenGLContext.hpp"
 #include "Graphics/OpenGL/OpenGLGraphicsDevice.hpp"
 #include "Graphics/Renderer2D.hpp"
+#include "Graphics/ShaderManager.hpp"
 #include "Graphics/TextureManager.hpp"
 
 #include <utility>
@@ -33,8 +34,9 @@ namespace Cocoa::Core
 
         Assets::AssetManager assetManager(m_assetPathProvider.GetAssetsPath());
         Assets::JsonAssetDatabase jsonAssetDatabase(m_assetPathProvider.GetMetaDataPath());
+        Graphics::ShaderManager shaderManager(graphicsDevice);
         Graphics::TextureManager textureManger(graphicsDevice);
-        Graphics::Renderer2D renderer2d(graphicsDevice, textureManger, assetManager, jsonAssetDatabase);
+        Graphics::Renderer2D renderer2d(graphicsDevice, shaderManager, textureManger, assetManager, jsonAssetDatabase);
 
         m_frameClock.Reset();
 

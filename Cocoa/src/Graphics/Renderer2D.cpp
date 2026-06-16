@@ -6,6 +6,7 @@
 #include "Graphics/Texture2D.hpp"
 #include "Graphics/BufferLayout.hpp"
 #include "Graphics/TextureSpec.hpp"
+#include "Graphics/ShaderManager.hpp"
 #include "Graphics/TextureManager.hpp"
 
 // ToDo: Remove after DrawQuad is added
@@ -15,44 +16,33 @@
 
 namespace Cocoa::Graphics
 {
-	Renderer2D::Renderer2D(GraphicsDevice& graphicsDevice, TextureManager& textureManager, Assets::AssetManager& assetManager, Assets::AssetDatabase& database) :
+	Renderer2D::Renderer2D(
+		GraphicsDevice& graphicsDevice,
+		ShaderManager& shaderManager,
+		TextureManager& textureManager,
+		Assets::AssetManager& assetManager, 
+		Assets::AssetDatabase& database
+	) :
 		m_graphicsDevice(graphicsDevice),
+		m_shaderManager(shaderManager),
 		m_textureManager(textureManager),
 		m_tempAssetManager(assetManager),
 		m_tempAssetDatabase(database)
 	{
-		// ToDo: Refactor all this temp into a real workflow
-		const char* vertexShaderSource = R"(
-			#version 330 core
+		const auto& shaderRecord = m_tempAssetDatabase.GetShaderInfo("sprite_default_shader");
+		auto& shaderSource = m_tempAssetManager.LoadShader(
+			shaderRecord.Id, 
+			shaderRecord.VertexPath,
+			shaderRecord.FragmentPath
+		);
 
-			layout(location = 0) in vec2 a_Position;
-			layout(location = 1) in vec2 a_TexCoord;
+		auto shaderHandle = m_shaderManager.Load(
+			shaderRecord.Id, 
+			shaderSource.Vertex, 
+			shaderSource.Fragment
+		);
 
-			out vec2 TexCoord;
-			
-			void main()
-			{
-				gl_Position = vec4(a_Position, 0.0, 1.0);
-				TexCoord = a_TexCoord;
-			}
-		)";
-
-		const char* fragmentShaderSource = R"(
-			#version 330 core
-			
-			out vec4 FragColor;
-
-			in vec2 TexCoord;
-
-			uniform sampler2D u_Texture;
-			
-			void main()
-			{
-				FragColor = texture(u_Texture, TexCoord);
-			}
-		)";
-
-		m_shader = m_graphicsDevice.CreateShader(vertexShaderSource, fragmentShaderSource);
+		m_shader = &m_shaderManager.Get(shaderHandle);
 
 		float vertices[] =
 		{
@@ -81,7 +71,6 @@ namespace Cocoa::Graphics
 		m_vao->AddVertexBuffer(*m_vbo);
 		m_vao->SetIndexBuffer(*m_ibo);
 
-		const auto& shaderRecord = m_tempAssetDatabase.GetShaderInfo("sprite_default_shader");
 		const auto& materialRecord = m_tempAssetDatabase.GetMaterialInfo("werewolf_material");
 
 		const auto& werewolfTextureRecord = m_tempAssetDatabase.GetTextureInfo("werewolf-idle1");
