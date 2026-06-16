@@ -5,6 +5,7 @@
 #include "Core/Memory.hpp"
 
 #include <string>
+#include <utility>
 #include <stdexcept>
 
 namespace Cocoa::Graphics
@@ -33,27 +34,27 @@ namespace Cocoa::Graphics
 			throw std::runtime_error("Texture pixels cannot be null.");
 		}
 
-		TextureHandle handle{ .id = m_nextId++ };
+		TextureHandle handle{ .Id = m_nextId++ };
 		Unique<Texture2D> texture = m_graphicsDevice.CreateTexture2D(
 			spec,
 			static_cast<const unsigned char*>(pixels)
 		);
 
 		m_handles.emplace(spec.Id, handle);
-		m_textures.emplace(handle.id, std::move(texture));
+		m_textures.emplace(handle.Id, std::move(texture));
 
 		return handle;
 	}
 
 	const Texture2D& TextureManager::Get(TextureHandle handle) const
 	{
-		auto it = m_textures.find(handle.id);
+		auto it = m_textures.find(handle.Id);
 
 		if (it == m_textures.end())
 		{
 			throw std::runtime_error(
 				"No Texture found with the texture handle id: " +
-				std::to_string(handle.id)
+				std::to_string(handle.Id)
 			);
 		}
 
