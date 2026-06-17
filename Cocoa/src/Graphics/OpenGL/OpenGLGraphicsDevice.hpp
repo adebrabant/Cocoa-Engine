@@ -3,7 +3,6 @@
 #include "Graphics/GraphicsDevice.hpp"
 #include "Core/Memory.hpp"
 
-#include <memory>
 #include <cstdint>
 
 namespace Cocoa::Graphics

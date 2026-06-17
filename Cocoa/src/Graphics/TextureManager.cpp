@@ -21,7 +21,6 @@ namespace Cocoa::Graphics
 
 	TextureManager::~TextureManager() = default;
 
-
 	TextureHandle TextureManager::Load(const TextureSpec& spec, const void* pixels)
 	{
 		if (auto it = m_handles.find(spec.Id); it != m_handles.end())
