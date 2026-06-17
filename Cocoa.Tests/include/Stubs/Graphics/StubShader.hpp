@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Graphics/Shader.hpp"
+#include <Graphics/Shader.hpp>
 
 namespace Cocoa::Stubs
 {

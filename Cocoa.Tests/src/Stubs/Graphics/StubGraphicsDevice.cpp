@@ -1,5 +1,6 @@
 #include "Stubs/Graphics/StubGraphicsDevice.hpp"
 #include "Stubs/Graphics/StubShader.hpp"
+#include "Stubs/Graphics/StubTexture2D.hpp"
 
 #include <Graphics/GraphicsDevice.hpp>
 #include <Graphics/IndexBuffer.hpp>
@@ -8,7 +9,6 @@
 #include <Graphics/VertexBuffer.hpp>
 #include <Graphics/VertexArray.hpp>
 #include <Graphics/BufferLayout.hpp>
-#include <Graphics/Texture2D.hpp>
 #include <Core/Memory.hpp>
 
 namespace Cocoa::Stubs
@@ -56,7 +56,7 @@ namespace Cocoa::Stubs
 
 	Unique<Graphics::Texture2D> StubGraphicsDevice::CreateTexture2D(Graphics::TextureSpec textureSpec, const unsigned char* pixels)
 	{
-		return Unique<Graphics::Texture2D>();
+		return CreateUnique<StubTexture2D>();
 	}
 
 	void StubGraphicsDevice::DrawIndexed(const Graphics::VertexArray& vertexArray, uint32_t indexCount)

@@ -1,6 +1,6 @@
-#include <Graphics/ShaderManager.hpp>
 #include "Stubs/Graphics/StubGraphicsDevice.hpp"
 #include "Stubs/Graphics/StubShader.hpp"
+#include <Graphics/ShaderManager.hpp>
 #include <gtest/gtest.h>
 #include <stdexcept>
 
@@ -16,7 +16,7 @@ namespace Cocoa::Graphics::Tests
         EXPECT_EQ(result.Id, 1);
     }
 
-    TEST(ShaderManagerTests, Load_ShouldReturnDifferentShaderHandleId_WhenProvidingDifferentShaderIds)
+    TEST(ShaderManagerTests, Load_ShouldReturnSameShaderHandleId_WhenProvidingSameShaderIds)
     {
         Stubs::StubGraphicsDevice stubGraphicsDevice;
         Graphics::ShaderManager sut(stubGraphicsDevice);

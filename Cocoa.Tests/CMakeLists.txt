@@ -3,6 +3,7 @@ find_package(GTest CONFIG REQUIRED)
 set(COCOA_TEST_HEADERS
     include/Stubs/Graphics/StubGraphicsDevice.hpp
     include/Stubs/Graphics/StubShader.hpp
+    include/Stubs/Graphics/StubTexture2D.hpp
 )
 
 set(COCOA_TEST_SOURCES
@@ -12,9 +13,11 @@ set(COCOA_TEST_SOURCES
     src/Assets/JsonDatabaseTests.cpp
     src/Graphics/TextureSpecTests.cpp
     src/Graphics/ShaderManagerTests.cpp
+    src/Graphics/TextureManagerTests.cpp
 
     src/Stubs/Graphics/StubGraphicsDevice.cpp
     src/Stubs/Graphics/StubShader.cpp
+    src/Stubs/Graphics/StubTexture2D.cpp
 )
 
 set(COCOA_TEST_DATA
