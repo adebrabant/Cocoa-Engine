@@ -10,7 +10,6 @@
 
 namespace Cocoa::Assets
 {
-	// ToDo: Add Unit tests
 	class AssetManager
 	{
 	public:

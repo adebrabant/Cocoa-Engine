@@ -12,6 +12,7 @@ set(COCOA_TEST_SOURCES
     src/Platforms/WindowPropertiesTests.cpp
     src/Assets/JsonDatabaseTests.cpp
     src/Assets/AssetLoaderTests.cpp
+    src/Assets/AssetManagerTests.cpp
     src/Graphics/TextureSpecTests.cpp
     src/Graphics/ShaderManagerTests.cpp
     src/Graphics/TextureManagerTests.cpp
