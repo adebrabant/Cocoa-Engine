@@ -16,6 +16,7 @@ set(COCOA_TEST_SOURCES
     src/Graphics/TextureSpecTests.cpp
     src/Graphics/ShaderManagerTests.cpp
     src/Graphics/TextureManagerTests.cpp
+    src/Graphics/MaterialManagerTests.cpp
 
     src/Stubs/Graphics/StubGraphicsDevice.cpp
     src/Stubs/Graphics/StubShader.cpp
