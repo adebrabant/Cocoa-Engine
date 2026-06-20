@@ -30,6 +30,7 @@ namespace Cocoa::Assets
 		~ResourceLoader() = default;
 
 		Graphics::TextureHandle LoadTexture(const std::string& textureId);
+		Graphics::ShaderHandle LoadShader(const std::string& shaderId);
 
 
 	private:

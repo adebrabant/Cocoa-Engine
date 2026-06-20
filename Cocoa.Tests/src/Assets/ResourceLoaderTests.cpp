@@ -36,4 +36,25 @@ namespace Cocoa::Assets::Tests
 
 		EXPECT_EQ(result.Id, 1);
 	}
+
+	TEST(ResourceLoaderTests, LoadShader_ShouldReturnShaderHandle_WhenProvidingShaderId)
+	{
+		Assets::JsonAssetDatabase jsonDatabase(testMetadataPath);
+		Assets::AssetManager assetManager(testResourcePath);
+		Stubs::StubGraphicsDevice stubGraphicsDevice;
+		Graphics::TextureManager textureManager(stubGraphicsDevice);
+		Graphics::ShaderManager shaderManager(stubGraphicsDevice);
+		Graphics::MaterialManager materialManager;
+		Assets::ResourceLoader sut(
+			jsonDatabase,
+			assetManager,
+			textureManager,
+			shaderManager,
+			materialManager
+		);
+
+		Graphics::ShaderHandle result = sut.LoadShader("dummy_shader");
+
+		EXPECT_EQ(result.Id, 1);
+	}
 }

@@ -78,8 +78,8 @@ namespace Cocoa::Assets::Tests
 
 		const auto& result = sut.GetShaderInfo("dummy_shader");
 
-		EXPECT_EQ(result.VertexPath, "Shaders/Dummy.vert");
-		EXPECT_EQ(result.FragmentPath, "Shaders/Dummy.frag");
+		EXPECT_EQ(result.VertexPath, "Shaders/Sprite.vert");
+		EXPECT_EQ(result.FragmentPath, "Shaders/Sprite.frag");
 	}
 
 	TEST(JsonAssetDatabaseTests, GetShaderInfo_ShouldThrowError_WhenGivenInvalidId)

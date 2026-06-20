@@ -48,4 +48,20 @@ namespace Cocoa::Assets
 
 		return m_textureManager.Load(spec, image.Pixels.data());
 	}
+
+	Graphics::ShaderHandle ResourceLoader::LoadShader(const std::string& shaderId)
+	{
+		const ShaderRecord& record = m_assetDatabase.GetShaderInfo(shaderId);
+		const ShaderSource& source = m_assetManager.LoadShader(
+			record.Id,
+			record.VertexPath,
+			record.FragmentPath
+		);
+
+		return m_shaderManager.Load(
+			record.Id,
+			source.Vertex,
+			source.Fragment
+		);
+	}
 }
