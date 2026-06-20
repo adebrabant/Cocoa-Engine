@@ -13,6 +13,7 @@ set(COCOA_TEST_SOURCES
     src/Assets/JsonDatabaseTests.cpp
     src/Assets/AssetLoaderTests.cpp
     src/Assets/AssetManagerTests.cpp
+    src/Assets/ResourceLoaderTests.cpp
     src/Graphics/TextureSpecTests.cpp
     src/Graphics/ShaderManagerTests.cpp
     src/Graphics/TextureManagerTests.cpp

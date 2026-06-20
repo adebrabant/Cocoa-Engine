@@ -71,8 +71,6 @@ namespace Cocoa::Graphics
 		m_vao->AddVertexBuffer(*m_vbo);
 		m_vao->SetIndexBuffer(*m_ibo);
 
-		const auto& materialRecord = m_tempAssetDatabase.GetMaterialInfo("werewolf_material");
-
 		const auto& werewolfTextureRecord = m_tempAssetDatabase.GetTextureInfo("werewolf-idle1");
 		const auto& werewolfImage = m_tempAssetManager.LoadImage(werewolfTextureRecord.Path);
 
@@ -90,6 +88,8 @@ namespace Cocoa::Graphics
 		};
 
 		auto handle = m_textureManager.Load(werewolfTextureSpec, werewolfImage.Pixels.data());
+
+		const auto& materialRecord = m_tempAssetDatabase.GetMaterialInfo("werewolf_material");
 		m_texture = &m_textureManager.Get(handle);
 	}
 
