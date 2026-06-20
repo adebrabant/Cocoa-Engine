@@ -78,8 +78,8 @@ namespace Cocoa::Assets::Tests
 
 		const auto& result = sut.GetShaderInfo("dummy_shader");
 
-		EXPECT_EQ(result.VertexPath, "Shaders/Dummy.vert");
-		EXPECT_EQ(result.FragmentPath, "Shaders/Dummy.frag");
+		EXPECT_EQ(result.VertexPath, "Shaders/Sprite.vert");
+		EXPECT_EQ(result.FragmentPath, "Shaders/Sprite.frag");
 	}
 
 	TEST(JsonAssetDatabaseTests, GetShaderInfo_ShouldThrowError_WhenGivenInvalidId)
@@ -99,7 +99,7 @@ namespace Cocoa::Assets::Tests
 		const auto& result = sut.GetMaterialInfo("dummy_material");
 
 		EXPECT_EQ(result.ShaderId, "dummy_shader");
-		EXPECT_EQ(result.TextureId, "dummy_texture");
+		EXPECT_EQ(result.TextureId, "dummy_idle1");
 		EXPECT_EQ(result.Tint.R, 1.0);
 		EXPECT_EQ(result.Tint.G, 1.0);
 		EXPECT_EQ(result.Tint.B, 1.0);
