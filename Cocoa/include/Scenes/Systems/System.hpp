@@ -1,15 +1,18 @@
 #pragma once
 
-#include "Graphics/Renderer2D.hpp"
+namespace Cocoa::Graphics
+{
+	class Renderer2D;
+}
 
 namespace Cocoa::Scenes
 {
 	class World;
 
-	class ISystem
+	class System
 	{
 	public:
-		virtual ~ISystem() = default;
+		virtual ~System() = default;
 		virtual void Update(World& world, float deltaTime) = 0;
 		virtual void Render(World& world, Graphics::Renderer2D& renderer, float alpha) = 0;
 	};

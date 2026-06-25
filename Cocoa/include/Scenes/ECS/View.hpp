@@ -2,9 +2,10 @@
 
 #include "Scenes/ECS/World.hpp"
 #include "Scenes/ECS/ComponentStorage.hpp"
+#include "Scenes/ECS/Entity.hpp"
+
 #include <cstdint>
 #include <tuple>
-#include "Entity.hpp"
 #include <utility>
 
 namespace Cocoa::Scenes

@@ -41,12 +41,13 @@ set(COCOA_PUBLIC_HEADERS
     include/Scenes/ECS/ComponentType.hpp
     include/Scenes/ECS/ComponentStorage.hpp
     include/Scenes/ECS/View.hpp
-    include/Scenes/Systems/ISystem.hpp
+    include/Scenes/Systems/System.hpp
     include/Scenes/Components/TransformComponent.hpp
     include/Scenes/Components/CameraComponent.hpp
     include/Scenes/Components/VelocityComponent.hpp
     include/Scenes/Components/CollisionComponent.hpp
-    include/Scenes/Components/RenderableComponent.hpp
+    include/Scenes/Components/Renderable2DComponent.hpp
+
     include/Scenes/Systems/CameraSystem.hpp
     include/Scenes/Systems/MovementSystem.hpp
     include/Scenes/Systems/CollisionSystem.hpp

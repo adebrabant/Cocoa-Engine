@@ -1,13 +1,12 @@
 #pragma once
 
-#include "Scenes/Systems/ISystem.hpp"
-#include <Graphics/Renderer2D.hpp>
+#include "Scenes/Systems/System.hpp"
 
 namespace Cocoa::Scenes
 {
 	class World;
 
-	class CollisionSystem : public ISystem
+	class CollisionSystem : public System
 	{
 	public:
 		CollisionSystem() = default;

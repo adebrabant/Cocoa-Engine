@@ -7,6 +7,7 @@
 
 namespace Cocoa::Scenes
 {
+	// ToDo: Remove I Prefix
 	class IComponentStorage
 	{
 	public:

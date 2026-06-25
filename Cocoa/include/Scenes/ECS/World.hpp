@@ -4,11 +4,13 @@
 #include "Scenes/ECS/Entity.hpp"
 #include "Scenes/ECS/ComponentStorage.hpp"
 #include "Scenes/ECS/ComponentType.hpp"
-#include "Scenes/Systems/ISystem.hpp"
+#include "Scenes/Systems/System.hpp"
 #include <cstdint>
 #include <vector>
 #include <set>
 #include <unordered_map>
+
+// ToDo: Remove for Memory.hpp
 #include <memory>
 
 namespace Cocoa::Scenes
@@ -36,7 +38,7 @@ namespace Cocoa::Scenes
 		ComponentStorage<TCompoent>* GetComponentStorage();
 
 		template<typename TSystem, typename... TArgs>
-		requires std::derived_from<TSystem, ISystem>
+		requires std::derived_from<TSystem, System>
 		TSystem& AddSystem(TArgs&&... args);
 
 	private:
@@ -44,7 +46,7 @@ namespace Cocoa::Scenes
 		std::vector<uint32_t> m_freeEntityIds;
 		std::set<uint32_t> m_activeEntities;
 		std::unordered_map<uint32_t, std::shared_ptr<IComponentStorage>> m_componentStorages;
-		std::vector<std::unique_ptr<ISystem>> m_systems;
+		std::vector<std::unique_ptr<System>> m_systems;
 	};
 
 	template<typename TComponent>
@@ -89,7 +91,7 @@ namespace Cocoa::Scenes
 	}
 
 	template<typename TSystem, typename... TArgs> 
-		requires std::derived_from<TSystem, ISystem>
+		requires std::derived_from<TSystem, System>
 	inline TSystem& World::AddSystem(TArgs&&... args)
 	{
 		auto system = std::make_unique<TSystem>(std::forward<TArgs>(args)...);

@@ -1,5 +1,5 @@
 #include "Scenes/Systems/MovementSystem.hpp"
-#include "Scenes/Systems/ISystem.hpp"
+#include "Scenes/ECS/World.hpp"
 #include "Graphics/Renderer2D.hpp"
 
 namespace Cocoa::Scenes

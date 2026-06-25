@@ -1,7 +1,7 @@
 #include "Scenes/ECS/World.hpp"
 #include "Scenes/ECS/Entity.hpp"
 #include "Graphics/Renderer2D.hpp"
-#include "Scenes/Systems/ISystem.hpp"
+#include "Scenes/Systems/System.hpp"
 
 #include <cstdint>
 

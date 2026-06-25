@@ -1,11 +1,10 @@
 #pragma once
 
-#include "Scenes/Systems/ISystem.hpp"
-#include "Graphics/Renderer2D.hpp"
+#include "Scenes/Systems/System.hpp"
 
 namespace Cocoa::Scenes
 {
-	class RenderSystem : public ISystem
+	class RenderSystem : public System
 	{
 		void Update(World& world, float deltaTime) override;
 		void Render(World& world, Graphics::Renderer2D& renderer, float alpha) override;
