@@ -5,14 +5,10 @@
 #include "Graphics/IndexBuffer.hpp"
 #include "Graphics/Texture2D.hpp"
 #include "Graphics/BufferLayout.hpp"
-#include "Graphics/TextureSpec.hpp"
 #include "Graphics/ShaderManager.hpp"
 #include "Graphics/TextureManager.hpp"
-
-// ToDo: Remove after DrawQuad is added
-#include "Assets/AssetManager.hpp" 
-#include "Assets/AssetDatabase.hpp"
-#include "Assets/Image.hpp"
+#include "Graphics/MaterialManager.hpp"
+#include "Graphics/GraphicsDevice.hpp"
 
 namespace Cocoa::Graphics
 {
@@ -20,30 +16,13 @@ namespace Cocoa::Graphics
 		GraphicsDevice& graphicsDevice,
 		ShaderManager& shaderManager,
 		TextureManager& textureManager,
-		Assets::AssetManager& assetManager, 
-		Assets::AssetDatabase& database
+		MaterialManager& materialManager
 	) :
 		m_graphicsDevice(graphicsDevice),
 		m_shaderManager(shaderManager),
 		m_textureManager(textureManager),
-		m_tempAssetManager(assetManager),
-		m_tempAssetDatabase(database)
+		m_materialManager(materialManager)
 	{
-		const auto& shaderRecord = m_tempAssetDatabase.GetShaderInfo("sprite_default_shader");
-		auto& shaderSource = m_tempAssetManager.LoadShader(
-			shaderRecord.Id, 
-			shaderRecord.VertexPath,
-			shaderRecord.FragmentPath
-		);
-
-		auto shaderHandle = m_shaderManager.Load(
-			shaderRecord.Id, 
-			shaderSource.Vertex, 
-			shaderSource.Fragment
-		);
-
-		m_shader = &m_shaderManager.Get(shaderHandle);
-
 		float vertices[] =
 		{
 			// position      // tex coord
@@ -70,27 +49,6 @@ namespace Cocoa::Graphics
 		m_ibo = m_graphicsDevice.CreateIndexBuffer(indices, static_cast<uint32_t>(std::size(indices)));
 		m_vao->AddVertexBuffer(*m_vbo);
 		m_vao->SetIndexBuffer(*m_ibo);
-
-		const auto& werewolfTextureRecord = m_tempAssetDatabase.GetTextureInfo("werewolf-idle1");
-		const auto& werewolfImage = m_tempAssetManager.LoadImage(werewolfTextureRecord.Path);
-
-		const TextureSpec werewolfTextureSpec
-		{
-			.Id = werewolfTextureRecord.Id,
-			.Width = static_cast<uint32_t>(werewolfImage.Width),
-			.Height = static_cast<uint32_t>(werewolfImage.Height),
-			.Format = Graphics::TextureSpec::ParseFormat(werewolfTextureRecord.Format, werewolfImage.Channels),
-			.MinFilter = Graphics::TextureSpec::ParseFilter(werewolfTextureRecord.MinFilter),
-			.MagFilter = Graphics::TextureSpec::ParseFilter(werewolfTextureRecord.MagFilter),
-			.WrapS = Graphics::TextureSpec::ParseWrap(werewolfTextureRecord.WrapS),
-			.WrapT = Graphics::TextureSpec::ParseWrap(werewolfTextureRecord.WrapT),
-			.GenerateMipmaps = werewolfTextureRecord.GenerateMipmaps
-		};
-
-		auto handle = m_textureManager.Load(werewolfTextureSpec, werewolfImage.Pixels.data());
-
-		const auto& materialRecord = m_tempAssetDatabase.GetMaterialInfo("werewolf_material");
-		m_texture = &m_textureManager.Get(handle);
 	}
 
 	Renderer2D::~Renderer2D() = default;
@@ -98,21 +56,34 @@ namespace Cocoa::Graphics
 	void Renderer2D::BeginScene()
 	{
 		//ToDo: Store camera/view-projection data
-		//ToDo: Reset batch/queue state
+		m_drawCommands.clear();
 	}
 
 	void Renderer2D::EndScene()
 	{
-		// ToDo: Flush queued 2D draw commands
 		Flush();
+	}
+
+	void Renderer2D::DrawQuad(MaterialHandle materialHandle)
+	{
+		m_drawCommands.emplace_back(DrawCommand2D{ materialHandle });
 	}
 
 	void Renderer2D::Flush()
 	{
-		m_shader->Bind();
-		m_texture->Bind(0);
-		m_shader->SetInt("u_Texture", 0);
-		m_graphicsDevice.DrawIndexed(*m_vao, m_ibo->GetCount());
-		m_shader->Unbind();
+		for (const auto& command : m_drawCommands)
+		{
+			const Material& material = m_materialManager.Get(command.Material);
+			const Shader& shader = m_shaderManager.Get(material.ShaderHandle);
+			const Texture2D& texture = m_textureManager.Get(material.TextureHandle);
+
+			shader.Bind();
+			texture.Bind(0);
+			shader.SetInt("u_Texture", 0);
+			m_graphicsDevice.DrawIndexed(*m_vao, m_ibo->GetCount());
+			shader.Unbind();
+		}
+
+		m_drawCommands.clear();
 	}
 }

@@ -1,21 +1,24 @@
 #pragma once
 
 #include "Core/Memory.hpp"
-#include "Graphics/GraphicsDevice.hpp"
+#include "Graphics/GraphicsHandles.hpp"
 
-// ToDo: Remove after DrawQuad is added
-#include "Assets/AssetManager.hpp"
-#include "Assets/AssetDatabase.hpp"
+#include <vector>
 
 namespace Cocoa::Graphics
 {
-	class Shader;
 	class IndexBuffer;
 	class VertexArray;
 	class VertexBuffer;
-	class Texture2D;
 	class ShaderManager;
 	class TextureManager;
+	class MaterialManager;
+	class GraphicsDevice;
+
+	struct DrawCommand2D
+	{
+		MaterialHandle Material;
+	};
 
 	class Renderer2D
 	{
@@ -24,13 +27,13 @@ namespace Cocoa::Graphics
 			GraphicsDevice& graphicsDevice, 
 			ShaderManager& shaderManager, 
 			TextureManager& textureManager, 
-			Assets::AssetManager& assetManager, 
-			Assets::AssetDatabase& assetDatabase
+			MaterialManager& materialManager
 		);
 		~Renderer2D();
 
 		void BeginScene();
 		void EndScene();
+		void DrawQuad(MaterialHandle materialHandle);
 
 	private:
 		void Flush();
@@ -39,15 +42,10 @@ namespace Cocoa::Graphics
 		GraphicsDevice& m_graphicsDevice;
 		ShaderManager& m_shaderManager;
 		TextureManager& m_textureManager;
-
-		//ToDo: Remove after DrawQuad is added
-		Assets::AssetManager& m_tempAssetManager;
-		Assets::AssetDatabase& m_tempAssetDatabase;
-		
-		const Shader* m_shader{ nullptr };
+		MaterialManager& m_materialManager;
 		Unique<VertexArray> m_vao{ nullptr };
 		Unique<VertexBuffer> m_vbo{ nullptr };
 		Unique<IndexBuffer> m_ibo{ nullptr };
-		const Texture2D* m_texture{ nullptr };
+		std::vector<DrawCommand2D> m_drawCommands;
 	};
 }
