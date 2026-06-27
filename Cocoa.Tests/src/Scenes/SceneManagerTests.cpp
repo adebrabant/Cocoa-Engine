@@ -2,6 +2,7 @@
 #include <Assets/ResourceLoader.hpp>
 #include <Scenes/Scene.hpp>
 #include <Assets/JsonAssetDatabase.hpp>
+#include <Assets/FilesystemAssetSource.hpp>
 #include <Assets/AssetManager.hpp>
 #include <Graphics/ShaderManager.hpp>
 #include <Graphics/TextureManager.hpp>
@@ -36,30 +37,34 @@ namespace Cocoa::Scenes::Tests
 		void Unload(Assets::ResourceLoader& loader) override { ++unloadCount; }
 	};
 
-	static Assets::ResourceLoader CreateResourceLoader()
+	struct ResourceLoaderTestContext
 	{
-		const std::filesystem::path testMetadataPath = "TestData/Metadata";
-		const std::filesystem::path testResourcePath = "TestData/Resources";
-		Assets::JsonAssetDatabase jsonDatabase(testMetadataPath);
-		Assets::AssetManager assetManager(testResourcePath);
-		Stubs::StubGraphicsDevice graphicsDevice;
-		Graphics::TextureManager textureManager(graphicsDevice);
-		Graphics::ShaderManager shaderManager(graphicsDevice);
-		Graphics::MaterialManager materialManager;
+		std::filesystem::path MetadataPath = "TestData/Metadata";
+		std::filesystem::path ResourcePath = "TestData/Resources";
 
-		return Assets::ResourceLoader(
-			jsonDatabase,
-			assetManager,
-			textureManager,
-			shaderManager,
-			materialManager
-		);
-	}
+		Assets::JsonAssetDatabase JsonDatabase{ MetadataPath };
+		Assets::FilesystemAssetSource AssetSource{ ResourcePath };
+		Assets::AssetManager AssetManager;
+
+		Stubs::StubGraphicsDevice GraphicsDevice;
+		Graphics::TextureManager TextureManager{ GraphicsDevice };
+		Graphics::ShaderManager ShaderManager{ GraphicsDevice };
+		Graphics::MaterialManager MaterialManager;
+
+		Assets::ResourceLoader ResourceLoader{
+			JsonDatabase,
+			AssetSource,
+			AssetManager,
+			TextureManager,
+			ShaderManager,
+			MaterialManager
+		};
+	};
 
 	TEST(SceneManagerTests, SetScene_ShouldLoadNewScene_WhenNewSceneIsAdded)
 	{
-		Assets::ResourceLoader loader = CreateResourceLoader();
-		Scenes::SceneManager manager(loader);
+		ResourceLoaderTestContext loaderContext;
+		Scenes::SceneManager manager(loaderContext.ResourceLoader);
 
 		manager.SetScene<TestScene>();
 		auto testScene = manager.GetScene<TestScene>();
@@ -71,8 +76,8 @@ namespace Cocoa::Scenes::Tests
 
 	TEST(SceneManagerTests, SetScene_ShouldUnloadPreviousScene_WhenNewSceneIsAdded)
 	{
-		Assets::ResourceLoader loader = CreateResourceLoader();
-		Scenes::SceneManager manager(loader);
+		ResourceLoaderTestContext loaderContext;
+		Scenes::SceneManager manager(loaderContext.ResourceLoader);
 
 		manager.SetScene<TestScene>();
 		manager.SetScene<AnotherTestScene>();
@@ -87,8 +92,8 @@ namespace Cocoa::Scenes::Tests
 
 	TEST(SceneManagerTests, AddScene_ShouldCreateNewScene)
 	{
-		Assets::ResourceLoader loader = CreateResourceLoader();
-		Scenes::SceneManager manager(loader);
+		ResourceLoaderTestContext loaderContext;
+		Scenes::SceneManager manager(loaderContext.ResourceLoader);
 
 		manager.AddScene<TestScene>();
 		auto scene = manager.GetScene<TestScene>();
@@ -98,8 +103,8 @@ namespace Cocoa::Scenes::Tests
 
 	TEST(SceneManagerTests, SetScene_ShouldNotCallUnload_WhenCurrentSceneEqualNewScene)
 	{
-		Assets::ResourceLoader loader = CreateResourceLoader();
-		Scenes::SceneManager manager(loader);
+		ResourceLoaderTestContext loaderContext;
+		Scenes::SceneManager manager(loaderContext.ResourceLoader);
 
 		manager.SetScene<TestScene>();
 		auto currentScene = dynamic_cast<TestScene*>(manager.GetCurrentScene());
@@ -111,8 +116,8 @@ namespace Cocoa::Scenes::Tests
 
 	TEST(SceneManagerTests, AddScene_ShouldNotCreateNewScene_WhenSceneExists)
 	{
-		Assets::ResourceLoader loader = CreateResourceLoader();
-		Scenes::SceneManager manager(loader);
+		ResourceLoaderTestContext loaderContext;
+		Scenes::SceneManager manager(loaderContext.ResourceLoader);
 
 		manager.AddScene<TestScene>();
 		manager.SetScene<TestScene>();
@@ -124,8 +129,8 @@ namespace Cocoa::Scenes::Tests
 
 	TEST(SceneManagerTests, GetScene_ShouldReturnNullptrIfSceneNotAdded)
 	{
-		Assets::ResourceLoader loader = CreateResourceLoader();
-		Scenes::SceneManager manager(loader);
+		ResourceLoaderTestContext loaderContext;
+		Scenes::SceneManager manager(loaderContext.ResourceLoader);
 
 		auto scene = manager.GetScene<TestScene>();
 
@@ -134,8 +139,8 @@ namespace Cocoa::Scenes::Tests
 
 	TEST(SceneManagerTests, GetCurrentScene_ShouldReturnActiveScene)
 	{
-		Assets::ResourceLoader loader = CreateResourceLoader();
-		Scenes::SceneManager manager(loader);
+		ResourceLoaderTestContext loaderContext;
+		Scenes::SceneManager manager(loaderContext.ResourceLoader);
 
 		manager.SetScene<TestScene>();
 		auto current = manager.GetCurrentScene();
@@ -146,8 +151,8 @@ namespace Cocoa::Scenes::Tests
 
 	TEST(SceneManagerTests, Unload_ShouldBeCalledExactlyOnce_WhenSceneReplaced)
 	{
-		Assets::ResourceLoader loader = CreateResourceLoader();
-		Scenes::SceneManager manager(loader);
+		ResourceLoaderTestContext loaderContext;
+		Scenes::SceneManager manager(loaderContext.ResourceLoader);
 
 		manager.SetScene<CountingScene>();
 		manager.SetScene<AnotherTestScene>();
