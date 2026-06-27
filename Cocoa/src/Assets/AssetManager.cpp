@@ -1,40 +1,36 @@
 #include "Assets/AssetManager.hpp"
 #include "Assets/AssetLoader.hpp"
 
-#include <string>
-#include <filesystem>
-
 namespace Cocoa::Assets
 {
-	AssetManager::AssetManager(const std::filesystem::path& rootPath) :
+	AssetManager::AssetManager() :
 		m_assetLoader(),
-		m_rootPath(rootPath),
 		m_images(),
 		m_shaderSources()
 	{
 
 	}
 
-	const Image& AssetManager::LoadImage(const std::string& path)
+	const Image& AssetManager::LoadImage(
+		const std::string& assetId,
+		const std::vector<std::byte>& assetBytes)
 	{
-		if (auto it = m_images.find(path); it != m_images.end())
+		if (auto it = m_images.find(assetId); it != m_images.end())
 		{
 			return it->second;
 		}
 
-		auto fullPath = m_rootPath / path;
+		Image image = m_assetLoader.LoadImage(assetBytes);
 
-		Image image = m_assetLoader.Load(fullPath);
-
-		auto [it, inserted] = m_images.emplace(path, std::move(image));
+		auto [it, inserted] = m_images.emplace(assetId, std::move(image));
 
 		return it->second;
 	}
 
 	const ShaderSource& AssetManager::LoadShader(
 		const std::string& shaderId, 
-		const std::string& vertexPath, 
-		const std::string& fragmentPath)
+		const std::vector<std::byte>& vertexBytes,
+		const std::vector<std::byte>& fragmentBytes)
 	{
 		if (auto it = m_shaderSources.find(shaderId); it != m_shaderSources.end())
 		{
@@ -43,8 +39,8 @@ namespace Cocoa::Assets
 
 		ShaderSource shaderSource
 		{
-			.Vertex = m_assetLoader.LoadTextFile(m_rootPath / vertexPath),
-			.Fragment = m_assetLoader.LoadTextFile(m_rootPath / fragmentPath)
+			.Vertex = m_assetLoader.LoadText(vertexBytes),
+			.Fragment = m_assetLoader.LoadText(fragmentBytes)
 		}; 
 
 		auto [it, inserted] = m_shaderSources.emplace(shaderId, std::move(shaderSource));
