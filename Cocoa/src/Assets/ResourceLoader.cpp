@@ -35,6 +35,10 @@ namespace Cocoa::Assets
 	Graphics::TextureHandle ResourceLoader::LoadTexture(const std::string& textureId) const
 	{
 		const TextureRecord& record = m_assetDatabase.GetTextureInfo(textureId);
+
+		if (Graphics::TextureHandle handle; m_textureManager.TryGetHandle(record.Id, handle))
+			return handle;
+
 		const Image& image = m_assetManager.LoadImage(
 			record.Path,
 			m_assetSource.ReadBytes(record.Path)
@@ -58,6 +62,10 @@ namespace Cocoa::Assets
 	Graphics::ShaderHandle ResourceLoader::LoadShader(const std::string& shaderId) const
 	{
 		const ShaderRecord& record = m_assetDatabase.GetShaderInfo(shaderId);
+
+		if (Graphics::ShaderHandle handle; m_shaderManager.TryGetHandle(record.Id, handle))
+			return handle;
+
 		const ShaderSource& source = m_assetManager.LoadShader(
 			record.Id,
 			m_assetSource.ReadBytes(record.VertexPath),
