@@ -6,7 +6,7 @@
 namespace Sandbox
 {
 	GameApplication::GameApplication() 
-		: Application(800, 600, "Vexxus")
+		: Application(800, 600, "Sandbox")
 	{
 
 	}
