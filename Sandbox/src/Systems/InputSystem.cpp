@@ -4,7 +4,7 @@
 #include "Graphics/Renderer2D.hpp"
 #include "Scenes/Components/VelocityComponent.hpp"	
 
-namespace Vexxus::Systems
+namespace Sandbox::Systems
 {
 	InputSystem::InputSystem() :
 		m_inputHandler()

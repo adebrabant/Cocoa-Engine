@@ -2,7 +2,7 @@
 
 int main()
 {
-    Vexxus::GameApplication gameApplication;
+    Sandbox::GameApplication gameApplication;
     gameApplication.Run();
 
     return 0; 

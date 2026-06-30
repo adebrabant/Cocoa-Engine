@@ -6,7 +6,7 @@
 #include <Scenes/Systems/RenderSystem.hpp>
 #include <Assets/ResourceLoader.hpp>
 
-namespace Vexxus
+namespace Sandbox
 {
     void TestScene::Load(Cocoa::Assets::ResourceLoader& loader)
     {
