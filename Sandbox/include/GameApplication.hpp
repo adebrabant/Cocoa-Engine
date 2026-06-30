@@ -2,7 +2,7 @@
 
 #include "Core/Application.hpp"
 
-namespace Vexxus
+namespace Sandbox
 {
 	class GameApplication : public Cocoa::Core::Application
 	{

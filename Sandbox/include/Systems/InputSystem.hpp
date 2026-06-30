@@ -3,7 +3,7 @@
 #include "Scenes/Systems/System.hpp"
 #include "Inputs/InputHandler.hpp"
 
-namespace Vexxus::Systems
+namespace Sandbox::Systems
 {
 	class InputSystem : public Cocoa::Scenes::System
 	{

@@ -2,7 +2,7 @@
 
 #include "Scenes/Scene.hpp"
 
-namespace Vexxus
+namespace Sandbox
 {
 	class TestScene : public Cocoa::Scenes::Scene
 	{

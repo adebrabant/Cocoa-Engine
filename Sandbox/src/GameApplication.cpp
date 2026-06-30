@@ -3,7 +3,7 @@
 #include <Core/Application.hpp>
 #include <Scenes/SceneManager.hpp>
 
-namespace Vexxus
+namespace Sandbox
 {
 	GameApplication::GameApplication() 
 		: Application(800, 600, "Vexxus")
