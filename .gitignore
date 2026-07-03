@@ -42,3 +42,5 @@ CMakeCache.txt
 # Ignore Thumbs.db and desktop.ini (Windows-specific)
 Thumbs.db
 desktop.ini
+
+.idea
