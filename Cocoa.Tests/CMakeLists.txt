@@ -18,6 +18,8 @@ set(COCOA_TEST_SOURCES
     src/Assets/ResourceLoaderTests.cpp
     src/Assets/FilesystemAssetSourceTests.cpp
 
+    src/Math/Vector2fTests.cpp
+
     src/Graphics/TextureSpecTests.cpp
     src/Graphics/ShaderManagerTests.cpp
     src/Graphics/TextureManagerTests.cpp

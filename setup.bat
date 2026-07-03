@@ -1,5 +1,7 @@
 @echo off
 
+set PYTHON_INSTALLED_DURING_SETUP=0
+
 REM Ensure Python is installed
 python --version >nul 2>&1
 IF ERRORLEVEL 1 (
@@ -14,16 +16,18 @@ IF ERRORLEVEL 1 (
             exit /b 1
         )
 
-        winget install Python.Python.3.14 --accept-package-agreements --accept-source-agreements
+        winget install --id Python.Python.3.14 -e --source winget --accept-package-agreements --accept-source-agreements
 
-        echo.
-        echo Python install completed.
-        echo Please close and reopen this terminal, then run setup.bat again.
-        exit /b 0
+        IF ERRORLEVEL 1 (
+            echo Python installation failed.
+            exit /b 1
+        )
+
+        set PYTHON_INSTALLED_DURING_SETUP=1
     )
 )
 
-echo Python found.
+echo Python found or installed.
 
 REM Check if vcpkg is already cloned, if not, clone it
 IF NOT EXIST "vcpkg" (
