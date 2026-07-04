@@ -70,33 +70,7 @@ namespace Cocoa::Math::Tests
 		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
 	}
 
-	class Vector2fAddAssignTests : public testing::TestWithParam<Vector2fTestCase> {};
-	INSTANTIATE_TEST_SUITE_P(
-		Vector2fValues,
-		Vector2fAddAssignTests,
-		testing::Values
-		(
-			Vector2fTestCase
-			{
-				.Left = { 1.0f, 2.0f },
-				.Right = { 3.0f, 4.0f },
-				.Expected = { 4.0f, 6.0f }
-			},
-			Vector2fTestCase
-			{
-				.Left = { -1.0f, -2.0f },
-				.Right = { -3.0f, -4.0f },
-				.Expected = { -4.0f, -6.0f }
-			},
-			Vector2fTestCase
-			{
-				.Left = { 5.0f, -2.0f },
-				.Right = { -3.0f, 4.0f },
-				.Expected = { 2.0f, 2.0f }
-			}
-		)
-	);
-	TEST_P(Vector2fAddAssignTests, AddAssignOperator_ShouldMutateVector_WhenAddingOtherVector)
+	TEST_P(Vector2fAddTests, AddAssignOperator_ShouldMutateVector_WhenAddingOtherVector)
 	{
 		const Vector2fTestCase testCase = GetParam();
 
@@ -146,33 +120,7 @@ namespace Cocoa::Math::Tests
 		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
 	}
 
-	class Vector2fSubtractAssignTests : public testing::TestWithParam<Vector2fTestCase> {};
-	INSTANTIATE_TEST_SUITE_P(
-		Vector2fValues,
-		Vector2fSubtractAssignTests,
-		testing::Values
-		(
-			Vector2fTestCase
-			{
-				.Left = { 1.0f, 2.0f },
-				.Right = { 3.0f, 4.0f },
-				.Expected = { -2.0f, -2.0f }
-			},
-			Vector2fTestCase
-			{
-				.Left = { -1.0f, -7.0f },
-				.Right = { -3.0f, -4.0f },
-				.Expected = { 2.0f, -3.0f }
-			},
-			Vector2fTestCase
-			{
-				.Left = { 5.0f, -2.0f },
-				.Right = { -3.0f, 4.0f },
-				.Expected = { 8.0f, -6.0f }
-			}
-		)
-	);
-	TEST_P(Vector2fSubtractAssignTests, SubtractAssignOperator_ShouldMutateVector_WhenSubtractingOtherVector)
+	TEST_P(Vector2fSubtractTests, SubtractAssignOperator_ShouldMutateVector_WhenSubtractingOtherVector)
 	{
 		const Vector2fTestCase testCase = GetParam();
 
@@ -222,33 +170,7 @@ namespace Cocoa::Math::Tests
 		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
 	}
 
-	class Vector2fMultiplyAssignTests : public testing::TestWithParam<Vector2fScalarTestCase> {};
-	INSTANTIATE_TEST_SUITE_P(
-		Vector2fValues,
-		Vector2fMultiplyAssignTests,
-		testing::Values
-		(
-			Vector2fScalarTestCase
-			{
-				.Left = { 1.0f, 2.0f },
-				.Scalar = { 8.0f },
-				.Expected = { 8.0f, 16.0f }
-			},
-			Vector2fScalarTestCase
-			{
-				.Left = { -4.4f, -7.0f },
-				.Scalar = { -5.5f },
-				.Expected = { 24.2f, 38.5f }
-			},
-			Vector2fScalarTestCase
-			{
-				.Left = { 5.0f, -2.0f },
-				.Scalar = { 4.0f },
-				.Expected = { 20.0f, -8.0f }
-			}
-		)
-	);
-	TEST_P(Vector2fMultiplyAssignTests, MultiplyAssignOperator_ShouldMutateVector_WhenMultiplyByScalar)
+	TEST_P(Vector2MultiplyScalarTests, MultiplyAssignOperator_ShouldMutateVector_WhenMultiplyByScalar)
 	{
 		const Vector2fScalarTestCase testCase = GetParam();
 
@@ -312,33 +234,7 @@ namespace Cocoa::Math::Tests
 		);
 	}
 
-	class Vector2fDivideAssignTests : public testing::TestWithParam<Vector2fScalarTestCase> {};
-	INSTANTIATE_TEST_SUITE_P(
-		Vector2fValues,
-		Vector2fDivideAssignTests,
-		testing::Values
-		(
-			Vector2fScalarTestCase
-			{
-				.Left = { 1.0f, 2.0f },
-				.Scalar = { 8.0f },
-				.Expected = { 0.125f, 0.25f }
-			},
-			Vector2fScalarTestCase
-			{
-				.Left = { -4.4f, -7.0f },
-				.Scalar = { -5.5f },
-				.Expected = { 0.8f, 1.272727273f }
-			},
-			Vector2fScalarTestCase
-			{
-				.Left = { 5.0f, -2.0f },
-				.Scalar = { 4.0f },
-				.Expected = { 1.25f, -0.5f }
-			}
-		)
-	);
-	TEST_P(Vector2fDivideAssignTests, DivideAssignOperator_ShouldMutateVector_WhenMDividingByScalar)
+	TEST_P(Vector2DivideScalarTests, DivideAssignOperator_ShouldMutateVector_WhenMDividingByScalar)
 	{
 		const Vector2fScalarTestCase testCase = GetParam();
 
