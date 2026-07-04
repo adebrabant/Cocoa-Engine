@@ -6,18 +6,18 @@
 namespace Cocoa::Math
 {
 	/// <summary>
-	/// Represents a two-dimensional vector using single-precision floating-point components.
+	/// Represents a three-dimensional vector using single-precision floating-point components.
 	/// </summary>
-	struct Vector2f
+	struct Vector3f
 	{
 		float X{ 0.0f };
 		float Y{ 0.0f };
+		float Z{ 0.0f };
 
-		constexpr Vector2f() = default;
+		constexpr Vector3f() = default;
 
-		constexpr Vector2f(float x, float y) :
-			X(x),
-			Y(y)
+		constexpr Vector3f(float x, float y, float z) :
+			X(x), Y(y), Z(z)
 		{
 
 		}
@@ -27,12 +27,13 @@ namespace Cocoa::Math
 		/// </summary>
 		/// <param name="other">The vector to add.</param>
 		/// <returns>A new vector containing the component-wise sum.</returns>
-		[[nodiscard]] Vector2f operator+(const Vector2f& other) const
+		[[nodiscard]] Vector3f operator+(const Vector3f& other) const
 		{
 			const auto xSum = X + other.X;
 			const auto ySum = Y + other.Y;
+			const auto zSum = Z + other.Z;
 
-			return Vector2f(xSum, ySum);
+			return Vector3f(xSum, ySum, zSum);
 		}
 
 		/// <summary>
@@ -40,10 +41,11 @@ namespace Cocoa::Math
 		/// </summary>
 		/// <param name="other">The vector to add.</param>
 		/// <returns>A reference to this vector after the addition.</returns>
-		Vector2f& operator+=(const Vector2f& other)
+		Vector3f& operator+=(const Vector3f& other)
 		{
 			X += other.X;
 			Y += other.Y;
+			Z += other.Z;
 
 			return *this;
 		}
@@ -53,12 +55,13 @@ namespace Cocoa::Math
 		/// </summary>
 		/// <param name="other">The vector to subtract.</param>
 		/// <returns>A new vector containing the component-wise difference.</returns>
-		[[nodiscard]] Vector2f operator-(const Vector2f& other) const
+		[[nodiscard]] Vector3f operator-(const Vector3f& other) const
 		{
 			const auto xDifference = X - other.X;
 			const auto yDifference = Y - other.Y;
+			const auto zDifference = Z - other.Z;
 
-			return Vector2f(xDifference, yDifference);
+			return Vector3f(xDifference, yDifference, zDifference);
 		}
 
 		/// <summary>
@@ -66,10 +69,11 @@ namespace Cocoa::Math
 		/// </summary>
 		/// <param name="other">The vector to subtract.</param>
 		/// <returns>A reference to this vector after the subtraction.</returns>
-		Vector2f& operator-=(const Vector2f& other) 
+		Vector3f& operator-=(const Vector3f& other)
 		{
 			X -= other.X;
 			Y -= other.Y;
+			Z -= other.Z;
 
 			return *this;
 		}
@@ -79,12 +83,13 @@ namespace Cocoa::Math
 		/// </summary>
 		/// <param name="scalar">The scalar value to multiply by.</param>
 		/// <returns>A new vector scaled by the provided scalar.</returns>
-		[[nodiscard]] Vector2f operator*(float scalar) const
+		[[nodiscard]] Vector3f operator*(float scalar) const
 		{
 			const auto xProduct = X * scalar;
 			const auto yProduct = Y * scalar;
+			const auto zProduct = Z * scalar;
 
-			return Vector2f(xProduct, yProduct);
+			return Vector3f(xProduct, yProduct, zProduct);
 		}
 
 		/// <summary>
@@ -92,10 +97,11 @@ namespace Cocoa::Math
 		/// </summary>
 		/// <param name="scalar">The scalar value to multiply by.</param>
 		/// <returns>A reference to this vector after scaling.</returns>
-		Vector2f& operator*=(float scalar)
+		Vector3f& operator*=(float scalar)
 		{
 			X *= scalar;
 			Y *= scalar;
+			Z *= scalar;
 
 			return *this;
 		}
@@ -108,13 +114,14 @@ namespace Cocoa::Math
 		/// <remarks>
 		/// Asserts in debug builds when the scalar is zero.
 		/// </remarks>
-		[[nodiscard]] Vector2f operator/(float scalar) const
+		[[nodiscard]] Vector3f operator/(float scalar) const
 		{
-			assert(scalar != 0.0f && "Vector2f::operator/ cannot divide by zero scalar");
-			const auto xQuotient = (X / scalar);
-			const auto yQuotient = (Y / scalar);
+			assert(scalar != 0.0f && "Vector3f::operator/ cannot divide by zero scalar");
+			const auto xQuotient = X / scalar;
+			const auto yQuotient = Y / scalar;
+			const auto zQuotient = Z / scalar;
 
-			return Vector2f(xQuotient, yQuotient);
+			return Vector3f(xQuotient, yQuotient, zQuotient);
 		}
 
 		/// <summary>
@@ -125,11 +132,12 @@ namespace Cocoa::Math
 		/// <remarks>
 		/// Asserts in debug builds when the scalar is zero.
 		/// </remarks>
-		Vector2f& operator/=(float scalar)
+		Vector3f& operator/=(float scalar)
 		{
-			assert(scalar != 0.0f && "Vector2f::operator/= cannot divide by zero scalar");
+			assert(scalar != 0.0f && "Vector3f::operator/= cannot divide by zero scalar");
 			X /= scalar;
 			Y /= scalar;
+			Z /= scalar;
 
 			return *this;
 		}
@@ -142,12 +150,13 @@ namespace Cocoa::Math
 		/// <remarks>
 		/// This is not a dot product. Use <c>Dot</c> for dot product operations.
 		/// </remarks>
-		[[nodiscard]] Vector2f ComponentWiseMultiply(const Vector2f& other) const
+		[[nodiscard]] Vector3f ComponentWiseMultiply(const Vector3f& other) const
 		{
 			const auto xProduct = X * other.X;
 			const auto yProduct = Y * other.Y;
+			const auto zProduct = Z * other.Z;
 
-			return Vector2f(xProduct, yProduct);
+			return Vector3f(xProduct, yProduct, zProduct);
 		}
 
 		/// <summary>
@@ -158,14 +167,16 @@ namespace Cocoa::Math
 		/// <remarks>
 		/// Asserts in debug builds when either component of <paramref name="other"/> is zero.
 		/// </remarks>
-		[[nodiscard]] Vector2f ComponentWiseDivide(const Vector2f& other) const
+		[[nodiscard]] Vector3f ComponentWiseDivide(const Vector3f& other) const
 		{
-			assert(other.X != 0.0f && "Vector2f::ComponentWiseDivide() cannot divide by zero X component");
-			assert(other.Y != 0.0f && "Vector2f::ComponentWiseDivide() cannot divide by zero Y component");
+			assert(other.X != 0.0f && "Vector3f::ComponentWiseDivide() cannot divide by zero X component");
+			assert(other.Y != 0.0f && "Vector3f::ComponentWiseDivide() cannot divide by zero Y component");
+			assert(other.Z != 0.0f && "Vector3f::ComponentWiseDivide() cannot divide by zero Z component");
 			const auto xQuotient = (X / other.X);
 			const auto yQuotient = (Y / other.Y);
+			const auto zQuotient = (Z / other.Z);
 
-			return Vector2f(xQuotient, yQuotient);
+			return Vector3f(xQuotient, yQuotient, zQuotient);
 		}
 
 		/// <summary>
@@ -174,7 +185,7 @@ namespace Cocoa::Math
 		/// <returns>The length of this vector.</returns>
 		[[nodiscard]] float Length() const
 		{
-			return std::sqrt(LengthSquared());
+			return std::sqrt((X * X) + (Y * Y) + (Z * Z));
 		}
 
 		/// <summary>
@@ -186,7 +197,7 @@ namespace Cocoa::Math
 		/// </remarks>
 		[[nodiscard]] constexpr float LengthSquared() const
 		{
-			return X * X + Y * Y;
+			return (X * X) + (Y * Y) + (Z * Z);
 		}
 
 		/// <summary>
@@ -194,9 +205,23 @@ namespace Cocoa::Math
 		/// </summary>
 		/// <param name="other">The other vector used in the dot product calculation.</param>
 		/// <returns>The dot product of the two vectors.</returns>
-		[[nodiscard]] constexpr float Dot(const Vector2f& other) const
+		[[nodiscard]] constexpr float Dot(const Vector3f& other) const
 		{
-			return (X * other.X) + (Y * other.Y);
+			return (X * other.X) + (Y * other.Y) + (Z * other.Z);
+		}
+
+		/// <summary>
+		/// Calculates the cross product between this vector and another vector.
+		/// </summary>
+		/// <param name="other">The other vector used in the cross product calculation.</param>
+		/// <returns>A vector perpendicular to both vectors.</returns>
+		[[nodiscard]] constexpr Vector3f Cross(const Vector3f& other) const
+		{
+			const auto x = (Y * other.Z) - (Z * other.Y);
+			const auto y = (Z * other.X) - (X * other.Z);
+			const auto z = (X * other.Y) - (Y * other.X);
+
+			return Vector3f(x, y, z);
 		}
 
 		/// <summary>
@@ -206,11 +231,11 @@ namespace Cocoa::Math
 		/// <remarks>
 		/// Asserts in debug builds when attempting to normalize a zero-length vector.
 		/// </remarks>
-		[[nodiscard]] Vector2f Normalized() const
+		[[nodiscard]] Vector3f Normalized() const
 		{
 			const float magnitude = Length();
-			assert(magnitude != 0.0f && "Vector2f::Normalized() cannot normalize a zero vector");
-			return Vector2f(X / magnitude, Y / magnitude);
+			assert(magnitude != 0.0f && "Vector3f::Normalized() cannot normalize a zero vector");
+			return Vector3f(X / magnitude, Y / magnitude, Z / magnitude);
 		}
 	};
 }
