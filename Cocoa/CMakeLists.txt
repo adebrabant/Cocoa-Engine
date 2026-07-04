@@ -37,6 +37,7 @@ set(COCOA_PUBLIC_HEADERS
     include/Assets/FilesystemAssetSource.hpp
 
     include/Math/Vector2f.hpp
+    include/Math/Vector3f.hpp
 
     include/Scenes/SceneManager.hpp
     include/Scenes/Scene.hpp
