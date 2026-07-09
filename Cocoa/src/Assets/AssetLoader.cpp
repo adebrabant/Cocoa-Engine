@@ -5,6 +5,7 @@
 #include <sstream>
 #include <fstream>
 #define STB_IMAGE_IMPLEMENTATION
+#include <cstring>
 #include <stb_image.h>
 
 namespace Cocoa::Assets

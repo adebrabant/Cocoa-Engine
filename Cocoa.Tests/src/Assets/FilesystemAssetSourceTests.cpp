@@ -11,7 +11,7 @@ namespace Cocoa::Assets::Tests
 		const std::filesystem::path rootPath = "TestData/Resources";
 		const std::filesystem::path relativePath = "Images/test.png";
 		const auto expectedSize = std::filesystem::file_size(rootPath / relativePath);
-		Assets::FilesystemAssetSource sut(rootPath);
+		const Assets::FilesystemAssetSource sut(rootPath);
 
 		auto results = sut.ReadBytes(relativePath);
 
@@ -23,7 +23,7 @@ namespace Cocoa::Assets::Tests
 		const std::filesystem::path rootPath = std::filesystem::current_path() / "TestData" / "Resources";
 		const std::filesystem::path relativePath = "Images/test.png";
 		const auto expectedSize = std::filesystem::file_size(rootPath / relativePath);
-		Assets::FilesystemAssetSource sut(rootPath);
+		const Assets::FilesystemAssetSource sut(rootPath);
 
 		auto results = sut.ReadBytes(relativePath);
 
@@ -33,8 +33,7 @@ namespace Cocoa::Assets::Tests
 	TEST(FilesystemAssetSourceTests, ReadBytes_ShouldThrowError_WhenFileDoesNotExist)
 	{
 		const std::filesystem::path rootPath = "TestData/Resources";
-		const auto expectedSize = std::filesystem::file_size(rootPath);
-		Assets::FilesystemAssetSource sut(rootPath);
+		const Assets::FilesystemAssetSource sut(rootPath);
 
 		EXPECT_THROW(
 			{
@@ -48,7 +47,7 @@ namespace Cocoa::Assets::Tests
 	{
 		const std::filesystem::path rootPath = "TestData/Resources";
 		const std::filesystem::path relativePath = "Images/test.png";
-		Assets::FilesystemAssetSource sut(rootPath);
+		const Assets::FilesystemAssetSource sut(rootPath);
 
 		auto result = sut.Exists(relativePath);
 
@@ -58,7 +57,7 @@ namespace Cocoa::Assets::Tests
 	TEST(FilesystemAssetSourceTests, Exists_ShouldReturnFalse_WhenFileDoesNotExist)
 	{
 		const std::filesystem::path rootPath = "TestData/Resources";
-		Assets::FilesystemAssetSource sut(rootPath);
+		const Assets::FilesystemAssetSource sut(rootPath);
 
 		auto result = sut.Exists("badValue");
 
