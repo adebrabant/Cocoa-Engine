@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Graphics/ShaderManager.hpp"
-#include "Graphics/TextureManager.hpp"
+#include "Graphics/GraphicsHandles.hpp"
 
 #include <string>
 
@@ -10,7 +9,7 @@ namespace Cocoa::Graphics
 	struct Material
 	{
 		std::string Id;
-		ShaderHandle ShaderHandle;
-		TextureHandle TextureHandle;
+		ShaderHandle ShaderId;
+		TextureHandle TextureId;
 	};
 }

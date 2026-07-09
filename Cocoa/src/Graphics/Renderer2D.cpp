@@ -74,8 +74,8 @@ namespace Cocoa::Graphics
 		for (const auto& command : m_drawCommands)
 		{
 			const Material& material = m_materialManager.Get(command.Material);
-			const Shader& shader = m_shaderManager.Get(material.ShaderHandle);
-			const Texture2D& texture = m_textureManager.Get(material.TextureHandle);
+			const Shader& shader = m_shaderManager.Get(material.ShaderId);
+			const Texture2D& texture = m_textureManager.Get(material.TextureId);
 
 			shader.Bind();
 			texture.Bind(0);
