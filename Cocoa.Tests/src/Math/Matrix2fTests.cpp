@@ -1,0 +1,45 @@
+#include <Math/Matrix2f.hpp>
+
+#include <gtest/gtest.h>
+
+namespace Cocoa::Math::Tests
+{
+    TEST(Matrix2fTests, Constructor_ShouldSetElementsToZero_WhenUsingDefaultConstructor)
+    {
+        const Matrix2f sut;
+
+        for (std::size_t i = 0; i <= 3; ++i)
+        {
+            EXPECT_FLOAT_EQ(sut[i], 0.0f);
+        }
+    }
+
+    TEST(Matrix2fTests, Constructor_ShouldSetElements_WhenProvidingValues)
+    {
+        const float expectedM00 = 2.0f;
+        const float expectedM01 = 2.0f;
+        const float expectedM10 = 2.0f;
+        const float expectedM11 = 2.0f;
+
+        const Matrix2f sut(expectedM00, expectedM01, expectedM10, expectedM11);
+
+        EXPECT_FLOAT_EQ(sut[0], expectedM00);
+        EXPECT_FLOAT_EQ(sut[1], expectedM01);
+        EXPECT_FLOAT_EQ(sut[2], expectedM10);
+        EXPECT_FLOAT_EQ(sut[3], expectedM11);
+
+    }
+
+    TEST(Matrix2fTests, AddOperator_ShouldReturnSum_WhenAddingTwoMatrices)
+    {
+        const Matrix2f sut(2.0f, 3.0f, 4.0f, 5.0f);
+        const Matrix2f other(2.5f, 3.6f, 4.7f, 5.8f);
+
+        const Matrix2f result = sut + other;
+
+        EXPECT_FLOAT_EQ(result[0], 4.5f);
+        EXPECT_FLOAT_EQ(result[1], 6.6f);
+        EXPECT_FLOAT_EQ(result[2], 8.7f);
+        EXPECT_FLOAT_EQ(result[3], 10.8f);
+    }
+}
