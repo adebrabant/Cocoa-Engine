@@ -15,7 +15,7 @@ namespace Cocoa::Math
 
 		constexpr Vector2f() = default;
 
-		constexpr Vector2f(float x, float y) :
+		constexpr Vector2f(const float x, const float y) :
 			X(x),
 			Y(y)
 		{
@@ -27,7 +27,7 @@ namespace Cocoa::Math
 		/// </summary>
 		/// <param name="other">The vector to add.</param>
 		/// <returns>A new vector containing the component-wise sum.</returns>
-		[[nodiscard]] Vector2f operator+(const Vector2f& other) const
+		[[nodiscard]] constexpr Vector2f operator+(const Vector2f& other) const
 		{
 			const auto xSum = X + other.X;
 			const auto ySum = Y + other.Y;
@@ -40,7 +40,7 @@ namespace Cocoa::Math
 		/// </summary>
 		/// <param name="other">The vector to add.</param>
 		/// <returns>A reference to this vector after the addition.</returns>
-		Vector2f& operator+=(const Vector2f& other)
+		constexpr Vector2f& operator+=(const Vector2f& other)
 		{
 			X += other.X;
 			Y += other.Y;
@@ -53,7 +53,7 @@ namespace Cocoa::Math
 		/// </summary>
 		/// <param name="other">The vector to subtract.</param>
 		/// <returns>A new vector containing the component-wise difference.</returns>
-		[[nodiscard]] Vector2f operator-(const Vector2f& other) const
+		[[nodiscard]] constexpr Vector2f operator-(const Vector2f& other) const
 		{
 			const auto xDifference = X - other.X;
 			const auto yDifference = Y - other.Y;
@@ -66,7 +66,7 @@ namespace Cocoa::Math
 		/// </summary>
 		/// <param name="other">The vector to subtract.</param>
 		/// <returns>A reference to this vector after the subtraction.</returns>
-		Vector2f& operator-=(const Vector2f& other) 
+		constexpr Vector2f& operator-=(const Vector2f& other)
 		{
 			X -= other.X;
 			Y -= other.Y;
@@ -79,7 +79,7 @@ namespace Cocoa::Math
 		/// </summary>
 		/// <param name="scalar">The scalar value to multiply by.</param>
 		/// <returns>A new vector scaled by the provided scalar.</returns>
-		[[nodiscard]] Vector2f operator*(float scalar) const
+		[[nodiscard]] constexpr Vector2f operator*(const float scalar) const
 		{
 			const auto xProduct = X * scalar;
 			const auto yProduct = Y * scalar;
@@ -92,7 +92,7 @@ namespace Cocoa::Math
 		/// </summary>
 		/// <param name="scalar">The scalar value to multiply by.</param>
 		/// <returns>A reference to this vector after scaling.</returns>
-		Vector2f& operator*=(float scalar)
+		constexpr Vector2f& operator*=(const float scalar)
 		{
 			X *= scalar;
 			Y *= scalar;
@@ -108,7 +108,7 @@ namespace Cocoa::Math
 		/// <remarks>
 		/// Asserts in debug builds when the scalar is zero.
 		/// </remarks>
-		[[nodiscard]] Vector2f operator/(float scalar) const
+		[[nodiscard]] constexpr Vector2f operator/(const float scalar) const
 		{
 			assert(scalar != 0.0f && "Vector2f::operator/ cannot divide by zero scalar");
 			const auto xQuotient = (X / scalar);
@@ -125,7 +125,7 @@ namespace Cocoa::Math
 		/// <remarks>
 		/// Asserts in debug builds when the scalar is zero.
 		/// </remarks>
-		Vector2f& operator/=(float scalar)
+		constexpr Vector2f& operator/=(const float scalar)
 		{
 			assert(scalar != 0.0f && "Vector2f::operator/= cannot divide by zero scalar");
 			X /= scalar;
@@ -142,7 +142,7 @@ namespace Cocoa::Math
 		/// <remarks>
 		/// This is not a dot product. Use <c>Dot</c> for dot product operations.
 		/// </remarks>
-		[[nodiscard]] Vector2f ComponentWiseMultiply(const Vector2f& other) const
+		[[nodiscard]] constexpr Vector2f ComponentWiseMultiply(const Vector2f& other) const
 		{
 			const auto xProduct = X * other.X;
 			const auto yProduct = Y * other.Y;
@@ -158,7 +158,7 @@ namespace Cocoa::Math
 		/// <remarks>
 		/// Asserts in debug builds when either component of <paramref name="other"/> is zero.
 		/// </remarks>
-		[[nodiscard]] Vector2f ComponentWiseDivide(const Vector2f& other) const
+		[[nodiscard]] constexpr Vector2f ComponentWiseDivide(const Vector2f& other) const
 		{
 			assert(other.X != 0.0f && "Vector2f::ComponentWiseDivide() cannot divide by zero X component");
 			assert(other.Y != 0.0f && "Vector2f::ComponentWiseDivide() cannot divide by zero Y component");

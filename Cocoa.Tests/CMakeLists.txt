@@ -20,6 +20,7 @@ set(COCOA_TEST_SOURCES
 
     src/Math/Vector2fTests.cpp
     src/Math/Vector3fTests.cpp
+    src/Math/Vector4fTests.cpp
 
     src/Graphics/TextureSpecTests.cpp
     src/Graphics/ShaderManagerTests.cpp
