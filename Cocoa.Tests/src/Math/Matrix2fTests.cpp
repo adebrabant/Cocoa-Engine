@@ -80,4 +80,14 @@ namespace Cocoa::Math::Tests
         EXPECT_FLOAT_EQ(result[2], 159.8f);
         EXPECT_FLOAT_EQ(result[3], 175.6f);
     }
+
+    TEST(Matrix2fTests, Identity_ShouldReturnDefaults_WhenCalled)
+    {
+        const Matrix2f result = Matrix2f::Identity();
+
+        EXPECT_FLOAT_EQ(result[0], 1.0f);
+        EXPECT_FLOAT_EQ(result[1], 0.0f);
+        EXPECT_FLOAT_EQ(result[2], 0.0f);
+        EXPECT_FLOAT_EQ(result[3], 1.0f);
+    }
 }

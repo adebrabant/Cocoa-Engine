@@ -67,6 +67,11 @@ namespace Cocoa::Math
             return result;
         }
 
+        [[nodiscard]] static constexpr Matrix2f Identity()
+        {
+            return Matrix2f(1.0f, 0.0f, 0.0f, 1.0f);
+        }
+
     private:
         std::array<float, 4> m_elements{};
     };
