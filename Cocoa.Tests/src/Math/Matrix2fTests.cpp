@@ -27,7 +27,6 @@ namespace Cocoa::Math::Tests
         EXPECT_FLOAT_EQ(sut[1], expectedM01);
         EXPECT_FLOAT_EQ(sut[2], expectedM10);
         EXPECT_FLOAT_EQ(sut[3], expectedM11);
-
     }
 
     TEST(Matrix2fTests, AddOperator_ShouldReturnSum_WhenAddingTwoMatrices)
@@ -41,5 +40,44 @@ namespace Cocoa::Math::Tests
         EXPECT_FLOAT_EQ(result[1], 6.6f);
         EXPECT_FLOAT_EQ(result[2], 8.7f);
         EXPECT_FLOAT_EQ(result[3], 10.8f);
+    }
+
+    TEST(Matrix2fTests, SubtractOperator_ShouldReturnDifference_WhenSubtractingTwoMatrics)
+    {
+        const Matrix2f sut(2.0f, 3.0f, 4.0f, 5.8f);
+        const Matrix2f other(2.5f, 3.6f, 4.7f, 5.0f);
+
+        const Matrix2f result = sut - other;
+
+        EXPECT_FLOAT_EQ(result[0], -0.5f);
+        EXPECT_FLOAT_EQ(result[1], -0.6f);
+        EXPECT_FLOAT_EQ(result[2], -0.7f);
+        EXPECT_FLOAT_EQ(result[3], 0.8f);
+    }
+
+    TEST(Matrix2fTests, MultiplyOperator_ShouldScaleMatrix_WhenMultiplyingByScalar)
+    {
+        const Matrix2f sut(2.0f, 3.0f, 4.0f, 5.8f);
+        const float scalar = 5.0f;
+
+        const Matrix2f result = sut * scalar;
+
+        EXPECT_FLOAT_EQ(result[0], 10.0f);
+        EXPECT_FLOAT_EQ(result[1], 15.0f);
+        EXPECT_FLOAT_EQ(result[2], 20.0f);
+        EXPECT_FLOAT_EQ(result[3], 29.0f);
+    }
+
+    TEST(Matrix2fTests, MultiplyOperator_ShouldReturnProduct_WhenMultiplyingTwoMatrices)
+    {
+        const Matrix2f sut(5.0f, 6.0f, 7.0f, 8.8f);
+        const Matrix2f other(9.0f, 10.0f, 11.0f, 12.0f);
+
+        const Matrix2f result = sut * other;
+
+        EXPECT_FLOAT_EQ(result[0], 111.0f);
+        EXPECT_FLOAT_EQ(result[1], 122.0f);
+        EXPECT_FLOAT_EQ(result[2], 159.8f);
+        EXPECT_FLOAT_EQ(result[3], 175.6f);
     }
 }
