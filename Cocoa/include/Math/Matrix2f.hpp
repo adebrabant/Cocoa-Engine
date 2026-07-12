@@ -3,6 +3,8 @@
 #include <array>
 #include <iostream>
 
+#include "Vector2f.hpp"
+
 namespace Cocoa::Math
 {
     struct Matrix2f
@@ -67,9 +69,27 @@ namespace Cocoa::Math
             return result;
         }
 
+        [[nodiscard]] constexpr Vector2f operator*(const Vector2f& vector) const
+        {
+            const float x = (m_elements[0] * vector.X) + (m_elements[1] * vector.Y);
+            const float y = (m_elements[2] * vector.X) + (m_elements[3] * vector.Y);
+
+            return Vector2f(x, y);
+        }
+
         [[nodiscard]] static constexpr Matrix2f Identity()
         {
             return Matrix2f(1.0f, 0.0f, 0.0f, 1.0f);
+        }
+
+        [[nodiscard]] static constexpr Matrix2f Scale(const Vector2f& scale)
+        {
+            return Matrix2f(
+                scale.X,
+                0.0f,
+                0.0f,
+                scale.Y
+            );
         }
 
     private:

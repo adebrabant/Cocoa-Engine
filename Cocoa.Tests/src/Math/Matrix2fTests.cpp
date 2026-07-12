@@ -81,6 +81,17 @@ namespace Cocoa::Math::Tests
         EXPECT_FLOAT_EQ(result[3], 175.6f);
     }
 
+    TEST(Matrix2fTests, MultiplyOperator_ShouldReturnVectorProduct_WhenMultiplyingByVector)
+    {
+        const Vector2f scale(3.0f, 2.0f);
+        const Matrix2f sut(1.0f, 2.0f, 3.0f, 4.0f);
+
+        const Vector2f result = sut * scale;
+
+        EXPECT_FLOAT_EQ(result.X, 7.0f);
+        EXPECT_FLOAT_EQ(result.Y, 17.0f);
+    }
+
     TEST(Matrix2fTests, Identity_ShouldReturnDefaults_WhenCalled)
     {
         const Matrix2f result = Matrix2f::Identity();
@@ -90,4 +101,17 @@ namespace Cocoa::Math::Tests
         EXPECT_FLOAT_EQ(result[2], 0.0f);
         EXPECT_FLOAT_EQ(result[3], 1.0f);
     }
+
+    TEST(Matrix2fTests, Scale_ShouldReturnScaleMatrix_WhenCalled)
+    {
+        const Vector2f scale(2.0f, 3.0f);
+
+        const Matrix2f result = Matrix2f::Scale(scale);
+
+        EXPECT_FLOAT_EQ(result[0], scale.X);
+        EXPECT_FLOAT_EQ(result[1], 0.0f);
+        EXPECT_FLOAT_EQ(result[2], 0.0f);
+        EXPECT_FLOAT_EQ(result[3], scale.Y);
+    }
+
 }
