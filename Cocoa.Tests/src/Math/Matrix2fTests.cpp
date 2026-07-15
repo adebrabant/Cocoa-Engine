@@ -114,4 +114,15 @@ namespace Cocoa::Math::Tests
         EXPECT_FLOAT_EQ(result[3], scale.Y);
     }
 
+    TEST(Matrix2fTests, Rotation_ShouldRotateVectorCounterClockwise)
+    {
+        const float angle = std::numbers::pi_v<float> / 2.0f;
+        const Vector2f vector(0.0f, 4.0f);
+
+        const Matrix2f sut = Matrix2f::Rotation(angle);
+        const Vector2f result = sut * vector;
+
+        EXPECT_NEAR(result.X, -4.0f, 0.0001f);
+        EXPECT_NEAR(result.Y, 0.0f, 0.0001f);
+    }
 }

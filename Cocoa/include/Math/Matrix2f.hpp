@@ -92,6 +92,18 @@ namespace Cocoa::Math
             );
         }
 
+        [[nodiscard]] static Matrix2f Rotation(const float angle)
+        {
+            const float cos = std::cos(angle);
+            const float sin = std::sin(angle);
+            return Matrix2f(
+                cos,
+                -sin,
+                sin,
+                cos
+            );
+        }
+
     private:
         std::array<float, 4> m_elements{};
     };
