@@ -21,11 +21,14 @@ namespace Cocoa::Math::Tests
         const float expectedM10 = 2.0f;
         const float expectedM11 = 2.0f;
 
-        const Matrix2f sut(expectedM00, expectedM01, expectedM10, expectedM11);
+        const Matrix2f sut(
+            expectedM00, expectedM10,
+            expectedM01, expectedM11
+        );
 
         EXPECT_FLOAT_EQ(sut[0], expectedM00);
-        EXPECT_FLOAT_EQ(sut[1], expectedM01);
-        EXPECT_FLOAT_EQ(sut[2], expectedM10);
+        EXPECT_FLOAT_EQ(sut[2], expectedM01);
+        EXPECT_FLOAT_EQ(sut[1], expectedM10);
         EXPECT_FLOAT_EQ(sut[3], expectedM11);
     }
 
@@ -70,21 +73,30 @@ namespace Cocoa::Math::Tests
 
     TEST(Matrix2fTests, MultiplyOperator_ShouldReturnProduct_WhenMultiplyingTwoMatrices)
     {
-        const Matrix2f sut(5.0f, 6.0f, 7.0f, 8.8f);
-        const Matrix2f other(9.0f, 10.0f, 11.0f, 12.0f);
+        const Matrix2f sut(
+            5.0f, 7.0f,
+            6.0f, 8.8f
+        );
+        const Matrix2f other(
+            9.0f, 11.0f,
+            10.0f, 12.0f
+        );
 
         const Matrix2f result = sut * other;
 
         EXPECT_FLOAT_EQ(result[0], 111.0f);
-        EXPECT_FLOAT_EQ(result[1], 122.0f);
-        EXPECT_FLOAT_EQ(result[2], 159.8f);
+        EXPECT_FLOAT_EQ(result[2], 122.0f);
+        EXPECT_FLOAT_EQ(result[1], 159.8f);
         EXPECT_FLOAT_EQ(result[3], 175.6f);
     }
 
     TEST(Matrix2fTests, MultiplyOperator_ShouldReturnVectorProduct_WhenMultiplyingByVector)
     {
         const Vector2f scale(3.0f, 2.0f);
-        const Matrix2f sut(1.0f, 2.0f, 3.0f, 4.0f);
+        const Matrix2f sut(
+            1.0f, 3.0f,
+            2.0f, 4.0f
+        );
 
         const Vector2f result = sut * scale;
 
