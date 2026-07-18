@@ -116,10 +116,14 @@ namespace Cocoa::Math
         {
             Matrix2f result;
 
+            // top-left
             result[0] = (m_elements[0] * other[0]) + (m_elements[2] * other[1]);
+            // top-right
             result[2] = (m_elements[0] * other[2]) + (m_elements[2] * other[3]);
 
+            // bottom-left
             result[1] = (m_elements[1] * other[0]) + (m_elements[3] * other[1]);
+            // bottom-right
             result[3] = (m_elements[1] * other[2]) + (m_elements[3] * other[3]);
 
             return result;
