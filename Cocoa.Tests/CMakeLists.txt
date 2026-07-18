@@ -23,6 +23,7 @@ set(COCOA_TEST_SOURCES
     src/Math/Vector4fTests.cpp
     src/Math/Matrix2fTests.cpp
     src/Math/Matrix3fTests.cpp
+    src/Math/Matrix4fTests.cpp
 
     src/Graphics/TextureSpecTests.cpp
     src/Graphics/ShaderManagerTests.cpp

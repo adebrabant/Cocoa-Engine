@@ -41,6 +41,7 @@ set(COCOA_PUBLIC_HEADERS
     include/Math/Vector4f.hpp
     include/Math/Matrix2f.hpp
     include/Math/Matrix3f.hpp
+    include/Math/Matrix4f.hpp
 
     include/Scenes/SceneManager.hpp
     include/Scenes/Scene.hpp
