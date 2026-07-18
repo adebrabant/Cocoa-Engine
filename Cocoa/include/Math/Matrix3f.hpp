@@ -1,11 +1,10 @@
 #pragma once
 
 #include "Vector3f.hpp"
+#include "Vector2f.hpp"
 #include <cstddef>
 #include <array>
 #include <cmath>
-
-#include "Vector2f.hpp"
 
 namespace Cocoa::Math
 {

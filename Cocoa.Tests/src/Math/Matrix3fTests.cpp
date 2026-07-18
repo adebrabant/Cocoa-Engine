@@ -4,9 +4,9 @@
 
 namespace Cocoa::Math::Tests
 {
-    TEST(Matrix3fTests, Constructor_ShouldSetElementsToZero_WhenUsingDefaultConstructor)
+    TEST(Matrix3fTests, constexprructor_ShouldSetElementsToZero_WhenUsingDefaultconstexprructor)
     {
-        const Matrix3f sut;
+        constexpr Matrix3f sut;
 
         for (std::size_t i = 0; i <= 8; ++i)
         {
@@ -14,7 +14,7 @@ namespace Cocoa::Math::Tests
         }
     }
 
-    TEST(Matrix3fTests, Constructor_ShouldSetElements_WhenProvidingValues)
+    TEST(Matrix3fTests, constexprructor_ShouldSetElements_WhenProvidingValues)
     {
         constexpr float expectedM00 = 1.0f;
         constexpr float expectedM10 = 2.0f;
@@ -49,18 +49,18 @@ namespace Cocoa::Math::Tests
 
     TEST(Matrix3fTests, AddOperator_ShouldReturnSum_WhenAddingTwoMatrices)
     {
-        const Matrix3f sut(
+        constexpr Matrix3f sut(
             2.0f, 3.0f, 4.0f,
             5.0f, 6.0f, 7.0f,
             8.0f, 9.0f, 10.0f
         );
-        const Matrix3f other(
+        constexpr Matrix3f other(
             2.5f, 3.5f, 4.5f,
             5.5f, 6.5f, 7.5f,
             8.5f, 9.5f, 10.5f
         );
 
-        const Matrix3f result = sut + other;
+        constexpr Matrix3f result = sut + other;
 
         EXPECT_FLOAT_EQ(result[0], 4.5f);
         EXPECT_FLOAT_EQ(result[1], 6.5f);
@@ -75,18 +75,18 @@ namespace Cocoa::Math::Tests
 
     TEST(Matrix3fTests, SubtractOperator_ShouldReturnDifference_WhenSubtractingTwoMatrics)
     {
-        const Matrix3f sut(
+        constexpr Matrix3f sut(
             2.0f, 3.0f, 4.0f,
             5.0f, 6.0f, 7.0f,
             8.0f, 9.0f, 10.0f
         );
-        const Matrix3f other(
+        constexpr Matrix3f other(
             2.5f, 3.5f, 4.5f,
             5.5f, 6.5f, 7.5f,
             8.5f, 9.5f, 10.5f
         );
 
-        const Matrix3f result = sut - other;
+        constexpr Matrix3f result = sut - other;
 
         EXPECT_FLOAT_EQ(result[0], -0.5f);
         EXPECT_FLOAT_EQ(result[1], -0.5f);
@@ -101,14 +101,14 @@ namespace Cocoa::Math::Tests
 
     TEST(Matrix3fTests, MultiplyOperator_ShouldScaleMatrix_WhenMultiplyingByScalar)
     {
-        const Matrix3f sut(
+        constexpr Matrix3f sut(
             2.0f, 3.0f, 4.0f,
             5.0f, 6.0f, 7.0f,
             8.0f, 9.0f, 10.0f
         );
-        const float scalar = 5.0f;
+        constexpr float scalar = 5.0f;
 
-        const Matrix3f result = sut * scalar;
+        constexpr Matrix3f result = sut * scalar;
 
         EXPECT_FLOAT_EQ(result[0], 10.0f);
         EXPECT_FLOAT_EQ(result[1], 15.0f);
@@ -123,18 +123,18 @@ namespace Cocoa::Math::Tests
 
     TEST(Matrix3fTests, MultiplyOperator_ShouldReturnProduct_WhenMultiplyingTwoMatrices)
     {
-        const Matrix3f sut(
+        constexpr Matrix3f sut(
             2.0f, 3.0f, 4.0f,
             5.0f, 6.0f, 7.0f,
             8.0f, 9.0f, 10.0f
         );
-        const Matrix3f other(
+        constexpr Matrix3f other(
             11.0f, 12.0f, 13.0f,
             14.0f, 15.0f, 16.0f,
             17.0f, 18.0f, 19.0f
         );
 
-        const Matrix3f result = sut * other;
+        constexpr Matrix3f result = sut * other;
 
         EXPECT_FLOAT_EQ(result[0], 186.0f);
         EXPECT_FLOAT_EQ(result[1], 222.0f);
@@ -151,14 +151,14 @@ namespace Cocoa::Math::Tests
 
     TEST(Matrix3fTests, MultiplyOperator_ShouldReturnVectorProduct_WhenMultiplyingByVector)
     {
-        const Vector3f scale(3.0f, 2.0f, 1.0f);
-        const Matrix3f sut(
+        constexpr Vector3f scale(3.0f, 2.0f, 1.0f);
+        constexpr Matrix3f sut(
             2.0f, 3.0f, 4.0f,
             5.0f, 6.0f, 7.0f,
             8.0f, 9.0f, 10.0f
         );
 
-        const Vector3f result = sut * scale;
+        constexpr Vector3f result = sut * scale;
 
         EXPECT_FLOAT_EQ(result.X, 24.0f);
         EXPECT_FLOAT_EQ(result.Y, 30.0f);
@@ -167,7 +167,7 @@ namespace Cocoa::Math::Tests
 
     TEST(Matrix3fTests, Identity_ShouldReturnDefaults_WhenCalled)
     {
-        const Matrix3f result = Matrix3f::Identity();
+        constexpr Matrix3f result = Matrix3f::Identity();
 
         EXPECT_FLOAT_EQ(result[0], 1.0f);
         EXPECT_FLOAT_EQ(result[1], 0.0f);
@@ -182,9 +182,9 @@ namespace Cocoa::Math::Tests
 
     TEST(Matrix3fTests, Scale_ShouldReturnScaleMatrix_WhenScaledByVector2f)
     {
-        const Vector2f scale(2.0f, 3.0f);
+        constexpr Vector2f scale(2.0f, 3.0f);
 
-        const Matrix3f result = Matrix3f::Scale(scale);
+        constexpr Matrix3f result = Matrix3f::Scale(scale);
 
         EXPECT_FLOAT_EQ(result[0], scale.X);
         EXPECT_FLOAT_EQ(result[1], 0.0f);
@@ -199,9 +199,9 @@ namespace Cocoa::Math::Tests
 
     TEST(Matrix3fTests, Scale_ShouldReturnScaleMatrix_WhenScaledByVector3f)
     {
-        const Vector3f scale(2.0f, 3.0f, 5.0f);
+        constexpr Vector3f scale(2.0f, 3.0f, 5.0f);
 
-        const Matrix3f result = Matrix3f::Scale(scale);
+        constexpr Matrix3f result = Matrix3f::Scale(scale);
 
         EXPECT_FLOAT_EQ(result[0], scale.X);
         EXPECT_FLOAT_EQ(result[1], 0.0f);
@@ -216,8 +216,8 @@ namespace Cocoa::Math::Tests
 
     TEST(Matrix3fTests, RotationX_ShouldRotateVectorCounterClockwise)
     {
-        const float angle = std::numbers::pi_v<float> / 2.0f;
-        const Vector3f vector(1.0f, 4.0f, 2.0f);
+        constexpr float angle = std::numbers::pi_v<float> / 2.0f;
+        constexpr Vector3f vector(1.0f, 4.0f, 2.0f);
 
         const Matrix3f sut = Matrix3f::RotationX(angle);
         const Vector3f result = sut * vector;
@@ -229,8 +229,8 @@ namespace Cocoa::Math::Tests
 
     TEST(Matrix3fTests, RotationY_ShouldRotateVectorCounterClockwise)
     {
-        const float angle = std::numbers::pi_v<float> / 2.0f;
-        const Vector3f vector(1.0f, 4.0f, 2.0f);
+        constexpr float angle = std::numbers::pi_v<float> / 2.0f;
+        constexpr Vector3f vector(1.0f, 4.0f, 2.0f);
 
         const Matrix3f sut = Matrix3f::RotationY(angle);
         const Vector3f result = sut * vector;
@@ -242,8 +242,8 @@ namespace Cocoa::Math::Tests
 
     TEST(Matrix3fTests, RotationZ_ShouldRotateVectorCounterClockwise)
     {
-        const float angle = std::numbers::pi_v<float> / 2.0f;
-        const Vector3f vector(1.0f, 4.0f, 2.0f);
+        constexpr float angle = std::numbers::pi_v<float> / 2.0f;
+        constexpr Vector3f vector(1.0f, 4.0f, 2.0f);
 
         const Matrix3f sut = Matrix3f::RotationZ(angle);
         const Vector3f result = sut * vector;
@@ -255,11 +255,11 @@ namespace Cocoa::Math::Tests
 
     TEST(Matrix3fTests, Translation_ShouldTranslatePointByVector2Amount)
     {
-        const Vector2f translationAmount(5.0f, 8.0f);
-        const Vector3f point(2.0f, 3.0f, 1.0f);
+        constexpr Vector2f translationAmount(5.0f, 8.0f);
+        constexpr Vector3f point(2.0f, 3.0f, 1.0f);
 
-        const Matrix3f translation = Matrix3f::Translation(translationAmount);
-        const Vector3f result = translation * point;
+        constexpr Matrix3f translation = Matrix3f::Translation(translationAmount);
+        constexpr Vector3f result = translation * point;
 
         EXPECT_FLOAT_EQ(result.X, 7.0f);
         EXPECT_FLOAT_EQ(result.Y, 11.0f);
