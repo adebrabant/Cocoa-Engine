@@ -252,4 +252,17 @@ namespace Cocoa::Math::Tests
         EXPECT_NEAR(result.Y, 1.0f, 0.0001f);
         EXPECT_NEAR(result.Z, 2.0f, 0.0001f);
     }
+
+    TEST(Matrix3fTests, Translation_ShouldTranslatePointByVector2Amount)
+    {
+        const Vector2f translationAmount(5.0f, 8.0f);
+        const Vector3f point(2.0f, 3.0f, 1.0f);
+
+        const Matrix3f translation = Matrix3f::Translation(translationAmount);
+        const Vector3f result = translation * point;
+
+        EXPECT_FLOAT_EQ(result.X, 7.0f);
+        EXPECT_FLOAT_EQ(result.Y, 11.0f);
+        EXPECT_FLOAT_EQ(result.Z, 1.0f);
+    }
 }

@@ -170,6 +170,15 @@ namespace Cocoa::Math
             );
         }
 
+        [[nodiscard]] static constexpr Matrix3f Translation(const Vector2f vector)
+        {
+            return Matrix3f(
+                1.0f, 0.0f, 0.0f,
+                0.0f, 1.0f, 0.0f,
+                vector.X, vector.Y, 1.0f
+            );
+        }
+
     private:
         std::array<float, 9> m_elements{};
     };
