@@ -172,7 +172,7 @@ namespace Cocoa::Math
         }
 
         /// <summary>
-        /// Transforms a three-dimensional column vector using this matrix.
+        /// Transforms a four-dimensional column vector using this matrix.
         /// </summary>
         /// <param name="vector">The vector to transform.</param>
         /// <returns>The transformed vector.</returns>
@@ -184,8 +184,8 @@ namespace Cocoa::Math
             const float y = (m_elements[1] * vector.X) + (m_elements[5] * vector.Y) + (m_elements[9] * vector.Z) + (m_elements[13] * vector.W);
             // Z indexes times each vector component
             const float z = (m_elements[2] * vector.X) + (m_elements[6] * vector.Y) + (m_elements[10] * vector.Z) + (m_elements[14] * vector.W);
-            // W indexes time each vector component
-            const float w =(m_elements[3] * vector.X) + (m_elements[7] * vector.Y) + (m_elements[11] * vector.Z) + (m_elements[15] * vector.W);
+            // W indexes times each vector component
+            const float w = (m_elements[3] * vector.X) + (m_elements[7] * vector.Y) + (m_elements[11] * vector.Z) + (m_elements[15] * vector.W);
 
             return Vector4f(x, y, z, w);
         }
@@ -231,6 +231,89 @@ namespace Cocoa::Math
                 0.0f, scale.Y, 0.0f, 0.0f,
                 0.0f, 0.0f, 1.0f, 0.0f,
                 0.0f, 0.0f, 0.0f, 1.0f
+            );
+        }
+
+        /// <summary>
+        /// Creates a counterclockwise rotation matrix around the X axis.
+        /// </summary>
+        /// <param name="angle">The rotation angle in radians.</param>
+        /// <returns>A matrix representing the requested rotation.</returns>
+        [[nodiscard]] static Matrix4f RotationX(const float angle)
+        {
+            const float cos = std::cos(angle);
+            const float sin = std::sin(angle);
+            return Matrix4f(
+                1.0f, 0.0f, 0.0f, 0.0f,
+                0.0f, cos, sin, 0.0f,
+                0.0f, -sin, cos, 0.0f,
+                0.0f, 0.0f, 0.0f, 1.0f
+            );
+        }
+
+        /// <summary>
+        /// Creates a counterclockwise rotation matrix around the Y axis.
+        /// </summary>
+        /// <param name="angle">The rotation angle in radians.</param>
+        /// <returns>A matrix representing the requested rotation.</returns>
+        [[nodiscard]] static Matrix4f RotationY(const float angle)
+        {
+            const float cos = std::cos(angle);
+            const float sin = std::sin(angle);
+
+            return Matrix4f(
+                cos, 0.0f, -sin, 0.0f,
+                0.0f, 1.0f, 0.0f, 0.0f,
+                sin, 0.0f, cos, 0.0f,
+                0.0f, 0.0f, 0.0f, 1.0f
+            );
+        }
+
+        /// <summary>
+        /// Creates a counterclockwise rotation matrix around the Z axis.
+        /// </summary>
+        /// <param name="angle">The rotation angle in radians.</param>
+        /// <returns>A matrix representing the requested rotation.</returns>
+        [[nodiscard]] static Matrix4f RotationZ(const float angle)
+        {
+            const float cos = std::cos(angle);
+            const float sin = std::sin(angle);
+
+            return Matrix4f(
+                cos, sin, 0.0f, 0.0f,
+                -sin, cos, 0.0f, 0.0f,
+                0.0f, 0.0f, 1.0f, 0.0f,
+                0.0f, 0.0f, 0.0f, 1.0f
+            );
+        }
+
+        /// <summary>
+        /// Creates a three-dimensional translation matrix using homogeneous coordinates.
+        /// </summary>
+        /// <param name="vector">The translation applied along the X, Y, and Z axes.</param>
+        /// <returns>A matrix representing the requested translation.</returns>
+        [[nodiscard]] static constexpr Matrix4f Translation(const Vector3f& vector)
+        {
+            return Matrix4f(
+                1.0f, 0.0f, 0.0f, 0.0f,
+                0.0f, 1.0f, 0.0f, 0.0f,
+                0.0f, 0.0f, 1.0f, 0.0f,
+                vector.X, vector.Y, vector.Z, 1.0f
+            );
+        }
+
+        /// <summary>
+        /// Creates a two-dimensional translation matrix using homogeneous coordinates.
+        /// </summary>
+        /// <param name="vector">The translation applied along the X and Y axes.</param>
+        /// <returns>A matrix representing the requested translation.</returns>
+        [[nodiscard]] static constexpr Matrix4f Translation(const Vector2f& vector)
+        {
+            return Matrix4f(
+                1.0f, 0.0f, 0.0f, 0.0f,
+                0.0f, 1.0f, 0.0f, 0.0f,
+                0.0f, 0.0f, 1.0f, 0.0f,
+                vector.X, vector.Y, 0.0f, 1.0f
             );
         }
 

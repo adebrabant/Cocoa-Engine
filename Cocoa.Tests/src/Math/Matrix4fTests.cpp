@@ -244,4 +244,46 @@ namespace Cocoa::Math::Tests
         EXPECT_FLOAT_EQ(result[14], 0.0f);
         EXPECT_FLOAT_EQ(result[15], 1.0f);
     }
+
+    TEST(Matrix4fTests, RotationX_ShouldRotateVectorCounterClockwise)
+    {
+        constexpr float angle = std::numbers::pi_v<float> / 2.0f;
+        constexpr Vector4f vector(1.0f, 6.0f, 3.0f, 1.0f);
+
+        const Matrix4f sut = Matrix4f::RotationX(angle);
+        const Vector4f result = sut * vector;
+
+        EXPECT_FLOAT_EQ(result.X, 1.0f);
+        EXPECT_NEAR(result.Y, -3.0f, 0.0001f);
+        EXPECT_NEAR(result.Z, 6.0f, 0.0001f);
+        EXPECT_FLOAT_EQ(result.W, 1.0f);
+    }
+
+    TEST(Matrix4fTests, RotationY_ShouldRotateVectorCounterClockwise)
+    {
+        constexpr float angle = std::numbers::pi_v<float> / 2.0f;
+        constexpr Vector4f vector(1.0f, 6.0f, 3.0f, 1.0f);
+
+        const Matrix4f sut = Matrix4f::RotationY(angle);
+        const Vector4f result = sut * vector;
+
+        EXPECT_NEAR(result.X, 3.0f, 0.0001f);
+        EXPECT_FLOAT_EQ(result.Y, 6.0f);
+        EXPECT_NEAR(result.Z, -1.0f, 0.0001f);
+        EXPECT_FLOAT_EQ(result.W, 1.0f);
+    }
+
+    TEST(Matrix4fTests, RotationZ_ShouldRotateVectorCounterClockwise)
+    {
+        constexpr float angle = std::numbers::pi_v<float> / 2.0f;
+        constexpr Vector4f vector(1.0f, 6.0f, 3.0f, 1.0f);
+
+        const Matrix4f sut = Matrix4f::RotationZ(angle);
+        const Vector4f result = sut * vector;
+
+        EXPECT_NEAR(result.X, -6.0f, 0.0001f);
+        EXPECT_NEAR(result.Y, 1.0f, 0.0001f);
+        EXPECT_FLOAT_EQ(result.Z, 3.0f);
+        EXPECT_FLOAT_EQ(result.W, 1.0f);
+    }
 }

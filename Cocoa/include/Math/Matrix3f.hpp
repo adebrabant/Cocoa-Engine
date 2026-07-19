@@ -256,7 +256,7 @@ namespace Cocoa::Math
         /// </summary>
         /// <param name="vector">The translation applied along the X and Y axes.</param>
         /// <returns>A matrix representing the requested translation.</returns>
-        [[nodiscard]] static constexpr Matrix3f Translation(const Vector2f vector)
+        [[nodiscard]] static constexpr Matrix3f Translation(const Vector2f& vector)
         {
             return Matrix3f(
                 1.0f, 0.0f, 0.0f,
