@@ -1,6 +1,9 @@
 #pragma once
 
-#include "Vector3f.hpp"
+#include "Math/Vector4f.hpp"
+#include "Math/Vector3f.hpp"
+#include "Math/Vector2f.hpp"
+
 #include <cstddef>
 #include <array>
 #include <cmath>
@@ -166,6 +169,69 @@ namespace Cocoa::Math
             result[15] = (m_elements[3] * other[12]) + (m_elements[7] * other[13]) + (m_elements[11] * other[14]) + (m_elements[15] * other[15]);
 
             return result;
+        }
+
+        /// <summary>
+        /// Transforms a three-dimensional column vector using this matrix.
+        /// </summary>
+        /// <param name="vector">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [[nodiscard]] constexpr Vector4f operator*(const Vector4f& vector) const
+        {
+            // X indexes times each vector component
+            const float x = (m_elements[0] * vector.X) + (m_elements[4] * vector.Y) + (m_elements[8] * vector.Z) + (m_elements[12] * vector.W);
+            // Y indexes times each vector component
+            const float y = (m_elements[1] * vector.X) + (m_elements[5] * vector.Y) + (m_elements[9] * vector.Z) + (m_elements[13] * vector.W);
+            // Z indexes times each vector component
+            const float z = (m_elements[2] * vector.X) + (m_elements[6] * vector.Y) + (m_elements[10] * vector.Z) + (m_elements[14] * vector.W);
+            // W indexes time each vector component
+            const float w =(m_elements[3] * vector.X) + (m_elements[7] * vector.Y) + (m_elements[11] * vector.Z) + (m_elements[15] * vector.W);
+
+            return Vector4f(x, y, z, w);
+        }
+
+        /// <summary>
+        /// Creates an identity matrix.
+        /// </summary>
+        /// <returns>A matrix that leaves values unchanged when multiplied.</returns>
+        [[nodiscard]] static constexpr Matrix4f Identity()
+        {
+            return Matrix4f(
+                1.0f, 0.0f, 0.0f, 0.0f,
+                0.0f, 1.0f, 0.0f, 0.0f,
+                0.0f, 0.0f, 1.0f, 0.0f,
+                0.0f, 0.0f, 0.0f, 1.0f
+            );
+        }
+
+        /// <summary>
+        /// Creates a three-dimensional scaling matrix.
+        /// </summary>
+        /// <param name="scale">The scale applied along the X, Y, and Z axes.</param>
+        /// <returns>A matrix representing the requested scale.</returns>
+        [[nodiscard]] static constexpr Matrix4f Scale(const Vector3f& scale)
+        {
+            return Matrix4f(
+                scale.X, 0.0f, 0.0f, 0.0f,
+                0.0f, scale.Y, 0.0f, 0.0f,
+                0.0f, 0.0f, scale.Z, 0.0f,
+                0.0f, 0.0f, 0.0f, 1.0f
+            );
+        }
+
+        /// <summary>
+        /// Creates a two-dimensional scaling matrix using homogeneous coordinates.
+        /// </summary>
+        /// <param name="scale">The scale applied along the X and Y axes.</param>
+        /// <returns>A matrix representing the requested scale.</returns>
+        [[nodiscard]] static constexpr Matrix4f Scale(const Vector2f& scale)
+        {
+            return Matrix4f(
+                scale.X, 0.0f, 0.0f, 0.0f,
+                0.0f, scale.Y, 0.0f, 0.0f,
+                0.0f, 0.0f, 1.0f, 0.0f,
+                0.0f, 0.0f, 0.0f, 1.0f
+            );
         }
 
     private:

@@ -161,4 +161,87 @@ namespace Cocoa::Math::Tests
         EXPECT_FLOAT_EQ(result[14], 1118.0f);
         EXPECT_FLOAT_EQ(result[15], 1240.0f);
     }
+
+    TEST(Matrix4fTests, MultiplyOperator_ShouldReturnVectorProduct_WhenMultiplyingByVector)
+    {
+        constexpr Vector4f scale(2.0f, 3.0f, 4.0f, 1.0f);
+        constexpr Matrix4f sut(
+            1.0f, 2.0f, 3.0f, 4.0f,
+            5.0f, 6.0f, 7.0f, 8.0f,
+            9.0f, 10.0f, 11.0f, 12.0f,
+            13.0f, 14.0f, 15.0f, 16.0f
+        );
+
+        constexpr Vector4f result = sut * scale;
+
+        EXPECT_FLOAT_EQ(result.X, 66.0f);
+        EXPECT_FLOAT_EQ(result.Y, 76.0f);
+        EXPECT_FLOAT_EQ(result.Z, 86.0f);
+        EXPECT_FLOAT_EQ(result.W, 96.0f);
+    }
+
+    TEST(Matrix4fTests, Identity_ShouldReturnDefaults_WhenCalled)
+    {
+        constexpr Matrix4f result = Matrix4f::Identity();
+
+        EXPECT_FLOAT_EQ(result[0], 1.0f);
+        EXPECT_FLOAT_EQ(result[1], 0.0f);
+        EXPECT_FLOAT_EQ(result[2], 0.0f);
+        EXPECT_FLOAT_EQ(result[3], 0.0f);
+        EXPECT_FLOAT_EQ(result[4], 0.0f);
+        EXPECT_FLOAT_EQ(result[5], 1.0f);
+        EXPECT_FLOAT_EQ(result[6], 0.0f);
+        EXPECT_FLOAT_EQ(result[7], 0.0f);
+        EXPECT_FLOAT_EQ(result[9], 0.0f);
+        EXPECT_FLOAT_EQ(result[10], 1.0f);
+        EXPECT_FLOAT_EQ(result[11], 0.0f);
+        EXPECT_FLOAT_EQ(result[12], 0.0f);
+        EXPECT_FLOAT_EQ(result[13], 0.0f);
+        EXPECT_FLOAT_EQ(result[14], 0.0f);
+        EXPECT_FLOAT_EQ(result[15], 1.0f);
+    }
+
+    TEST(Matrix4fTests, Scale_ShouldReturnScaleMatrix_WhenScaledByVector3f)
+    {
+        constexpr Vector3f scale(2.0f, 3.0f, 4.0);
+
+        constexpr Matrix4f result = Matrix4f::Scale(scale);
+
+        EXPECT_FLOAT_EQ(result[0], scale.X);
+        EXPECT_FLOAT_EQ(result[1], 0.0f);
+        EXPECT_FLOAT_EQ(result[2], 0.0f);
+        EXPECT_FLOAT_EQ(result[3], 0.0f);
+        EXPECT_FLOAT_EQ(result[4], 0.0f);
+        EXPECT_FLOAT_EQ(result[5], scale.Y);
+        EXPECT_FLOAT_EQ(result[6], 0.0f);
+        EXPECT_FLOAT_EQ(result[7], 0.0f);
+        EXPECT_FLOAT_EQ(result[10], scale.Z);
+        EXPECT_FLOAT_EQ(result[11], 0.0f);
+        EXPECT_FLOAT_EQ(result[12], 0.0f);
+        EXPECT_FLOAT_EQ(result[13], 0.0f);
+        EXPECT_FLOAT_EQ(result[14], 0.0f);
+        EXPECT_FLOAT_EQ(result[15], 1.0f);
+    }
+
+    TEST(Matrix4fTests, Scale_ShouldReturnScaleMatrix_WhenScaledByVector2f)
+    {
+        constexpr Vector2f scale(2.0f, 3.0f);
+
+        constexpr Matrix4f result = Matrix4f::Scale(scale);
+
+        EXPECT_FLOAT_EQ(result[0], scale.X);
+        EXPECT_FLOAT_EQ(result[1], 0.0f);
+        EXPECT_FLOAT_EQ(result[2], 0.0f);
+        EXPECT_FLOAT_EQ(result[3], 0.0f);
+        EXPECT_FLOAT_EQ(result[4], 0.0f);
+        EXPECT_FLOAT_EQ(result[5], scale.Y);
+        EXPECT_FLOAT_EQ(result[6], 0.0f);
+        EXPECT_FLOAT_EQ(result[7], 0.0f);
+        EXPECT_FLOAT_EQ(result[10], 1.0f);
+        EXPECT_FLOAT_EQ(result[11], 0.0f);
+        EXPECT_FLOAT_EQ(result[12], 0.0f);
+        EXPECT_FLOAT_EQ(result[13], 0.0f);
+        EXPECT_FLOAT_EQ(result[14], 0.0f);
+        EXPECT_FLOAT_EQ(result[15], 1.0f);
+    }
 }
