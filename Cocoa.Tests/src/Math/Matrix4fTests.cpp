@@ -286,4 +286,32 @@ namespace Cocoa::Math::Tests
         EXPECT_FLOAT_EQ(result.Z, 3.0f);
         EXPECT_FLOAT_EQ(result.W, 1.0f);
     }
+
+    TEST(Matrix4fTests, Translation_ShouldTranslatePointByVector3Amount)
+    {
+        constexpr Vector3f translationAmount(5.0f, 8.0f, 3.0f);
+        constexpr Vector4f point(2.0f, 3.0f, 4.0f, 1.0f);
+
+        constexpr Matrix4f translation = Matrix4f::Translation(translationAmount);
+        constexpr Vector4f result = translation * point;
+
+        EXPECT_FLOAT_EQ(result.X, 7.0f);
+        EXPECT_FLOAT_EQ(result.Y, 11.0f);
+        EXPECT_FLOAT_EQ(result.Z, 7.0f);
+        EXPECT_FLOAT_EQ(result.W, 1.0f);
+    }
+
+    TEST(Matrix4fTests, Translation_ShouldTranslatePointByVector2Amount)
+    {
+        constexpr Vector2f translationAmount(5.0f, 8.0f);
+        constexpr Vector4f point(2.0f, 3.0f, 4.0f, 1.0f);
+
+        constexpr Matrix4f translation = Matrix4f::Translation(translationAmount);
+        constexpr Vector4f result = translation * point;
+
+        EXPECT_FLOAT_EQ(result.X, 7.0f);
+        EXPECT_FLOAT_EQ(result.Y, 11.0f);
+        EXPECT_FLOAT_EQ(result.Z, 4.0f);
+        EXPECT_FLOAT_EQ(result.W, 1.0f);
+    }
 }
