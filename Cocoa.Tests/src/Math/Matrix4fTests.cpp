@@ -123,4 +123,42 @@ namespace Cocoa::Math::Tests
         EXPECT_FLOAT_EQ(result[14], 80.0f);
         EXPECT_FLOAT_EQ(result[15], 85.0f);
     }
+
+    TEST(Matrix4fTests, MultiplyOperator_ShouldReturnProduct_WhenMultiplyingTwoMatrices)
+    {
+        constexpr Matrix4f sut(
+            1.0f, 2.0f, 3.0f, 4.0f,
+            5.0f, 6.0f, 7.0f, 8.0f,
+            9.0f, 10.0f, 11.0f, 12.0f,
+            13.0f, 14.0f, 15.0f, 16.0f
+        );
+        constexpr Matrix4f other(
+            17.0f, 18.0f, 19.0f, 20.0f,
+            21.0f, 22.0f, 23.0f, 24.0f,
+            25.0f, 26.0f, 27.0f, 28.0f,
+            29.0f, 30.0f, 31.0f, 32.0f
+        );
+
+        constexpr Matrix4f result = sut * other;
+
+        EXPECT_FLOAT_EQ(result[0], 538.0f);
+        EXPECT_FLOAT_EQ(result[1], 612.0f);
+        EXPECT_FLOAT_EQ(result[2], 686.0f);
+        EXPECT_FLOAT_EQ(result[3], 760.0f);
+
+        EXPECT_FLOAT_EQ(result[4], 650.0f);
+        EXPECT_FLOAT_EQ(result[5], 740.0f);
+        EXPECT_FLOAT_EQ(result[6], 830.0f);
+        EXPECT_FLOAT_EQ(result[7], 920.0f);
+
+        EXPECT_FLOAT_EQ(result[8], 762.0f);
+        EXPECT_FLOAT_EQ(result[9], 868.0f);
+        EXPECT_FLOAT_EQ(result[10], 974.0f);
+        EXPECT_FLOAT_EQ(result[11], 1080.0f);
+
+        EXPECT_FLOAT_EQ(result[12], 874.0f);
+        EXPECT_FLOAT_EQ(result[13], 996.0f);
+        EXPECT_FLOAT_EQ(result[14], 1118.0f);
+        EXPECT_FLOAT_EQ(result[15], 1240.0f);
+    }
 }

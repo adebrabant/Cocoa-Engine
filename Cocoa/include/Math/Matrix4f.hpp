@@ -120,6 +120,54 @@ namespace Cocoa::Math
             return result;
         }
 
+        /// <summary>
+        /// Multiplies this matrix by another matrix.
+        /// </summary>
+        /// <param name="other">The matrix on the right side of the multiplication.</param>
+        /// <returns>The resulting matrix product.</returns>
+        [[nodiscard]] constexpr Matrix4f operator*(const Matrix4f& other) const
+        {
+            Matrix4f result;
+
+            // top-left
+            result[0] = (m_elements[0] * other[0]) + (m_elements[4] * other[1]) + (m_elements[8] * other[2]) + (m_elements[12] * other[3]);
+            // upper-middle-left
+            result[1] = (m_elements[1] * other[0]) + (m_elements[5] * other[1]) + (m_elements[9] * other[2]) + (m_elements[13] * other[3]);
+            // lower-middle-left
+            result[2] = (m_elements[2] * other[0]) + (m_elements[6] * other[1]) + (m_elements[10] * other[2]) + (m_elements[14] * other[3]);
+            // bottom-left
+            result[3] = (m_elements[3] * other[0]) + (m_elements[7] * other[1]) + (m_elements[11] * other[2]) + (m_elements[15] * other[3]);
+
+            // top-center-left
+            result[4] = (m_elements[0] * other[4]) + (m_elements[4] * other[5]) + (m_elements[8] * other[6]) + (m_elements[12] * other[7]);
+            // upper-middle-center-left
+            result[5] = (m_elements[1] * other[4]) + (m_elements[5] * other[5]) + (m_elements[9] * other[6]) + (m_elements[13] * other[7]);
+            // lower-middle-center-left
+            result[6] = (m_elements[2] * other[4]) + (m_elements[6] * other[5]) + (m_elements[10] * other[6]) + (m_elements[14] * other[7]);
+            // bottom-center-left
+            result[7] = (m_elements[3] * other[4]) + (m_elements[7] * other[5]) + (m_elements[11] * other[6]) + (m_elements[15] * other[7]);
+
+            // top-center-right
+            result[8] = (m_elements[0] * other[8]) + (m_elements[4] * other[9]) + (m_elements[8] * other[10]) + (m_elements[12] * other[11]);
+            // upper-middle-center-right
+            result[9] = (m_elements[1] * other[8]) + (m_elements[5] * other[9]) + (m_elements[9] * other[10]) + (m_elements[13] * other[11]);
+            // lower-middle-center-right
+            result[10] = (m_elements[2] * other[8]) + (m_elements[6] * other[9]) + (m_elements[10] * other[10]) + (m_elements[14] * other[11]);
+            // bottom-center-right
+            result[11] = (m_elements[3] * other[8]) + (m_elements[7] * other[9]) + (m_elements[11] * other[10]) + (m_elements[15] * other[11]);
+
+            // top-right
+            result[12] = (m_elements[0] * other[12]) + (m_elements[4] * other[13]) + (m_elements[8] * other[14]) + (m_elements[12] * other[15]);
+            // upper-middle-right
+            result[13] = (m_elements[1] * other[12]) + (m_elements[5] * other[13]) + (m_elements[9] * other[14]) + (m_elements[13] * other[15]);
+            // lower-middle-right
+            result[14] = (m_elements[2] * other[12]) + (m_elements[6] * other[13]) + (m_elements[10] * other[14]) + (m_elements[14] * other[15]);
+            // bottom-right
+            result[15] = (m_elements[3] * other[12]) + (m_elements[7] * other[13]) + (m_elements[11] * other[14]) + (m_elements[15] * other[15]);
+
+            return result;
+        }
+
     private:
         std::array<float, 16> m_elements{};
     };
