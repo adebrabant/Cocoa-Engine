@@ -1,6 +1,9 @@
 #include <Math/Matrix4f.hpp>
 #include <Math/Vector4f.hpp>
+
 #include <gtest/gtest.h>
+#include <array>
+#include <numbers>
 
 namespace Cocoa::Math::Tests
 {
@@ -192,6 +195,7 @@ namespace Cocoa::Math::Tests
         EXPECT_FLOAT_EQ(result[5], 1.0f);
         EXPECT_FLOAT_EQ(result[6], 0.0f);
         EXPECT_FLOAT_EQ(result[7], 0.0f);
+        EXPECT_FLOAT_EQ(result[8], 0.0f);
         EXPECT_FLOAT_EQ(result[9], 0.0f);
         EXPECT_FLOAT_EQ(result[10], 1.0f);
         EXPECT_FLOAT_EQ(result[11], 0.0f);
@@ -203,7 +207,7 @@ namespace Cocoa::Math::Tests
 
     TEST(Matrix4fTests, Scale_ShouldReturnScaleMatrix_WhenScaledByVector3f)
     {
-        constexpr Vector3f scale(2.0f, 3.0f, 4.0);
+        constexpr Vector3f scale(2.0f, 3.0f, 4.0f);
 
         constexpr Matrix4f result = Matrix4f::Scale(scale);
 
@@ -215,6 +219,8 @@ namespace Cocoa::Math::Tests
         EXPECT_FLOAT_EQ(result[5], scale.Y);
         EXPECT_FLOAT_EQ(result[6], 0.0f);
         EXPECT_FLOAT_EQ(result[7], 0.0f);
+        EXPECT_FLOAT_EQ(result[8], 0.0f);
+        EXPECT_FLOAT_EQ(result[9], 0.0f);
         EXPECT_FLOAT_EQ(result[10], scale.Z);
         EXPECT_FLOAT_EQ(result[11], 0.0f);
         EXPECT_FLOAT_EQ(result[12], 0.0f);
@@ -237,6 +243,8 @@ namespace Cocoa::Math::Tests
         EXPECT_FLOAT_EQ(result[5], scale.Y);
         EXPECT_FLOAT_EQ(result[6], 0.0f);
         EXPECT_FLOAT_EQ(result[7], 0.0f);
+        EXPECT_FLOAT_EQ(result[8], 0.0f);
+        EXPECT_FLOAT_EQ(result[9], 0.0f);
         EXPECT_FLOAT_EQ(result[10], 1.0f);
         EXPECT_FLOAT_EQ(result[11], 0.0f);
         EXPECT_FLOAT_EQ(result[12], 0.0f);
