@@ -39,6 +39,9 @@ set(COCOA_PUBLIC_HEADERS
     include/Math/Vector2f.hpp
     include/Math/Vector3f.hpp
     include/Math/Vector4f.hpp
+    include/Math/Matrix2f.hpp
+    include/Math/Matrix3f.hpp
+    include/Math/Matrix4f.hpp
 
     include/Scenes/SceneManager.hpp
     include/Scenes/Scene.hpp
@@ -62,7 +65,6 @@ set(COCOA_PUBLIC_HEADERS
     include/Chronos/FrameClock.hpp
 
     include/Inputs/InputHandler.hpp
-    
 )
 
 set(COCOA_PRIVATE_SOURCES
