@@ -322,4 +322,21 @@ namespace Cocoa::Math::Tests
         EXPECT_FLOAT_EQ(result.Z, 4.0f);
         EXPECT_FLOAT_EQ(result.W, 1.0f);
     }
+
+    TEST(Matrix4fTests, TransformHelpers_ShouldReturnCombinedTransform_WhenComposed)
+    {
+        constexpr Vector4f point(1.0f, 1.0f, 0.0f, 1.0f);
+
+        constexpr Matrix4f scale = Matrix4f::Scale(Vector2f(2.0f, 3.0f));
+        const Matrix4f rotation = Matrix4f::RotationZ(std::numbers::pi_v<float> / 2.0f);
+        constexpr Matrix4f translation = Matrix4f::Translation(Vector2f(5.0f, 8.0f));
+
+        const Matrix4f transform = translation * rotation * scale;
+        const Vector4f result = transform * point;
+
+        EXPECT_NEAR(result.X, 2.0f, 0.0001f);
+        EXPECT_NEAR(result.Y, 10.0f, 0.0001f);
+        EXPECT_FLOAT_EQ(result.Z, 0.0f);
+        EXPECT_FLOAT_EQ(result.W, 1.0f);
+    }
 }
