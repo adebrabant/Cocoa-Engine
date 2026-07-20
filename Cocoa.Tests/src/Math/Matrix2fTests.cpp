@@ -1,6 +1,7 @@
 #include <Math/Matrix2f.hpp>
 
 #include <gtest/gtest.h>
+#include <numbers>
 
 namespace Cocoa::Math::Tests
 {
