@@ -79,7 +79,7 @@ namespace Cocoa::Graphics::Tests
 	{
 		Graphics::ShaderHandle shaderHandle{ .Id = 1 };
 		Graphics::TextureHandle textureHandle{ .Id = 1 };
-		Core::Color tint;
+		Core::Color tint{ 0.25f, 0.5f, 0.75f, 1.0f };
 		Graphics::MaterialManager sut;
 
 		Graphics::MaterialHandle handle = sut.Load(
@@ -92,6 +92,12 @@ namespace Cocoa::Graphics::Tests
 		const Graphics::Material& result = sut.Get(handle);
 
 		EXPECT_NE(&result, nullptr);
+		EXPECT_EQ(result.ShaderId.Id, shaderHandle.Id);
+		EXPECT_EQ(result.TextureId.Id, textureHandle.Id);
+		EXPECT_FLOAT_EQ(result.Tint.R, tint.R);
+		EXPECT_FLOAT_EQ(result.Tint.G, tint.G);
+		EXPECT_FLOAT_EQ(result.Tint.B, tint.B);
+		EXPECT_FLOAT_EQ(result.Tint.A, tint.A);
 	}
 
 	TEST(MaterialManagerTests, Get_ShouldReturnSameMaterial_WhenProvidingSameHandle)
