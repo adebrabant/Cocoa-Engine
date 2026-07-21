@@ -9,7 +9,7 @@
 
 namespace Cocoa::Core
 {
-	class Color;
+	struct Color;
 }
 
 namespace Cocoa::Graphics

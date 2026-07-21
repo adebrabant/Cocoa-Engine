@@ -10,7 +10,7 @@ namespace Cocoa::Graphics
 	class OpenGLVertexBuffer : public VertexBuffer
 	{
 	public:
-		OpenGLVertexBuffer(const float* vertices, uint32_t size, const BufferLayout& bufferLayout);
+		OpenGLVertexBuffer(const void* vertices, uint32_t size, const BufferLayout& bufferLayout);
 		~OpenGLVertexBuffer() override;
 
 		OpenGLVertexBuffer(const OpenGLVertexBuffer&) = delete;
