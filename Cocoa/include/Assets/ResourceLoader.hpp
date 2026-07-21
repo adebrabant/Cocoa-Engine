@@ -37,9 +37,9 @@ namespace Cocoa::Assets
 		ResourceLoader(ResourceLoader&&) = delete;
 		ResourceLoader& operator=(ResourceLoader&&) = delete;
 
-		Graphics::TextureHandle LoadTexture(const std::string& textureId) const;
-		Graphics::ShaderHandle LoadShader(const std::string& shaderId) const;
-		Graphics::MaterialHandle LoadMaterial(const std::string& materialId) const;
+		[[nodiscard]] Graphics::TextureHandle LoadTexture(const std::string& textureId) const;
+		[[nodiscard]] Graphics::ShaderHandle LoadShader(const std::string& shaderId) const;
+		[[nodiscard]] Graphics::MaterialHandle LoadMaterial(const std::string& materialId) const;
 
 
 	private:
