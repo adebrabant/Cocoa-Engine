@@ -10,7 +10,6 @@
 #include "Core/Memory.hpp"
 
 #include <GL/glew.h>
-#include <iostream>
 
 namespace Cocoa::Graphics
 {
@@ -70,7 +69,7 @@ namespace Cocoa::Graphics
 		return CreateUnique<OpenGLVertexArray>();
 	}
 
-	Unique<VertexBuffer> OpenGLGraphicsDevice::CreateVertexBuffer(const float* vertices, uint32_t size, const BufferLayout& bufferLayout)
+	Unique<VertexBuffer> OpenGLGraphicsDevice::CreateVertexBuffer(const void* vertices, uint32_t size, const BufferLayout& bufferLayout)
 	{
 		return CreateUnique<OpenGLVertexBuffer>(vertices, size, bufferLayout);
 	}

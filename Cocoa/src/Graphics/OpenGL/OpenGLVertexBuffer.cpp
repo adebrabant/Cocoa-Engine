@@ -6,7 +6,7 @@
 
 namespace Cocoa::Graphics
 {
-	OpenGLVertexBuffer::OpenGLVertexBuffer(const float* vertices, uint32_t size, const BufferLayout& bufferLayout) : 
+	OpenGLVertexBuffer::OpenGLVertexBuffer(const void* vertices, const uint32_t size, const BufferLayout& bufferLayout) :
 		m_bufferLayout(bufferLayout),
 		m_vbo(0)
 	{

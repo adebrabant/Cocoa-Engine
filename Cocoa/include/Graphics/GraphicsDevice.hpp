@@ -26,7 +26,7 @@ namespace Cocoa::Graphics
 
         virtual Unique<Shader> CreateShader(const std::string& vertexSource, const std::string& fragmentSource) = 0;
         virtual Unique<VertexArray> CreateVertexArray() = 0;
-        virtual Unique<VertexBuffer> CreateVertexBuffer(const float* vertices, uint32_t size, const BufferLayout& bufferLayout) = 0;
+        virtual Unique<VertexBuffer> CreateVertexBuffer(const void* vertices, uint32_t size, const BufferLayout& bufferLayout) = 0;
         virtual Unique<IndexBuffer> CreateIndexBuffer(const uint32_t* indices, uint32_t count) = 0;
         virtual Unique<Texture2D> CreateTexture2D(TextureSpec textureSpec, const unsigned char* pixels) = 0;
 
