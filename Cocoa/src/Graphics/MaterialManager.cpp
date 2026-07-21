@@ -36,7 +36,8 @@ namespace Cocoa::Graphics
 		{
 			.Id = materialId,
 			.ShaderId = shaderHandle,
-			.TextureId = textureHandle
+			.TextureId = textureHandle,
+			.Tint = tint
 		};
 		
 		m_handles.emplace(materialId, handle);

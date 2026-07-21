@@ -75,7 +75,7 @@ namespace Cocoa::Graphics::Tests
 		EXPECT_NE(result1.Id, result2.Id);
 	}
 
-	TEST(MaterialManagerTests, Get_ShouldReturnMaterial_WHenProvidingValidHandle)
+	TEST(MaterialManagerTests, Get_ShouldReturnMaterial_WhenProvidingValidHandle)
 	{
 		Graphics::ShaderHandle shaderHandle{ .Id = 1 };
 		Graphics::TextureHandle textureHandle{ .Id = 1 };
