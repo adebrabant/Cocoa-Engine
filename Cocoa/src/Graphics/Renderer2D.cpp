@@ -64,6 +64,7 @@ namespace Cocoa::Graphics
 	{
 		//ToDo: Store camera/view-projection data
 		m_drawCommands.clear();
+		m_quadDrawCommands.clear();
 	}
 
 	void Renderer2D::EndScene()

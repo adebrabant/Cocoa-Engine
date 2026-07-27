@@ -8,6 +8,7 @@
 #include "Math/Matrix4f.hpp"
 
 #include <vector>
+#include <array>
 
 namespace Cocoa::Graphics
 {
