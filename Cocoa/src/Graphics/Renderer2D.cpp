@@ -9,26 +9,12 @@
 #include "Graphics/TextureManager.hpp"
 #include "Graphics/MaterialManager.hpp"
 #include "Graphics/GraphicsDevice.hpp"
-#include "Math/Vector2f.hpp"
-#include "Math/Vector3f.hpp"
-#include "Math/Vector4f.hpp"
 #include "Core/Color.hpp"
 
 #include <array>
 
 namespace Cocoa::Graphics
 {
-	struct QuadVertex
-	{
-		Math::Vector3f Position;
-		Math::Vector2f TexCoord;
-		Math::Vector4f Color;
-
-		// ToDo : Need to look into this
-		//float TextureIndex;
-		//float TilingFactor;
-	};
-
 	Renderer2D::Renderer2D(
 		GraphicsDevice& graphicsDevice,
 		ShaderManager& shaderManager,
@@ -88,6 +74,38 @@ namespace Cocoa::Graphics
 	void Renderer2D::DrawQuad(MaterialHandle materialHandle)
 	{
 		m_drawCommands.emplace_back(DrawCommand2D{ materialHandle });
+	}
+
+	void Renderer2D::DrawQuad(const Math::Matrix4f& transform, MaterialHandle materialHandle)
+	{
+		// Transform the quad's local-space corners into world space.
+		const Math::Vector4f worldBottomLeft =
+			transform * Math::Vector4f{-0.5f, -0.5f, 0.0f, 1.0f };
+
+		const Math::Vector4f worldBottomRight =
+			transform * Math::Vector4f{ 0.5f, -0.5f, 0.0f, 1.0f };
+
+		const Math::Vector4f worldTopRight =
+			transform * Math::Vector4f{ 0.5f, 0.5f, 0.0f, 1.0f };
+
+		const Math::Vector4f worldTopLeft =
+			transform * Math::Vector4f{ -0.5f, 0.5f, 0.0f, 1.0f };
+
+		constexpr Math::Vector4f defaultWhiteColor{ 1.0f, 1.0f, 1.0f, 1.0f };
+
+		const std::array<QuadVertex, 4> vertices =
+		{
+			// Bottom-left
+			QuadVertex{ {worldBottomLeft.X, worldBottomLeft.Y, worldBottomLeft.Z}, {0.0f, 0.0f }, defaultWhiteColor},
+			// Bottom-right
+			QuadVertex{ {worldBottomRight.X, worldBottomRight.Y, worldBottomRight.Z}, {1.0f, 0.0f }, defaultWhiteColor},
+			// Top-right
+			QuadVertex{ {worldTopRight.X,  worldTopRight.Y, worldTopRight.Z}, {1.0f, 1.0f }, defaultWhiteColor},
+			// Top-left
+			QuadVertex{ {worldTopLeft.X, worldTopLeft.Y, worldTopLeft.Z}, {0.0f, 1.0f}, defaultWhiteColor}
+		};
+
+		m_quadDrawCommands.emplace_back(QuadDrawCommand{ .Material = materialHandle, .Vertices = vertices});
 	}
 
 	void Renderer2D::Flush()

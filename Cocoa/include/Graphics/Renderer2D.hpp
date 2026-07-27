@@ -2,6 +2,10 @@
 
 #include "Core/Memory.hpp"
 #include "Graphics/GraphicsHandles.hpp"
+#include "Math/Vector2f.hpp"
+#include "Math/Vector3f.hpp"
+#include "Math/Vector4f.hpp"
+#include "Math/Matrix4f.hpp"
 
 #include <vector>
 
@@ -15,9 +19,26 @@ namespace Cocoa::Graphics
 	class MaterialManager;
 	class GraphicsDevice;
 
+	// Remove
 	struct DrawCommand2D
 	{
 		MaterialHandle Material;
+	};
+
+	struct QuadVertex
+	{
+		Math::Vector3f Position;
+		Math::Vector2f TexCoord;
+		Math::Vector4f Color;
+		// ToDo : Need to look into this
+		//float TextureIndex;
+		//float TilingFactor;
+	};
+
+	struct QuadDrawCommand
+	{
+		MaterialHandle Material;
+		std::array<QuadVertex, 4> Vertices;
 	};
 
 	class Renderer2D
@@ -34,6 +55,7 @@ namespace Cocoa::Graphics
 		void BeginScene();
 		void EndScene();
 		void DrawQuad(MaterialHandle materialHandle);
+		void DrawQuad(const Math::Matrix4f& transform, MaterialHandle materialHandle);
 
 	private:
 		void Flush();
@@ -46,6 +68,7 @@ namespace Cocoa::Graphics
 		Unique<VertexArray> m_vao{ nullptr };
 		Unique<VertexBuffer> m_vbo{ nullptr };
 		Unique<IndexBuffer> m_ibo{ nullptr };
-		std::vector<DrawCommand2D> m_drawCommands;
+		std::vector<DrawCommand2D> m_drawCommands; // Remove after quad drawCommand is set
+		std::vector<QuadDrawCommand> m_quadDrawCommands;
 	};
 }
