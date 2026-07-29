@@ -15,17 +15,7 @@ namespace Cocoa::Scenes
 
 		for (auto [transform, camera] : view)
 		{
-			transform.X += 1.0f * deltaTime;
-			transform.Y += 0.0f;
-			transform.Z += 0.5f * deltaTime;
 
-			//std::cout << "Camera Position -> X: "
-			//	<< transform.X
-			//	<< ", Y: "
-			//	<< transform.Y
-			//	<< ", Z: "
-			//	<< transform.Z
-			//	<< std::endl;
 		}
 	}
 

@@ -6,6 +6,7 @@ namespace Cocoa::Scenes
 {
 	class MovementSystem : public System
 	{
+	public:
 		void Update(World& world, float deltaTime) override;
 		void Render(World& world, Graphics::Renderer2D& renderer, float alpha) override;
 	};
