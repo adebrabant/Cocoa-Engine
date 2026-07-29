@@ -8,7 +8,7 @@ namespace Cocoa::Stubs
 	{
 	public:
 		StubShader() = default;
-		~StubShader() = default;
+		~StubShader() override = default;
 		void Bind() const override;
 		void Unbind() const override;
 		void SetInt(const std::string& name, int value) const override;
