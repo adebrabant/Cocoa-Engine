@@ -11,12 +11,13 @@ namespace Sandbox
     void TestScene::Load(Cocoa::Assets::ResourceLoader& loader)
     {
         auto cameraEntity = m_world.CreateEntity();
-        m_world.AddComponent(cameraEntity, Cocoa::Scenes::TransformComponent{ 0, 0, 0, 0, 0 });
+        m_world.AddComponent(cameraEntity, Cocoa::Scenes::TransformComponent{ });
         m_world.AddComponent(cameraEntity, Cocoa::Scenes::CameraComponent{ 0, 0, 0, 60.0f });
         m_world.AddSystem<Cocoa::Scenes::CameraSystem>();
 
         auto dummyEntity = m_world.CreateEntity();
         auto materialHandle = loader.LoadMaterial("werewolf_material");
+    	m_world.AddComponent(dummyEntity, Cocoa::Scenes::TransformComponent{ });
         m_world.AddComponent(dummyEntity, Cocoa::Scenes::Renderable2DComponent{ materialHandle });
         m_world.AddSystem<Cocoa::Scenes::RenderSystem>();
     }
