@@ -45,6 +45,11 @@ namespace Cocoa::Stubs
 		return Unique<Graphics::VertexArray>();
 	}
 
+	Unique<Graphics::VertexBuffer> StubGraphicsDevice::CreateVertexBuffer(uint32_t size, const Graphics::BufferLayout& bufferLayout)
+	{
+		return Unique<Graphics::VertexBuffer>();
+	}
+
 	Unique<Graphics::VertexBuffer> StubGraphicsDevice::CreateVertexBuffer(const void* vertices, uint32_t size, const Graphics::BufferLayout& bufferLayout)
 	{
 		return Unique<Graphics::VertexBuffer>();

@@ -6,6 +6,19 @@
 
 namespace Cocoa::Graphics
 {
+	OpenGLVertexBuffer::OpenGLVertexBuffer(const uint32_t size, const BufferLayout& bufferLayout) :
+		m_bufferLayout(bufferLayout),
+		m_vbo(0)
+	{
+		GLuint vbo = 0;
+		glGenBuffers(1, &vbo);
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		m_vbo = static_cast<uint32_t>(vbo);
+	}
+
 	OpenGLVertexBuffer::OpenGLVertexBuffer(const void* vertices, const uint32_t size, const BufferLayout& bufferLayout) :
 		m_bufferLayout(bufferLayout),
 		m_vbo(0)
@@ -58,6 +71,13 @@ namespace Cocoa::Graphics
 	void OpenGLVertexBuffer::Unbind() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	void OpenGLVertexBuffer::SetData(const void* data, uint32_t size) const
+	{
+		Bind();
+		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
+		Unbind();
 	}
 
 	void OpenGLVertexBuffer::Destroy()
