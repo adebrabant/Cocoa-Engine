@@ -20,12 +20,6 @@ namespace Cocoa::Graphics
 	class MaterialManager;
 	class GraphicsDevice;
 
-	// Remove
-	struct DrawCommand2D
-	{
-		MaterialHandle Material;
-	};
-
 	struct QuadVertex
 	{
 		Math::Vector3f Position;
@@ -55,11 +49,11 @@ namespace Cocoa::Graphics
 
 		void BeginScene();
 		void EndScene();
-		void DrawQuad(MaterialHandle materialHandle);
-		void DrawQuad(const Math::Matrix4f& transform, MaterialHandle materialHandle);
+		void DrawQuad(const Math::Matrix4f& modelMatrix, MaterialHandle materialHandle);
 
 	private:
 		void Flush();
+		void FlushQuadVertices(const MaterialHandle& handle, const std::vector<QuadVertex>& batchVertices) const;
 
 	private:
 		GraphicsDevice& m_graphicsDevice;
@@ -69,7 +63,6 @@ namespace Cocoa::Graphics
 		Unique<VertexArray> m_vao{ nullptr };
 		Unique<VertexBuffer> m_vbo{ nullptr };
 		Unique<IndexBuffer> m_ibo{ nullptr };
-		std::vector<DrawCommand2D> m_drawCommands; // Remove after quad drawCommand is set
 		std::vector<QuadDrawCommand> m_quadDrawCommands;
 	};
 }

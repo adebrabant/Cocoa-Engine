@@ -8,9 +8,9 @@ namespace Cocoa::Stubs
 	{
 	public:
 		StubTexture2D() = default;
-		~StubTexture2D() = default;
+		~StubTexture2D() override = default;
 		void Bind(uint32_t slot) const override;
-		uint32_t GetWidth() const override;
-		uint32_t GetHeight() const override;
+		[[nodiscard]] uint32_t GetWidth() const override;
+		[[nodiscard]] uint32_t GetHeight() const override;
 	};
 }

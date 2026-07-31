@@ -10,6 +10,7 @@ namespace Cocoa::Graphics
 	class OpenGLVertexBuffer : public VertexBuffer
 	{
 	public:
+		OpenGLVertexBuffer(uint32_t size, const BufferLayout& bufferLayout);
 		OpenGLVertexBuffer(const void* vertices, uint32_t size, const BufferLayout& bufferLayout);
 		~OpenGLVertexBuffer() override;
 
@@ -21,8 +22,9 @@ namespace Cocoa::Graphics
 
 		void Bind() const override;
 		void Unbind() const override;
+		void SetData(const void* data, uint32_t size) const override;
 
-		const BufferLayout& GetLayout() const override { return m_bufferLayout; }
+		[[nodiscard]] const BufferLayout& GetLayout() const override { return m_bufferLayout; }
 
 	private:
 		void Destroy();

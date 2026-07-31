@@ -11,8 +11,6 @@
 #include "Graphics/GraphicsDevice.hpp"
 #include "Core/Color.hpp"
 
-#include <array>
-
 namespace Cocoa::Graphics
 {
 	Renderer2D::Renderer2D(
@@ -26,23 +24,23 @@ namespace Cocoa::Graphics
 		m_textureManager(textureManager),
 		m_materialManager(materialManager)
 	{
-		constexpr std::array<QuadVertex, 4> vertices =
+		constexpr uint32_t maxQuads = 20000;
+		constexpr uint32_t maxVertices = maxQuads * 4;
+		constexpr uint32_t maxIndices = maxQuads * 6;
+		const auto quadIndices = new uint32_t[maxIndices];
+		uint32_t offset = 0;
+		for (uint32_t i = 0; i < maxIndices; i += 6)
 		{
-			// Bottom-left
-			QuadVertex{ {-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f },{ 1.0f, 1.0f, 1.0f, 1.0f }},
-			// Bottom-right
-			QuadVertex{ { 0.5f, -0.5f, 0.0f}, {1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f } },
-			// Top-right
-			QuadVertex{ { 0.5f,  0.5f, 0.0f}, {1.0f, 1.0f },{ 1.0f, 1.0f, 1.0f, 1.0f } },
-			// Top-left
-			QuadVertex{ {-0.5f,  0.5f, 0.0f}, {0.0f, 1.0f},{ 1.0f, 1.0f, 1.0f, 1.0f } }
-		};
+			quadIndices[i + 0] = offset + 0;
+			quadIndices[i + 1] = offset + 1;
+			quadIndices[i + 2] = offset + 2;
 
-		constexpr uint32_t indices[] =
-		{
-			0, 1, 2,
-			2, 3, 0
-		};
+			quadIndices[i + 3] = offset + 2;
+			quadIndices[i + 4] = offset + 3;
+			quadIndices[i + 5] = offset + 0;
+
+			offset += 4;
+		}
 
 		const BufferLayout layout =
 		{
@@ -52,10 +50,11 @@ namespace Cocoa::Graphics
 		};
 
 		m_vao = m_graphicsDevice.CreateVertexArray();
-		m_vbo = m_graphicsDevice.CreateVertexBuffer(vertices.data(), sizeof(vertices), layout);
-		m_ibo = m_graphicsDevice.CreateIndexBuffer(indices, static_cast<uint32_t>(std::size(indices)));
+		m_vbo = m_graphicsDevice.CreateVertexBuffer(maxVertices * sizeof(QuadVertex), layout);
+		m_ibo = m_graphicsDevice.CreateIndexBuffer(quadIndices, static_cast<uint32_t>(maxIndices));
 		m_vao->AddVertexBuffer(*m_vbo);
 		m_vao->SetIndexBuffer(*m_ibo);
+		delete[] quadIndices;
 	}
 
 	Renderer2D::~Renderer2D() = default;
@@ -63,7 +62,6 @@ namespace Cocoa::Graphics
 	void Renderer2D::BeginScene()
 	{
 		//ToDo: Store camera/view-projection data
-		m_drawCommands.clear();
 		m_quadDrawCommands.clear();
 	}
 
@@ -72,25 +70,20 @@ namespace Cocoa::Graphics
 		Flush();
 	}
 
-	void Renderer2D::DrawQuad(MaterialHandle materialHandle)
-	{
-		m_drawCommands.emplace_back(DrawCommand2D{ materialHandle });
-	}
-
-	void Renderer2D::DrawQuad(const Math::Matrix4f& transform, MaterialHandle materialHandle)
+	void Renderer2D::DrawQuad(const Math::Matrix4f& modelMatrix, MaterialHandle materialHandle)
 	{
 		// Transform the quad's local-space corners into world space.
 		const Math::Vector4f worldBottomLeft =
-			transform * Math::Vector4f{-0.5f, -0.5f, 0.0f, 1.0f };
+			modelMatrix * Math::Vector4f{-0.5f, -0.5f, 0.0f, 1.0f };
 
 		const Math::Vector4f worldBottomRight =
-			transform * Math::Vector4f{ 0.5f, -0.5f, 0.0f, 1.0f };
+			modelMatrix * Math::Vector4f{ 0.5f, -0.5f, 0.0f, 1.0f };
 
 		const Math::Vector4f worldTopRight =
-			transform * Math::Vector4f{ 0.5f, 0.5f, 0.0f, 1.0f };
+			modelMatrix * Math::Vector4f{ 0.5f, 0.5f, 0.0f, 1.0f };
 
 		const Math::Vector4f worldTopLeft =
-			transform * Math::Vector4f{ -0.5f, 0.5f, 0.0f, 1.0f };
+			modelMatrix * Math::Vector4f{ -0.5f, 0.5f, 0.0f, 1.0f };
 
 		constexpr Math::Vector4f defaultWhiteColor{ 1.0f, 1.0f, 1.0f, 1.0f };
 
@@ -111,28 +104,60 @@ namespace Cocoa::Graphics
 
 	void Renderer2D::Flush()
 	{
-		for (const auto& command : m_drawCommands)
-		{
-			const Material& material = m_materialManager.Get(command.Material);
-			const Shader& shader = m_shaderManager.Get(material.ShaderId);
-			const Texture2D& texture = m_textureManager.Get(material.TextureId);
+		if (m_quadDrawCommands.empty())
+			return;
 
-			shader.Bind();
-			texture.Bind(0);
-			shader.SetInt("u_Texture", 0);
-			shader.SetVector4(
-				"u_Tint",
-				{
-					material.Tint.R,
-					material.Tint.G,
-					material.Tint.B,
-					material.Tint.A
-				}
+		std::vector<QuadVertex> batchVertices;
+		MaterialHandle currentMaterial = m_quadDrawCommands[0].Material;
+		for (const QuadDrawCommand& command : m_quadDrawCommands)
+		{
+			if (command.Material.Id != currentMaterial.Id)
+			{
+				FlushQuadVertices(currentMaterial, batchVertices);
+				batchVertices.clear();
+				currentMaterial = command.Material;
+			}
+
+			batchVertices.insert(batchVertices.end(),
+			                     command.Vertices.begin(),
+			                     command.Vertices.end()
 			);
-			m_graphicsDevice.DrawIndexed(*m_vao, m_ibo->GetCount());
-			shader.Unbind();
 		}
 
-		m_drawCommands.clear();
+		if (!batchVertices.empty())
+		{
+			FlushQuadVertices(currentMaterial, batchVertices);
+			batchVertices.clear();
+		}
+
+		m_quadDrawCommands.clear();
+	}
+
+	void Renderer2D::FlushQuadVertices(const MaterialHandle& handle, const std::vector<QuadVertex>& batchVertices) const
+	{
+		const Material& material = m_materialManager.Get(handle);
+		const Shader& shader = m_shaderManager.Get(material.ShaderId);
+		const Texture2D& texture = m_textureManager.Get(material.TextureId);
+		m_vbo->SetData(
+			batchVertices.data(),
+			static_cast<uint32_t>(batchVertices.size() * sizeof(QuadVertex))
+		);
+
+		shader.Bind();
+		texture.Bind(0);
+		shader.SetInt("u_Texture", 0);
+		shader.SetVector4(
+			"u_Tint",
+			{
+				material.Tint.R,
+				material.Tint.G,
+				material.Tint.B,
+				material.Tint.A
+			}
+		);
+		const auto quadCount = static_cast<uint32_t>(batchVertices.size() / 4);
+		const uint32_t indexCount = quadCount * 6;
+		m_graphicsDevice.DrawIndexed(*m_vao, indexCount);
+		shader.Unbind();
 	}
 }

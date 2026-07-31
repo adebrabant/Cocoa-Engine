@@ -69,6 +69,11 @@ namespace Cocoa::Graphics
 		return CreateUnique<OpenGLVertexArray>();
 	}
 
+	Unique<VertexBuffer> OpenGLGraphicsDevice::CreateVertexBuffer(uint32_t size, const BufferLayout& bufferLayout)
+	{
+		return CreateUnique<OpenGLVertexBuffer>(size, bufferLayout);
+	}
+
 	Unique<VertexBuffer> OpenGLGraphicsDevice::CreateVertexBuffer(const void* vertices, uint32_t size, const BufferLayout& bufferLayout)
 	{
 		return CreateUnique<OpenGLVertexBuffer>(vertices, size, bufferLayout);
