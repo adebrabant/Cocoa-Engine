@@ -70,20 +70,20 @@ namespace Cocoa::Graphics
 		Flush();
 	}
 
-	void Renderer2D::DrawQuad(const Math::Matrix4f& transform, MaterialHandle materialHandle)
+	void Renderer2D::DrawQuad(const Math::Matrix4f& modelMatrix, MaterialHandle materialHandle)
 	{
 		// Transform the quad's local-space corners into world space.
 		const Math::Vector4f worldBottomLeft =
-			transform * Math::Vector4f{-0.5f, -0.5f, 0.0f, 1.0f };
+			modelMatrix * Math::Vector4f{-0.5f, -0.5f, 0.0f, 1.0f };
 
 		const Math::Vector4f worldBottomRight =
-			transform * Math::Vector4f{ 0.5f, -0.5f, 0.0f, 1.0f };
+			modelMatrix * Math::Vector4f{ 0.5f, -0.5f, 0.0f, 1.0f };
 
 		const Math::Vector4f worldTopRight =
-			transform * Math::Vector4f{ 0.5f, 0.5f, 0.0f, 1.0f };
+			modelMatrix * Math::Vector4f{ 0.5f, 0.5f, 0.0f, 1.0f };
 
 		const Math::Vector4f worldTopLeft =
-			transform * Math::Vector4f{ -0.5f, 0.5f, 0.0f, 1.0f };
+			modelMatrix * Math::Vector4f{ -0.5f, 0.5f, 0.0f, 1.0f };
 
 		constexpr Math::Vector4f defaultWhiteColor{ 1.0f, 1.0f, 1.0f, 1.0f };
 

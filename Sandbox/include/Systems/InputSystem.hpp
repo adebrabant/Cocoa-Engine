@@ -9,7 +9,7 @@ namespace Sandbox::Systems
 	{
 	public:
 		InputSystem();
-		~InputSystem() = default;
+		~InputSystem() override = default;
 		void Update(Cocoa::Scenes::World& world, float deltaTime) override;
 		void Render(Cocoa::Scenes::World& world, Cocoa::Graphics::Renderer2D& renderer, float alpha) override;
 

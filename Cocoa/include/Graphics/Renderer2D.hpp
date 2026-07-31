@@ -49,7 +49,7 @@ namespace Cocoa::Graphics
 
 		void BeginScene();
 		void EndScene();
-		void DrawQuad(const Math::Matrix4f& transform, MaterialHandle materialHandle);
+		void DrawQuad(const Math::Matrix4f& modelMatrix, MaterialHandle materialHandle);
 
 	private:
 		void Flush();

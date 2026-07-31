@@ -18,8 +18,12 @@ namespace Cocoa::Scenes
 		View<TransformComponent, Renderable2DComponent> view(world);
 		for (auto [transform, renderable] : view)
 		{
-			Math::Matrix4f modelCoordinates = Math::Matrix4f::Identity();
-			renderer.DrawQuad(modelCoordinates, renderable.Material);
+			Math::Matrix4f translation = Math::Matrix4f::Translation(transform.Position);
+			Math::Matrix4f zRotation = Math::Matrix4f::RotationZ(transform.Rotation.Z);
+			Math::Matrix4f scale = Math::Matrix4f::Scale(transform.Scale);
+
+			Math::Matrix4f modelMatrix = translation * zRotation * scale;
+			renderer.DrawQuad(modelMatrix, renderable.Material);
 		}
 	}
 }
