@@ -317,6 +317,42 @@ namespace Cocoa::Math
             );
         }
 
+        /// <summary>
+        /// Creates a three-dimensional orthographic projection matrix.
+        /// </summary>
+        /// <param name="left">The leftmost coordinate of the viewing volume.</param>
+        /// <param name="right">The rightmost coordinate of the viewing volume.</param>
+        /// <param name="bottom">The bottommost coordinate of the viewing volume.</param>
+        /// <param name="top">The topmost coordinate of the viewing volume.</param>
+        /// <param name="near">The distance to the near clipping plane.</param>
+        /// <param name="far">The distance to the far clipping plane.</param>
+        /// <returns> A matrix representing the orthographic projection.</returns>
+        [[nodiscard]] static constexpr Matrix4f Ortho(
+            const float left, const float right,
+            const float bottom, const float top,
+            const float near, const float far)
+        {
+            assert(right != left);
+            assert(top != bottom);
+            assert(far != near);
+
+            const float xScale = 2.0f / (right - left);
+            const float xTranslation = -(right + left) / (right - left);
+
+            const float yScale = 2.0f / (top - bottom);
+            const float yTranslation = -(top + bottom) / (top - bottom);
+
+            const float zScale = -2.0f / (far - near);
+            const float zTranslation = -(far + near) / (far - near);
+
+            return Matrix4f(
+                xScale, 0.0f, 0.0f, xTranslation,
+                0.0f, yScale, 0.0f, yTranslation,
+                0.0f, 0.0f, zScale, zTranslation,
+                0.0f, 0.0f, 0.0f, 1.0f
+            );
+        }
+
     private:
         std::array<float, 16> m_elements{};
     };
