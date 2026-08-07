@@ -353,6 +353,100 @@ namespace Cocoa::Math
             );
         }
 
+        /// <summary>
+        /// Calculates and returns the inverse of this matrix.
+        /// </summary>
+        /// <returns>
+        /// A new matrix representing the inverse of this matrix.
+        /// </returns>
+        /// <remarks>
+        /// The inverse is calculated using the matrix determinant, cofactors, and adjugate.
+        /// The matrix must be invertible; an assertion will fail if the determinant is
+        /// sufficiently close to zero.
+        /// </remarks>
+        [[nodiscard]] constexpr Matrix4f Inverse() const
+        {
+            const float v1xMinor =
+                m_elements[5] * ((m_elements[10] * m_elements[15]) - (m_elements[14] * m_elements[11])) -
+                m_elements[9] * ((m_elements[6] * m_elements[15]) - (m_elements[14] * m_elements[7])) +
+                m_elements[13] * ((m_elements[6] * m_elements[11]) - (m_elements[10] * m_elements[7]));
+            const float v2xMinor =
+                m_elements[1] * ((m_elements[10] * m_elements[15]) - (m_elements[14] * m_elements[11])) -
+                m_elements[9] * ((m_elements[2] * m_elements[15]) - (m_elements[14] * m_elements[3])) +
+                m_elements[13] * ((m_elements[2] * m_elements[11]) - (m_elements[10] * m_elements[3]));
+            const float v3xMinor =
+                m_elements[1] * ((m_elements[6] * m_elements[15]) - (m_elements[14] * m_elements[7])) -
+                m_elements[5] * ((m_elements[2] * m_elements[15]) - (m_elements[14] * m_elements[3])) +
+                m_elements[13] * ((m_elements[2] * m_elements[7]) - (m_elements[6] * m_elements[3]));
+            const float v4xMinor =
+                m_elements[1] * ((m_elements[6] * m_elements[11]) - (m_elements[10] * m_elements[7])) -
+                m_elements[5] * ((m_elements[2] * m_elements[11]) - (m_elements[10] * m_elements[3])) +
+                m_elements[9] * ((m_elements[2] * m_elements[7]) - (m_elements[6] * m_elements[3]));
+
+            const float determinant = (m_elements[0] * v1xMinor) - (m_elements[4] * v2xMinor) +
+                    (m_elements[8] * v3xMinor) - (m_elements[12] * v4xMinor);
+            assert(std::abs(determinant) > 1e-6f);
+
+            const float v1yMinor =
+                m_elements[4] * ((m_elements[10] * m_elements[15]) - (m_elements[14] * m_elements[11])) -
+                m_elements[8] * ((m_elements[6] * m_elements[15]) - (m_elements[14] * m_elements[7])) +
+                m_elements[12] * ((m_elements[6] * m_elements[11]) - (m_elements[10] * m_elements[7]));
+            const float v2yMinor =
+                m_elements[0] * ((m_elements[10] * m_elements[15]) - (m_elements[14] * m_elements[11])) -
+                m_elements[8] * ((m_elements[2] * m_elements[15]) - (m_elements[14] * m_elements[3])) +
+                m_elements[12] * ((m_elements[2] * m_elements[11]) - (m_elements[10] * m_elements[3]));
+            const float v3yMinor =
+                m_elements[0] * ((m_elements[6] * m_elements[15]) - (m_elements[14] * m_elements[7])) -
+                m_elements[4] * ((m_elements[2] * m_elements[15]) - (m_elements[14] * m_elements[3])) +
+                m_elements[12] * ((m_elements[2] * m_elements[7]) - (m_elements[6] * m_elements[3]));
+            const float v4yMinor =
+                m_elements[0] * ((m_elements[6] * m_elements[11]) - (m_elements[10] * m_elements[7])) -
+                m_elements[4] * ((m_elements[2] * m_elements[11]) - (m_elements[10] * m_elements[3])) +
+                m_elements[8] * ((m_elements[2] * m_elements[7]) - (m_elements[6] * m_elements[3]));
+
+            const float v1zMinor =
+                m_elements[4] * ((m_elements[9] * m_elements[15]) - (m_elements[13] * m_elements[11])) -
+                m_elements[8] * ((m_elements[5] * m_elements[15]) - (m_elements[13] * m_elements[7])) +
+                m_elements[12] * ((m_elements[5] * m_elements[11]) - (m_elements[9] * m_elements[7]));
+            const float v2zMinor =
+                m_elements[0] * ((m_elements[9] * m_elements[15]) - (m_elements[13] * m_elements[11])) -
+                m_elements[8] * ((m_elements[1] * m_elements[15]) - (m_elements[13] * m_elements[3])) +
+                m_elements[12] * ((m_elements[1] * m_elements[11]) - (m_elements[9] * m_elements[3]));
+            const float v3zMinor =
+                m_elements[0] * ((m_elements[5] * m_elements[15]) - (m_elements[13] * m_elements[7])) -
+                m_elements[4] * ((m_elements[1] * m_elements[15]) - (m_elements[13] * m_elements[3])) +
+                m_elements[12] * ((m_elements[1] * m_elements[7]) - (m_elements[5] * m_elements[3]));
+            const float v4zMinor =
+               m_elements[0] * ((m_elements[5] * m_elements[11]) - (m_elements[9] * m_elements[7])) -
+               m_elements[4] * ((m_elements[1] * m_elements[11]) - (m_elements[9] * m_elements[3])) +
+               m_elements[8] * ((m_elements[1] * m_elements[7]) - (m_elements[5] * m_elements[3]));
+
+            const float v1wMinor =
+                m_elements[4] * ((m_elements[9] * m_elements[14]) - (m_elements[13] * m_elements[10])) -
+                m_elements[8] * ((m_elements[5] * m_elements[14]) - (m_elements[13] * m_elements[6])) +
+                m_elements[12] * ((m_elements[5] * m_elements[10]) - (m_elements[9] * m_elements[6]));
+            const float v2wMinor =
+                m_elements[0] * ((m_elements[9] * m_elements[14]) - (m_elements[13] * m_elements[10])) -
+                m_elements[8] * ((m_elements[1] * m_elements[14]) - (m_elements[13] * m_elements[2])) +
+                m_elements[12] * ((m_elements[1] * m_elements[10]) - (m_elements[9] * m_elements[2]));
+            const float v3wMinor =
+                m_elements[0] * ((m_elements[5] * m_elements[14]) - (m_elements[13] * m_elements[6])) -
+                m_elements[4] * ((m_elements[1] * m_elements[14]) - (m_elements[13] * m_elements[2])) +
+                m_elements[12] * ((m_elements[1] * m_elements[6]) - (m_elements[5] * m_elements[2]));
+            const float v4wMinor =
+                m_elements[0] * ((m_elements[5] * m_elements[10]) - (m_elements[9] * m_elements[6])) -
+                m_elements[4] * ((m_elements[1] * m_elements[10]) - (m_elements[9] * m_elements[2])) +
+                m_elements[8] * ((m_elements[1] * m_elements[6]) - (m_elements[5] * m_elements[2]));
+
+            // Applying the cofactor & adjugate within the return instead of making a temp matrix
+            return Matrix4f(
+                v1xMinor / determinant, -v2xMinor / determinant, v3xMinor / determinant, -v4xMinor / determinant,
+                -v1yMinor / determinant, v2yMinor / determinant, -v3yMinor / determinant, v4yMinor / determinant,
+                v1zMinor / determinant, -v2zMinor / determinant, v3zMinor / determinant, -v4zMinor / determinant,
+                -v1wMinor / determinant, v2wMinor / determinant, -v3wMinor / determinant, v4wMinor / determinant
+            );
+        }
+
     private:
         std::array<float, 16> m_elements{};
     };
