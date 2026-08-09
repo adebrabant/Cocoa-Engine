@@ -26,4 +26,9 @@ namespace Cocoa::Stubs
 	{
 
 	}
+
+	void StubShader::SetMatrix4(const std::string& name, const Math::Matrix4f& value) const
+	{
+
+	}
 }

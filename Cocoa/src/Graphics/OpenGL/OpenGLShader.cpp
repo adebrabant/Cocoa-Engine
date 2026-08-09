@@ -1,5 +1,6 @@
 #include "Graphics/OpenGL/OpenGLShader.hpp"
 #include "Math/Vector4f.hpp"
+#include "Math/Matrix4f.hpp"
 
 #include <GL/glew.h>
 #include <iostream>
@@ -94,7 +95,7 @@ namespace Cocoa::Graphics
 
 	void OpenGLShader::SetInt(const std::string& name, int value) const
 	{
-		GLint location = glGetUniformLocation(
+		const GLint location = glGetUniformLocation(
 			static_cast<GLuint>(m_rendererId),
 			name.c_str()
 		);
@@ -104,7 +105,7 @@ namespace Cocoa::Graphics
 
 	void OpenGLShader::SetFloat(const std::string& name, float value) const
 	{
-		GLint location = glGetUniformLocation(
+		const GLint location = glGetUniformLocation(
 			static_cast<GLuint>(m_rendererId),
 			name.c_str()
 		);
@@ -114,12 +115,22 @@ namespace Cocoa::Graphics
 
 	void OpenGLShader::SetVector4(const std::string& name, const Math::Vector4f& value) const
 	{
-		GLint location = glGetUniformLocation(
+		const GLint location = glGetUniformLocation(
 			static_cast<GLuint>(m_rendererId),
 			name.c_str()
 		);
 
 		glUniform4f(location, value.X, value.Y, value.Z, value.W);
+	}
+
+	void OpenGLShader::SetMatrix4(const std::string& name, const Math::Matrix4f& value) const
+	{
+		const GLint location = glGetUniformLocation(
+			static_cast<GLuint>(m_rendererId),
+			name.c_str()
+		);
+
+		glUniformMatrix4fv(location, 1, GL_FALSE, &value[0]);
 	}
 
 	void OpenGLShader::Destroy() const
