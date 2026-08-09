@@ -351,18 +351,18 @@ namespace Cocoa::Math::Tests
         EXPECT_FLOAT_EQ(result[0], 0.25f);
         EXPECT_FLOAT_EQ(result[1], 0.0f);
         EXPECT_FLOAT_EQ(result[2], 0.0f);
-        EXPECT_FLOAT_EQ(result[3], -0.5f);
+        EXPECT_FLOAT_EQ(result[3], 0.0f);
         EXPECT_FLOAT_EQ(result[4], 0.0f);
         EXPECT_FLOAT_EQ(result[5], 0.33333334f);
         EXPECT_FLOAT_EQ(result[6], 0.0f);
-        EXPECT_FLOAT_EQ(result[7], 0.33333334f);
+        EXPECT_FLOAT_EQ(result[7], 0.0f);
         EXPECT_FLOAT_EQ(result[8], 0.0f);
         EXPECT_FLOAT_EQ(result[9], 0.0f);
         EXPECT_FLOAT_EQ(result[10], -0.25f);
-        EXPECT_FLOAT_EQ(result[11], -1.25f);
-        EXPECT_FLOAT_EQ(result[12], 0.0f);
-        EXPECT_FLOAT_EQ(result[13], 0.0f);
-        EXPECT_FLOAT_EQ(result[14], 0.0f);
+        EXPECT_FLOAT_EQ(result[11], 0.0f);
+        EXPECT_FLOAT_EQ(result[12], -0.5f);
+        EXPECT_FLOAT_EQ(result[13], 0.33333334f);
+        EXPECT_FLOAT_EQ(result[14], -1.25f);
         EXPECT_FLOAT_EQ(result[15], 1.0f);
     }
 

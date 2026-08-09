@@ -346,10 +346,10 @@ namespace Cocoa::Math
             const float zTranslation = -(far + near) / (far - near);
 
             return Matrix4f(
-                xScale, 0.0f, 0.0f, xTranslation,
-                0.0f, yScale, 0.0f, yTranslation,
-                0.0f, 0.0f, zScale, zTranslation,
-                0.0f, 0.0f, 0.0f, 1.0f
+                xScale, 0.0f, 0.0f, 0.0f,
+                0.0f, yScale, 0.0f, 0.0f,
+                0.0f, 0.0f, zScale, 0.0f,
+                xTranslation, yTranslation, zTranslation, 1.0f
             );
         }
 
