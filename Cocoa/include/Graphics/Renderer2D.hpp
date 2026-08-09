@@ -19,6 +19,7 @@ namespace Cocoa::Graphics
 	class TextureManager;
 	class MaterialManager;
 	class GraphicsDevice;
+	class OrthographicCamera;
 
 	struct QuadVertex
 	{
@@ -32,8 +33,8 @@ namespace Cocoa::Graphics
 
 	struct QuadDrawCommand
 	{
-		MaterialHandle Material;
-		std::array<QuadVertex, 4> Vertices;
+		MaterialHandle Material{};
+		std::array<QuadVertex, 4> Vertices{};
 	};
 
 	class Renderer2D
@@ -47,7 +48,7 @@ namespace Cocoa::Graphics
 		);
 		~Renderer2D();
 
-		void BeginScene();
+		void BeginScene(const OrthographicCamera& camera);
 		void EndScene();
 		void DrawQuad(const Math::Matrix4f& modelMatrix, MaterialHandle materialHandle);
 
@@ -63,6 +64,7 @@ namespace Cocoa::Graphics
 		Unique<VertexArray> m_vao{ nullptr };
 		Unique<VertexBuffer> m_vbo{ nullptr };
 		Unique<IndexBuffer> m_ibo{ nullptr };
-		std::vector<QuadDrawCommand> m_quadDrawCommands;
+		Math::Matrix4f m_viewProjectionMatrix{};
+		std::vector<QuadDrawCommand> m_quadDrawCommands{};
 	};
 }

@@ -9,6 +9,7 @@
 #include "Graphics/TextureManager.hpp"
 #include "Graphics/MaterialManager.hpp"
 #include "Graphics/GraphicsDevice.hpp"
+#include "Graphics/OrthographicCamera.hpp"
 #include "Core/Color.hpp"
 
 namespace Cocoa::Graphics
@@ -59,9 +60,9 @@ namespace Cocoa::Graphics
 
 	Renderer2D::~Renderer2D() = default;
 
-	void Renderer2D::BeginScene()
+	void Renderer2D::BeginScene(const OrthographicCamera& camera)
 	{
-		//ToDo: Store camera/view-projection data
+		m_viewProjectionMatrix = camera.GetViewProjectionMatrix();
 		m_quadDrawCommands.clear();
 	}
 
@@ -70,7 +71,7 @@ namespace Cocoa::Graphics
 		Flush();
 	}
 
-	void Renderer2D::DrawQuad(const Math::Matrix4f& modelMatrix, MaterialHandle materialHandle)
+	void Renderer2D::DrawQuad(const Math::Matrix4f& modelMatrix, const MaterialHandle materialHandle)
 	{
 		// Transform the quad's local-space corners into world space.
 		const Math::Vector4f worldBottomLeft =
@@ -155,6 +156,7 @@ namespace Cocoa::Graphics
 				material.Tint.A
 			}
 		);
+		shader.SetMatrix4("u_ViewProjection", m_viewProjectionMatrix);
 		const auto quadCount = static_cast<uint32_t>(batchVertices.size() / 4);
 		const uint32_t indexCount = quadCount * 6;
 		m_graphicsDevice.DrawIndexed(*m_vao, indexCount);
