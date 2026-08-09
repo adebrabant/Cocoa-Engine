@@ -385,7 +385,7 @@ namespace Cocoa::Math
 
             const float determinant = (m_elements[0] * v1xMinor) - (m_elements[4] * v2xMinor) +
                     (m_elements[8] * v3xMinor) - (m_elements[12] * v4xMinor);
-            assert(std::abs(determinant) > 1e-6f);
+            assert(determinant > 1e-6f || determinant < -1e-6f);
 
             const float v1yMinor =
                 m_elements[4] * ((m_elements[10] * m_elements[15]) - (m_elements[14] * m_elements[11])) -
