@@ -59,6 +59,7 @@ namespace Cocoa::Core
             materialManager
         );
 
+		// TODO: Temp placement for camera while render pipeline is being built
 	    constexpr float aspectRatio = 800.0f / 600.0f;
 	    Graphics::OrthographicCamera orthoCamera(
 	    	-aspectRatio, aspectRatio,
