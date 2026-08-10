@@ -339,4 +339,63 @@ namespace Cocoa::Math::Tests
         EXPECT_FLOAT_EQ(result.Z, 0.0f);
         EXPECT_FLOAT_EQ(result.W, 1.0f);
     }
+
+    TEST(Matrix4fTests, Ortho_ShouldReturnOrthographicProjectMatrix_WhenGivenValidInput)
+    {
+        constexpr Matrix4f result = Matrix4f::Ortho(
+            -2.0f, 6.0f,
+            -4.0f, 2.0f,
+            1.0f, 9.0f
+        );
+
+        EXPECT_FLOAT_EQ(result[0], 0.25f);
+        EXPECT_FLOAT_EQ(result[1], 0.0f);
+        EXPECT_FLOAT_EQ(result[2], 0.0f);
+        EXPECT_FLOAT_EQ(result[3], 0.0f);
+        EXPECT_FLOAT_EQ(result[4], 0.0f);
+        EXPECT_FLOAT_EQ(result[5], 0.33333334f);
+        EXPECT_FLOAT_EQ(result[6], 0.0f);
+        EXPECT_FLOAT_EQ(result[7], 0.0f);
+        EXPECT_FLOAT_EQ(result[8], 0.0f);
+        EXPECT_FLOAT_EQ(result[9], 0.0f);
+        EXPECT_FLOAT_EQ(result[10], -0.25f);
+        EXPECT_FLOAT_EQ(result[11], 0.0f);
+        EXPECT_FLOAT_EQ(result[12], -0.5f);
+        EXPECT_FLOAT_EQ(result[13], 0.33333334f);
+        EXPECT_FLOAT_EQ(result[14], -1.25f);
+        EXPECT_FLOAT_EQ(result[15], 1.0f);
+    }
+
+    TEST(Matrix4Tests, Inverse_ShouldReturnInversedMatrix)
+    {
+        constexpr int determinant = 78.0f;
+        Math::Matrix4f sut(
+            4.0f, 5.0f, 6.0f, 10.0f,
+            7.0f, 8.0f, 11.0f, 15.0f,
+            9.0f, 12.0f, 14.0f, 17.0f,
+            13.0f, 16.0f, 18.0f, 19.0f
+        );
+
+        Math::Matrix4f result = sut.Inverse();
+
+        EXPECT_FLOAT_EQ(result[0], 44.0f / determinant);
+        EXPECT_FLOAT_EQ(result[1], 16.0f / determinant);
+        EXPECT_FLOAT_EQ(result[2], -97.0f / determinant);
+        EXPECT_FLOAT_EQ(result[3], 51.0f / determinant);
+
+        EXPECT_FLOAT_EQ(result[4], 30.0f / determinant);
+        EXPECT_FLOAT_EQ(result[5], -60.0f / determinant);
+        EXPECT_FLOAT_EQ(result[6], 42.0f / determinant);
+        EXPECT_FLOAT_EQ(result[7], -6.0f / determinant);
+
+        EXPECT_FLOAT_EQ(result[8], -88.0f / determinant);
+        EXPECT_FLOAT_EQ(result[9], 46.0f / determinant);
+        EXPECT_FLOAT_EQ(result[10], 38.0f / determinant);
+        EXPECT_FLOAT_EQ(result[11], -24.0f / determinant);
+
+        EXPECT_FLOAT_EQ(result[12], 28.0f / determinant);
+        EXPECT_FLOAT_EQ(result[13], -4.0f / determinant);
+        EXPECT_FLOAT_EQ(result[14], -5.0f / determinant);
+        EXPECT_FLOAT_EQ(result[15], -3.0f / determinant);
+    }
 }

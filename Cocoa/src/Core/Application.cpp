@@ -10,6 +10,7 @@
 #include "Graphics/ShaderManager.hpp"
 #include "Graphics/TextureManager.hpp"
 #include "Graphics/MaterialManager.hpp"
+#include "Graphics/OrthographicCamera.hpp"
 #include "Scenes/SceneManager.hpp"
 
 #include <utility>
@@ -58,6 +59,13 @@ namespace Cocoa::Core
             materialManager
         );
 
+		// TODO: Temp placement for camera while render pipeline is being built
+	    constexpr float aspectRatio = 800.0f / 600.0f;
+	    Graphics::OrthographicCamera orthoCamera(
+	    	-aspectRatio, aspectRatio,
+	    	-1.0f, 1.0f,
+	    	-1.0f, 1.0f);
+
         Scenes::SceneManager sceneManager(resourceLoader);
 
         ConfigureScenes(sceneManager);
@@ -77,7 +85,7 @@ namespace Cocoa::Core
 
             graphicsDevice.BeginFrame();
             graphicsDevice.Clear();
-            Render(sceneManager, renderer2d, m_frameClock.GetAlpha());
+            Render(sceneManager, renderer2d, orthoCamera, m_frameClock.GetAlpha());
             graphicsDevice.EndFrame();
 
             window.OnUpdate();
@@ -95,9 +103,9 @@ namespace Cocoa::Core
         sceneManager.Update(deltaTime);
 	}
 
-	void Application::Render(Scenes::SceneManager& sceneManager, Graphics::Renderer2D& renderer, float alpha)
+	void Application::Render(Scenes::SceneManager& sceneManager, Graphics::Renderer2D& renderer, Graphics::OrthographicCamera& camera, const float alpha)
 	{
-        renderer.BeginScene();
+        renderer.BeginScene(camera);
 		sceneManager.Render(renderer, alpha);
         renderer.EndScene();
 	}

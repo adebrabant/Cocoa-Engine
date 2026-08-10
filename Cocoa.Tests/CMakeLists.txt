@@ -29,6 +29,7 @@ set(COCOA_TEST_SOURCES
     src/Graphics/ShaderManagerTests.cpp
     src/Graphics/TextureManagerTests.cpp
     src/Graphics/MaterialManagerTests.cpp
+    src/Graphics/OrthographicCameraTests.cpp
 
     src/Stubs/Graphics/StubGraphicsDevice.cpp
     src/Stubs/Graphics/StubShader.cpp
