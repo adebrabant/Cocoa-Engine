@@ -10,12 +10,9 @@
 #include "Graphics/ShaderManager.hpp"
 #include "Graphics/TextureManager.hpp"
 #include "Graphics/MaterialManager.hpp"
-#include "Graphics/OrthographicCamera.hpp"
 #include "Scenes/SceneManager.hpp"
 
-#include <utility>
 #include <string>
-#include <iostream>
 
 namespace Cocoa::Core
 {
@@ -59,13 +56,6 @@ namespace Cocoa::Core
             materialManager
         );
 
-		// TODO: Temp placement for camera while render pipeline is being built
-	    constexpr float aspectRatio = 800.0f / 600.0f;
-	    Graphics::OrthographicCamera orthoCamera(
-	    	-aspectRatio, aspectRatio,
-	    	-1.0f, 1.0f,
-	    	-1.0f, 1.0f);
-
         Scenes::SceneManager sceneManager(resourceLoader);
 
         ConfigureScenes(sceneManager);
@@ -77,38 +67,21 @@ namespace Cocoa::Core
             m_frameClock.Tick();
             while (m_frameClock.CanUpdate())
             {
-                FixedUpdate(sceneManager, m_frameClock.GetFixedDelta());
+            	sceneManager.FixedUpdate(m_frameClock.GetFixedDelta());
                 m_frameClock.ConsumeUpdate();
             }
 
-            Update(sceneManager, m_frameClock.GetDelta());
+        	sceneManager.Update(m_frameClock.GetDelta());
 
             graphicsDevice.BeginFrame();
             graphicsDevice.Clear();
-            Render(sceneManager, renderer2d, orthoCamera, m_frameClock.GetAlpha());
+        	sceneManager.Render(renderer2d, m_frameClock.GetAlpha());
             graphicsDevice.EndFrame();
 
             window.OnUpdate();
             m_frameClock.SleepNextFrame();
         }
     }
-
-    void Application::FixedUpdate(Scenes::SceneManager& sceneManager, float fixedDeltaTime)
-    {
-        sceneManager.FixedUpdate(fixedDeltaTime);
-    }
-
-	void Application::Update(Scenes::SceneManager& sceneManager, float deltaTime)
-	{
-        sceneManager.Update(deltaTime);
-	}
-
-	void Application::Render(Scenes::SceneManager& sceneManager, Graphics::Renderer2D& renderer, Graphics::OrthographicCamera& camera, const float alpha)
-	{
-        renderer.BeginScene(camera);
-		sceneManager.Render(renderer, alpha);
-        renderer.EndScene();
-	}
 
     void Application::ConfigureScenes(Scenes::SceneManager& sceneManager)
     {

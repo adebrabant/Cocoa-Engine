@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Graphics/OrthographicCamera.hpp"
 #include "Scenes/ECS/World.hpp"
 
 namespace Cocoa::Assets
@@ -25,6 +26,7 @@ namespace Cocoa::Scenes
 		virtual void Render(Graphics::Renderer2D& renderer, float alpha);
 
 	protected:
+		Graphics::OrthographicCamera m_camera;
 		World m_world;
 	};
 }

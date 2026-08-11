@@ -1,9 +1,8 @@
 #pragma once
 
 #include "Scenes/Scene.hpp"
+#include "Core/Memory.hpp"
 #include <vector>
-// ToDo: Remove for Memory.hpp
-#include <memory>
 #include <type_traits>
 
 namespace Cocoa::Assets
@@ -23,10 +22,10 @@ namespace Cocoa::Scenes
 	public:
 		SceneManager(Assets::ResourceLoader& loader);
 		~SceneManager() = default;
-		Scene* GetCurrentScene();
-		void FixedUpdate(float fixedDeltaTime);
-		void Update(float deltaTime);
-		void Render(Graphics::Renderer2D& renderer, float alpha);
+		[[nodiscard]] Scene* GetCurrentScene() const;
+		void FixedUpdate(float fixedDeltaTime) const;
+		void Update(float deltaTime) const;
+		void Render(Graphics::Renderer2D& renderer, float alpha) const;
 		template<typename TScene> void SetScene();
 		template<typename TScene> void AddScene();
 		template<typename TScene> TScene* GetScene();
@@ -35,7 +34,7 @@ namespace Cocoa::Scenes
 		template<typename TScene> constexpr void ValidateScene();
 
 	private:
-		std::vector<std::unique_ptr<Scene>> m_scenes;
+		std::vector<Unique<Scene>> m_scenes;
 		Assets::ResourceLoader& m_resourceLoader;
 		Scene* m_currentScene = nullptr;
 	};
@@ -72,7 +71,7 @@ namespace Cocoa::Scenes
 			return;
 		}
 
-		m_scenes.emplace_back(std::make_unique<TScene>());
+		m_scenes.emplace_back(CreateUnique<TScene>());
 	}
 
 	template<typename TScene>
