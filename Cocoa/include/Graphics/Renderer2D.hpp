@@ -19,7 +19,6 @@ namespace Cocoa::Graphics
 	class TextureManager;
 	class MaterialManager;
 	class GraphicsDevice;
-	class OrthographicCamera;
 
 	struct QuadVertex
 	{
@@ -48,9 +47,9 @@ namespace Cocoa::Graphics
 		);
 		~Renderer2D();
 
-		void BeginScene(const OrthographicCamera& camera);
-		void EndScene();
+		void BeginDraw(const Math::Matrix4f& viewProjectionMatrix);
 		void DrawQuad(const Math::Matrix4f& modelMatrix, MaterialHandle materialHandle);
+		void EndDraw();
 
 	private:
 		void Flush();

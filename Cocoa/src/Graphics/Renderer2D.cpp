@@ -9,7 +9,6 @@
 #include "Graphics/TextureManager.hpp"
 #include "Graphics/MaterialManager.hpp"
 #include "Graphics/GraphicsDevice.hpp"
-#include "Graphics/OrthographicCamera.hpp"
 #include "Core/Color.hpp"
 
 namespace Cocoa::Graphics
@@ -60,15 +59,10 @@ namespace Cocoa::Graphics
 
 	Renderer2D::~Renderer2D() = default;
 
-	void Renderer2D::BeginScene(const OrthographicCamera& camera)
+	void Renderer2D::BeginDraw(const Math::Matrix4f& viewProjectionMatrix)
 	{
-		m_viewProjectionMatrix = camera.GetViewProjectionMatrix();
+		m_viewProjectionMatrix = viewProjectionMatrix;
 		m_quadDrawCommands.clear();
-	}
-
-	void Renderer2D::EndScene()
-	{
-		Flush();
 	}
 
 	void Renderer2D::DrawQuad(const Math::Matrix4f& modelMatrix, const MaterialHandle materialHandle)
@@ -101,6 +95,11 @@ namespace Cocoa::Graphics
 		};
 
 		m_quadDrawCommands.emplace_back(QuadDrawCommand{ .Material = materialHandle, .Vertices = vertices});
+	}
+
+	void Renderer2D::EndDraw()
+	{
+		Flush();
 	}
 
 	void Renderer2D::Flush()

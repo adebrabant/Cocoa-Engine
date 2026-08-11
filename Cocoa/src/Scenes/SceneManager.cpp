@@ -11,17 +11,17 @@ namespace Cocoa::Scenes
 
 	}
 
-	Scene* SceneManager::GetCurrentScene()
+	Scene* SceneManager::GetCurrentScene() const
 	{
 		return m_currentScene;
 	}
 
-	void SceneManager::FixedUpdate(float fixedDeltaTime)
+	void SceneManager::FixedUpdate(float fixedDeltaTime) const
 	{
 		// ToDo: Handle when physics is ready
 	}
 
-	void SceneManager::Update(float deltaTime)
+	void SceneManager::Update(float deltaTime) const
 	{
 		if (m_currentScene)
 		{
@@ -29,7 +29,7 @@ namespace Cocoa::Scenes
 		}
 	}
 
-	void SceneManager::Render(Graphics::Renderer2D& renderer, float alpha)
+	void SceneManager::Render(Graphics::Renderer2D& renderer, const float alpha) const
 	{
 		if (m_currentScene)
 		{
