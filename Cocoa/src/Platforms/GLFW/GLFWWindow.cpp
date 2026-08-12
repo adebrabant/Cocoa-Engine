@@ -1,5 +1,5 @@
 #include "Platforms/GLFW/GLFWWindow.hpp"
-#include "Platforms/WindowResizeEvent.hpp"
+#include "Platforms/FramebufferResizeEvent.hpp"
 #include "Events/EventBus.hpp"
 
 #include <GLFW/glfw3.h>
@@ -93,7 +93,7 @@ namespace Cocoa::Platforms
 			return;
 
 		self->m_eventBus.Publish(
-			WindowResizeEvent{
+			FramebufferResizeEvent{
 				.Width = static_cast<uint32_t>(width),
 				.Height = static_cast<uint32_t>(height)
 			});

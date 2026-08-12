@@ -4,7 +4,7 @@
 #include "Assets/ResourceLoader.hpp"
 #include "Assets/FilesystemAssetSource.hpp"
 #include "Platforms/GLFW/GLFWWindow.hpp"
-#include "Platforms/WindowResizeEvent.hpp"
+#include "Platforms/FramebufferResizeEvent.hpp"
 #include "Graphics/OpenGL/OpenGLContext.hpp"
 #include "Graphics/OpenGL/OpenGLGraphicsDevice.hpp"
 #include "Graphics/Renderer2D.hpp"
@@ -24,7 +24,7 @@ namespace Cocoa::Core
         m_viewport(0, 0, windowWidth, windowHeight),
 		m_eventBus(),
 		m_graphicsDevice(nullptr),
-		m_windowResizeEventToken()
+		m_FramebufferResizeEventToken()
 	{
 		RegisterEventHandlers();
 	}
@@ -101,8 +101,8 @@ namespace Cocoa::Core
 
 	void Application::RegisterEventHandlers()
 	{
-		m_windowResizeEventToken = m_eventBus.Subscribe<Platforms::WindowResizeEvent>(
-			[this](const Platforms::WindowResizeEvent& evt)
+		m_FramebufferResizeEventToken = m_eventBus.Subscribe<Platforms::FramebufferResizeEvent>(
+			[this](const Platforms::FramebufferResizeEvent& evt)
 			{
 				m_viewport.Resize(0, 0, evt.Width, evt.Height);
 				m_graphicsDevice->SetViewport(0,0, evt.Width, evt.Height);
@@ -111,6 +111,6 @@ namespace Cocoa::Core
 
     void Application::UnregisterEventHandlers()
     {
-		m_eventBus.Unsubscribe<Platforms::WindowResizeEvent>(m_windowResizeEventToken);
+		m_eventBus.Unsubscribe<Platforms::FramebufferResizeEvent>(m_FramebufferResizeEventToken);
     }
 }

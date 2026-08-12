@@ -43,6 +43,6 @@ namespace Cocoa::Core
 		Graphics::Viewport m_viewport;
 		Events::EventBus m_eventBus;
 		Unique<Graphics::GraphicsDevice> m_graphicsDevice;
-		Events::EventBus::SubscriptionToken m_windowResizeEventToken;
+		Events::EventBus::SubscriptionToken m_FramebufferResizeEventToken;
 	};
 }

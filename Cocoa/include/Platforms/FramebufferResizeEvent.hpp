@@ -3,7 +3,7 @@
 
 namespace Cocoa::Platforms
 {
-    struct WindowResizeEvent
+    struct FramebufferResizeEvent
     {
         uint32_t Width;
         uint32_t Height;
