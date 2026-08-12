@@ -1,11 +1,14 @@
 #include "Platforms/GLFW/GLFWWindow.hpp"
+#include "Platforms/WindowResizeEvent.hpp"
+#include "Events/EventBus.hpp"
 
 #include <GLFW/glfw3.h>
 #include <stdexcept>
 
 namespace Cocoa::Platforms
 {
-	GLFWWindow::GLFWWindow(const WindowProperties& properties) :
+	GLFWWindow::GLFWWindow(const Cocoa::Events::EventBus& eventBus, const WindowProperties& properties) :
+		m_eventBus(eventBus),
 		m_window(nullptr),
 		m_title(properties.GetTitle()),
 		m_width(properties.GetWidth()),
@@ -38,6 +41,9 @@ namespace Cocoa::Platforms
 		CenterWindow();
 
 		glfwMakeContextCurrent(m_window);
+
+		glfwSetWindowUserPointer(m_window, this);
+		glfwSetFramebufferSizeCallback(m_window,GLFWWindow::FrameBufferSizeCallback);
 	}
 
 	GLFWWindow::~GLFWWindow()
@@ -80,7 +86,20 @@ namespace Cocoa::Platforms
 		return m_window;
 	}
 
-	void GLFWWindow::CenterWindow()
+	void GLFWWindow::FrameBufferSizeCallback(GLFWwindow* window, const int width, const int height)
+	{
+		const auto* self = static_cast<GLFWWindow*>(glfwGetWindowUserPointer(window));
+		if (!self)
+			return;
+
+		self->m_eventBus.Publish(
+			WindowResizeEvent{
+				.Width = static_cast<uint32_t>(width),
+				.Height = static_cast<uint32_t>(height)
+			});
+	}
+
+	void GLFWWindow::CenterWindow() const
 	{
 		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 		if (!monitor)
@@ -105,6 +124,8 @@ namespace Cocoa::Platforms
 		if (!m_window)
 			return;
 
+		glfwSetFramebufferSizeCallback(m_window, nullptr);
+		glfwSetWindowUserPointer(m_window, nullptr);
 		glfwDestroyWindow(m_window);
 		glfwTerminate();
 		m_window = nullptr;

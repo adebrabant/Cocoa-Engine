@@ -34,6 +34,8 @@ set(COCOA_TEST_SOURCES
     src/Stubs/Graphics/StubGraphicsDevice.cpp
     src/Stubs/Graphics/StubShader.cpp
     src/Stubs/Graphics/StubTexture2D.cpp
+
+    src/Events/EventBusTests.cpp
 )
 
 set(COCOA_TEST_DATA

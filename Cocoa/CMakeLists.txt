@@ -8,6 +8,7 @@ set(COCOA_PUBLIC_HEADERS
 
     include/Platforms/Window.hpp
     include/Platforms/WindowProperties.hpp
+    include/Platforms/WindowResizeEvent.hpp
 
     include/Graphics/Renderer2D.hpp
     include/Graphics/GraphicsDevice.hpp
