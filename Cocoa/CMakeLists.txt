@@ -26,6 +26,7 @@ set(COCOA_PUBLIC_HEADERS
     include/Graphics/Material.hpp
     include/Graphics/GraphicsHandles.hpp
     include/Graphics/OrthographicCamera.hpp
+    include/Graphics/Viewport.hpp
 
     include/Assets/AssetManager.hpp
     include/Assets/AssetLoader.hpp
