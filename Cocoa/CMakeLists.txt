@@ -48,6 +48,7 @@ set(COCOA_PUBLIC_HEADERS
 
     include/Scenes/SceneManager.hpp
     include/Scenes/Scene.hpp
+    include/Scenes/SceneCamera.hpp
     include/Scenes/ECS/World.hpp
     include/Scenes/ECS/Entity.hpp
     include/Scenes/ECS/ComponentType.hpp
@@ -109,6 +110,7 @@ set(COCOA_PRIVATE_SOURCES
 
     src/Scenes/SceneManager.cpp
     src/Scenes/Scene.cpp
+    src/Scenes/SceneCamera.cpp
     src/Scenes/ECS/World.cpp
     src/Scenes/ECS/Entity.cpp
     src/Scenes/Systems/CameraSystem.cpp
