@@ -26,7 +26,6 @@ namespace Cocoa::Scenes
 		virtual void Render(Graphics::Renderer2D& renderer, float alpha);
 
 	protected:
-		const Graphics::Viewport& m_viewport;
 		SceneCamera m_camera;
 		World m_world;
 	};

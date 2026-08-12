@@ -17,7 +17,7 @@ namespace Cocoa::Scenes
 
     }
 
-    Math::Matrix4f SceneCamera::GetViewProjectionMatrix()
+    const Math::Matrix4f& SceneCamera::GetViewProjectionMatrix()
     {
         SyncProjection();
         return m_orthoCamera.GetViewProjectionMatrix();

@@ -22,7 +22,7 @@ namespace Cocoa::Scenes
         explicit SceneCamera(const Graphics::Viewport& viewport);
         ~SceneCamera() = default;
 
-        [[nodiscard]] Math::Matrix4f GetViewProjectionMatrix();
+        [[nodiscard]] const Math::Matrix4f& GetViewProjectionMatrix();
 
     private:
         void SyncProjection();

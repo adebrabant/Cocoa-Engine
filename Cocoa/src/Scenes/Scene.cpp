@@ -4,7 +4,6 @@
 namespace Cocoa::Scenes
 {
 	Scene::Scene(const Graphics::Viewport& viewport) :
-		m_viewport(viewport),
 		m_camera(viewport),
 		m_world()
 	{
