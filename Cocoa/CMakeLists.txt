@@ -66,6 +66,8 @@ set(COCOA_PUBLIC_HEADERS
     include/Chronos/FrameClock.hpp
 
     include/Inputs/InputHandler.hpp
+
+    include/Events/EventBus.hpp
 )
 
 set(COCOA_PRIVATE_SOURCES
