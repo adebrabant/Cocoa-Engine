@@ -8,7 +8,15 @@
 
 namespace Sandbox
 {
-    void TestScene::Load(Cocoa::Assets::ResourceLoader& loader)
+	TestScene::TestScene(const Cocoa::Graphics::Viewport& viewport)
+		: Scene(viewport)
+	{
+
+	}
+
+	TestScene::~TestScene() = default;
+
+	void TestScene::Load(Cocoa::Assets::ResourceLoader& loader)
     {
         auto cameraEntity = m_world.CreateEntity();
         m_world.AddComponent(cameraEntity, Cocoa::Scenes::CameraComponent{ 0, 0, 0, 60.0f });

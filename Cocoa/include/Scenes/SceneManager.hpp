@@ -13,6 +13,7 @@ namespace Cocoa::Assets
 namespace Cocoa::Graphics
 {
 	class Renderer2D;
+	struct Viewport;
 }
 
 namespace Cocoa::Scenes
@@ -20,7 +21,7 @@ namespace Cocoa::Scenes
 	class SceneManager
 	{
 	public:
-		SceneManager(Assets::ResourceLoader& loader);
+		explicit SceneManager(Assets::ResourceLoader& loader, const Graphics::Viewport& viewport);
 		~SceneManager() = default;
 		[[nodiscard]] Scene* GetCurrentScene() const;
 		void FixedUpdate(float fixedDeltaTime) const;
@@ -31,11 +32,12 @@ namespace Cocoa::Scenes
 		template<typename TScene> TScene* GetScene();
 
 	protected:
-		template<typename TScene> constexpr void ValidateScene();
+		template<typename TScene> constexpr void ValidateScene() const;
 
 	private:
 		std::vector<Unique<Scene>> m_scenes;
 		Assets::ResourceLoader& m_resourceLoader;
+		const Graphics::Viewport& m_viewport;
 		Scene* m_currentScene = nullptr;
 	};
 
@@ -71,7 +73,7 @@ namespace Cocoa::Scenes
 			return;
 		}
 
-		m_scenes.emplace_back(CreateUnique<TScene>());
+		m_scenes.emplace_back(CreateUnique<TScene>(m_viewport));
 	}
 
 	template<typename TScene>
@@ -90,7 +92,7 @@ namespace Cocoa::Scenes
 	}
 
 	template<typename TScene>
-	constexpr void SceneManager::ValidateScene()
+	constexpr void SceneManager::ValidateScene() const
 	{
 		static_assert(std::is_base_of_v<Scene, TScene>,
 			"TScene must derive from Scene");

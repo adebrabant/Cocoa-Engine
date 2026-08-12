@@ -3,12 +3,9 @@
 
 namespace Cocoa::Scenes
 {
-	// TODO: Viewport aspect ratio
-	Scene::Scene() :
-		m_camera(
-			-800.f/600.0f, 800.f/600.0f,
-			-1.0f, 1.0f,
-			-1.0f, 1.0f),
+	Scene::Scene(const Graphics::Viewport& viewport) :
+		m_viewport(viewport),
+		m_camera(viewport),
 		m_world()
 	{
 

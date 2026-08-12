@@ -4,6 +4,7 @@
 #include "Assets/ResourceLoader.hpp"
 #include "Assets/FilesystemAssetSource.hpp"
 #include "Platforms/GLFW/GLFWWindow.hpp"
+#include "Platforms/WindowResizeEvent.hpp"
 #include "Graphics/OpenGL/OpenGLContext.hpp"
 #include "Graphics/OpenGL/OpenGLGraphicsDevice.hpp"
 #include "Graphics/Renderer2D.hpp"
@@ -16,28 +17,38 @@
 
 namespace Cocoa::Core
 {
-	Application::Application(uint32_t windowWidth, uint32_t windowHeight, const std::string& title) :
+	Application::Application(const uint32_t windowWidth, const uint32_t windowHeight, const std::string& title) :
         m_assetPathProvider(),
 		m_frameClock(0.25f, 1.0f / 60.0f),
-        m_windowProps(windowWidth, windowHeight, title)
+        m_windowProps(windowWidth, windowHeight, title),
+        m_viewport(0, 0, windowWidth, windowHeight),
+		m_eventBus(),
+		m_graphicsDevice(nullptr),
+		m_windowResizeEventToken()
 	{
+		RegisterEventHandlers();
+	}
 
+	Application::~Application()
+	{
+		UnregisterEventHandlers();
 	}
 
     void Application::Run()
     {
-        Platforms::GLFWWindow window(m_windowProps);
+        Platforms::GLFWWindow window(m_eventBus, m_windowProps);
         Graphics::OpenGLContext openGLContext;
-        Graphics::OpenGLGraphicsDevice graphicsDevice;
-        graphicsDevice.SetViewport(window.GetWidth(), window.GetHeight());
-        graphicsDevice.SetClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+
+		m_graphicsDevice = CreateUnique<Graphics::OpenGLGraphicsDevice>();
+        m_graphicsDevice->SetViewport(m_viewport.X, m_viewport.Y, m_viewport.Width, m_viewport.Height);
+        m_graphicsDevice->SetClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
         Assets::AssetManager assetManager;
         Assets::FilesystemAssetSource assetSource(m_assetPathProvider.GetAssetsPath());
         Assets::JsonAssetDatabase jsonAssetDatabase(m_assetPathProvider.GetMetaDataPath());
 
-        Graphics::ShaderManager shaderManager(graphicsDevice);
-        Graphics::TextureManager textureManager(graphicsDevice);
+        Graphics::ShaderManager shaderManager(*m_graphicsDevice);
+        Graphics::TextureManager textureManager(*m_graphicsDevice);
         Graphics::MaterialManager materialManager;
 
         Assets::ResourceLoader resourceLoader(
@@ -50,13 +61,13 @@ namespace Cocoa::Core
         );
 
         Graphics::Renderer2D renderer2d(
-            graphicsDevice, 
+            *m_graphicsDevice,
             shaderManager,
             textureManager, 
             materialManager
         );
 
-        Scenes::SceneManager sceneManager(resourceLoader);
+        Scenes::SceneManager sceneManager(resourceLoader, m_viewport);
 
         ConfigureScenes(sceneManager);
 
@@ -73,10 +84,10 @@ namespace Cocoa::Core
 
         	sceneManager.Update(m_frameClock.GetDelta());
 
-            graphicsDevice.BeginFrame();
-            graphicsDevice.Clear();
+            m_graphicsDevice->BeginFrame();
+            m_graphicsDevice->Clear();
         	sceneManager.Render(renderer2d, m_frameClock.GetAlpha());
-            graphicsDevice.EndFrame();
+            m_graphicsDevice->EndFrame();
 
             window.OnUpdate();
             m_frameClock.SleepNextFrame();
@@ -86,5 +97,20 @@ namespace Cocoa::Core
     void Application::ConfigureScenes(Scenes::SceneManager& sceneManager)
     {
 
+    }
+
+	void Application::RegisterEventHandlers()
+	{
+		m_windowResizeEventToken = m_eventBus.Subscribe<Platforms::WindowResizeEvent>(
+			[this](const Platforms::WindowResizeEvent& evt)
+			{
+				m_viewport.Resize(0, 0, evt.Width, evt.Height);
+				m_graphicsDevice->SetViewport(0,0, evt.Width, evt.Height);
+			});
+	}
+
+    void Application::UnregisterEventHandlers()
+    {
+		m_eventBus.Unsubscribe<Platforms::WindowResizeEvent>(m_windowResizeEventToken);
     }
 }
