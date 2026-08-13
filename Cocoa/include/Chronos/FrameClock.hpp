@@ -10,13 +10,14 @@ namespace Cocoa::Chronos
 		FrameClock(float maxDelta, float fixedDelta, float targetFrameRate = 1.0f / 60.0f);
 		void Reset();            
 		void Tick();
-		bool CanUpdate() const;
 		void ConsumeUpdate();
-		float GetDelta() const;
-		float GetFixedDelta() const;
-		float GetAlpha() const;
 		void SleepNextFrame() const;
-		float GetElapsed() const; 
+		[[nodiscard]] bool CanUpdate() const;
+		[[nodiscard]] float GetDelta() const;
+		[[nodiscard]] float GetFixedDelta() const;
+		[[nodiscard]] float GetAlpha() const;
+		[[nodiscard]] float GetElapsed() const;
+		[[nodiscard]] float GetRemainingFrameTime() const;
 
 	private:
 		std::chrono::high_resolution_clock::time_point m_start;

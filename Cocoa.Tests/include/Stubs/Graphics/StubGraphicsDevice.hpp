@@ -11,7 +11,7 @@ namespace Cocoa::Stubs
 		~StubGraphicsDevice() override = default;
 		void BeginFrame() override;
 		void EndFrame() override;
-		void SetViewport(uint32_t width, uint32_t height) override;
+		void SetViewport(int32_t x, int32_t y, uint32_t width, uint32_t height) override;
 		void SetClearColor(float red, float green, float blue, float alpha) override;
 		void Clear() override;
 		Unique<Graphics::Shader> CreateShader(const std::string& vertexSource, const std::string& fragmentSource) override;

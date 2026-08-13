@@ -19,10 +19,7 @@ namespace Cocoa::Graphics
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
-	OpenGLGraphicsDevice::~OpenGLGraphicsDevice()
-	{
-
-	}
+	OpenGLGraphicsDevice::~OpenGLGraphicsDevice() = default;
 
 	void OpenGLGraphicsDevice::BeginFrame()
 	{
@@ -34,11 +31,15 @@ namespace Cocoa::Graphics
 		// ToDo: Reserved for per-frame graphics device cleanup/submission
 	}
 
-	void OpenGLGraphicsDevice::SetViewport(uint32_t width, uint32_t height)
+	void OpenGLGraphicsDevice::SetViewport(
+		const int32_t x,
+		const int32_t y,
+		const uint32_t width,
+		const uint32_t height)
 	{
 		glViewport(
-			0,
-			0,
+			x,
+			y,
 			static_cast<GLsizei>(width),
 			static_cast<GLsizei>(height)
 		);

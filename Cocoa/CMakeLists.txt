@@ -8,6 +8,7 @@ set(COCOA_PUBLIC_HEADERS
 
     include/Platforms/Window.hpp
     include/Platforms/WindowProperties.hpp
+    include/Platforms/FramebufferResizeEvent.hpp
 
     include/Graphics/Renderer2D.hpp
     include/Graphics/GraphicsDevice.hpp
@@ -25,6 +26,7 @@ set(COCOA_PUBLIC_HEADERS
     include/Graphics/Material.hpp
     include/Graphics/GraphicsHandles.hpp
     include/Graphics/OrthographicCamera.hpp
+    include/Graphics/Viewport.hpp
 
     include/Assets/AssetManager.hpp
     include/Assets/AssetLoader.hpp
@@ -46,6 +48,7 @@ set(COCOA_PUBLIC_HEADERS
 
     include/Scenes/SceneManager.hpp
     include/Scenes/Scene.hpp
+    include/Scenes/SceneCamera.hpp
     include/Scenes/ECS/World.hpp
     include/Scenes/ECS/Entity.hpp
     include/Scenes/ECS/ComponentType.hpp
@@ -66,6 +69,8 @@ set(COCOA_PUBLIC_HEADERS
     include/Chronos/FrameClock.hpp
 
     include/Inputs/InputHandler.hpp
+
+    include/Events/EventBus.hpp
 )
 
 set(COCOA_PRIVATE_SOURCES
@@ -105,6 +110,7 @@ set(COCOA_PRIVATE_SOURCES
 
     src/Scenes/SceneManager.cpp
     src/Scenes/Scene.cpp
+    src/Scenes/SceneCamera.cpp
     src/Scenes/ECS/World.cpp
     src/Scenes/ECS/Entity.cpp
     src/Scenes/Systems/CameraSystem.cpp

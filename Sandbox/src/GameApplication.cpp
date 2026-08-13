@@ -6,7 +6,7 @@
 namespace Sandbox
 {
 	GameApplication::GameApplication() 
-		: Application(800, 600, "Sandbox")
+		: Application(1920, 1080, "Sandbox")
 	{
 
 	}
