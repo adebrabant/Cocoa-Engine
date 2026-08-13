@@ -1,8 +1,7 @@
 #pragma once
 
-#include <cstdint>
-
 #include "Graphics/OrthographicCamera.hpp"
+#include <cstdint>
 
 namespace Cocoa::Graphics
 {

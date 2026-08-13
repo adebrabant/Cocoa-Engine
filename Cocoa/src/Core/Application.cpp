@@ -106,6 +106,9 @@ namespace Cocoa::Core
 		m_FramebufferResizeEventToken = m_eventBus.Subscribe<Platforms::FramebufferResizeEvent>(
 			[this](const Platforms::FramebufferResizeEvent& evt)
 			{
+				if (evt.Width == 0 || evt.Height == 0)
+					return;
+
 				m_graphicsDevice->SetViewport(0,0, evt.Width, evt.Height);
 				m_viewport.Resize(0, 0, evt.Width, evt.Height);
 			});
