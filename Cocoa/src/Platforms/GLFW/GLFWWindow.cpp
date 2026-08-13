@@ -58,7 +58,7 @@ namespace Cocoa::Platforms
 
 	void GLFWWindow::WaitForEvents(const float duration) const
 	{
-		if (duration < 0.0f)
+		if (duration <= 0.0f)
 			return;
 
 		glfwWaitEventsTimeout(duration);
@@ -126,7 +126,7 @@ namespace Cocoa::Platforms
 		glfwGetWindowSize(m_window, &windowWidth, &windowHeight);
 
 		const int x = (videoMode->width - windowWidth) / 2;
-		const int y = (videoMode->height - windowWidth) / 2;
+		const int y = (videoMode->height - windowHeight) / 2;
 
 		glfwSetWindowPos(m_window, x, y);
 	}

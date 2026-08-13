@@ -18,7 +18,7 @@ namespace Cocoa::Graphics
             Width(width),
             Height(height)
         {
-
+            assert(height != 0 && "Viewport::Viewport() height cannot be zero");
         }
 
         void Resize(
@@ -27,6 +27,7 @@ namespace Cocoa::Graphics
             const uint32_t width,
             const uint32_t height)
         {
+            assert(height != 0 && "Viewport::Resize() height cannot be zero");
             X = x;
             Y = y;
             Width = width;
