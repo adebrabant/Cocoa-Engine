@@ -59,16 +59,17 @@ namespace Cocoa::Chronos
     }
 
     void FrameClock::SleepNextFrame() const
-    {
-        if (m_targetFrameTime <= 0.0f)
-            return; 
+	{
+	    if (m_targetFrameTime <= 0.0f)
+	        return;
 
-        if (m_deltaTime < m_targetFrameTime)
-        {
-            auto sleepTime = std::chrono::duration<float>(m_targetFrameTime - m_deltaTime);
-            std::this_thread::sleep_for(std::chrono::duration_cast<std::chrono::milliseconds>(sleepTime));
-        }
-    }
+	    const auto targetFrameEnd =
+            m_last +
+            std::chrono::duration_cast<std::chrono::high_resolution_clock::duration>(
+                std::chrono::duration<float>(m_targetFrameTime));
+
+	    std::this_thread::sleep_until(targetFrameEnd);
+	}
 
     float FrameClock::GetElapsed() const
     {
@@ -76,5 +77,17 @@ namespace Cocoa::Chronos
         std::chrono::duration<float> elapsedTime = now - m_start;
 
         return elapsedTime.count();
+    }
+
+    float FrameClock::GetRemainingFrameTime() const
+    {
+	    if (m_targetFrameTime <= 0.0f)
+	        return 0.0f;
+
+		const auto now = std::chrono::high_resolution_clock::now();
+
+		const std::chrono::duration<float> elapsed = now - m_last;
+
+		return std::max(0.0f, m_targetFrameTime - elapsed.count());
     }
 }

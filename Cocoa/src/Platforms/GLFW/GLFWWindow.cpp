@@ -51,12 +51,24 @@ namespace Cocoa::Platforms
 		Shutdown();
 	}
 
+	void GLFWWindow::ProcessEvents()
+	{
+		glfwPollEvents();
+	}
+
+	void GLFWWindow::WaitForEvents(const float duration) const
+	{
+		if (duration < 0.0f)
+			return;
+
+		glfwWaitEventsTimeout(duration);
+	}
+
 	void GLFWWindow::OnUpdate()
 	{
 		if (!m_window)
 			throw std::logic_error("GLFWWindow must be initialized before OnUpdate.");
 
-		glfwPollEvents();
 		glfwSwapBuffers(m_window);
 	}
 

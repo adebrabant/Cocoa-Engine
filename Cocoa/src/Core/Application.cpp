@@ -76,6 +76,7 @@ namespace Cocoa::Core
         while (window.IsOpen())
         {
             m_frameClock.Tick();
+        	window.ProcessEvents();
             while (m_frameClock.CanUpdate())
             {
             	sceneManager.FixedUpdate(m_frameClock.GetFixedDelta());
@@ -90,7 +91,8 @@ namespace Cocoa::Core
             m_graphicsDevice->EndFrame();
 
             window.OnUpdate();
-            m_frameClock.SleepNextFrame();
+
+        	window.WaitForEvents(m_frameClock.GetRemainingFrameTime());
         }
     }
 
@@ -104,8 +106,8 @@ namespace Cocoa::Core
 		m_FramebufferResizeEventToken = m_eventBus.Subscribe<Platforms::FramebufferResizeEvent>(
 			[this](const Platforms::FramebufferResizeEvent& evt)
 			{
-				m_viewport.Resize(0, 0, evt.Width, evt.Height);
 				m_graphicsDevice->SetViewport(0,0, evt.Width, evt.Height);
+				m_viewport.Resize(0, 0, evt.Width, evt.Height);
 			});
 	}
 

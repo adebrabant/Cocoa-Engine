@@ -22,6 +22,8 @@ namespace Cocoa::Platforms
 		GLFWWindow& operator = (const GLFWWindow&) = delete;
 
 		void OnUpdate() override;
+		void ProcessEvents() override;
+		void WaitForEvents(float duration) const override;
 		[[nodiscard]] bool IsOpen() const override;
 		[[nodiscard]] uint32_t GetWidth() const override;
 		[[nodiscard]] uint32_t GetHeight() const override;

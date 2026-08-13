@@ -8,6 +8,8 @@ namespace Cocoa::Platforms
 	{
 	public:
 		virtual ~Window() = default;
+		virtual void ProcessEvents() = 0;
+		virtual void WaitForEvents(float duration) const = 0;
 		virtual void OnUpdate() = 0;
 		[[nodiscard]] virtual bool IsOpen() const = 0;
 		[[nodiscard]] virtual uint32_t GetWidth() const = 0;
