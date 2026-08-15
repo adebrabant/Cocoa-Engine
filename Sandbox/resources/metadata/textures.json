@@ -7,5 +7,41 @@
     "wrapS": "ClampToEdge",
     "wrapT": "ClampToEdge",
     "generateMipmaps": false
+  },
+  "sun-set-background-01": {
+    "path": "textures/backgrounds/sun-set-01.png",
+    "format": "RGBA8",
+    "minFilter": "Nearest",
+    "magFilter": "Nearest",
+    "wrapS": "ClampToEdge",
+    "wrapT": "ClampToEdge",
+    "generateMipmaps": false
+  },
+  "mountains-background-01": {
+    "path": "textures/backgrounds/mountains-01.png",
+    "format": "RGBA8",
+    "minFilter": "Nearest",
+    "magFilter": "Nearest",
+    "wrapS": "ClampToEdge",
+    "wrapT": "ClampToEdge",
+    "generateMipmaps": false
+  },
+  "forest-fog-background-01": {
+    "path": "textures/backgrounds/forest-fog-01.png",
+    "format": "RGBA8",
+    "minFilter": "Nearest",
+    "magFilter": "Nearest",
+    "wrapS": "ClampToEdge",
+    "wrapT": "ClampToEdge",
+    "generateMipmaps": false
+  },
+  "forest-fog-background-02": {
+    "path": "textures/backgrounds/forest-fog-02.png",
+    "format": "RGBA8",
+    "minFilter": "Nearest",
+    "magFilter": "Nearest",
+    "wrapS": "ClampToEdge",
+    "wrapT": "ClampToEdge",
+    "generateMipmaps": false
   }
 }
