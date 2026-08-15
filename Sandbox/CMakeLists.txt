@@ -16,6 +16,10 @@ set(SANDBOX_RESOURCES
     resources/metadata/shaders.json
     resources/metadata/textures.json
 
+    resources/textures/backgrounds/sun-set-01.png
+    resources/textures/backgrounds/mountains-01.png
+    resources/textures/backgrounds/forest-fog-01.png
+    resources/textures/backgrounds/forest-fog-02.png
     resources/textures/werewolf-idle1.png
 )
 

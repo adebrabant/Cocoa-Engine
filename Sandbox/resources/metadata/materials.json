@@ -3,5 +3,25 @@
     "shader": "sprite_default_shader",
     "texture": "werewolf-idle1",
     "tint": [ 1.0, 1.0, 1.0, 1.0 ]
+  },
+  "sunset_background_01_material": {
+    "shader": "sprite_default_shader",
+    "texture": "sun-set-background-01",
+    "tint": [ 1.0, 1.0, 1.0, 1.0 ]
+  },
+  "mountains_background_01_material": {
+    "shader": "sprite_default_shader",
+    "texture": "mountains-background-01",
+    "tint": [ 1.0, 1.0, 1.0, 1.0 ]
+  },
+  "forest_fog_background_01_material": {
+    "shader": "sprite_default_shader",
+    "texture": "forest-fog-background-01",
+    "tint": [ 1.0, 1.0, 1.0, 1.0 ]
+  },
+  "forest_fog_background_02_material": {
+    "shader": "sprite_default_shader",
+    "texture": "forest-fog-background-02",
+    "tint": [ 1.0, 1.0, 1.0, 1.0 ]
   }
 }
