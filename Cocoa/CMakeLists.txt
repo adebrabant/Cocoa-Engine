@@ -27,6 +27,7 @@ set(COCOA_PUBLIC_HEADERS
     include/Graphics/GraphicsHandles.hpp
     include/Graphics/OrthographicCamera.hpp
     include/Graphics/Viewport.hpp
+    include/Graphics/QuadBatch.hpp
 
     include/Assets/AssetManager.hpp
     include/Assets/AssetLoader.hpp
@@ -100,6 +101,7 @@ set(COCOA_PRIVATE_SOURCES
     src/Graphics/ShaderManager.cpp
     src/Graphics/MaterialManager.cpp
     src/Graphics/OrthographicCamera.cpp
+    src/Graphics/QuadBatch.cpp
 
     src/Assets/AssetManager.cpp
     src/Assets/AssetLoader.cpp
