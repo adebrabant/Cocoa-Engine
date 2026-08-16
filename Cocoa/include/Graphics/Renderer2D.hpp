@@ -1,40 +1,15 @@
 #pragma once
 
-#include "Core/Memory.hpp"
-#include "Graphics/GraphicsHandles.hpp"
-#include "Math/Vector2f.hpp"
-#include "Math/Vector3f.hpp"
-#include "Math/Vector4f.hpp"
 #include "Math/Matrix4f.hpp"
-
-#include <vector>
-#include <array>
+#include "Graphics/QuadBatch.hpp"
+#include "Graphics/GraphicsHandles.hpp"
 
 namespace Cocoa::Graphics
 {
-	class IndexBuffer;
-	class VertexArray;
-	class VertexBuffer;
+	class GraphicsDevice;
 	class ShaderManager;
 	class TextureManager;
 	class MaterialManager;
-	class GraphicsDevice;
-
-	struct QuadVertex
-	{
-		Math::Vector3f Position;
-		Math::Vector2f TexCoord;
-		Math::Vector4f Color;
-		// ToDo : Need to look into this
-		//float TextureIndex;
-		//float TilingFactor;
-	};
-
-	struct QuadDrawCommand
-	{
-		MaterialHandle Material{};
-		std::array<QuadVertex, 4> Vertices{};
-	};
 
 	class Renderer2D
 	{
@@ -52,18 +27,7 @@ namespace Cocoa::Graphics
 		void EndDraw();
 
 	private:
-		void Flush();
-		void FlushQuadVertices(const MaterialHandle& handle, const std::vector<QuadVertex>& batchVertices) const;
-
-	private:
-		GraphicsDevice& m_graphicsDevice;
-		ShaderManager& m_shaderManager;
-		TextureManager& m_textureManager;
-		MaterialManager& m_materialManager;
-		Unique<VertexArray> m_vao{ nullptr };
-		Unique<VertexBuffer> m_vbo{ nullptr };
-		Unique<IndexBuffer> m_ibo{ nullptr };
+		QuadBatch m_quadBatch;
 		Math::Matrix4f m_viewProjectionMatrix{};
-		std::vector<QuadDrawCommand> m_quadDrawCommands{};
 	};
 }
