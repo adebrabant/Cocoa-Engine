@@ -22,11 +22,11 @@ namespace Cocoa::Graphics
         m_graphicsDevice(graphicsDevice),
         m_shaderManager(shaderManager),
         m_textureManager(textureManager),
-        m_materialManager(materialManager)
+        m_materialManager(materialManager),
+        m_maxQuadCount(20000)
     {
-        constexpr uint32_t maxQuads{ 20000 };
-        constexpr uint32_t maxVertices{ maxQuads * 4 };
-        constexpr uint32_t maxIndices{ maxQuads * 6 };
+        const uint32_t maxVertices{ m_maxQuadCount * 4 };
+        const uint32_t maxIndices{ m_maxQuadCount * 6 };
         const auto quadIndices = new uint32_t[maxIndices];
         uint32_t offset{ 0 };
         for (uint32_t i = 0; i < maxIndices; i += 6)
@@ -99,19 +99,24 @@ namespace Cocoa::Graphics
 
         std::vector<QuadVertex> batchVertices;
         MaterialHandle currentMaterial = m_drawCommands[0].Material;
+
+        uint32_t batchCounter = 0;
         for (const QuadDrawCommand& command : m_drawCommands)
         {
-            if (command.Material.Id != currentMaterial.Id)
+            if (command.Material.Id != currentMaterial.Id || batchCounter == m_maxQuadCount)
             {
                 FlushBatch(currentMaterial, viewProjectionMatrix, batchVertices);
                 batchVertices.clear();
                 currentMaterial = command.Material;
+                batchCounter = 0;
             }
 
             batchVertices.insert(batchVertices.end(),
                                  command.Vertices.begin(),
                                  command.Vertices.end()
             );
+
+            batchCounter++;
         }
 
         if (!batchVertices.empty())

@@ -60,5 +60,6 @@ namespace Cocoa::Graphics
         Unique<VertexBuffer> m_vbo{ nullptr };
         Unique<IndexBuffer> m_ibo{ nullptr};
         std::vector<QuadDrawCommand> m_drawCommands;
+        const uint32_t m_maxQuadCount;
     };
 }
