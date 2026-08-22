@@ -27,7 +27,7 @@ namespace Cocoa::Graphics
 		void DrawQuad(const Math::Matrix4f& modelMatrix, MaterialHandle materialHandle);
 		void EndDraw();
 
-		[[nodiscard]] const RenderStatistics& GetRenderStatistics() const { return m_renderStatistics; };
+		[[nodiscard]] const RenderStatistics& GetRenderStatistics() const { return m_renderStatistics; }
 
 	private:
 		RenderStatistics m_renderStatistics;
