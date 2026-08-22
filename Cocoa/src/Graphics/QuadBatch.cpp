@@ -10,6 +10,7 @@
 #include "Graphics/BufferLayout.hpp"
 #include "Graphics/Material.hpp"
 #include "Graphics/MaterialManager.hpp"
+#include "Graphics/RenderStatistics.hpp"
 
 namespace Cocoa::Graphics
 {
@@ -17,12 +18,14 @@ namespace Cocoa::Graphics
         GraphicsDevice& graphicsDevice,
         ShaderManager& shaderManager,
         TextureManager& textureManager,
-        MaterialManager& materialManager)
+        MaterialManager& materialManager,
+        RenderStatistics& renderStatistics)
     :
         m_graphicsDevice(graphicsDevice),
         m_shaderManager(shaderManager),
         m_textureManager(textureManager),
         m_materialManager(materialManager),
+        m_renderStatistics(renderStatistics),
         m_maxQuadCount(20000)
     {
         const uint32_t maxVertices{ m_maxQuadCount * 4 };
@@ -124,6 +127,7 @@ namespace Cocoa::Graphics
         }
 
         m_drawCommands.clear();
+        m_renderStatistics.BatchFlushCount++;
     }
 
     void QuadBatch::FlushBatch(
@@ -156,5 +160,9 @@ namespace Cocoa::Graphics
         const uint32_t indexCount = quadCount * 6;
         m_graphicsDevice.DrawIndexed(*m_vao, indexCount);
         shader.Unbind();
+
+        m_renderStatistics.VertexCount += quadCount * 4;
+        m_renderStatistics.IndexCount += indexCount;
+        m_renderStatistics.DrawCount++;
     }
 }

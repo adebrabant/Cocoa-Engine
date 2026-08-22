@@ -3,6 +3,7 @@
 #include "Math/Matrix4f.hpp"
 #include "Graphics/QuadBatch.hpp"
 #include "Graphics/GraphicsHandles.hpp"
+#include "Graphics/RenderStatistics.hpp"
 
 namespace Cocoa::Graphics
 {
@@ -26,8 +27,11 @@ namespace Cocoa::Graphics
 		void DrawQuad(const Math::Matrix4f& modelMatrix, MaterialHandle materialHandle);
 		void EndDraw();
 
+		[[nodiscard]] const RenderStatistics& GetRenderStatistics() const { return m_renderStatistics; }
+
 	private:
+		RenderStatistics m_renderStatistics;
 		QuadBatch m_quadBatch;
-		Math::Matrix4f m_viewProjectionMatrix{};
+		Math::Matrix4f m_viewProjectionMatrix;
 	};
 }
