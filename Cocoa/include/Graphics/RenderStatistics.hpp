@@ -14,7 +14,7 @@ namespace Cocoa::Graphics
 
         void Reset()
         {
-            memset(this, 0, sizeof(*this));
+            std::memset(this, 0, sizeof(*this));
         }
     };
 }
