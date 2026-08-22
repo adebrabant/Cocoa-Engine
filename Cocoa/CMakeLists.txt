@@ -28,6 +28,7 @@ set(COCOA_PUBLIC_HEADERS
     include/Graphics/OrthographicCamera.hpp
     include/Graphics/Viewport.hpp
     include/Graphics/QuadBatch.hpp
+    include/Graphics/RenderStatistics.hpp
 
     include/Assets/AssetManager.hpp
     include/Assets/AssetLoader.hpp
@@ -123,6 +124,7 @@ set(COCOA_PRIVATE_SOURCES
     src/Chronos/FrameClock.cpp
 
     src/Inputs/InputHandler.cpp
+
 )
 
 set(COCOA_RESOURCES
