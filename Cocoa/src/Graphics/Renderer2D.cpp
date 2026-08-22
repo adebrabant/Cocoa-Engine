@@ -12,7 +12,14 @@ namespace Cocoa::Graphics
 		TextureManager& textureManager,
 		MaterialManager& materialManager
 	) :
-		m_quadBatch(graphicsDevice, shaderManager, textureManager, materialManager)
+		m_renderStatistics(),
+		m_quadBatch(
+			graphicsDevice,
+			shaderManager,
+			textureManager,
+			materialManager,
+			m_renderStatistics),
+		m_viewProjectionMatrix()
 	{
 
 	}
@@ -21,6 +28,7 @@ namespace Cocoa::Graphics
 
 	void Renderer2D::BeginDraw(const Math::Matrix4f& viewProjectionMatrix)
 	{
+		m_renderStatistics.Reset();
 		m_viewProjectionMatrix = viewProjectionMatrix;
 	}
 

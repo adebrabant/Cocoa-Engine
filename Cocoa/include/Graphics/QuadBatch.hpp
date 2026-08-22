@@ -19,6 +19,7 @@ namespace Cocoa::Graphics
     class VertexArray;
     class VertexBuffer;
     class IndexBuffer;
+    class RenderStatistics;
 
     class QuadBatch
     {
@@ -27,7 +28,8 @@ namespace Cocoa::Graphics
             GraphicsDevice& graphicsDevice,
             ShaderManager& shaderManager,
             TextureManager& textureManager,
-            MaterialManager& materialManager
+            MaterialManager& materialManager,
+            RenderStatistics& renderStatistics
         );
         ~QuadBatch();
 
@@ -56,6 +58,7 @@ namespace Cocoa::Graphics
         ShaderManager& m_shaderManager;
         TextureManager& m_textureManager;
         MaterialManager& m_materialManager;
+        RenderStatistics& m_renderStatistics;
         Unique<VertexArray> m_vao{ nullptr };
         Unique<VertexBuffer> m_vbo{ nullptr };
         Unique<IndexBuffer> m_ibo{ nullptr};
