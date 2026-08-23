@@ -9,7 +9,7 @@ namespace Cocoa::Core::Tests
         bool Expected;
     };
     class ColorOperatorTests : public testing::TestWithParam<ColorTestCase> {};
-    INSTANTIATE_TEST_CASE_P(
+    INSTANTIATE_TEST_SUITE_P(
         ColorValues,
         ColorOperatorTests,
         testing::Values
