@@ -105,7 +105,7 @@ namespace Cocoa::Graphics
         Material currentMaterial = m_materialManager.Get(m_drawCommands[0].Material);
         for (const QuadDrawCommand& command : m_drawCommands)
         {
-            if (Material commandMaterial = m_materialManager.Get(command.Material);
+            if (const Material& commandMaterial = m_materialManager.Get(command.Material);
                 commandMaterial.ShaderId.Id != currentMaterial.ShaderId.Id ||
                 commandMaterial.TextureId.Id != currentMaterial.TextureId.Id ||
                 commandMaterial.Tint != currentMaterial.Tint ||
