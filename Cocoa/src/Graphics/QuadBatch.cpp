@@ -102,14 +102,19 @@ namespace Cocoa::Graphics
 
         uint32_t batchCounter{ 0 };
         std::vector<QuadVertex> batchVertices;
-        MaterialHandle currentMaterial = m_drawCommands[0].Material;
+        Material currentMaterial = m_materialManager.Get(m_drawCommands[0].Material);
         for (const QuadDrawCommand& command : m_drawCommands)
         {
-            if (command.Material.Id != currentMaterial.Id || batchCounter == m_maxQuadCount)
+            const Material& commandMaterial = m_materialManager.Get(command.Material);
+            if (commandMaterial.Id != currentMaterial.Id &&
+                commandMaterial.ShaderId.Id != currentMaterial.ShaderId.Id &&
+                commandMaterial.TextureId.Id != currentMaterial.TextureId.Id &&
+                commandMaterial.Tint != currentMaterial.Tint ||
+                batchCounter == m_maxQuadCount)
             {
                 FlushBatch(currentMaterial, viewProjectionMatrix, batchVertices);
                 batchVertices.clear();
-                currentMaterial = command.Material;
+                currentMaterial = commandMaterial;
                 batchCounter = 0;
             }
 
@@ -131,11 +136,10 @@ namespace Cocoa::Graphics
     }
 
     void QuadBatch::FlushBatch(
-        const MaterialHandle& handle,
+        const Material& material,
         const Math::Matrix4f& viewProjectionMatrix,
         const std::vector<QuadVertex>& batchVertices) const
     {
-        const Material& material = m_materialManager.Get(handle);
         const Shader& shader = m_shaderManager.Get(material.ShaderId);
         const Texture2D& texture = m_textureManager.Get(material.TextureId);
         m_vbo->SetData(
