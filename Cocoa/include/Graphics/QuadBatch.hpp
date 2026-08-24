@@ -20,6 +20,7 @@ namespace Cocoa::Graphics
     class VertexBuffer;
     class IndexBuffer;
     class RenderStatistics;
+    struct Material;
 
     class QuadBatch
     {
@@ -49,7 +50,7 @@ namespace Cocoa::Graphics
             std::array<QuadVertex, 4> Vertices{};
         };
         void FlushBatch(
-            const MaterialHandle& handle,
+            const Material& material,
             const Math::Matrix4f& viewProjectionMatrix,
             const std::vector<QuadVertex>& batchVertices) const;
 

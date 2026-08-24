@@ -39,6 +39,8 @@ set(COCOA_TEST_SOURCES
     src/Events/EventBusTests.cpp
 
     src/Scenes/SceneCameraTests.cpp
+
+    src/Core/ColorTests.cpp
 )
 
 set(COCOA_TEST_DATA
