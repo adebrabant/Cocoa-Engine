@@ -1,5 +1,6 @@
 #include "Graphics/QuadBatch.hpp"
 #include "Graphics/GraphicsDevice.hpp"
+#include "Graphics/MaterialManager.hpp"
 #include "Graphics/ShaderManager.hpp"
 #include "Graphics/TextureManager.hpp"
 #include "Graphics/VertexArray.hpp"
@@ -8,9 +9,8 @@
 #include "Graphics/Shader.hpp"
 #include "Graphics/Texture2D.hpp"
 #include "Graphics/BufferLayout.hpp"
-#include "Graphics/Material.hpp"
-#include "Graphics/MaterialManager.hpp"
 #include "Graphics/RenderStatistics.hpp"
+#include "Graphics/Material.hpp"
 
 namespace Cocoa::Graphics
 {
@@ -65,6 +65,8 @@ namespace Cocoa::Graphics
 
     void QuadBatch::Draw(const Math::Matrix4f& modelMatrix, MaterialHandle materialHandle)
     {
+        const Material& material = m_materialManager.Get(materialHandle);
+
         // Transform the quad's local-space corners into world space.
         const Math::Vector4f worldBottomLeft =
             modelMatrix * Math::Vector4f{-0.5f, -0.5f, 0.0f, 1.0f };
@@ -78,21 +80,27 @@ namespace Cocoa::Graphics
         const Math::Vector4f worldTopLeft =
             modelMatrix * Math::Vector4f{ -0.5f, 0.5f, 0.0f, 1.0f };
 
-        constexpr Math::Vector4f defaultWhiteColor{ 1.0f, 1.0f, 1.0f, 1.0f };
+        const Math::Vector4f color{ material.Tint.R, material.Tint.G, material.Tint.B, material.Tint.A };
 
         const std::array<QuadVertex, 4> vertices =
         {
             // Bottom-Left
-            QuadVertex{{ worldBottomLeft.X, worldBottomLeft.Y, worldBottomLeft.Z}, { 0.0f, 0.0f }, defaultWhiteColor},
+            QuadVertex{{ worldBottomLeft.X, worldBottomLeft.Y, worldBottomLeft.Z}, { 0.0f, 0.0f }, color },
             // Bottom-Right
-            QuadVertex{{ worldBottomRight.X, worldBottomRight.Y, worldBottomRight.Z }, { 1.0f, 0.0f }, defaultWhiteColor},
+            QuadVertex{{ worldBottomRight.X, worldBottomRight.Y, worldBottomRight.Z }, { 1.0f, 0.0f }, color },
             // Top-Right
-            QuadVertex{{worldTopRight.X, worldTopRight.Y, worldTopRight.Z}, {1.0f, 1.0f}, defaultWhiteColor},
+            QuadVertex{{worldTopRight.X, worldTopRight.Y, worldTopRight.Z}, {1.0f, 1.0f}, color },
             // Top-Left
-            QuadVertex{{worldTopLeft.X, worldTopLeft.Y, worldTopLeft.Z}, { 0.0f, 1.0f}, defaultWhiteColor}
+            QuadVertex{{worldTopLeft.X, worldTopLeft.Y, worldTopLeft.Z}, { 0.0f, 1.0f}, color }
         };
 
-        m_drawCommands.emplace_back(QuadDrawCommand{ .Material = materialHandle, .Vertices = vertices});
+        m_drawCommands.emplace_back(
+            QuadDrawCommand
+            {
+                .MaterialRef = material,
+                .Vertices = vertices
+            }
+        );
     }
 
     void QuadBatch::Flush(const Math::Matrix4f& viewProjectionMatrix)
@@ -102,18 +110,16 @@ namespace Cocoa::Graphics
 
         uint32_t batchCounter{ 0 };
         std::vector<QuadVertex> batchVertices;
-        Material currentMaterial = m_materialManager.Get(m_drawCommands[0].Material);
+        Material currentMaterial = m_drawCommands[0].MaterialRef;
         for (const QuadDrawCommand& command : m_drawCommands)
         {
-            if (const Material& commandMaterial = m_materialManager.Get(command.Material);
-                commandMaterial.ShaderId.Id != currentMaterial.ShaderId.Id ||
-                commandMaterial.TextureId.Id != currentMaterial.TextureId.Id ||
-                commandMaterial.Tint != currentMaterial.Tint ||
+            if (command.MaterialRef.ShaderId.Id != currentMaterial.ShaderId.Id ||
+                command.MaterialRef.TextureId.Id != currentMaterial.TextureId.Id ||
                 batchCounter == m_maxQuadCount)
             {
                 FlushBatch(currentMaterial, viewProjectionMatrix, batchVertices);
                 batchVertices.clear();
-                currentMaterial = commandMaterial;
+                currentMaterial = command.MaterialRef;
                 batchCounter = 0;
             }
 
@@ -149,15 +155,6 @@ namespace Cocoa::Graphics
         shader.Bind();
         texture.Bind(0);
         shader.SetInt("u_Texture", 0);
-        shader.SetVector4(
-            "u_Tint",
-            {
-                material.Tint.R,
-                material.Tint.G,
-                material.Tint.B,
-                material.Tint.A
-            }
-        );
         shader.SetMatrix4("u_ViewProjection", viewProjectionMatrix);
         const auto quadCount = static_cast<uint32_t>(batchVertices.size() / 4);
         const uint32_t indexCount = quadCount * 6;

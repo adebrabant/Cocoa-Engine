@@ -19,7 +19,7 @@ namespace Cocoa::Graphics
 
 		void Bind() const override;
 		void Unbind() const override;
-		uint32_t GetCount() const override;
+		[[nodiscard]] uint32_t GetCount() const override;
 
 	private:
 		void Destroy() const;

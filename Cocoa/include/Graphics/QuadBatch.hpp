@@ -46,7 +46,7 @@ namespace Cocoa::Graphics
         };
         struct QuadDrawCommand
         {
-            MaterialHandle Material{};
+            const Material& MaterialRef;
             std::array<QuadVertex, 4> Vertices{};
         };
         void FlushBatch(
