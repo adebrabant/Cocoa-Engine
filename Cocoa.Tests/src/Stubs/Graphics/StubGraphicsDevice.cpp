@@ -1,8 +1,10 @@
 #include "Stubs/Graphics/StubGraphicsDevice.hpp"
+#include "Stubs/Graphics/StubVertexArray.hpp"
 #include "Stubs/Graphics/StubShader.hpp"
 #include "Stubs/Graphics/StubTexture2D.hpp"
+#include "Stubs/Graphics/StubVertexBuffer.hpp"
+#include "Stubs/Graphics/StubIndexBuffer.hpp"
 
-#include <Graphics/GraphicsDevice.hpp>
 #include <Graphics/IndexBuffer.hpp>
 #include <Graphics/TextureSpec.hpp>
 #include <Graphics/BufferElement.hpp>
@@ -43,21 +45,22 @@ namespace Cocoa::Stubs
 
 	Unique<Graphics::VertexArray> StubGraphicsDevice::CreateVertexArray()
 	{
-		return Unique<Graphics::VertexArray>();
+		return CreateUnique<StubVertexArray>();
 	}
 
 	Unique<Graphics::VertexBuffer> StubGraphicsDevice::CreateVertexBuffer(uint32_t size, const Graphics::BufferLayout& bufferLayout)
 	{
-		return Unique<Graphics::VertexBuffer>();
+		return CreateUnique<StubVertexBuffer>(size, bufferLayout);
 	}
 
 	Unique<Graphics::VertexBuffer> StubGraphicsDevice::CreateVertexBuffer(const void* vertices, uint32_t size, const Graphics::BufferLayout& bufferLayout)
 	{
-		return Unique<Graphics::VertexBuffer>();
+		return CreateUnique<StubVertexBuffer>(vertices, size, bufferLayout);
 	}
+
 	Unique<Graphics::IndexBuffer> StubGraphicsDevice::CreateIndexBuffer(const uint32_t* indices, uint32_t count)
 	{
-		return Unique<Graphics::IndexBuffer>();
+		return CreateUnique<StubIndexBuffer>(indices, count);
 	}
 
 	Unique<Graphics::Texture2D> StubGraphicsDevice::CreateTexture2D(Graphics::TextureSpec textureSpec, const unsigned char* pixels)

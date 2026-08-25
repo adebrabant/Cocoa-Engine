@@ -4,6 +4,9 @@ set(COCOA_TEST_HEADERS
     include/Stubs/Graphics/StubGraphicsDevice.hpp
     include/Stubs/Graphics/StubShader.hpp
     include/Stubs/Graphics/StubTexture2D.hpp
+    include/Stubs/Graphics/StubVertexArray.hpp
+    include/Stubs/Graphics/StubVertexBuffer.hpp
+    include/Stubs/Graphics/StubIndexBuffer.hpp
     include/Helpers/TestFileReader.hpp
 )
 
@@ -31,10 +34,14 @@ set(COCOA_TEST_SOURCES
     src/Graphics/MaterialManagerTests.cpp
     src/Graphics/OrthographicCameraTests.cpp
     src/Graphics/RenderStatisticsTests.cpp
+    src/Graphics/QuadBatchTests.cpp
 
     src/Stubs/Graphics/StubGraphicsDevice.cpp
     src/Stubs/Graphics/StubShader.cpp
     src/Stubs/Graphics/StubTexture2D.cpp
+    src/Stubs/Graphics/StubVertexArray.cpp
+    src/Stubs/Graphics/StubVertexBuffer.cpp
+    src/Stubs/Graphics/StubIndexBuffer.cpp
 
     src/Events/EventBusTests.cpp
 
