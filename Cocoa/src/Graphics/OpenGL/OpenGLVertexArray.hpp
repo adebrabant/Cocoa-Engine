@@ -25,7 +25,7 @@ namespace Cocoa::Graphics
 		void SetIndexBuffer(const IndexBuffer& indexBuffer) override;
 
 	private:
-		void Destroy();
+		void Destroy() const;
 
 	private:
 		uint32_t m_vao;

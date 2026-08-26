@@ -43,6 +43,7 @@ namespace Cocoa::Graphics
             Math::Vector3f Position{};
             Math::Vector2f TexCoord{};
             Math::Vector4f Color{};
+            uint32_t TexIndex{0};
         };
         struct QuadDrawCommand
         {

@@ -50,6 +50,7 @@ namespace Cocoa::Graphics
             { 0, ShaderDataType::Float3, "a_Position" },
             { 1, ShaderDataType::Float2, "a_TexCoord" },
             { 2, ShaderDataType::Float4, "a_Color" },
+            { 3, ShaderDataType::UInt, "a_TexIndex" },
         };
 
         m_vao = m_graphicsDevice.CreateVertexArray();

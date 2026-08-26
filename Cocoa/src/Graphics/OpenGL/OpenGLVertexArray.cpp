@@ -34,6 +34,8 @@ namespace Cocoa::Graphics
 			return GL_INT;
 		case Cocoa::Graphics::ShaderDataType::Int4:
 			return GL_INT;
+		case Cocoa::Graphics::ShaderDataType::UInt:
+			return GL_UNSIGNED_INT;
 		case Cocoa::Graphics::ShaderDataType::Bool:
 			return GL_BOOL;
 		default:
@@ -90,14 +92,27 @@ namespace Cocoa::Graphics
 		for (const auto& element : vertexBuffer.GetLayout().GetElements())
 		{
 			glEnableVertexAttribArray(element.Location);
-			glVertexAttribPointer(
-				element.Location,
-				static_cast<GLint>(element.GetScalarCount()),
-				ToOpenGLScalarType(element.Type),
-				element.Normalized != true ? GL_FALSE : GL_TRUE,
-				vertexBuffer.GetLayout().GetStride(),
-				reinterpret_cast<const void*>(static_cast<uintptr_t>(element.Offset))
-			);
+			if (element.IsInteger())
+			{
+				glVertexAttribIPointer(
+					element.Location,
+					static_cast<GLint>(element.GetScalarCount()),
+					ToOpenGLScalarType(element.Type),
+					static_cast<GLsizei>(vertexBuffer.GetLayout().GetStride()),
+					reinterpret_cast<const void*>(static_cast<uintptr_t>(element.Offset))
+				);
+			}
+			else
+			{
+				glVertexAttribPointer(
+					element.Location,
+					static_cast<GLint>(element.GetScalarCount()),
+					ToOpenGLScalarType(element.Type),
+					element.Normalized ? GL_TRUE : GL_FALSE,
+					static_cast<GLsizei>(vertexBuffer.GetLayout().GetStride()),
+					reinterpret_cast<const void*>(static_cast<uintptr_t>(element.Offset))
+				);
+			}
 		}
 
 		vertexBuffer.Unbind();
@@ -111,7 +126,7 @@ namespace Cocoa::Graphics
 		Unbind();
 	}
 
-	void OpenGLVertexArray::Destroy()
+	void OpenGLVertexArray::Destroy() const
 	{
 		if (m_vao <= 0)
 			return;
