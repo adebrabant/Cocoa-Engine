@@ -18,6 +18,7 @@ namespace Cocoa::Graphics
 		Int2,
 		Int3,
 		Int4,
+		UInt,
 		Bool
 	};
 
@@ -47,7 +48,20 @@ namespace Cocoa::Graphics
 
 		}
 
-		uint32_t GetScalarCount() const
+		[[nodiscard]] bool IsInteger() const
+		{
+			switch (Type)
+			{
+			case ShaderDataType::Int:  return true;
+			case ShaderDataType::Int2: return true;
+			case ShaderDataType::Int3: return true;
+			case ShaderDataType::Int4: return true;
+			case ShaderDataType::UInt: return true;
+			default: return false;
+			}
+		}
+
+		[[nodiscard]] uint32_t GetScalarCount() const
 		{
 			switch (Type)
 			{
@@ -60,6 +74,8 @@ namespace Cocoa::Graphics
 			case ShaderDataType::Int2:   return 2;
 			case ShaderDataType::Int3:   return 3;
 			case ShaderDataType::Int4:   return 4;
+
+			case ShaderDataType::UInt:   return 1;
 
 			case ShaderDataType::Bool:   return 1;
 
@@ -82,6 +98,8 @@ namespace Cocoa::Graphics
 			case ShaderDataType::Int2:   return 4 * 2;
 			case ShaderDataType::Int3:   return 4 * 3;
 			case ShaderDataType::Int4:   return 4 * 4;
+
+			case ShaderDataType::UInt:   return 4;
 
 			case ShaderDataType::Bool:   return 1;
 
