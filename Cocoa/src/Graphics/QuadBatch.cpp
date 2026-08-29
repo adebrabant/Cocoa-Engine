@@ -146,13 +146,20 @@ namespace Cocoa::Graphics
                 currentMaterial = command.MaterialRef;
             }
 
+            uint32_t currentTexSlotIndex;
             if (texSlotIterator == texSlotActiveEnd)
             {
+                currentTexSlotIndex = textureSlots.Count;
                 textureSlots.Data[textureSlots.Count] = command.MaterialRef.Texture.Id;
                 textureSlots.Count++;
             }
+            else
+            {
+                currentTexSlotIndex = static_cast<uint32_t>(
+                    texSlotIterator - textureSlots.Data.begin()
+                );
+            }
 
-            const auto currentTexSlotIndex = texSlotIterator - textureSlots.Data.begin();
             for (auto& quadVertex : command.Vertices)
             {
                 quadVertex.TexIndex = currentTexSlotIndex;
