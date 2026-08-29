@@ -145,7 +145,7 @@ namespace Cocoa::Graphics::Tests
         EXPECT_EQ(renderStats.DrawCount, 2);
     }
 
-    TEST(QuadBatchTests, Flush_ShouldDrawTwice_WhenTextureChanges)
+    TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenTextureChanges)
     {
         Stubs::StubGraphicsDevice graphicsDevice;
         ShaderManager shaderManager(graphicsDevice);
@@ -219,7 +219,7 @@ namespace Cocoa::Graphics::Tests
 
         sut.Flush(identity);
 
-        EXPECT_EQ(renderStats.DrawCount, 2);
+        EXPECT_EQ(renderStats.DrawCount, 1);
     }
 
     TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenOnlyTintChanges)
