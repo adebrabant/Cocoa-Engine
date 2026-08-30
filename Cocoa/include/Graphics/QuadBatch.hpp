@@ -56,12 +56,17 @@ namespace Cocoa::Graphics
             std::array<TextureHandle, MaxCount> Data{};
             uint32_t Count{0};
         };
+        struct BatchData
+        {
+            ShaderHandle Shader;
+            TextureSlots Textures;
+            std::vector<QuadVertex> Vertices;
+        };
         void BuildBatch(const Math::Matrix4f& viewProjectionMatrix);
         void ExecuteBatch(
-            const ShaderHandle& shaderHandle,
-            const TextureSlots& textureSlots,
-            const std::vector<QuadVertex>& batchVertices,
-            const Math::Matrix4f& viewProjectionMatrix) const;
+            const BatchData& batchData,
+            const Math::Matrix4f& viewProjectionMatrix
+        ) const;
 
         static std::array<int, TextureSlots::MaxCount> CreateSamplerUnits();
 
