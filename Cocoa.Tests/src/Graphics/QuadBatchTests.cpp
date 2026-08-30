@@ -458,7 +458,7 @@ namespace Cocoa::Graphics::Tests
         EXPECT_EQ(renderStats.DrawCount, 1);
     }
 
-    TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenGiven20001QuadsWithSameTexture)
+    TEST(QuadBatchTests, Flush_ShouldDrawTwice_WhenGiven20001QuadsWithSameTexture)
     {
         constexpr int quadCount = 20001;
         Stubs::StubGraphicsDevice graphicsDevice;
