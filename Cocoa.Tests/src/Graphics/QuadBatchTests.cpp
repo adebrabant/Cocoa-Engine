@@ -7,6 +7,8 @@
 #include <Graphics/TextureSpec.hpp>
 #include <gtest/gtest.h>
 
+#include <vector>
+
 namespace Cocoa::Graphics::Tests
 {
     static std::vector<MaterialHandle> CreateMaterialsWithUniqueTextures(
