@@ -323,7 +323,7 @@ namespace Cocoa::Graphics::Tests
         EXPECT_EQ(renderStats.DrawCount, 1);
     }
 
-    TEST(QuadBatchTests, Flush_ShouldDrawTwice_WhenGiven33UinqueTextures)
+    TEST(QuadBatchTests, Flush_ShouldDrawTwice_WhenGiven33UniqueTextures)
     {
         Stubs::StubGraphicsDevice graphicsDevice;
         ShaderManager shaderManager(graphicsDevice);
@@ -399,9 +399,9 @@ namespace Cocoa::Graphics::Tests
         EXPECT_EQ(renderStats.DrawCount, 1);
     }
 
-    TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenGiven20000DuplicateTextures)
+    TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenGiven20000QuadsWithSameTexture)
     {
-        constexpr int m_drawCount = 20000;
+        constexpr int quadCount = 20000;
         Stubs::StubGraphicsDevice graphicsDevice;
         ShaderManager shaderManager(graphicsDevice);
         TextureManager textureManager(graphicsDevice);
@@ -448,7 +448,7 @@ namespace Cocoa::Graphics::Tests
 
         constexpr Math::Matrix4f identity = Math::Matrix4f::Identity();
 
-        for (auto i = 0; i < m_drawCount; ++i)
+        for (auto i = 0; i < quadCount; ++i)
         {
             sut.Draw(identity, materialHandle);
         }
@@ -458,9 +458,9 @@ namespace Cocoa::Graphics::Tests
         EXPECT_EQ(renderStats.DrawCount, 1);
     }
 
-    TEST(QuadBatchTests, Flush_ShouldDrawTwice_WhenGiven20001DuplicateTextures)
+    TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenGiven20001QuadsWithSameTexture)
     {
-        constexpr int m_drawCount = 20001;
+        constexpr int quadCount = 20001;
         Stubs::StubGraphicsDevice graphicsDevice;
         ShaderManager shaderManager(graphicsDevice);
         TextureManager textureManager(graphicsDevice);
@@ -507,7 +507,7 @@ namespace Cocoa::Graphics::Tests
 
         constexpr Math::Matrix4f identity = Math::Matrix4f::Identity();
 
-        for (auto i = 0; i < m_drawCount; ++i)
+        for (auto i = 0; i < quadCount; ++i)
         {
             sut.Draw(identity, materialHandle);
         }
