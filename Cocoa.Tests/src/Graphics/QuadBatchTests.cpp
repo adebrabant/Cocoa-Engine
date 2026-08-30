@@ -387,12 +387,12 @@ namespace Cocoa::Graphics::Tests
 
         constexpr Math::Matrix4f identity = Math::Matrix4f::Identity();
 
-        sut.Draw(identity, materialHandles[0]);
-
         for (const auto& materialHandle : materialHandles)
         {
             sut.Draw(identity, materialHandle);
         }
+
+        sut.Draw(identity, materialHandles[0]);
 
         sut.Flush(identity);
 
