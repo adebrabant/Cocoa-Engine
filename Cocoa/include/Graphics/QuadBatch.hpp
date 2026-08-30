@@ -53,14 +53,15 @@ namespace Cocoa::Graphics
         struct TextureSlots
         {
             static constexpr uint32_t MaxCount{32};
-            std::array<uint32_t, MaxCount> Data{};
+            std::array<TextureHandle, MaxCount> Data{};
             uint32_t Count{0};
         };
-        void FlushBatch(
-            const Material& material,
-            const Math::Matrix4f& viewProjectionMatrix,
+        void BuildBatch(const Math::Matrix4f& viewProjectionMatrix);
+        void ExecuteBatch(
+            const ShaderHandle& shaderHandle,
+            const TextureSlots& textureSlots,
             const std::vector<QuadVertex>& batchVertices,
-            const TextureSlots& textureSlots) const;
+            const Math::Matrix4f& viewProjectionMatrix) const;
 
         static std::array<int, TextureSlots::MaxCount> CreateSamplerUnits();
 

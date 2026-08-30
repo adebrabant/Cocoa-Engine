@@ -111,10 +111,18 @@ namespace Cocoa::Graphics
         if (m_drawCommands.empty())
             return;
 
+        BuildBatch(viewProjectionMatrix);
+
+        m_drawCommands.clear();
+        m_renderStatistics.BatchFlushCount++;
+    }
+
+    void QuadBatch::BuildBatch(const Math::Matrix4f& viewProjectionMatrix)
+    {
         uint32_t batchCounter{ 0 };
         TextureSlots textureSlots;
         std::vector<QuadVertex> batchVertices;
-        Material currentMaterial = m_drawCommands[0].MaterialRef;
+        ShaderHandle currentShaderHandle = m_drawCommands[0].MaterialRef.Shader;
 
         for (QuadDrawCommand& command : m_drawCommands)
         {
@@ -122,35 +130,35 @@ namespace Cocoa::Graphics
             auto texSlotIterator = std::find_if(
                 textureSlots.Data.begin(),
                 texSlotActiveEnd,
-                [&](const uint32_t& texId)
+                [&](const TextureHandle& textureHandle)
                 {
-                    return texId == command.MaterialRef.Texture.Id;
+                    return textureHandle.Id == command.MaterialRef.Texture.Id;
                 }
             );
 
-            if (command.MaterialRef.Shader.Id != currentMaterial.Shader.Id ||
+            if (command.MaterialRef.Shader.Id != currentShaderHandle.Id ||
                 (texSlotIterator == texSlotActiveEnd && textureSlots.Count == TextureSlots::MaxCount) ||
                 batchCounter == m_maxQuadCount)
             {
-                FlushBatch(
-                    currentMaterial,
-                    viewProjectionMatrix,
+                ExecuteBatch(
+                    currentShaderHandle,
+                    textureSlots,
                     batchVertices,
-                    textureSlots
+                    viewProjectionMatrix
                 );
                 batchCounter = 0;
                 textureSlots.Count = 0;
                 batchVertices.clear();
                 texSlotActiveEnd = textureSlots.Data.begin();
                 texSlotIterator = texSlotActiveEnd;
-                currentMaterial = command.MaterialRef;
+                currentShaderHandle = command.MaterialRef.Shader;
             }
 
             uint32_t currentTexSlotIndex;
             if (texSlotIterator == texSlotActiveEnd)
             {
                 currentTexSlotIndex = textureSlots.Count;
-                textureSlots.Data[textureSlots.Count] = command.MaterialRef.Texture.Id;
+                textureSlots.Data[textureSlots.Count] = command.MaterialRef.Texture;
                 textureSlots.Count++;
             }
             else
@@ -174,26 +182,23 @@ namespace Cocoa::Graphics
 
         if (!batchVertices.empty())
         {
-            FlushBatch(
-                currentMaterial,
-                viewProjectionMatrix,
+            ExecuteBatch(
+                currentShaderHandle,
+                textureSlots,
                 batchVertices,
-                textureSlots
+                viewProjectionMatrix
             );
             batchVertices.clear();
         }
-
-        m_drawCommands.clear();
-        m_renderStatistics.BatchFlushCount++;
     }
 
-    void QuadBatch::FlushBatch(
-        const Material& material,
-        const Math::Matrix4f& viewProjectionMatrix,
+    void QuadBatch::ExecuteBatch(
+        const ShaderHandle& shaderHandle,
+        const TextureSlots& textureSlots,
         const std::vector<QuadVertex>& batchVertices,
-        const TextureSlots& textureSlots) const
+        const Math::Matrix4f& viewProjectionMatrix) const
     {
-        const Shader& shader = m_shaderManager.Get(material.Shader);
+        const Shader& shader = m_shaderManager.Get(shaderHandle);
         const std::array samplerUnits = CreateSamplerUnits();
 
         m_vbo->SetData(
@@ -205,7 +210,7 @@ namespace Cocoa::Graphics
         shader.SetIntArray("u_Textures", samplerUnits.data(), samplerUnits.size());
         for (uint32_t i = 0; i < textureSlots.Count; ++i)
         {
-            const Texture2D& texture = m_textureManager.Get({textureSlots.Data[i]});
+            const Texture2D& texture = m_textureManager.Get(textureSlots.Data[i]);
             texture.Bind(i);
         }
         const auto quadCount = static_cast<uint32_t>(batchVertices.size() / 4);
