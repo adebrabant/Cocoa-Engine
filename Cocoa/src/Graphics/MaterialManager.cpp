@@ -35,8 +35,8 @@ namespace Cocoa::Graphics
 		Material material
 		{
 			.Id = materialId,
-			.ShaderId = shaderHandle,
-			.TextureId = textureHandle,
+			.Shader = shaderHandle,
+			.Texture = textureHandle,
 			.Tint = tint
 		};
 		

@@ -11,7 +11,7 @@ namespace Cocoa::Graphics
 		: m_rendererId(0)
 	{
 		const char* vertexShaderCStr = vertexSource.c_str();
-		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+		const GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 		glShaderSource(vertexShader, 1, &vertexShaderCStr, nullptr);
 		glCompileShader(vertexShader);
 
@@ -26,7 +26,7 @@ namespace Cocoa::Graphics
 		}
 
 		const char* fragmentShaderCStr = fragmentSource.c_str();
-		GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+		const GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 		glShaderSource(fragmentShader, 1, &fragmentShaderCStr, nullptr);
 		glCompileShader(fragmentShader);
 
@@ -40,7 +40,7 @@ namespace Cocoa::Graphics
 			std::cerr << "Fragment shader comp failed: " << infoLog << std::endl;
 		}
 
-		GLuint shaderProgram = glCreateProgram();
+		const GLuint shaderProgram = glCreateProgram();
 		glAttachShader(shaderProgram, vertexShader);
 		glAttachShader(shaderProgram, fragmentShader);
 		glLinkProgram(shaderProgram);
@@ -131,6 +131,16 @@ namespace Cocoa::Graphics
 		);
 
 		glUniformMatrix4fv(location, 1, GL_FALSE, &value[0]);
+	}
+
+	void OpenGLShader::SetIntArray(const std::string& name, const int* values, const int count) const
+	{
+		const GLint location = glGetUniformLocation(
+			static_cast<GLuint>(m_rendererId),
+			name.c_str()
+		);
+
+		glUniform1iv(location, count, values);
 	}
 
 	void OpenGLShader::Destroy() const

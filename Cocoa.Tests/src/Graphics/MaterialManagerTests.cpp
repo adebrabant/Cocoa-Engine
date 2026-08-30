@@ -92,8 +92,8 @@ namespace Cocoa::Graphics::Tests
 		const Graphics::Material& result = sut.Get(handle);
 
 		EXPECT_NE(&result, nullptr);
-		EXPECT_EQ(result.ShaderId.Id, shaderHandle.Id);
-		EXPECT_EQ(result.TextureId.Id, textureHandle.Id);
+		EXPECT_EQ(result.Shader.Id, shaderHandle.Id);
+		EXPECT_EQ(result.Texture.Id, textureHandle.Id);
 		EXPECT_FLOAT_EQ(result.Tint.R, tint.R);
 		EXPECT_FLOAT_EQ(result.Tint.G, tint.G);
 		EXPECT_FLOAT_EQ(result.Tint.B, tint.B);

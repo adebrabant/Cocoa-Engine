@@ -31,4 +31,9 @@ namespace Cocoa::Stubs
 	{
 
 	}
+
+	void StubShader::SetIntArray(const std::string& name, const int* values, int count) const
+	{
+
+	}
 }

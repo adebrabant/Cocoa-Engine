@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <string>
 
 namespace Cocoa::Math
@@ -19,6 +20,7 @@ namespace Cocoa::Graphics
 		virtual void SetInt(const std::string& name, int value) const = 0;
 		virtual void SetFloat(const std::string& name, float value) const = 0;
 		virtual void SetVector4(const std::string& name, const Math::Vector4f& value) const = 0;
-		virtual  void SetMatrix4(const std::string& name, const Math::Matrix4f& value) const = 0;
+		virtual void SetMatrix4(const std::string& name, const Math::Matrix4f& value) const = 0;
+		virtual void SetIntArray(const std::string& name, const int* values, int count) const = 0;
 	};
 }

@@ -9,8 +9,8 @@ namespace Cocoa::Graphics
 	struct Material
 	{
 		std::string Id;
-		ShaderHandle ShaderId;
-		TextureHandle TextureId;
+		ShaderHandle Shader;
+		TextureHandle Texture;
 		Core::Color Tint;
 	};
 }

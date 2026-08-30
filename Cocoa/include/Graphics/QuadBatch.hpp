@@ -50,10 +50,25 @@ namespace Cocoa::Graphics
             const Material& MaterialRef;
             std::array<QuadVertex, 4> Vertices{};
         };
-        void FlushBatch(
-            const Material& material,
-            const Math::Matrix4f& viewProjectionMatrix,
-            const std::vector<QuadVertex>& batchVertices) const;
+        struct TextureSlots
+        {
+            static constexpr uint32_t MaxCount{32};
+            std::array<TextureHandle, MaxCount> Data{};
+            uint32_t Count{0};
+        };
+        struct BatchData
+        {
+            ShaderHandle Shader;
+            TextureSlots Textures;
+            std::vector<QuadVertex> Vertices;
+        };
+        void BuildBatch(const Math::Matrix4f& viewProjectionMatrix);
+        void ExecuteBatch(
+            const BatchData& batchData,
+            const Math::Matrix4f& viewProjectionMatrix
+        ) const;
+
+        static std::array<int, TextureSlots::MaxCount> CreateSamplerUnits();
 
     private:
         GraphicsDevice& m_graphicsDevice;

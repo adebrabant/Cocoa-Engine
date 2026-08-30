@@ -12,6 +12,8 @@
 #include "Graphics/RenderStatistics.hpp"
 #include "Graphics/Material.hpp"
 
+#include <algorithm>
+
 namespace Cocoa::Graphics
 {
     QuadBatch::QuadBatch(
@@ -109,55 +111,95 @@ namespace Cocoa::Graphics
         if (m_drawCommands.empty())
             return;
 
+        BuildBatch(viewProjectionMatrix);
+
+        m_drawCommands.clear();
+        m_renderStatistics.BatchFlushCount++;
+    }
+
+    void QuadBatch::BuildBatch(const Math::Matrix4f& viewProjectionMatrix)
+    {
         uint32_t batchCounter{ 0 };
-        std::vector<QuadVertex> batchVertices;
-        Material currentMaterial = m_drawCommands[0].MaterialRef;
-        for (const QuadDrawCommand& command : m_drawCommands)
+        BatchData batchData{.Shader =  m_drawCommands[0].MaterialRef.Shader};
+
+        for (QuadDrawCommand& command : m_drawCommands)
         {
-            if (command.MaterialRef.ShaderId.Id != currentMaterial.ShaderId.Id ||
-                command.MaterialRef.TextureId.Id != currentMaterial.TextureId.Id ||
+            auto texSlotActiveEnd = batchData.Textures.Data.begin() + batchData.Textures.Count;
+            auto texSlotIterator = std::find_if(
+                batchData.Textures.Data.begin(),
+                texSlotActiveEnd,
+                [&](const TextureHandle& textureHandle)
+                {
+                    return textureHandle.Id == command.MaterialRef.Texture.Id;
+                }
+            );
+
+            if (command.MaterialRef.Shader.Id != batchData.Shader.Id ||
+                (texSlotIterator == texSlotActiveEnd && batchData.Textures.Count == TextureSlots::MaxCount) ||
                 batchCounter == m_maxQuadCount)
             {
-                FlushBatch(currentMaterial, viewProjectionMatrix, batchVertices);
-                batchVertices.clear();
-                currentMaterial = command.MaterialRef;
+                ExecuteBatch(batchData, viewProjectionMatrix);
                 batchCounter = 0;
+                batchData.Textures.Count = 0;
+                batchData.Vertices.clear();
+                texSlotActiveEnd = batchData.Textures.Data.begin();
+                texSlotIterator = texSlotActiveEnd;
+                batchData.Shader = command.MaterialRef.Shader;
             }
 
-            batchVertices.insert(batchVertices.end(),
+            uint32_t currentTexSlotIndex;
+            if (texSlotIterator == texSlotActiveEnd)
+            {
+                currentTexSlotIndex = batchData.Textures.Count;
+                batchData.Textures.Data[batchData.Textures.Count] = command.MaterialRef.Texture;
+                batchData.Textures.Count++;
+            }
+            else
+            {
+                currentTexSlotIndex = static_cast<uint32_t>(
+                    texSlotIterator - batchData.Textures.Data.begin()
+                );
+            }
+
+            for (auto& quadVertex : command.Vertices)
+            {
+                quadVertex.TexIndex = currentTexSlotIndex;
+            }
+
+            batchData.Vertices.insert(batchData.Vertices.end(),
                                  command.Vertices.begin(),
                                  command.Vertices.end()
             );
             batchCounter++;
         }
 
-        if (!batchVertices.empty())
+        if (!batchData.Vertices.empty())
         {
-            FlushBatch(currentMaterial, viewProjectionMatrix, batchVertices);
-            batchVertices.clear();
+            ExecuteBatch(batchData, viewProjectionMatrix);
+            batchData.Vertices.clear();
         }
-
-        m_drawCommands.clear();
-        m_renderStatistics.BatchFlushCount++;
     }
 
-    void QuadBatch::FlushBatch(
-        const Material& material,
-        const Math::Matrix4f& viewProjectionMatrix,
-        const std::vector<QuadVertex>& batchVertices) const
+    void QuadBatch::ExecuteBatch(
+        const BatchData& batchData,
+        const Math::Matrix4f& viewProjectionMatrix) const
     {
-        const Shader& shader = m_shaderManager.Get(material.ShaderId);
-        const Texture2D& texture = m_textureManager.Get(material.TextureId);
-        m_vbo->SetData(
-            batchVertices.data(),
-            static_cast<uint32_t>(batchVertices.size() * sizeof(QuadVertex))
-        );
+        const Shader& shader = m_shaderManager.Get(batchData.Shader);
+        const std::array samplerUnits = CreateSamplerUnits();
 
+        m_vbo->SetData(
+            batchData.Vertices.data(),
+            static_cast<uint32_t>(batchData.Vertices.size() * sizeof(QuadVertex))
+        );
         shader.Bind();
-        texture.Bind(0);
-        shader.SetInt("u_Texture", 0);
         shader.SetMatrix4("u_ViewProjection", viewProjectionMatrix);
-        const auto quadCount = static_cast<uint32_t>(batchVertices.size() / 4);
+        shader.SetIntArray("u_Textures", samplerUnits.data(), samplerUnits.size());
+        for (uint32_t i = 0; i < batchData.Textures.Count; ++i)
+        {
+            const Texture2D& texture = m_textureManager.Get(batchData.Textures.Data[i]);
+            texture.Bind(i);
+        }
+        const auto quadCount = static_cast<uint32_t>(batchData.Vertices.size() / 4);
         const uint32_t indexCount = quadCount * 6;
         m_graphicsDevice.DrawIndexed(*m_vao, indexCount);
         shader.Unbind();
@@ -165,5 +207,16 @@ namespace Cocoa::Graphics
         m_renderStatistics.VertexCount += quadCount * 4;
         m_renderStatistics.IndexCount += indexCount;
         m_renderStatistics.DrawCount++;
+    }
+
+    std::array<int, QuadBatch::TextureSlots::MaxCount> QuadBatch::CreateSamplerUnits()
+    {
+        std::array<int, TextureSlots::MaxCount> units{};
+        for (uint32_t i = 0; i < TextureSlots::MaxCount; ++i)
+        {
+            units[i] = static_cast<int>(i);
+        }
+
+        return units;
     }
 }
