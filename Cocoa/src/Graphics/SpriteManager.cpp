@@ -40,7 +40,7 @@ namespace Cocoa::Graphics
         return handle;
     }
 
-    const Sprite& SpriteManager::Get(const SpriteHandle& handle)
+    const Sprite& SpriteManager::Get(const SpriteHandle& handle) const
     {
         const auto it = m_sprites.find(handle.Id);
         if (it == m_sprites.end())

@@ -12,7 +12,7 @@ namespace Cocoa::Graphics
     class SpriteManager
     {
     public:
-        explicit SpriteManager();
+        SpriteManager();
         ~SpriteManager();
 
         SpriteManager(const SpriteManager&) = delete;
@@ -24,7 +24,7 @@ namespace Cocoa::Graphics
             const Math::Vector2f& minUV,
             const Math::Vector2f& maxUV
         );
-        const Sprite& Get(const SpriteHandle& handle);
+        const Sprite& Get(const SpriteHandle& handle) const;
 
     private:
         std::unordered_map<uint32_t, Sprite> m_sprites;
