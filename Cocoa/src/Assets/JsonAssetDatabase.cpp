@@ -65,7 +65,7 @@ namespace Cocoa::Assets
 		return it->second;
 	}
 
-	const SpriteRecord & JsonAssetDatabase::GetSpriteInfo(const std::string& id) const
+	const SpriteRecord& JsonAssetDatabase::GetSpriteInfo(const std::string& id) const
 	{
 		const auto it = m_spriteRecords.find(id);
 
