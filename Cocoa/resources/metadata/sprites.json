@@ -1,0 +1,7 @@
+{
+  "default_sprite" : {
+    "texture": "default_texture",
+    "minUV" : [0, 0],
+    "maxUV" : [1, 1]
+  }
+}
