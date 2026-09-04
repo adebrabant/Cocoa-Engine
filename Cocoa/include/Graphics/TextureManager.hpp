@@ -16,7 +16,7 @@ namespace Cocoa::Graphics
 	class TextureManager
 	{
 	public:
-		TextureManager(GraphicsDevice& graphicsDevice);
+		explicit TextureManager(GraphicsDevice& graphicsDevice);
 		~TextureManager();
 
 		TextureManager(const TextureManager&) = delete;

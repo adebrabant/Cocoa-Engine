@@ -15,7 +15,7 @@ namespace Cocoa::Graphics
 	class ShaderManager
 	{
 	public:
-		ShaderManager(GraphicsDevice& graphicsDevice);
+		explicit ShaderManager(GraphicsDevice& graphicsDevice);
 		~ShaderManager();
 
 		ShaderManager(const ShaderManager&) = delete;

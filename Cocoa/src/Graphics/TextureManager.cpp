@@ -21,7 +21,7 @@ namespace Cocoa::Graphics
 
 	TextureHandle TextureManager::Load(const TextureSpec& spec, const void* pixels)
 	{
-		if (auto it = m_handles.find(spec.Id); it != m_handles.end())
+		if (const auto it = m_handles.find(spec.Id); it != m_handles.end())
 		{
 			return it->second;
 		}
@@ -45,7 +45,7 @@ namespace Cocoa::Graphics
 
 	const Texture2D& TextureManager::Get(TextureHandle handle) const
 	{
-		auto it = m_textures.find(handle.Id);
+		const auto it = m_textures.find(handle.Id);
 
 		if (it == m_textures.end())
 		{
@@ -60,7 +60,7 @@ namespace Cocoa::Graphics
 
 	bool TextureManager::TryGetHandle(const std::string& id, TextureHandle& outHandle) const
 	{
-		if (auto it = m_handles.find(id); it != m_handles.end())
+		if (const auto it = m_handles.find(id); it != m_handles.end())
 		{
 			outHandle = it->second;
 			return true;
