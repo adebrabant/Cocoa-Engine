@@ -26,7 +26,7 @@ namespace Cocoa::Graphics
 		TextureHandle textureHandle, 
 		Core::Color tint)
 	{
-		if (auto it = m_handles.find(materialId); it != m_handles.end())
+		if (const auto it = m_handles.find(materialId); it != m_handles.end())
 		{
 			return it->second;
 		}
@@ -48,7 +48,7 @@ namespace Cocoa::Graphics
 
 	const Material& MaterialManager::Get(MaterialHandle handle) const
 	{
-		auto it = m_materials.find(handle.Id);
+		const auto it = m_materials.find(handle.Id);
 
 		if (it == m_materials.end())
 		{
