@@ -32,6 +32,7 @@ set(COCOA_TEST_SOURCES
     src/Graphics/ShaderManagerTests.cpp
     src/Graphics/TextureManagerTests.cpp
     src/Graphics/MaterialManagerTests.cpp
+    src/Graphics/SpriteManagerTests.cpp
     src/Graphics/OrthographicCameraTests.cpp
     src/Graphics/RenderStatisticsTests.cpp
     src/Graphics/QuadBatchTests.cpp

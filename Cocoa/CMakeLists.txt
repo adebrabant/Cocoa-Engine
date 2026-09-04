@@ -24,6 +24,8 @@ set(COCOA_PUBLIC_HEADERS
     include/Graphics/ShaderManager.hpp
     include/Graphics/MaterialManager.hpp
     include/Graphics/Material.hpp
+    include/Graphics/Sprite.hpp
+    include/Graphics/SpriteManager.hpp
     include/Graphics/GraphicsHandles.hpp
     include/Graphics/OrthographicCamera.hpp
     include/Graphics/Viewport.hpp
@@ -101,6 +103,7 @@ set(COCOA_PRIVATE_SOURCES
     src/Graphics/TextureManager.cpp
     src/Graphics/ShaderManager.cpp
     src/Graphics/MaterialManager.cpp
+    src/Graphics/SpriteManager.cpp
     src/Graphics/OrthographicCamera.cpp
     src/Graphics/QuadBatch.cpp
 
@@ -124,7 +127,6 @@ set(COCOA_PRIVATE_SOURCES
     src/Chronos/FrameClock.cpp
 
     src/Inputs/InputHandler.cpp
-
 )
 
 set(COCOA_RESOURCES
