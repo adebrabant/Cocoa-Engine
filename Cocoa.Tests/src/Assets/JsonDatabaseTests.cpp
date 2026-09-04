@@ -46,7 +46,7 @@ namespace Cocoa::Assets::Tests
 		);
 	}
 
-	TEST(JsonAssetDatabaseTests, Constructor_ShouldThrowError_WhenSprtiesJsonDoesNotExist)
+	TEST(JsonAssetDatabaseTests, Constructor_ShouldThrowError_WhenSpritesJsonDoesNotExist)
 	{
 		const std::filesystem::path metadataPath = "TestData/MissingSprites";
 
@@ -60,7 +60,7 @@ namespace Cocoa::Assets::Tests
 
 	TEST(JsonAssetDatabaseTests, GetTextureInfo_ShouldReturnTextureRecord_WhenGivenValidId)
 	{
-		auto sut = Assets::JsonAssetDatabase(testMetadataPath);
+		const auto sut = Assets::JsonAssetDatabase(testMetadataPath);
 
 		const auto& result = sut.GetTextureInfo("dummy_idle1");
 
@@ -76,17 +76,17 @@ namespace Cocoa::Assets::Tests
 
 	TEST(JsonAssetDatabaseTests, GetTextureInfo_ShouldThrowError_WhenGivenInvalidId)
 	{
-		auto sut = Assets::JsonAssetDatabase(testMetadataPath);
+		const auto sut = Assets::JsonAssetDatabase(testMetadataPath);
 
 		EXPECT_THROW(
-			sut.GetTextureInfo("missing_texture"),
+			auto record = sut.GetTextureInfo("missing_texture"),
 			std::runtime_error
 		);
 	}
 
 	TEST(JsonAssetDatabaseTests, GetShaderInfo_ShouldReturnShaderRecord_WhenGivenValidId)
 	{
-		auto sut = Assets::JsonAssetDatabase(testMetadataPath);
+		const auto sut = Assets::JsonAssetDatabase(testMetadataPath);
 
 		const auto& result = sut.GetShaderInfo("dummy_shader");
 
@@ -96,17 +96,17 @@ namespace Cocoa::Assets::Tests
 
 	TEST(JsonAssetDatabaseTests, GetShaderInfo_ShouldThrowError_WhenGivenInvalidId)
 	{
-		auto sut = Assets::JsonAssetDatabase(testMetadataPath);
+		const auto sut = Assets::JsonAssetDatabase(testMetadataPath);
 
 		EXPECT_THROW(
-			sut.GetShaderInfo("missing_shader"),
+			auto record = sut.GetShaderInfo("missing_shader"),
 			std::runtime_error
 		);
 	}
 
 	TEST(JsonAssetDatabaseTests, GetMaterialInfo_ShouldReturnMaterialRecord_WhenGivenValidId)
 	{
-		auto sut = Assets::JsonAssetDatabase(testMetadataPath);
+		const auto sut = Assets::JsonAssetDatabase(testMetadataPath);
 
 		const auto& result = sut.GetMaterialInfo("dummy_material");
 
@@ -120,10 +120,10 @@ namespace Cocoa::Assets::Tests
 
 	TEST(JsonAssetDatabaseTests, GetMaterialInfo_ShouldThrowError_WhenGivenInvalidId)
 	{
-		auto sut = Assets::JsonAssetDatabase(testMetadataPath);
+		const auto sut = Assets::JsonAssetDatabase(testMetadataPath);
 
 		EXPECT_THROW(
-			sut.GetMaterialInfo("missing_material"),
+			auto record = sut.GetMaterialInfo("missing_material"),
 			std::runtime_error
 		);
 	}
@@ -148,7 +148,7 @@ namespace Cocoa::Assets::Tests
 		const auto sut = Assets::JsonAssetDatabase(testMetadataPath);
 
 		EXPECT_THROW(
-			sut.GetSpriteInfo("missing_sprite"),
+			auto record = sut.GetSpriteInfo("missing_sprite"),
 			std::runtime_error
 		);
 	}
