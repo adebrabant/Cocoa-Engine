@@ -131,6 +131,7 @@ set(COCOA_RESOURCES
     resources/metadata/materials.json
     resources/metadata/shaders.json
     resources/metadata/textures.json
+    resources/metadata/sprites.json
 
     resources/shaders/sprite_default.vert
     resources/shaders/sprite_default.frag

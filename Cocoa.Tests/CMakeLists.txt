@@ -57,6 +57,8 @@ set(COCOA_TEST_DATA
     src/TestData/Metadata/badshaders.json
     src/TestData/Metadata/materials.json
     src/TestData/Metadata/badmaterials.json
+    src/TestData/Metadata/sprites.json
+    src/TestData/Metadata/badsprites.json
 )
 
 add_executable(${COCOA_TESTS_TARGET_NAME}

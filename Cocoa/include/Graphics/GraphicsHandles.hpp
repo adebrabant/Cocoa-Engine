@@ -18,4 +18,9 @@ namespace Cocoa::Graphics
 	{
 		uint32_t Id;
 	};
+
+	struct SpriteHandle
+	{
+		uint32_t Id;
+	};
 }
