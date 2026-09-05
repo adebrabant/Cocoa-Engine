@@ -5,6 +5,7 @@
 #include <Graphics/ShaderManager.hpp>
 #include <Graphics/TextureManager.hpp>
 #include <Graphics/MaterialManager.hpp>
+#include <Graphics/SpriteManager.hpp>
 #include <Graphics/GraphicsHandles.hpp>
 #include "Stubs/Graphics/StubGraphicsDevice.hpp"
 
@@ -26,13 +27,15 @@ namespace Cocoa::Assets::Tests
 		Graphics::TextureManager textureManager(stubGraphicsDevice);
 		Graphics::ShaderManager shaderManager(stubGraphicsDevice);
 		Graphics::MaterialManager materialManager;
+		Graphics::SpriteManager spriteManager;
 		Assets::ResourceLoader sut(
 			jsonDatabase,
 			assetSource,
 			assetManager,
 			textureManager,
 			shaderManager,
-			materialManager
+			materialManager,
+			spriteManager
 		);
 
 		Graphics::TextureHandle result = sut.LoadTexture("dummy_idle1");
@@ -49,13 +52,15 @@ namespace Cocoa::Assets::Tests
 		Graphics::TextureManager textureManager(stubGraphicsDevice);
 		Graphics::ShaderManager shaderManager(stubGraphicsDevice);
 		Graphics::MaterialManager materialManager;
+		Graphics::SpriteManager spriteManager;
 		Assets::ResourceLoader sut(
 			jsonDatabase,
 			assetSource,
 			assetManager,
 			textureManager,
 			shaderManager,
-			materialManager
+			materialManager,
+			spriteManager
 		);
 
 		Graphics::ShaderHandle result = sut.LoadShader("dummy_shader");
@@ -72,16 +77,43 @@ namespace Cocoa::Assets::Tests
 		Graphics::TextureManager textureManager(stubGraphicsDevice);
 		Graphics::ShaderManager shaderManager(stubGraphicsDevice);
 		Graphics::MaterialManager materialManager;
+		Graphics::SpriteManager spriteManager;
 		Assets::ResourceLoader sut(
 			jsonDatabase,
 			assetSource,
 			assetManager,
 			textureManager,
 			shaderManager,
-			materialManager
+			materialManager,
+			spriteManager
 		);
 
 		Graphics::MaterialHandle result = sut.LoadMaterial("dummy_material");
+
+		EXPECT_EQ(result.Id, 1);
+	}
+
+	TEST(ResourceLoaderTests, LoadSprite_ShouldReturnSpriteHandle_WhenProvidingSpriteId)
+	{
+		Assets::JsonAssetDatabase jsonDatabase(testMetadataPath);
+		Assets::FilesystemAssetSource assetSource(testResourcePath);
+		Assets::AssetManager assetManager;
+		Stubs::StubGraphicsDevice stubGraphicsDevice;
+		Graphics::TextureManager textureManager(stubGraphicsDevice);
+		Graphics::ShaderManager shaderManager(stubGraphicsDevice);
+		Graphics::MaterialManager materialManager;
+		Graphics::SpriteManager spriteManager;
+		Assets::ResourceLoader sut(
+			jsonDatabase,
+			assetSource,
+			assetManager,
+			textureManager,
+			shaderManager,
+			materialManager,
+			spriteManager
+		);
+
+		const Graphics::SpriteHandle result = sut.LoadSprite("dummy_sprite");
 
 		EXPECT_EQ(result.Id, 1);
 	}

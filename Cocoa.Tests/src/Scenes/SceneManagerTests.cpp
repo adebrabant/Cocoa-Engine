@@ -7,6 +7,7 @@
 #include <Graphics/ShaderManager.hpp>
 #include <Graphics/TextureManager.hpp>
 #include <Graphics/MaterialManager.hpp>
+#include <Graphics/SpriteManager.hpp>
 #include "Stubs/Graphics/StubGraphicsDevice.hpp"
 #include "Graphics/Viewport.hpp"
 
@@ -69,6 +70,7 @@ namespace Cocoa::Scenes::Tests
 		Graphics::TextureManager TextureManager{ GraphicsDevice };
 		Graphics::ShaderManager ShaderManager{ GraphicsDevice };
 		Graphics::MaterialManager MaterialManager;
+		Graphics::SpriteManager SpriteManager;
 
 		Assets::ResourceLoader ResourceLoader{
 			JsonDatabase,
@@ -76,7 +78,8 @@ namespace Cocoa::Scenes::Tests
 			AssetManager,
 			TextureManager,
 			ShaderManager,
-			MaterialManager
+			MaterialManager,
+			SpriteManager
 		};
 	};
 
