@@ -70,7 +70,7 @@ namespace Cocoa::Scenes::Tests
 		Graphics::TextureManager TextureManager{ GraphicsDevice };
 		Graphics::ShaderManager ShaderManager{ GraphicsDevice };
 		Graphics::MaterialManager MaterialManager;
-		Graphics::SpriteManager spriteManager;
+		Graphics::SpriteManager SpriteManager;
 
 		Assets::ResourceLoader ResourceLoader{
 			JsonDatabase,
@@ -79,7 +79,7 @@ namespace Cocoa::Scenes::Tests
 			TextureManager,
 			ShaderManager,
 			MaterialManager,
-			spriteManager
+			SpriteManager
 		};
 	};
 
