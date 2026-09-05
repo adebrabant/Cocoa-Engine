@@ -9,6 +9,7 @@ namespace Cocoa::Graphics
 	class TextureManager;
 	class ShaderManager;
 	class MaterialManager;
+	class SpriteManager;
 }
 
 namespace Cocoa::Assets
@@ -26,7 +27,8 @@ namespace Cocoa::Assets
 			AssetManager& assetManager,
 			Graphics::TextureManager& textureManager,
 			Graphics::ShaderManager& shaderManager,
-			Graphics::MaterialManager& materialManager
+			Graphics::MaterialManager& materialManager,
+			Graphics::SpriteManager& spriteManager
 		);
 
 		~ResourceLoader() = default;
@@ -40,7 +42,7 @@ namespace Cocoa::Assets
 		[[nodiscard]] Graphics::TextureHandle LoadTexture(const std::string& textureId) const;
 		[[nodiscard]] Graphics::ShaderHandle LoadShader(const std::string& shaderId) const;
 		[[nodiscard]] Graphics::MaterialHandle LoadMaterial(const std::string& materialId) const;
-
+		[[nodiscard]] Graphics::SpriteHandle LoadSprite(const std::string& spriteId) const;
 
 	private:
 		AssetDatabase& m_assetDatabase;
@@ -49,5 +51,6 @@ namespace Cocoa::Assets
 		Graphics::TextureManager& m_textureManager;
 		Graphics::ShaderManager& m_shaderManager;
 		Graphics::MaterialManager& m_materialManager;
+		Graphics::SpriteManager& m_spriteManager;
 	};
 }

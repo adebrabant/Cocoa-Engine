@@ -5,6 +5,7 @@
 #include "Graphics/ShaderManager.hpp"
 #include "Graphics/TextureManager.hpp"
 #include "Graphics/MaterialManager.hpp"
+#include "Graphics/SpriteManager.hpp"
 #include "Graphics/GraphicsHandles.hpp"
 #include "Graphics/TextureSpec.hpp"
 #include "Assets/Image.hpp"
@@ -20,14 +21,16 @@ namespace Cocoa::Assets
 		AssetManager& assetManager, 
 		Graphics::TextureManager& textureManager, 
 		Graphics::ShaderManager& shaderManager, 
-		Graphics::MaterialManager& materialManager
+		Graphics::MaterialManager& materialManager,
+		Graphics::SpriteManager& spriteManager
 	) :
 		m_assetDatabase(assetDatabase),
 		m_assetSource(assetSource),
 		m_assetManager(assetManager),
 		m_textureManager(textureManager),
 		m_shaderManager(shaderManager),
-		m_materialManager(materialManager)
+		m_materialManager(materialManager),
+		m_spriteManager(spriteManager)
 	{
 
 	}
@@ -90,6 +93,19 @@ namespace Cocoa::Assets
 			shaderHandle,
 			textureHandle,
 			record.Tint
+		);
+	}
+
+	Graphics::SpriteHandle ResourceLoader::LoadSprite(const std::string& spriteId) const
+	{
+		const SpriteRecord& record = m_assetDatabase.GetSpriteInfo(spriteId);
+		const Graphics::TextureHandle textureHandle = LoadTexture(record.TextureId);
+
+		return m_spriteManager.Load(
+			record.Id,
+			textureHandle,
+			record.MinUV,
+			record.MaxUV
 		);
 	}
 }

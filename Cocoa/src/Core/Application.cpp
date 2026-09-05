@@ -11,6 +11,7 @@
 #include "Graphics/ShaderManager.hpp"
 #include "Graphics/TextureManager.hpp"
 #include "Graphics/MaterialManager.hpp"
+#include "Graphics/SpriteManager.hpp"
 #include "Scenes/SceneManager.hpp"
 
 #include <string>
@@ -50,6 +51,7 @@ namespace Cocoa::Core
         Graphics::ShaderManager shaderManager(*m_graphicsDevice);
         Graphics::TextureManager textureManager(*m_graphicsDevice);
         Graphics::MaterialManager materialManager;
+		Graphics::SpriteManager spriteManager;
 
         Assets::ResourceLoader resourceLoader(
             jsonAssetDatabase,
@@ -57,7 +59,8 @@ namespace Cocoa::Core
             assetManager,
             textureManager,
             shaderManager,
-            materialManager
+            materialManager,
+            spriteManager
         );
 
         Graphics::Renderer2D renderer2d(
