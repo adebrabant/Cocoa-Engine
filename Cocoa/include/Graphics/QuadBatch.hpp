@@ -57,8 +57,8 @@ namespace Cocoa::Graphics
         };
         struct QuadDrawCommand
         {
-            const ShaderHandle& Shader;
-            const TextureHandle& Texture;
+            ShaderHandle Shader;
+            TextureHandle Texture;
             std::array<QuadVertex, 4> Vertices{};
         };
         struct TextureSlots

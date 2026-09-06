@@ -30,8 +30,8 @@ namespace Cocoa::Graphics
         m_shaderManager(shaderManager),
         m_textureManager(textureManager),
         m_materialManager(materialManager),
-        m_renderStatistics(renderStatistics),
         m_spriteManager(spriteManager),
+        m_renderStatistics(renderStatistics),
         m_maxQuadCount(20000)
     {
         const uint32_t maxVertices{ m_maxQuadCount * 4 };
