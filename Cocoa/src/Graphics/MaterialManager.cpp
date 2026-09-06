@@ -22,8 +22,7 @@ namespace Cocoa::Graphics
 
 	MaterialHandle MaterialManager::Load(
 		const std::string& materialId, 
-		ShaderHandle shaderHandle, 
-		TextureHandle textureHandle, 
+		ShaderHandle shaderHandle,
 		Core::Color tint)
 	{
 		if (const auto it = m_handles.find(materialId); it != m_handles.end())
@@ -36,7 +35,6 @@ namespace Cocoa::Graphics
 		{
 			.Id = materialId,
 			.Shader = shaderHandle,
-			.Texture = textureHandle,
 			.Tint = tint
 		};
 		

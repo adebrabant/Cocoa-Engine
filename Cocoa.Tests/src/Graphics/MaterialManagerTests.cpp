@@ -12,14 +12,12 @@ namespace Cocoa::Graphics::Tests
 	{
 		std::string materialId{ "test-material" };
 		Graphics::ShaderHandle shaderHandle{ .Id = 1 };
-		Graphics::TextureHandle textureHandle{ .Id = 1 };
 		Core::Color tint;
 		Graphics::MaterialManager sut;
 
 		Graphics::MaterialHandle result = sut.Load(
 			materialId, 
-			shaderHandle, 
-			textureHandle,
+			shaderHandle,
 			tint
 		);
 
@@ -30,21 +28,18 @@ namespace Cocoa::Graphics::Tests
 	{
 		std::string materialId{ "test-material" };
 		Graphics::ShaderHandle shaderHandle{ .Id = 1 };
-		Graphics::TextureHandle textureHandle{ .Id = 1 };
 		Core::Color tint;
 		Graphics::MaterialManager sut;
 
 		Graphics::MaterialHandle result1 = sut.Load(
 			materialId,
 			shaderHandle,
-			textureHandle,
 			tint
 		);
 
 		Graphics::MaterialHandle result2 = sut.Load(
 			materialId,
 			shaderHandle,
-			textureHandle,
 			tint
 		);
 
@@ -54,21 +49,18 @@ namespace Cocoa::Graphics::Tests
 	TEST(MaterialManagerTests, Load_ShouldReturnDifferentMaterialHandle_WhenProvidingDifferentMaterialId)
 	{
 		Graphics::ShaderHandle shaderHandle{ .Id = 1 };
-		Graphics::TextureHandle textureHandle{ .Id = 1 };
 		Core::Color tint;
 		Graphics::MaterialManager sut;
 
 		Graphics::MaterialHandle result1 = sut.Load(
 			"test-material",
 			shaderHandle,
-			textureHandle,
 			tint
 		);
 
 		Graphics::MaterialHandle result2 = sut.Load(
 			"some-material",
 			shaderHandle,
-			textureHandle,
 			tint
 		);
 
@@ -78,14 +70,12 @@ namespace Cocoa::Graphics::Tests
 	TEST(MaterialManagerTests, Get_ShouldReturnMaterial_WhenProvidingValidHandle)
 	{
 		Graphics::ShaderHandle shaderHandle{ .Id = 1 };
-		Graphics::TextureHandle textureHandle{ .Id = 1 };
 		Core::Color tint{ 0.25f, 0.5f, 0.75f, 1.0f };
 		Graphics::MaterialManager sut;
 
 		Graphics::MaterialHandle handle = sut.Load(
 			"test-material",
 			shaderHandle,
-			textureHandle,
 			tint
 		);
 
@@ -93,7 +83,6 @@ namespace Cocoa::Graphics::Tests
 
 		EXPECT_NE(&result, nullptr);
 		EXPECT_EQ(result.Shader.Id, shaderHandle.Id);
-		EXPECT_EQ(result.Texture.Id, textureHandle.Id);
 		EXPECT_FLOAT_EQ(result.Tint.R, tint.R);
 		EXPECT_FLOAT_EQ(result.Tint.G, tint.G);
 		EXPECT_FLOAT_EQ(result.Tint.B, tint.B);
@@ -104,14 +93,12 @@ namespace Cocoa::Graphics::Tests
 	{
 		const std::string materialId{ "test-material" };
 		Graphics::ShaderHandle shaderHandle{ .Id = 1 };
-		Graphics::TextureHandle textureHandle{ .Id = 1 };
 		Core::Color tint;
 		Graphics::MaterialManager sut;
 
 		Graphics::MaterialHandle handle = sut.Load(
 			materialId,
 			shaderHandle,
-			textureHandle,
 			tint
 		);
 
@@ -124,19 +111,16 @@ namespace Cocoa::Graphics::Tests
 	TEST(MaterialManagerTests, Get_ShouldReturnDifferentMaterial_WhenProvidingDifferentHandle)
 	{
 		Graphics::ShaderHandle shaderHandle{ .Id = 1 };
-		Graphics::TextureHandle textureHandle{ .Id = 1 };
 		Core::Color tint;
 		Graphics::MaterialManager sut;
 		Graphics::MaterialHandle handle1 = sut.Load(
 			"test-material",
 			shaderHandle,
-			textureHandle,
 			tint
 		);
 		Graphics::MaterialHandle handle2 = sut.Load(
 			"mock-material",
 			shaderHandle,
-			textureHandle,
 			tint
 		);
 
@@ -148,7 +132,7 @@ namespace Cocoa::Graphics::Tests
 
 	TEST(MaterialManagerTests, Get_ShouldThrowError_WhenProvidingMissingHandle)
 	{
-		Graphics::MaterialManager sut;
+		const Graphics::MaterialManager sut;
 		MaterialHandle handle{ .Id = 9999 };
 
 		EXPECT_THROW(

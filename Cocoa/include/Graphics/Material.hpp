@@ -10,7 +10,6 @@ namespace Cocoa::Graphics
 	{
 		std::string Id;
 		ShaderHandle Shader;
-		TextureHandle Texture;
 		Core::Color Tint;
 	};
 }

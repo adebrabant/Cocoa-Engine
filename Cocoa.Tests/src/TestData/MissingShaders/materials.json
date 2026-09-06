@@ -1,7 +1,6 @@
 {
   "dummy_material": {
     "shader": "dummy_shader",
-    "texture": "dummy_texture",
     "tint": [ 1.0, 1.0, 1.0, 1.0 ]
   }
 }

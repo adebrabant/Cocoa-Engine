@@ -86,12 +86,10 @@ namespace Cocoa::Assets
 	{
 		const MaterialRecord& record = m_assetDatabase.GetMaterialInfo(materialId);
 		const Graphics::ShaderHandle shaderHandle = LoadShader(record.ShaderId);
-		const Graphics::TextureHandle textureHandle = LoadTexture(record.TextureId);
 		
 		return m_materialManager.Load(
 			materialId,
 			shaderHandle,
-			textureHandle,
 			record.Tint
 		);
 	}

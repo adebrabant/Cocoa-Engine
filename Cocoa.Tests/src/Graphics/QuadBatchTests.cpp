@@ -3,6 +3,7 @@
 #include <Graphics/MaterialManager.hpp>
 #include <Graphics/ShaderManager.hpp>
 #include <Graphics/TextureManager.hpp>
+#include <Graphics/SpriteManager.hpp>
 #include <Graphics/RenderStatistics.hpp>
 #include <Graphics/TextureSpec.hpp>
 #include <gtest/gtest.h>
@@ -11,13 +12,12 @@
 
 namespace Cocoa::Graphics::Tests
 {
-    static std::vector<MaterialHandle> CreateMaterialsWithUniqueTextures(
+    static std::vector<SpriteHandle> CreateSpritesWithUniqueTextures(
         TextureManager& textureManager,
-        MaterialManager& materialManager,
-        const ShaderHandle& shaderHandle,
+        SpriteManager& spriteManager,
         const int count)
     {
-        std::vector<MaterialHandle> handles;
+        std::vector<SpriteHandle> handles;
         constexpr uint8_t pixelData[] {255, 255, 255, 255};
 
         for (auto i = 0; i < count; ++i)
@@ -34,14 +34,14 @@ namespace Cocoa::Graphics::Tests
                 pixelData
             );
 
-            const MaterialHandle materialHandle = materialManager.Load(
-                "material-" + std::to_string(i),
-                shaderHandle,
+            const SpriteHandle spriteHandle = spriteManager.Load(
+                "sprite-" + std::to_string(i),
                 textureHandle,
-                Core::Color{0.5, 1.0, 0.5, 1.0f}
+                Math::Vector2f(0.0f, 0.0f),
+                Math::Vector2f(1.0f, 1.0f)
             );
 
-            handles.emplace_back(materialHandle);
+            handles.emplace_back(spriteHandle);
         }
 
         return handles;
@@ -53,6 +53,7 @@ namespace Cocoa::Graphics::Tests
         ShaderManager shaderManager(graphicsDevice);
         TextureManager textureManager(graphicsDevice);
         MaterialManager materialManager;
+        SpriteManager spriteManager;
         RenderStatistics renderStats;
 
         const ShaderHandle shaderHandle = shaderManager.Load(
@@ -83,15 +84,20 @@ namespace Cocoa::Graphics::Tests
         const MaterialHandle materialHandleA = materialManager.Load(
             "material-a",
             shaderHandle,
-            textureHandle,
             tint
         );
 
         const MaterialHandle materialHandleB = materialManager.Load(
             "material-b",
             shaderHandle,
-            textureHandle,
             tint
+        );
+
+        const SpriteHandle spriteHandle = spriteManager.Load(
+            "default-sprite",
+            textureHandle,
+            Math::Vector2f(0.0f, 0.0f),
+            Math::Vector2f(1.0f, 1.0f)
         );
 
         QuadBatch sut(
@@ -99,13 +105,14 @@ namespace Cocoa::Graphics::Tests
             shaderManager,
             textureManager,
             materialManager,
+            spriteManager,
             renderStats
         );
 
         constexpr Math::Matrix4f identity = Math::Matrix4f::Identity();
 
-        sut.Draw(identity, materialHandleA);
-        sut.Draw(identity, materialHandleB);
+        sut.Draw(identity, materialHandleA, spriteHandle);
+        sut.Draw(identity, materialHandleB, spriteHandle);
 
         sut.Flush(identity);
 
@@ -118,6 +125,7 @@ namespace Cocoa::Graphics::Tests
         ShaderManager shaderManager(graphicsDevice);
         TextureManager textureManager(graphicsDevice);
         MaterialManager materialManager;
+        SpriteManager spriteManager;
         RenderStatistics renderStats;
 
         const ShaderHandle shaderHandleOne = shaderManager.Load(
@@ -154,15 +162,20 @@ namespace Cocoa::Graphics::Tests
         const MaterialHandle materialHandleA = materialManager.Load(
             "material-a",
             shaderHandleOne,
-            textureHandle,
             tint
         );
 
         const MaterialHandle materialHandleB = materialManager.Load(
             "material-b",
             shaderHandleTwo,
-            textureHandle,
             tint
+        );
+
+        const SpriteHandle spriteHandle = spriteManager.Load(
+            "default-sprite",
+            textureHandle,
+            Math::Vector2f(0.0f, 0.0f),
+            Math::Vector2f(1.0f, 1.0f)
         );
 
         QuadBatch sut(
@@ -170,13 +183,14 @@ namespace Cocoa::Graphics::Tests
             shaderManager,
             textureManager,
             materialManager,
+            spriteManager,
             renderStats
         );
 
         constexpr Math::Matrix4f identity = Math::Matrix4f::Identity();
 
-        sut.Draw(identity, materialHandleA);
-        sut.Draw(identity, materialHandleB);
+        sut.Draw(identity, materialHandleA, spriteHandle);
+        sut.Draw(identity, materialHandleB, spriteHandle);
 
         sut.Flush(identity);
 
@@ -189,6 +203,7 @@ namespace Cocoa::Graphics::Tests
         ShaderManager shaderManager(graphicsDevice);
         TextureManager textureManager(graphicsDevice);
         MaterialManager materialManager;
+        SpriteManager spriteManager;
         RenderStatistics renderStats;
 
         const ShaderHandle shaderHandle = shaderManager.Load(
@@ -231,15 +246,27 @@ namespace Cocoa::Graphics::Tests
         const MaterialHandle materialHandleA = materialManager.Load(
             "material-a",
             shaderHandle,
-            textureHandleOne,
             tint
         );
 
         const MaterialHandle materialHandleB = materialManager.Load(
             "material-b",
             shaderHandle,
-            textureHandleTwo,
             tint
+        );
+
+        const SpriteHandle spriteHandleA = spriteManager.Load(
+            "default-sprite-a",
+            textureHandleOne,
+            Math::Vector2f(0.0f, 0.0f),
+            Math::Vector2f(1.0f, 1.0f)
+        );
+
+        const SpriteHandle spriteHandleB = spriteManager.Load(
+            "default-sprite-b",
+            textureHandleTwo,
+            Math::Vector2f(0.0f, 0.0f),
+            Math::Vector2f(1.0f, 1.0f)
         );
 
         QuadBatch sut(
@@ -247,13 +274,14 @@ namespace Cocoa::Graphics::Tests
             shaderManager,
             textureManager,
             materialManager,
+            spriteManager,
             renderStats
         );
 
         constexpr Math::Matrix4f identity = Math::Matrix4f::Identity();
 
-        sut.Draw(identity, materialHandleA);
-        sut.Draw(identity, materialHandleB);
+        sut.Draw(identity, materialHandleA, spriteHandleA);
+        sut.Draw(identity, materialHandleB, spriteHandleB);
 
         sut.Flush(identity);
 
@@ -266,6 +294,7 @@ namespace Cocoa::Graphics::Tests
         ShaderManager shaderManager(graphicsDevice);
         TextureManager textureManager(graphicsDevice);
         MaterialManager materialManager;
+        SpriteManager spriteManager;
         RenderStatistics renderStats;
 
         const ShaderHandle shaderHandle = shaderManager.Load(
@@ -294,15 +323,20 @@ namespace Cocoa::Graphics::Tests
         const MaterialHandle materialHandleA = materialManager.Load(
             "material-a",
             shaderHandle,
-            textureHandle,
             Core::Color{0.5, 1.0, 0.5, 1.0f}
         );
 
         const MaterialHandle materialHandleB = materialManager.Load(
             "material-b",
             shaderHandle,
-            textureHandle,
             Core::Color{1.0f, 1.0f, 1.0f, 1.0f}
+        );
+
+        const SpriteHandle spriteHandle = spriteManager.Load(
+            "default-sprite-b",
+            textureHandle,
+            Math::Vector2f(0.0f, 0.0f),
+            Math::Vector2f(1.0f, 1.0f)
         );
 
         QuadBatch sut(
@@ -310,13 +344,14 @@ namespace Cocoa::Graphics::Tests
             shaderManager,
             textureManager,
             materialManager,
+            spriteManager,
             renderStats
         );
 
         constexpr Math::Matrix4f identity = Math::Matrix4f::Identity();
 
-        sut.Draw(identity, materialHandleA);
-        sut.Draw(identity, materialHandleB);
+        sut.Draw(identity, materialHandleA, spriteHandle);
+        sut.Draw(identity, materialHandleB, spriteHandle);
 
         sut.Flush(identity);
 
@@ -329,6 +364,7 @@ namespace Cocoa::Graphics::Tests
         ShaderManager shaderManager(graphicsDevice);
         TextureManager textureManager(graphicsDevice);
         MaterialManager materialManager;
+        SpriteManager spriteManager;
         RenderStatistics renderStats;
 
         const ShaderHandle shaderHandle = shaderManager.Load(
@@ -337,22 +373,29 @@ namespace Cocoa::Graphics::Tests
             "fragment-source"
         );
 
-        const std::vector<MaterialHandle> materialHandles =
-            CreateMaterialsWithUniqueTextures(textureManager, materialManager, shaderHandle, 33);
+        const MaterialHandle materialHandle = materialManager.Load(
+            "material-a",
+            shaderHandle,
+            Core::Color{1.0f, 1.0f, 1.0f, 1.0f}
+        );
+
+        const std::vector<SpriteHandle> spriteHandles =
+            CreateSpritesWithUniqueTextures(textureManager, spriteManager, 33);
 
         QuadBatch sut(
             graphicsDevice,
             shaderManager,
             textureManager,
             materialManager,
+            spriteManager,
             renderStats
         );
 
         constexpr Math::Matrix4f identity = Math::Matrix4f::Identity();
 
-        for (const auto& materialHandle : materialHandles)
+        for (const auto& spriteHandle : spriteHandles)
         {
-            sut.Draw(identity, materialHandle);
+            sut.Draw(identity, materialHandle, spriteHandle);
         }
 
         sut.Flush(identity);
@@ -366,6 +409,7 @@ namespace Cocoa::Graphics::Tests
         ShaderManager shaderManager(graphicsDevice);
         TextureManager textureManager(graphicsDevice);
         MaterialManager materialManager;
+        SpriteManager spriteManager;
         RenderStatistics renderStats;
 
         const ShaderHandle shaderHandle = shaderManager.Load(
@@ -374,25 +418,32 @@ namespace Cocoa::Graphics::Tests
             "fragment-source"
         );
 
-        const std::vector<MaterialHandle> materialHandles =
-            CreateMaterialsWithUniqueTextures(textureManager, materialManager, shaderHandle, 32);
+        const MaterialHandle materialHandle = materialManager.Load(
+            "material-a",
+            shaderHandle,
+            Core::Color{1.0f, 1.0f, 1.0f, 1.0f}
+        );
+
+        const std::vector<SpriteHandle> spriteHandles =
+            CreateSpritesWithUniqueTextures(textureManager, spriteManager, 32);
 
         QuadBatch sut(
             graphicsDevice,
             shaderManager,
             textureManager,
             materialManager,
+            spriteManager,
             renderStats
         );
 
         constexpr Math::Matrix4f identity = Math::Matrix4f::Identity();
 
-        for (const auto& materialHandle : materialHandles)
+        for (const auto& spriteHandle : spriteHandles)
         {
-            sut.Draw(identity, materialHandle);
+            sut.Draw(identity, materialHandle, spriteHandle);
         }
 
-        sut.Draw(identity, materialHandles[0]);
+        sut.Draw(identity, materialHandle, spriteHandles[0]);
 
         sut.Flush(identity);
 
@@ -406,6 +457,7 @@ namespace Cocoa::Graphics::Tests
         ShaderManager shaderManager(graphicsDevice);
         TextureManager textureManager(graphicsDevice);
         MaterialManager materialManager;
+        SpriteManager spriteManager;
         RenderStatistics renderStats;
 
         const ShaderHandle shaderHandle = shaderManager.Load(
@@ -434,8 +486,14 @@ namespace Cocoa::Graphics::Tests
         const MaterialHandle materialHandle = materialManager.Load(
             "material-a",
             shaderHandle,
-            textureHandle,
             Core::Color{0.5, 1.0, 0.5, 1.0f}
+        );
+
+        const SpriteHandle spriteHandle = spriteManager.Load(
+            "default-sprite",
+            textureHandle,
+            Math::Vector2f(0.0f, 0.0f),
+            Math::Vector2f(1.0f, 1.0f)
         );
 
         QuadBatch sut(
@@ -443,6 +501,7 @@ namespace Cocoa::Graphics::Tests
             shaderManager,
             textureManager,
             materialManager,
+            spriteManager,
             renderStats
         );
 
@@ -450,7 +509,7 @@ namespace Cocoa::Graphics::Tests
 
         for (auto i = 0; i < quadCount; ++i)
         {
-            sut.Draw(identity, materialHandle);
+            sut.Draw(identity, materialHandle, spriteHandle);
         }
 
         sut.Flush(identity);
@@ -465,6 +524,7 @@ namespace Cocoa::Graphics::Tests
         ShaderManager shaderManager(graphicsDevice);
         TextureManager textureManager(graphicsDevice);
         MaterialManager materialManager;
+        SpriteManager spriteManager;
         RenderStatistics renderStats;
 
         const ShaderHandle shaderHandle = shaderManager.Load(
@@ -493,8 +553,14 @@ namespace Cocoa::Graphics::Tests
         const MaterialHandle materialHandle = materialManager.Load(
             "material-a",
             shaderHandle,
-            textureHandle,
             Core::Color{0.5, 1.0, 0.5, 1.0f}
+        );
+
+        const SpriteHandle spriteHandle = spriteManager.Load(
+            "default-sprite",
+            textureHandle,
+            Math::Vector2f(0.0f, 0.0f),
+            Math::Vector2f(1.0f, 1.0f)
         );
 
         QuadBatch sut(
@@ -502,6 +568,7 @@ namespace Cocoa::Graphics::Tests
             shaderManager,
             textureManager,
             materialManager,
+            spriteManager,
             renderStats
         );
 
@@ -509,11 +576,75 @@ namespace Cocoa::Graphics::Tests
 
         for (auto i = 0; i < quadCount; ++i)
         {
-            sut.Draw(identity, materialHandle);
+            sut.Draw(identity, materialHandle, spriteHandle);
         }
 
         sut.Flush(identity);
 
         EXPECT_EQ(renderStats.DrawCount, 2);
+    }
+
+    TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenGivenSameTextureFromSpriteAndDirectTexture)
+    {
+        Stubs::StubGraphicsDevice graphicsDevice;
+        ShaderManager shaderManager(graphicsDevice);
+        TextureManager textureManager(graphicsDevice);
+        MaterialManager materialManager;
+        SpriteManager spriteManager;
+        RenderStatistics renderStats;
+
+        const ShaderHandle shaderHandle = shaderManager.Load(
+            "test-shader",
+            "vertex-source",
+            "fragment-source"
+        );
+
+        const TextureSpec textureSpec
+        {
+            .Id = "test-texture",
+            .Width = 1,
+            .Height = 1
+        };
+
+        constexpr uint8_t pixelData[]
+        {
+            255, 255, 255, 255
+        };
+
+        const TextureHandle textureHandle = textureManager.Load(
+            textureSpec,
+            pixelData
+        );
+
+        const MaterialHandle materialHandle = materialManager.Load(
+            "material-a",
+            shaderHandle,
+            Core::Color{0.5, 1.0, 0.5, 1.0f}
+        );
+
+        const SpriteHandle spriteHandle = spriteManager.Load(
+            "default-sprite",
+            textureHandle,
+            Math::Vector2f(0.0f, 0.0f),
+            Math::Vector2f(1.0f, 1.0f)
+        );
+
+        QuadBatch sut(
+            graphicsDevice,
+            shaderManager,
+            textureManager,
+            materialManager,
+            spriteManager,
+            renderStats
+        );
+
+        constexpr Math::Matrix4f identity = Math::Matrix4f::Identity();
+
+        sut.Draw(identity, materialHandle, textureHandle);
+        sut.Draw(identity, materialHandle, spriteHandle);
+
+        sut.Flush(identity);
+
+        EXPECT_EQ(renderStats.DrawCount, 1);
     }
 }

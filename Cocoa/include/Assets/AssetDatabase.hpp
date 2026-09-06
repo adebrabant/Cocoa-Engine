@@ -30,7 +30,6 @@ namespace Cocoa::Assets
 	{
 		std::string Id;
 		std::string ShaderId;
-		std::string TextureId;
 		Core::Color Tint;
 	};
 

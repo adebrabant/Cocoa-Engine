@@ -23,7 +23,7 @@ namespace Cocoa::Scenes
 			Math::Matrix4f scale = Math::Matrix4f::Scale(transform.Scale);
 
 			Math::Matrix4f modelMatrix = translation * zRotation * scale;
-			renderer.DrawQuad(modelMatrix, renderable.Material);
+			renderer.DrawQuad(modelMatrix, renderable.Material, renderable.Sprite);
 		}
 	}
 }
