@@ -54,7 +54,6 @@ namespace Cocoa::Graphics::Tests
         TextureManager textureManager(graphicsDevice);
         MaterialManager materialManager;
         SpriteManager spriteManager;
-
         RenderStatistics renderStats;
 
         const ShaderHandle shaderHandle = shaderManager.Load(
@@ -583,5 +582,69 @@ namespace Cocoa::Graphics::Tests
         sut.Flush(identity);
 
         EXPECT_EQ(renderStats.DrawCount, 2);
+    }
+
+    TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenGivenSameTextureFromSpriteAndDirectTexture)
+    {
+        Stubs::StubGraphicsDevice graphicsDevice;
+        ShaderManager shaderManager(graphicsDevice);
+        TextureManager textureManager(graphicsDevice);
+        MaterialManager materialManager;
+        SpriteManager spriteManager;
+        RenderStatistics renderStats;
+
+        const ShaderHandle shaderHandle = shaderManager.Load(
+            "test-shader",
+            "vertex-source",
+            "fragment-source"
+        );
+
+        const TextureSpec textureSpec
+        {
+            .Id = "test-texture",
+            .Width = 1,
+            .Height = 1
+        };
+
+        constexpr uint8_t pixelData[]
+        {
+            255, 255, 255, 255
+        };
+
+        const TextureHandle textureHandle = textureManager.Load(
+            textureSpec,
+            pixelData
+        );
+
+        const MaterialHandle materialHandle = materialManager.Load(
+            "material-a",
+            shaderHandle,
+            Core::Color{0.5, 1.0, 0.5, 1.0f}
+        );
+
+        const SpriteHandle spriteHandle = spriteManager.Load(
+            "default-sprite",
+            textureHandle,
+            Math::Vector2f(0.0f, 0.0f),
+            Math::Vector2f(1.0f, 1.0f)
+        );
+
+        QuadBatch sut(
+            graphicsDevice,
+            shaderManager,
+            textureManager,
+            materialManager,
+            spriteManager,
+            renderStats
+        );
+
+        constexpr Math::Matrix4f identity = Math::Matrix4f::Identity();
+
+        sut.Draw(identity, materialHandle, textureHandle);
+        sut.Draw(identity, materialHandle, spriteHandle);
+
+        sut.Flush(identity);
+
+        EXPECT_EQ(renderStats.DrawCount, 1);
     }
 }
