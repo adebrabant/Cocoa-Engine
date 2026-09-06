@@ -67,7 +67,8 @@ namespace Cocoa::Core
             *m_graphicsDevice,
             shaderManager,
             textureManager, 
-            materialManager
+            materialManager,
+            spriteManager
         );
 
         Scenes::SceneManager sceneManager(resourceLoader, m_viewport);

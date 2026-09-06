@@ -2,6 +2,7 @@
 #include "Graphics/ShaderManager.hpp"
 #include "Graphics/TextureManager.hpp"
 #include "Graphics/MaterialManager.hpp"
+#include "Graphics/SpriteManager.hpp"
 #include "Graphics/GraphicsDevice.hpp"
 
 namespace Cocoa::Graphics
@@ -10,7 +11,8 @@ namespace Cocoa::Graphics
 		GraphicsDevice& graphicsDevice,
 		ShaderManager& shaderManager,
 		TextureManager& textureManager,
-		MaterialManager& materialManager
+		MaterialManager& materialManager,
+		SpriteManager& spriteManager
 	) :
 		m_renderStatistics(),
 		m_quadBatch(
@@ -18,6 +20,7 @@ namespace Cocoa::Graphics
 			shaderManager,
 			textureManager,
 			materialManager,
+			spriteManager,
 			m_renderStatistics),
 		m_viewProjectionMatrix()
 	{
@@ -32,9 +35,20 @@ namespace Cocoa::Graphics
 		m_viewProjectionMatrix = viewProjectionMatrix;
 	}
 
-	void Renderer2D::DrawQuad(const Math::Matrix4f& modelMatrix, const MaterialHandle materialHandle)
+	void Renderer2D::DrawQuad(
+		const Math::Matrix4f& modelMatrix,
+		const MaterialHandle materialHandle,
+		const TextureHandle textureHandle)
 	{
-		m_quadBatch.Draw(modelMatrix, materialHandle);
+		m_quadBatch.Draw(modelMatrix, materialHandle, textureHandle);
+	}
+
+	void Renderer2D::DrawQuad(
+		const Math::Matrix4f& modelMatrix,
+		const MaterialHandle materialHandle,
+		const SpriteHandle spriteHandle)
+	{
+		m_quadBatch.Draw(modelMatrix, materialHandle, spriteHandle);
 	}
 
 	void Renderer2D::EndDraw()

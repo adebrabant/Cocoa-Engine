@@ -16,11 +16,11 @@ namespace Cocoa::Graphics
     class ShaderManager;
     class TextureManager;
     class MaterialManager;
+    class SpriteManager;
     class VertexArray;
     class VertexBuffer;
     class IndexBuffer;
     class RenderStatistics;
-    struct Material;
 
     class QuadBatch
     {
@@ -30,11 +30,21 @@ namespace Cocoa::Graphics
             ShaderManager& shaderManager,
             TextureManager& textureManager,
             MaterialManager& materialManager,
+            SpriteManager& spriteManager,
             RenderStatistics& renderStatistics
         );
         ~QuadBatch();
 
-        void Draw(const Math::Matrix4f& modelMatrix, MaterialHandle materialHandle);
+        void Draw(
+            const Math::Matrix4f& modelMatrix,
+            MaterialHandle materialHandle,
+            TextureHandle textureHandle
+        );
+        void Draw(
+            const Math::Matrix4f& modelMatrix,
+            MaterialHandle materialHandle,
+            SpriteHandle spriteHandle
+        );
         void Flush(const Math::Matrix4f& viewProjectionMatrix);
 
     private:
@@ -47,7 +57,8 @@ namespace Cocoa::Graphics
         };
         struct QuadDrawCommand
         {
-            const Material& MaterialRef;
+            const ShaderHandle& Shader;
+            const TextureHandle& Texture;
             std::array<QuadVertex, 4> Vertices{};
         };
         struct TextureSlots
@@ -67,14 +78,20 @@ namespace Cocoa::Graphics
             const BatchData& batchData,
             const Math::Matrix4f& viewProjectionMatrix
         ) const;
-
         static std::array<int, TextureSlots::MaxCount> CreateSamplerUnits();
+        static std::array<QuadVertex, 4> BuildVertices(
+            const Math::Matrix4f& modelMatrix,
+            const Math::Vector4f& color,
+            const Math::Vector2f& minUV,
+            const Math::Vector2f& maxUV
+        );
 
     private:
         GraphicsDevice& m_graphicsDevice;
         ShaderManager& m_shaderManager;
         TextureManager& m_textureManager;
         MaterialManager& m_materialManager;
+        SpriteManager& m_spriteManager;
         RenderStatistics& m_renderStatistics;
         Unique<VertexArray> m_vao{ nullptr };
         Unique<VertexBuffer> m_vbo{ nullptr };

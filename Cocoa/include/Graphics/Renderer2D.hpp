@@ -11,6 +11,7 @@ namespace Cocoa::Graphics
 	class ShaderManager;
 	class TextureManager;
 	class MaterialManager;
+	class SpriteManager;
 
 	class Renderer2D
 	{
@@ -19,12 +20,22 @@ namespace Cocoa::Graphics
 			GraphicsDevice& graphicsDevice, 
 			ShaderManager& shaderManager, 
 			TextureManager& textureManager, 
-			MaterialManager& materialManager
+			MaterialManager& materialManager,
+			SpriteManager& spriteManager
 		);
 		~Renderer2D();
 
 		void BeginDraw(const Math::Matrix4f& viewProjectionMatrix);
-		void DrawQuad(const Math::Matrix4f& modelMatrix, MaterialHandle materialHandle);
+		void DrawQuad(
+			const Math::Matrix4f& modelMatrix,
+			MaterialHandle materialHandle,
+			TextureHandle textureHandle
+		);
+		void DrawQuad(
+			const Math::Matrix4f& modelMatrix,
+			MaterialHandle materialHandle,
+			SpriteHandle spriteHandle
+		);
 		void EndDraw();
 
 		[[nodiscard]] const RenderStatistics& GetRenderStatistics() const { return m_renderStatistics; }

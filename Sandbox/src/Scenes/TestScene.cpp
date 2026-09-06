@@ -22,8 +22,9 @@ namespace Sandbox
         m_world.AddComponent(cameraEntity, Cocoa::Scenes::CameraComponent{ 0, 0, 0, 60.0f });
         m_world.AddSystem<Cocoa::Scenes::CameraSystem>();
 
-		auto sunEntity = m_world.CreateEntity();
-		auto sunMaterialHandle = loader.LoadMaterial("sunset_background_01_material");
+		const auto defaultMaterial = loader.LoadMaterial("default_material");
+
+		const auto sunEntity = m_world.CreateEntity();
 		Cocoa::Scenes::TransformComponent sunsetTransform
 		{
 			.Position = { 0.0f, 0.0f, 0.0f },
@@ -32,7 +33,6 @@ namespace Sandbox
 		};
 
 		auto mountainBackgroundEntity = m_world.CreateEntity();
-		auto mountainBackgroundMaterialHandle = loader.LoadMaterial("mountains_background_01_material");
 		Cocoa::Scenes::TransformComponent mountainBackgroundTransform
 		{
 			.Position = { 0.0f, -0.05f, 0.0f },
@@ -41,7 +41,6 @@ namespace Sandbox
 		};
 
 		auto forestFogBackground01Entity = m_world.CreateEntity();
-		auto forestFogBackground01MaterialHandle = loader.LoadMaterial("forest_fog_background_01_material");
 		Cocoa::Scenes::TransformComponent forestFogBackground01Transform
 		{
 			.Position = { 0.0f, -0.15f, 0.0f },
@@ -50,7 +49,6 @@ namespace Sandbox
 		};
 
 		auto forestFogBackground02Entity = m_world.CreateEntity();
-		auto forestFogBackground02MaterialHandle = loader.LoadMaterial("forest_fog_background_02_material");
 		Cocoa::Scenes::TransformComponent forestFogBackground02Transform
 		{
 			.Position = { 0.0f, -0.25f, 0.0f },
@@ -59,16 +57,44 @@ namespace Sandbox
 		};
 
 		m_world.AddComponent(sunEntity, sunsetTransform);
-		m_world.AddComponent(sunEntity, Cocoa::Scenes::Renderable2DComponent{ sunMaterialHandle });
+		m_world.AddComponent(
+			sunEntity,
+			Cocoa::Scenes::Renderable2DComponent
+			{
+				.Material = defaultMaterial,
+				.Sprite = loader.LoadSprite("sunset_background_01_sprite")
+			}
+		);
 
 		m_world.AddComponent(mountainBackgroundEntity, mountainBackgroundTransform);
-		m_world.AddComponent(mountainBackgroundEntity, Cocoa::Scenes::Renderable2DComponent{ mountainBackgroundMaterialHandle });
+		m_world.AddComponent(
+			mountainBackgroundEntity,
+			Cocoa::Scenes::Renderable2DComponent
+			{
+				.Material = defaultMaterial,
+				.Sprite = loader.LoadSprite("mountains_background_01_sprite")
+			}
+		);
 
 		m_world.AddComponent(forestFogBackground01Entity, forestFogBackground01Transform);
-		m_world.AddComponent(forestFogBackground01Entity, Cocoa::Scenes::Renderable2DComponent{ forestFogBackground01MaterialHandle });
+		m_world.AddComponent(
+			forestFogBackground01Entity,
+			Cocoa::Scenes::Renderable2DComponent
+			{
+				.Material = defaultMaterial,
+				.Sprite = loader.LoadSprite("forest_fog_background_01_sprite")
+			}
+		);
 
 		m_world.AddComponent(forestFogBackground02Entity, forestFogBackground02Transform);
-		m_world.AddComponent(forestFogBackground02Entity, Cocoa::Scenes::Renderable2DComponent{ forestFogBackground02MaterialHandle });
+		m_world.AddComponent(
+			forestFogBackground02Entity,
+			Cocoa::Scenes::Renderable2DComponent
+			{
+				.Material = defaultMaterial,
+				.Sprite = loader.LoadSprite("forest_fog_background_02_sprite")
+			}
+		);
 
 		m_world.AddSystem<Cocoa::Scenes::RenderSystem>();
     }

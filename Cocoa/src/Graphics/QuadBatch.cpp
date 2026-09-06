@@ -3,6 +3,7 @@
 #include "Graphics/MaterialManager.hpp"
 #include "Graphics/ShaderManager.hpp"
 #include "Graphics/TextureManager.hpp"
+#include "Graphics/SpriteManager.hpp"
 #include "Graphics/VertexArray.hpp"
 #include "Graphics/VertexBuffer.hpp"
 #include "Graphics/IndexBuffer.hpp"
@@ -11,6 +12,7 @@
 #include "Graphics/BufferLayout.hpp"
 #include "Graphics/RenderStatistics.hpp"
 #include "Graphics/Material.hpp"
+#include "Graphics/Sprite.hpp"
 
 #include <algorithm>
 
@@ -21,6 +23,7 @@ namespace Cocoa::Graphics
         ShaderManager& shaderManager,
         TextureManager& textureManager,
         MaterialManager& materialManager,
+        SpriteManager& spriteManager,
         RenderStatistics& renderStatistics)
     :
         m_graphicsDevice(graphicsDevice),
@@ -28,6 +31,7 @@ namespace Cocoa::Graphics
         m_textureManager(textureManager),
         m_materialManager(materialManager),
         m_renderStatistics(renderStatistics),
+        m_spriteManager(spriteManager),
         m_maxQuadCount(20000)
     {
         const uint32_t maxVertices{ m_maxQuadCount * 4 };
@@ -66,41 +70,45 @@ namespace Cocoa::Graphics
 
     QuadBatch::~QuadBatch() = default;
 
-    void QuadBatch::Draw(const Math::Matrix4f& modelMatrix, MaterialHandle materialHandle)
+    void QuadBatch::Draw(
+        const Math::Matrix4f& modelMatrix,
+        const MaterialHandle materialHandle,
+        const TextureHandle textureHandle)
     {
         const Material& material = m_materialManager.Get(materialHandle);
-
-        // Transform the quad's local-space corners into world space.
-        const Math::Vector4f worldBottomLeft =
-            modelMatrix * Math::Vector4f{-0.5f, -0.5f, 0.0f, 1.0f };
-
-        const Math::Vector4f worldBottomRight =
-            modelMatrix * Math::Vector4f{ 0.5f, -0.5f, 0.0f, 1.0f };
-
-        const Math::Vector4f worldTopRight =
-            modelMatrix * Math::Vector4f{ 0.5f, 0.5f, 0.0f, 1.0f };
-
-        const Math::Vector4f worldTopLeft =
-            modelMatrix * Math::Vector4f{ -0.5f, 0.5f, 0.0f, 1.0f };
-
         const Math::Vector4f color{ material.Tint.R, material.Tint.G, material.Tint.B, material.Tint.A };
-
-        const std::array<QuadVertex, 4> vertices =
-        {
-            // Bottom-Left
-            QuadVertex{{ worldBottomLeft.X, worldBottomLeft.Y, worldBottomLeft.Z}, { 0.0f, 0.0f }, color },
-            // Bottom-Right
-            QuadVertex{{ worldBottomRight.X, worldBottomRight.Y, worldBottomRight.Z }, { 1.0f, 0.0f }, color },
-            // Top-Right
-            QuadVertex{{worldTopRight.X, worldTopRight.Y, worldTopRight.Z}, {1.0f, 1.0f}, color },
-            // Top-Left
-            QuadVertex{{worldTopLeft.X, worldTopLeft.Y, worldTopLeft.Z}, { 0.0f, 1.0f}, color }
-        };
+        const std::array<QuadVertex, 4> vertices = BuildVertices(
+            modelMatrix,
+            color,
+            {0.0f, 0.0f},
+            {1.0f, 1.0f}
+        );
 
         m_drawCommands.emplace_back(
             QuadDrawCommand
             {
-                .MaterialRef = material,
+                .Shader = material.Shader,
+                .Texture = textureHandle,
+                .Vertices = vertices
+            }
+        );
+    }
+
+    void QuadBatch::Draw(
+        const Math::Matrix4f& modelMatrix,
+        const MaterialHandle materialHandle,
+        const SpriteHandle spriteHandle)
+    {
+        const Material& material = m_materialManager.Get(materialHandle);
+        const Sprite& sprite = m_spriteManager.Get(spriteHandle);
+        const Math::Vector4f color{ material.Tint.R, material.Tint.G, material.Tint.B, material.Tint.A };
+        const std::array<QuadVertex, 4> vertices = BuildVertices(modelMatrix, color, sprite.MinUV, sprite.MaxUV);
+
+        m_drawCommands.emplace_back(
+            QuadDrawCommand
+            {
+                .Shader = material.Shader,
+                .Texture = sprite.Texture,
                 .Vertices = vertices
             }
         );
@@ -120,7 +128,7 @@ namespace Cocoa::Graphics
     void QuadBatch::BuildBatch(const Math::Matrix4f& viewProjectionMatrix)
     {
         uint32_t batchCounter{ 0 };
-        BatchData batchData{.Shader =  m_drawCommands[0].MaterialRef.Shader};
+        BatchData batchData{.Shader =  m_drawCommands[0].Shader};
 
         for (QuadDrawCommand& command : m_drawCommands)
         {
@@ -130,11 +138,11 @@ namespace Cocoa::Graphics
                 texSlotActiveEnd,
                 [&](const TextureHandle& textureHandle)
                 {
-                    return textureHandle.Id == command.MaterialRef.Texture.Id;
+                    return textureHandle.Id == command.Texture.Id;
                 }
             );
 
-            if (command.MaterialRef.Shader.Id != batchData.Shader.Id ||
+            if (command.Shader.Id != batchData.Shader.Id ||
                 (texSlotIterator == texSlotActiveEnd && batchData.Textures.Count == TextureSlots::MaxCount) ||
                 batchCounter == m_maxQuadCount)
             {
@@ -144,14 +152,14 @@ namespace Cocoa::Graphics
                 batchData.Vertices.clear();
                 texSlotActiveEnd = batchData.Textures.Data.begin();
                 texSlotIterator = texSlotActiveEnd;
-                batchData.Shader = command.MaterialRef.Shader;
+                batchData.Shader = command.Shader;
             }
 
             uint32_t currentTexSlotIndex;
             if (texSlotIterator == texSlotActiveEnd)
             {
                 currentTexSlotIndex = batchData.Textures.Count;
-                batchData.Textures.Data[batchData.Textures.Count] = command.MaterialRef.Texture;
+                batchData.Textures.Data[batchData.Textures.Count] = command.Texture;
                 batchData.Textures.Count++;
             }
             else
@@ -218,5 +226,36 @@ namespace Cocoa::Graphics
         }
 
         return units;
+    }
+
+    std::array<QuadBatch::QuadVertex, 4> QuadBatch::BuildVertices(
+        const Math::Matrix4f& modelMatrix,
+        const Math::Vector4f& color,
+        const Math::Vector2f& minUV,
+        const Math::Vector2f& maxUV)
+    {
+        // Transform the quad's local-space corners into world space.
+        const Math::Vector4f worldBottomLeft =
+            modelMatrix * Math::Vector4f{-0.5f, -0.5f, 0.0f, 1.0f };
+
+        const Math::Vector4f worldBottomRight =
+            modelMatrix * Math::Vector4f{ 0.5f, -0.5f, 0.0f, 1.0f };
+
+        const Math::Vector4f worldTopRight =
+            modelMatrix * Math::Vector4f{ 0.5f, 0.5f, 0.0f, 1.0f };
+
+        const Math::Vector4f worldTopLeft =
+            modelMatrix * Math::Vector4f{ -0.5f, 0.5f, 0.0f, 1.0f };
+
+        return{
+            // Bottom-Left
+            QuadVertex{{ worldBottomLeft.X, worldBottomLeft.Y, worldBottomLeft.Z}, { minUV.X, minUV.Y }, color },
+            // Bottom-Right
+            QuadVertex{{ worldBottomRight.X, worldBottomRight.Y, worldBottomRight.Z }, { maxUV.X, minUV.Y }, color },
+            // Top-Right
+            QuadVertex{{worldTopRight.X, worldTopRight.Y, worldTopRight.Z}, {maxUV.X, maxUV.Y}, color },
+            // Top-Left
+            QuadVertex{{worldTopLeft.X, worldTopLeft.Y, worldTopLeft.Z}, { minUV.X, maxUV.Y}, color }
+        };
     }
 }

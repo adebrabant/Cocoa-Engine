@@ -14,8 +14,9 @@ set(SANDBOX_PRIVATE_SOURCES
 set(SANDBOX_RESOURCES
     resources/metadata/materials.json
     resources/metadata/shaders.json
+    resources/metadata/sprites.json
     resources/metadata/textures.json
-
+        
     resources/textures/backgrounds/sun-set-01.png
     resources/textures/backgrounds/mountains-01.png
     resources/textures/backgrounds/forest-fog-01.png

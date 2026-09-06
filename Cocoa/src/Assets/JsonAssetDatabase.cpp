@@ -156,7 +156,6 @@ namespace Cocoa::Assets
 			{
 				.Id = id,
 				.ShaderId = materialJson.at("shader").get<std::string>(),
-				.TextureId = materialJson.at("texture").get<std::string>(),
 				.Tint = Core::Color
 				{
 					materialJson.at("tint").at(0).get<float>(),

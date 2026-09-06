@@ -1,7 +1,6 @@
 {
   "default_material": {
     "shader": "sprite_default_shader",
-    "texture": "default_texture",
     "tint": [ 1.0, 1.0, 1.0, 1.0 ]
   }
 }

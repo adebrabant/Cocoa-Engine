@@ -29,7 +29,6 @@ namespace Cocoa::Graphics
 		MaterialHandle Load(
 			const std::string& materialId,
 			ShaderHandle shaderHandle,
-			TextureHandle textureHandle,
 			Core::Color tint
 		);
 

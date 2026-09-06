@@ -1,0 +1,27 @@
+{
+  "werewolf_sprite": {
+    "texture": "werewolf-idle1",
+    "minUV": [0.0, 0.0],
+    "maxUV": [1.0, 1.0]
+  },
+  "sunset_background_01_sprite": {
+    "texture": "sun-set-background-01",
+    "minUV": [0.0, 0.0],
+    "maxUV": [1.0, 1.0]
+  },
+  "mountains_background_01_sprite": {
+    "texture": "mountains-background-01",
+    "minUV": [ 0.0, 0.0],
+    "maxUV": [1.0, 1.0]
+  },
+  "forest_fog_background_01_sprite": {
+    "texture": "forest-fog-background-01",
+    "minUV": [0.0, 0.0],
+    "maxUV": [1.0, 1.0]
+  },
+  "forest_fog_background_02_sprite": {
+    "texture": "forest-fog-background-02",
+    "minUV": [0.0, 0.0],
+    "maxUV": [1.0, 1.0]
+  }
+}

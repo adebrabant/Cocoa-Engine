@@ -7,5 +7,6 @@ namespace Cocoa::Scenes
 	struct Renderable2DComponent
 	{
 		Graphics::MaterialHandle Material;
+		Graphics::SpriteHandle Sprite;
 	};
 }

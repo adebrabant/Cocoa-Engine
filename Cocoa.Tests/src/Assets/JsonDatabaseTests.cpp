@@ -111,7 +111,6 @@ namespace Cocoa::Assets::Tests
 		const auto& result = sut.GetMaterialInfo("dummy_material");
 
 		EXPECT_EQ(result.ShaderId, "dummy_shader");
-		EXPECT_EQ(result.TextureId, "dummy_idle1");
 		EXPECT_EQ(result.Tint.R, 1.0);
 		EXPECT_EQ(result.Tint.G, 1.0);
 		EXPECT_EQ(result.Tint.B, 1.0);
