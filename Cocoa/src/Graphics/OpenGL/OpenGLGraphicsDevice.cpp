@@ -7,7 +7,7 @@
 #include "Graphics/TextureSpec.hpp"
 #include "Graphics/BufferElement.hpp"
 #include "Graphics/BufferLayout.hpp"
-#include "Core/Memory.hpp"
+#include "Utilities/Memory.hpp"
 
 #include <GL/glew.h>
 

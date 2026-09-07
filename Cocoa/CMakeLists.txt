@@ -3,8 +3,10 @@ find_package(GLEW REQUIRED)
 
 set(COCOA_PUBLIC_HEADERS
     include/Core/Application.hpp
-    include/Core/Memory.hpp
     include/Core/Color.hpp
+
+    include/Utilities/Memory.hpp
+    include/Utilities/Threading.hpp
 
     include/Platforms/Window.hpp
     include/Platforms/WindowProperties.hpp
@@ -79,6 +81,8 @@ set(COCOA_PUBLIC_HEADERS
 
 set(COCOA_PRIVATE_SOURCES
     src/Core/Application.cpp
+
+    src/Utilities/Threading.cpp
 
     src/Platforms/GLFW/GLFWWindow.hpp
     src/Platforms/GLFW/GLFWWindow.cpp

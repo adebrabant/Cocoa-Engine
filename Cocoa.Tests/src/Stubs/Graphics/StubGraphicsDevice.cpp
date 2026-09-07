@@ -11,7 +11,7 @@
 #include <Graphics/VertexBuffer.hpp>
 #include <Graphics/VertexArray.hpp>
 #include <Graphics/BufferLayout.hpp>
-#include <Core/Memory.hpp>
+#include <Utilities/Memory.hpp>
 
 namespace Cocoa::Stubs
 {
