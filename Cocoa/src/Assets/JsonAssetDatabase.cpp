@@ -3,8 +3,9 @@
 
 #include <fstream>
 #include <string>
-#include <filesystem>
 #include <thread>
+#include <array>
+#include <filesystem>
 #include <nlohmann/json.hpp>
 
 namespace Cocoa::Assets
