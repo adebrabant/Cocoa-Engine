@@ -1,5 +1,6 @@
 find_package(glfw3 3.4 REQUIRED)
 find_package(GLEW REQUIRED)
+find_package(Threads REQUIRED)
 
 set(COCOA_PUBLIC_HEADERS
     include/Core/Application.hpp
@@ -177,4 +178,5 @@ target_include_directories(${COCOA_TARGET_NAME}
 target_link_libraries(${COCOA_TARGET_NAME} PRIVATE
     glfw
     GLEW::GLEW
+    Threads::Threads
 )
