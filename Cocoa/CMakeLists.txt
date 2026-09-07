@@ -178,5 +178,8 @@ target_include_directories(${COCOA_TARGET_NAME}
 target_link_libraries(${COCOA_TARGET_NAME} PRIVATE
     glfw
     GLEW::GLEW
+)
+
+target_link_libraries(${COCOA_TARGET_NAME} PUBLIC
     Threads::Threads
 )
