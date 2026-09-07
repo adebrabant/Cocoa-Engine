@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/Memory.hpp"
+#include "Utilities/Memory.hpp"
 #include "Math/Vector3f.hpp"
 #include "Math/Vector2f.hpp"
 #include "Math/Vector4f.hpp"

@@ -1,7 +1,11 @@
 #include "Assets/JsonAssetDatabase.hpp"
+#include "Utilities/Threading.hpp"
 
 #include <fstream>
 #include <string>
+#include <thread>
+#include <array>
+#include <exception>
 #include <filesystem>
 #include <nlohmann/json.hpp>
 
@@ -14,10 +18,55 @@ namespace Cocoa::Assets
 		m_materialRecords(),
 		m_spriteRecords()
 	{
-		LoadTextureRecords();
-		LoadShaderRecords();
-		LoadMaterialRecords();
-		LoadSpriteRecords();
+		std::array<std::exception_ptr, 4> errors;
+		std::thread textureWorker;
+		std::thread shaderWorker;
+		std::thread materialWorker;
+		std::thread spriteWorker;
+
+		try
+		{
+			textureWorker = StartThread(
+				[this]{LoadTextureRecords();},
+				errors[0]
+			);
+
+			shaderWorker = StartThread(
+				[this]{LoadShaderRecords();},
+				errors[1]
+			);
+
+			materialWorker = StartThread(
+				[this]{LoadMaterialRecords();},
+				errors[2]
+			);
+
+			spriteWorker = StartThread(
+				[this]{LoadSpriteRecords();},
+				errors[3]
+			);
+		}
+		catch (...)
+		{
+			SafeJoin(textureWorker);
+			SafeJoin(shaderWorker);
+			SafeJoin(materialWorker);
+			SafeJoin(spriteWorker);
+			throw;
+		}
+
+		SafeJoin(textureWorker);
+		SafeJoin(shaderWorker);
+		SafeJoin(materialWorker);
+		SafeJoin(spriteWorker);
+
+		for (const std::exception_ptr& error : errors)
+		{
+			if (error)
+			{
+				std::rethrow_exception(error);
+			}
+		}
 	}
 
 	const TextureRecord& JsonAssetDatabase::GetTextureInfo(const std::string& id) const

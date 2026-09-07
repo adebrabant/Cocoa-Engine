@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Core/Memory.hpp"
+#include "Utilities/Memory.hpp"
+
 #include <string>
 #include <cstdint>
 

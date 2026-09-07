@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Scenes/Scene.hpp"
-#include "Core/Memory.hpp"
+#include "Utilities/Memory.hpp"
 #include <vector>
 #include <type_traits>
 

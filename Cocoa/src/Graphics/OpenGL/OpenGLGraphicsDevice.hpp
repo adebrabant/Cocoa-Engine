@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Graphics/GraphicsDevice.hpp"
-#include "Core/Memory.hpp"
+#include "Utilities/Memory.hpp"
 
 #include <cstdint>
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/Memory.hpp"
+#include "Utilities/Memory.hpp"
 #include "Graphics/GraphicsHandles.hpp"
 
 #include <string>

@@ -5,7 +5,7 @@
 #include "Platforms/WindowProperties.hpp"
 #include "Graphics/Viewport.hpp"
 #include "Events/EventBus.hpp"
-#include "Core/Memory.hpp"
+#include "Utilities/Memory.hpp"
 
 #include <string>
 
