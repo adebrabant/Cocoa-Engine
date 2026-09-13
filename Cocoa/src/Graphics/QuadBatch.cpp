@@ -85,12 +85,9 @@ namespace Cocoa::Graphics
         );
 
         m_drawCommands.emplace_back(
-            QuadDrawCommand
-            {
-                .Shader = material.Shader,
-                .Texture = textureHandle,
-                .Vertices = vertices
-            }
+            material.Shader,
+            textureHandle,
+            vertices
         );
     }
 
@@ -105,12 +102,9 @@ namespace Cocoa::Graphics
         const std::array<QuadVertex, 4> vertices = BuildVertices(modelMatrix, color, sprite.MinUV, sprite.MaxUV);
 
         m_drawCommands.emplace_back(
-            QuadDrawCommand
-            {
-                .Shader = material.Shader,
-                .Texture = sprite.Texture,
-                .Vertices = vertices
-            }
+            material.Shader,
+            sprite.Texture,
+            vertices
         );
     }
 

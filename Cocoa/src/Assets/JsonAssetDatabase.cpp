@@ -8,11 +8,12 @@
 #include <exception>
 #include <filesystem>
 #include <nlohmann/json.hpp>
+#include <utility>
 
 namespace Cocoa::Assets
 {
-	JsonAssetDatabase::JsonAssetDatabase(const std::filesystem::path& metadataPath) :
-		m_metadataPath(metadataPath),
+	JsonAssetDatabase::JsonAssetDatabase(std::filesystem::path  metadataPath) :
+		m_metadataPath(std::move(metadataPath)),
 		m_textureRecords(),
 		m_shaderRecords(),
 		m_materialRecords(),
@@ -237,15 +238,15 @@ namespace Cocoa::Assets
 			{
 				.Id = id,
 				.TextureId = spriteJson.at("texture").get<std::string>(),
-				.MinUV = Math::Vector2f
+				.MinPixel = Math::Vector2f
 				{
-					spriteJson.at("minUV").at(0).get<float>(),
-					spriteJson.at("minUV").at(1).get<float>()
+					spriteJson.at("minPixel").at(0).get<float>(),
+					spriteJson.at("minPixel").at(1).get<float>()
 				},
-				.MaxUV = Math::Vector2f
+				.MaxPixel = Math::Vector2f
 				{
-					spriteJson.at("maxUV").at(0).get<float>(),
-					spriteJson.at("maxUV").at(1).get<float>()
+					spriteJson.at("maxPixel").at(0).get<float>(),
+					spriteJson.at("maxPixel").at(1).get<float>()
 				}
 			};
 

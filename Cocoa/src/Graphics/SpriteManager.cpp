@@ -17,8 +17,9 @@ namespace Cocoa::Graphics
     SpriteHandle SpriteManager::Load(
         const std::string& spriteId,
         const TextureHandle& textureHandle,
-        const Math::Vector2f& minUV,
-        const Math::Vector2f& maxUV)
+        const Math::Vector2f& minPixel,
+        const Math::Vector2f& maxPixel,
+        const Math::Vector2f& textureSize)
     {
         if (const auto it = m_handles.find(spriteId); it != m_handles.end())
         {
@@ -30,8 +31,8 @@ namespace Cocoa::Graphics
         {
             .Id = spriteId,
             .Texture = textureHandle,
-            .MinUV = minUV,
-            .MaxUV = maxUV
+            .MinUV = {minPixel.X / textureSize.X, minPixel.Y / textureSize.Y},
+            .MaxUV = {maxPixel.X / textureSize.X, maxPixel.Y / textureSize.Y}
         };
 
         m_sprites.emplace(handle.Id, sprite);

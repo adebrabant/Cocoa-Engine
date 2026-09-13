@@ -25,8 +25,8 @@ namespace Cocoa::Graphics::Tests
             const TextureSpec textureSpec
             {
                 .Id = "test-texture-" + std::to_string(i),
-                .Width = 1,
-                .Height = 1
+                .Width = 256,
+                .Height = 256
             };
 
             const TextureHandle textureHandle = textureManager.Load(
@@ -38,7 +38,8 @@ namespace Cocoa::Graphics::Tests
                 "sprite-" + std::to_string(i),
                 textureHandle,
                 Math::Vector2f(0.0f, 0.0f),
-                Math::Vector2f(1.0f, 1.0f)
+                Math::Vector2f(256.0f, 256.0f),
+                Math::Vector2f(256.0f, 256.0f)
             );
 
             handles.emplace_back(spriteHandle);
@@ -65,8 +66,8 @@ namespace Cocoa::Graphics::Tests
         const TextureSpec textureSpec
         {
             .Id = "test-texture",
-            .Width = 1,
-            .Height = 1
+            .Width = 256,
+            .Height = 256
         };
 
         constexpr uint8_t pixelData[]
@@ -97,7 +98,8 @@ namespace Cocoa::Graphics::Tests
             "default-sprite",
             textureHandle,
             Math::Vector2f(0.0f, 0.0f),
-            Math::Vector2f(1.0f, 1.0f)
+            Math::Vector2f(256.0f, 256.0f),
+            Math::Vector2f(256.0f, 256.0f)
         );
 
         QuadBatch sut(
@@ -143,8 +145,8 @@ namespace Cocoa::Graphics::Tests
         const TextureSpec textureSpec
         {
             .Id = "test-texture",
-            .Width = 1,
-            .Height = 1
+            .Width = 256,
+            .Height = 256
         };
 
         constexpr uint8_t pixelData[]
@@ -175,7 +177,8 @@ namespace Cocoa::Graphics::Tests
             "default-sprite",
             textureHandle,
             Math::Vector2f(0.0f, 0.0f),
-            Math::Vector2f(1.0f, 1.0f)
+            Math::Vector2f(256.0f, 256.0f),
+            Math::Vector2f(256.0f, 256.0f)
         );
 
         QuadBatch sut(
@@ -215,15 +218,15 @@ namespace Cocoa::Graphics::Tests
         const TextureSpec textureSpecOne
         {
             .Id = "test-texture-01",
-            .Width = 1,
-            .Height = 1
+            .Width = 256,
+            .Height = 256
         };
 
         const TextureSpec textureSpecTwo
         {
             .Id = "test-texture-02",
-            .Width = 1,
-            .Height = 1
+            .Width = 256,
+            .Height = 256
         };
 
         constexpr uint8_t pixelData[]
@@ -259,14 +262,16 @@ namespace Cocoa::Graphics::Tests
             "default-sprite-a",
             textureHandleOne,
             Math::Vector2f(0.0f, 0.0f),
-            Math::Vector2f(1.0f, 1.0f)
+            Math::Vector2f(256.0f, 256.0f),
+            Math::Vector2f(256.0f, 256.0f)
         );
 
         const SpriteHandle spriteHandleB = spriteManager.Load(
             "default-sprite-b",
             textureHandleTwo,
             Math::Vector2f(0.0f, 0.0f),
-            Math::Vector2f(1.0f, 1.0f)
+            Math::Vector2f(256.0f, 256.0f),
+            Math::Vector2f(256.0f, 256.0f)
         );
 
         QuadBatch sut(
@@ -306,8 +311,8 @@ namespace Cocoa::Graphics::Tests
         const TextureSpec textureSpec
         {
             .Id = "test-texture",
-            .Width = 1,
-            .Height = 1
+            .Width = 256,
+            .Height = 256
         };
 
         constexpr uint8_t pixelData[]
@@ -336,7 +341,8 @@ namespace Cocoa::Graphics::Tests
             "default-sprite-b",
             textureHandle,
             Math::Vector2f(0.0f, 0.0f),
-            Math::Vector2f(1.0f, 1.0f)
+            Math::Vector2f(256.0f, 256.0f),
+            Math::Vector2f(256.0f, 256.0f)
         );
 
         QuadBatch sut(
@@ -469,8 +475,8 @@ namespace Cocoa::Graphics::Tests
         const TextureSpec textureSpec
         {
             .Id = "test-texture",
-            .Width = 1,
-            .Height = 1
+            .Width = 256,
+            .Height = 256
         };
 
         constexpr uint8_t pixelData[]
@@ -493,7 +499,8 @@ namespace Cocoa::Graphics::Tests
             "default-sprite",
             textureHandle,
             Math::Vector2f(0.0f, 0.0f),
-            Math::Vector2f(1.0f, 1.0f)
+            Math::Vector2f(256.0f, 256.0f),
+            Math::Vector2f(256.0f, 256.0f)
         );
 
         QuadBatch sut(
@@ -536,8 +543,8 @@ namespace Cocoa::Graphics::Tests
         const TextureSpec textureSpec
         {
             .Id = "test-texture",
-            .Width = 1,
-            .Height = 1
+            .Width = 256,
+            .Height = 256
         };
 
         constexpr uint8_t pixelData[]
@@ -560,7 +567,8 @@ namespace Cocoa::Graphics::Tests
             "default-sprite",
             textureHandle,
             Math::Vector2f(0.0f, 0.0f),
-            Math::Vector2f(1.0f, 1.0f)
+            Math::Vector2f(256.0f, 256.0f),
+            Math::Vector2f(256.0f, 256.0f)
         );
 
         QuadBatch sut(
@@ -602,8 +610,8 @@ namespace Cocoa::Graphics::Tests
         const TextureSpec textureSpec
         {
             .Id = "test-texture",
-            .Width = 1,
-            .Height = 1
+            .Width = 256,
+            .Height = 256
         };
 
         constexpr uint8_t pixelData[]
@@ -626,7 +634,8 @@ namespace Cocoa::Graphics::Tests
             "default-sprite",
             textureHandle,
             Math::Vector2f(0.0f, 0.0f),
-            Math::Vector2f(1.0f, 1.0f)
+            Math::Vector2f(256.0f, 256.0f),
+            Math::Vector2f(256.0f, 256.0f)
         );
 
         QuadBatch sut(

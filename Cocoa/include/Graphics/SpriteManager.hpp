@@ -21,8 +21,9 @@ namespace Cocoa::Graphics
         SpriteHandle Load(
             const std::string& spriteId,
             const TextureHandle& textureHandle,
-            const Math::Vector2f& minUV,
-            const Math::Vector2f& maxUV
+            const Math::Vector2f& minPixel,
+            const Math::Vector2f& maxPixel,
+            const Math::Vector2f& textureSize
         );
         const Sprite& Get(const SpriteHandle& handle) const;
 

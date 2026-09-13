@@ -8,6 +8,7 @@
 #include "Graphics/SpriteManager.hpp"
 #include "Graphics/GraphicsHandles.hpp"
 #include "Graphics/TextureSpec.hpp"
+#include "Graphics/Texture2D.hpp"
 #include "Assets/Image.hpp"
 
 #include <cstdint>
@@ -98,12 +99,18 @@ namespace Cocoa::Assets
 	{
 		const SpriteRecord& record = m_assetDatabase.GetSpriteInfo(spriteId);
 		const Graphics::TextureHandle textureHandle = LoadTexture(record.TextureId);
+		const Graphics::Texture2D& texture2D = m_textureManager.Get(textureHandle);
+		const Math::Vector2f textureSize(
+			static_cast<float>(texture2D.GetWidth()),
+			static_cast<float>(texture2D.GetHeight())
+		);
 
 		return m_spriteManager.Load(
 			record.Id,
 			textureHandle,
-			record.MinUV,
-			record.MaxUV
+			record.MinPixel,
+			record.MaxPixel,
+			textureSize
 		);
 	}
 }
