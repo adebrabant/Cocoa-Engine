@@ -25,8 +25,8 @@ namespace Cocoa::Graphics::Tests
             const TextureSpec textureSpec
             {
                 .Id = "test-texture-" + std::to_string(i),
-                .Width = 1,
-                .Height = 1
+                .Width = 256,
+                .Height = 256
             };
 
             const TextureHandle textureHandle = textureManager.Load(
@@ -66,8 +66,8 @@ namespace Cocoa::Graphics::Tests
         const TextureSpec textureSpec
         {
             .Id = "test-texture",
-            .Width = 1,
-            .Height = 1
+            .Width = 256,
+            .Height = 256
         };
 
         constexpr uint8_t pixelData[]
@@ -145,8 +145,8 @@ namespace Cocoa::Graphics::Tests
         const TextureSpec textureSpec
         {
             .Id = "test-texture",
-            .Width = 1,
-            .Height = 1
+            .Width = 256,
+            .Height = 256
         };
 
         constexpr uint8_t pixelData[]
@@ -218,15 +218,15 @@ namespace Cocoa::Graphics::Tests
         const TextureSpec textureSpecOne
         {
             .Id = "test-texture-01",
-            .Width = 1,
-            .Height = 1
+            .Width = 256,
+            .Height = 256
         };
 
         const TextureSpec textureSpecTwo
         {
             .Id = "test-texture-02",
-            .Width = 1,
-            .Height = 1
+            .Width = 256,
+            .Height = 256
         };
 
         constexpr uint8_t pixelData[]
@@ -311,8 +311,8 @@ namespace Cocoa::Graphics::Tests
         const TextureSpec textureSpec
         {
             .Id = "test-texture",
-            .Width = 1,
-            .Height = 1
+            .Width = 256,
+            .Height = 256
         };
 
         constexpr uint8_t pixelData[]
@@ -475,8 +475,8 @@ namespace Cocoa::Graphics::Tests
         const TextureSpec textureSpec
         {
             .Id = "test-texture",
-            .Width = 1,
-            .Height = 1
+            .Width = 256,
+            .Height = 256
         };
 
         constexpr uint8_t pixelData[]
@@ -543,8 +543,8 @@ namespace Cocoa::Graphics::Tests
         const TextureSpec textureSpec
         {
             .Id = "test-texture",
-            .Width = 1,
-            .Height = 1
+            .Width = 256,
+            .Height = 256
         };
 
         constexpr uint8_t pixelData[]
@@ -610,8 +610,8 @@ namespace Cocoa::Graphics::Tests
         const TextureSpec textureSpec
         {
             .Id = "test-texture",
-            .Width = 1,
-            .Height = 1
+            .Width = 256,
+            .Height = 256
         };
 
         constexpr uint8_t pixelData[]
