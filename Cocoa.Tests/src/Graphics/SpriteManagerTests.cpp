@@ -83,9 +83,9 @@ namespace Cocoa::Graphics::Tests
 	{
 		const std::string spriteId{ "test-sprite" };
 		constexpr Graphics::TextureHandle textureHandle{ .Id = 1 };
-		constexpr Math::Vector2f minPixel(0.0f, 0.0f);
-		constexpr Math::Vector2f maxPixel(320.0f, 180.0f);
-		constexpr Math::Vector2f textureSize(320.0f, 180.0f);
+		constexpr Math::Vector2f minPixel(250.0f, 400.0f);
+		constexpr Math::Vector2f maxPixel(500.0f, 800.0f);
+		constexpr Math::Vector2f textureSize(1000.0f, 800.0f);
 		Graphics::SpriteManager sut;
 
 		const Graphics::SpriteHandle handle = sut.Load(
@@ -100,9 +100,9 @@ namespace Cocoa::Graphics::Tests
 
 		EXPECT_EQ(spriteId, result.Id);
 		EXPECT_EQ(textureHandle.Id, result.Texture.Id);
-		EXPECT_FLOAT_EQ(0.0f, result.MinUV.X);
-		EXPECT_FLOAT_EQ(0.0f, result.MinUV.Y);
-		EXPECT_FLOAT_EQ(1.0f, result.MaxUV.X);
+		EXPECT_FLOAT_EQ(0.25f, result.MinUV.X);
+		EXPECT_FLOAT_EQ(0.5f, result.MinUV.Y);
+		EXPECT_FLOAT_EQ(0.5f, result.MaxUV.X);
 		EXPECT_FLOAT_EQ(1.0f, result.MaxUV.Y);
 	}
 
