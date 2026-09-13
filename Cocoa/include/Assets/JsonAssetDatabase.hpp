@@ -11,7 +11,7 @@ namespace Cocoa::Assets
 	class JsonAssetDatabase : public AssetDatabase
 	{
 	public:
-		explicit JsonAssetDatabase(const std::filesystem::path& metadataPath);
+		explicit JsonAssetDatabase(std::filesystem::path  metadataPath);
 		[[nodiscard]] const TextureRecord& GetTextureInfo(const std::string& id) const override;
 		[[nodiscard]] const ShaderRecord& GetShaderInfo(const std::string& id) const override;
 		[[nodiscard]] const MaterialRecord& GetMaterialInfo(const std::string& id) const override;

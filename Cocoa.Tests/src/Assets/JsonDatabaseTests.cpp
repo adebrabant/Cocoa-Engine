@@ -136,10 +136,10 @@ namespace Cocoa::Assets::Tests
 
 		EXPECT_EQ(result.Id, name);
 		EXPECT_EQ(result.TextureId, "dummy_idle1");
-		EXPECT_EQ(result.MinUV.X, 0.0);
-		EXPECT_EQ(result.MinUV.Y, 0.0);
-		EXPECT_EQ(result.MaxUV.X, 1.0);
-		EXPECT_EQ(result.MaxUV.Y, 1.0);
+		EXPECT_EQ(result.MinPixel.X, 0.0);
+		EXPECT_EQ(result.MinPixel.Y, 0.0);
+		EXPECT_EQ(result.MaxPixel.X, 320.0);
+		EXPECT_EQ(result.MaxPixel.Y, 180.0);
 	}
 
 	TEST(JsonAssetDatabaseTests, GetSpriteInfo_ShouldThrowError_WhenGivenInvalidId)

@@ -37,8 +37,8 @@ namespace Cocoa::Assets
 	{
 		std::string Id;
 		std::string TextureId;
-		Math::Vector2f MinUV;
-		Math::Vector2f MaxUV;
+		Math::Vector2f MinPixel;
+		Math::Vector2f MaxPixel;
 	};
 
 	class AssetDatabase
