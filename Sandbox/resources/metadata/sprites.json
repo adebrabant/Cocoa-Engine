@@ -26,7 +26,7 @@
   },
   "cherry_blossom_tree_02_sprite": {
     "texture": "cherry_blossom_tree_01",
-    "minPixel": [140, 0.0],
-    "maxPixel": [267.00, 160.0]
+    "minPixel": [140.0, 0.0],
+    "maxPixel": [267.0, 160.0]
   }
 }
