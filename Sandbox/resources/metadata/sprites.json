@@ -24,12 +24,12 @@
     "minPixel": [0.0, 0.0],
     "maxPixel": [320.0, 180.0]
   },
-  "cherry_blossom_tree_01_sprite" : {
+  "cherry_blossom_tree_01_sprite": {
     "texture": "cherry-blossom-tree-01",
     "minPixel": [0.0, 0.0],
     "maxPixel": [140.0, 160.0]
   },
-  "cherry_blossom_tree_02_sprite" : {
+  "cherry_blossom_tree_02_sprite": {
     "texture": "cherry-blossom-tree-01",
     "minPixel": [140, 0.0],
     "maxPixel": [267.00, 160.0]
