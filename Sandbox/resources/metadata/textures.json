@@ -1,14 +1,5 @@
 {
-  "werewolf-idle1": {
-    "path": "textures/werewolf-idle1.png",
-    "format": "RGBA8",
-    "minFilter": "Linear",
-    "magFilter": "Linear",
-    "wrapS": "ClampToEdge",
-    "wrapT": "ClampToEdge",
-    "generateMipmaps": false
-  },
-  "sun-set-background-01": {
+  "sun_set_background_01": {
     "path": "textures/backgrounds/sun-set-01.png",
     "format": "RGBA8",
     "minFilter": "Nearest",
@@ -17,7 +8,7 @@
     "wrapT": "ClampToEdge",
     "generateMipmaps": false
   },
-  "mountains-background-01": {
+  "mountains_background_01": {
     "path": "textures/backgrounds/mountains-01.png",
     "format": "RGBA8",
     "minFilter": "Nearest",
@@ -26,7 +17,7 @@
     "wrapT": "ClampToEdge",
     "generateMipmaps": false
   },
-  "forest-fog-background-01": {
+  "forest_fog_background_01": {
     "path": "textures/backgrounds/forest-fog-01.png",
     "format": "RGBA8",
     "minFilter": "Nearest",
@@ -35,7 +26,7 @@
     "wrapT": "ClampToEdge",
     "generateMipmaps": false
   },
-  "forest-fog-background-02": {
+  "forest_fog_background_02": {
     "path": "textures/backgrounds/forest-fog-02.png",
     "format": "RGBA8",
     "minFilter": "Nearest",
@@ -44,7 +35,7 @@
     "wrapT": "ClampToEdge",
     "generateMipmaps": false
   },
-  "cherry-blossom-tree-01": {
+  "cherry_blossom_tree_01": {
     "path": "textures/foliage/cherry-blossom-tree-01.png",
     "format": "RGBA8",
     "minFilter": "Nearest",

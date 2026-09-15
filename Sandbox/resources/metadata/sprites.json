@@ -1,36 +1,31 @@
 {
-  "werewolf_sprite": {
-    "texture": "werewolf-idle1",
-    "minPixel": [0.0, 0.0],
-    "maxPixel": [320.0, 180.0]
-  },
   "sunset_background_01_sprite": {
-    "texture": "sun-set-background-01",
+    "texture": "sun_set_background_01",
     "minPixel": [0.0, 0.0],
     "maxPixel": [320.0, 180.0]
   },
   "mountains_background_01_sprite": {
-    "texture": "mountains-background-01",
+    "texture": "mountains_background_01",
     "minPixel": [ 0.0, 0.0],
     "maxPixel": [320.0, 180.0]
   },
   "forest_fog_background_01_sprite": {
-    "texture": "forest-fog-background-01",
+    "texture": "forest_fog_background_01",
     "minPixel": [0.0, 0.0],
     "maxPixel": [320.0, 180.0]
   },
   "forest_fog_background_02_sprite": {
-    "texture": "forest-fog-background-02",
+    "texture": "forest_fog_background_02",
     "minPixel": [0.0, 0.0],
     "maxPixel": [320.0, 180.0]
   },
   "cherry_blossom_tree_01_sprite": {
-    "texture": "cherry-blossom-tree-01",
+    "texture": "cherry_blossom_tree_01",
     "minPixel": [0.0, 0.0],
     "maxPixel": [140.0, 160.0]
   },
   "cherry_blossom_tree_02_sprite": {
-    "texture": "cherry-blossom-tree-01",
+    "texture": "cherry_blossom_tree_01",
     "minPixel": [140, 0.0],
     "maxPixel": [267.00, 160.0]
   }
