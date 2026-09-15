@@ -1,6 +1,6 @@
 {
   "sunset_background_01_sprite": {
-    "texture": "sun_set_background_01",
+    "texture": "sunset_background_01",
     "minPixel": [0.0, 0.0],
     "maxPixel": [320.0, 180.0]
   },

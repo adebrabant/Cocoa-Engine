@@ -1,5 +1,5 @@
 {
-  "sun_set_background_01": {
+  "sunset_background_01": {
     "path": "textures/backgrounds/sun-set-01.png",
     "format": "RGBA8",
     "minFilter": "Nearest",
