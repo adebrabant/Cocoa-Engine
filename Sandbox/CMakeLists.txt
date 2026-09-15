@@ -21,7 +21,7 @@ set(SANDBOX_RESOURCES
     resources/textures/backgrounds/mountains-01.png
     resources/textures/backgrounds/forest-fog-01.png
     resources/textures/backgrounds/forest-fog-02.png
-    resources/textures/werewolf-idle1.png
+    resources/textures/foliage/cherry-blossom-tree-01.png
 )
 
 add_executable(${SANDBOX_TARGET_NAME}
