@@ -43,5 +43,14 @@
     "wrapS": "ClampToEdge",
     "wrapT": "ClampToEdge",
     "generateMipmaps": false
+  },
+  "cherry-blossom-tree-01": {
+    "path": "textures/foliage/cherry-blossom-tree-01.png",
+    "format": "RGBA8",
+    "minFilter": "Nearest",
+    "magFilter": "Nearest",
+    "wrapS": "ClampToEdge",
+    "wrapT": "ClampToEdge",
+    "generateMipmaps": false
   }
 }

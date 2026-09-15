@@ -56,6 +56,22 @@ namespace Sandbox
 			.Scale = { 3.56f, 2.0f, 1.0f }
 		};
 
+		auto cherryBlossomTree01Entity = m_world.CreateEntity();
+		Cocoa::Scenes::TransformComponent cherryBlossomTree01Transform
+		{
+			.Position = { -1.20f, -0.35f, 0.0f },
+			.Rotation =  { 0.0f, 0.0f, 0.0f },
+			.Scale = { 0.75f, 0.75f, 1.0f }
+		};
+
+		auto cherryBlossomTree02Entity = m_world.CreateEntity();
+		Cocoa::Scenes::TransformComponent cherryBlossomTree02Transform
+		{
+			.Position = { 1.20f, -0.35f, 0.0f },
+			.Rotation =  { 0.0f, 0.0f, 0.0f },
+			.Scale = { 0.75f, 0.75f, 1.0f }
+		};
+
 		m_world.AddComponent(sunEntity, sunsetTransform);
 		m_world.AddComponent(
 			sunEntity,
@@ -93,6 +109,26 @@ namespace Sandbox
 			{
 				.Material = defaultMaterial,
 				.Sprite = loader.LoadSprite("forest_fog_background_02_sprite")
+			}
+		);
+
+		m_world.AddComponent(cherryBlossomTree01Entity, cherryBlossomTree01Transform);
+		m_world.AddComponent(
+			cherryBlossomTree01Entity,
+			Cocoa::Scenes::Renderable2DComponent
+			{
+				.Material = defaultMaterial,
+				.Sprite = loader.LoadSprite("cherry_blossom_tree_01_sprite")
+			}
+		);
+
+		m_world.AddComponent(cherryBlossomTree02Entity, cherryBlossomTree02Transform);
+		m_world.AddComponent(
+			cherryBlossomTree02Entity,
+			Cocoa::Scenes::Renderable2DComponent
+			{
+				.Material = defaultMaterial,
+				.Sprite = loader.LoadSprite("cherry_blossom_tree_02_sprite")
 			}
 		);
 
