@@ -38,12 +38,14 @@ namespace Cocoa::Graphics
         void Draw(
             const Math::Matrix4f& modelMatrix,
             MaterialHandle materialHandle,
-            TextureHandle textureHandle
+            TextureHandle textureHandle,
+            float tilingFactor
         );
         void Draw(
             const Math::Matrix4f& modelMatrix,
             MaterialHandle materialHandle,
-            SpriteHandle spriteHandle
+            SpriteHandle spriteHandle,
+            float tilingFactor
         );
         void Flush(const Math::Matrix4f& viewProjectionMatrix);
 
@@ -51,9 +53,12 @@ namespace Cocoa::Graphics
         struct QuadVertex
         {
             Math::Vector3f Position{};
-            Math::Vector2f TexCoord{};
+            Math::Vector2f LocalUV{};
+            Math::Vector2f MinUV{};
+            Math::Vector2f MaxUV{};
             Math::Vector4f Color{};
             uint32_t TexIndex{0};
+            float TilingFactor{1.0f};
         };
         struct QuadDrawCommand
         {
@@ -83,7 +88,8 @@ namespace Cocoa::Graphics
             const Math::Matrix4f& modelMatrix,
             const Math::Vector4f& color,
             const Math::Vector2f& minUV,
-            const Math::Vector2f& maxUV
+            const Math::Vector2f& maxUV,
+            float tilingFactor
         );
 
     private:

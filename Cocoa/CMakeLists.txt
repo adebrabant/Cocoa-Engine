@@ -71,7 +71,7 @@ set(COCOA_PUBLIC_HEADERS
     include/Scenes/Systems/CameraSystem.hpp
     include/Scenes/Systems/MovementSystem.hpp
     include/Scenes/Systems/CollisionSystem.hpp
-    include/Scenes/Systems/RenderSystem.hpp
+    include/Scenes/Systems/Render2DSystem.hpp
 
     include/Chronos/FrameClock.hpp
 
@@ -127,7 +127,7 @@ set(COCOA_PRIVATE_SOURCES
     src/Scenes/Systems/CameraSystem.cpp
     src/Scenes/Systems/MovementSystem.cpp
     src/Scenes/Systems/CollisionSystem.cpp
-    src/Scenes/Systems/RenderSystem.cpp
+    src/Scenes/Systems/Render2DSystem.cpp
 
     src/Chronos/FrameClock.cpp
 

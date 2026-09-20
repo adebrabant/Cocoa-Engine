@@ -54,14 +54,17 @@ namespace Cocoa::Graphics
         const BufferLayout layout =
         {
             { 0, ShaderDataType::Float3, "a_Position" },
-            { 1, ShaderDataType::Float2, "a_TexCoord" },
-            { 2, ShaderDataType::Float4, "a_Color" },
-            { 3, ShaderDataType::UInt, "a_TexIndex" },
+            { 1, ShaderDataType::Float2, "a_LocalUV" },
+            { 2, ShaderDataType::Float2, "a_MinUV" },
+            { 3, ShaderDataType::Float2, "a_MaxUV" },
+            { 4, ShaderDataType::Float4, "a_Color" },
+            { 5, ShaderDataType::UInt, "a_TexIndex" },
+            { 6, ShaderDataType::Float, "a_TilingFactor"}
         };
 
         m_vao = m_graphicsDevice.CreateVertexArray();
         m_vbo = m_graphicsDevice.CreateVertexBuffer(maxVertices * sizeof(QuadVertex), layout);
-        m_ibo = m_graphicsDevice.CreateIndexBuffer(quadIndices, static_cast<uint32_t>(maxIndices));
+        m_ibo = m_graphicsDevice.CreateIndexBuffer(quadIndices, maxIndices);
         m_vao->AddVertexBuffer(*m_vbo);
         m_vao->SetIndexBuffer(*m_ibo);
 
@@ -73,7 +76,8 @@ namespace Cocoa::Graphics
     void QuadBatch::Draw(
         const Math::Matrix4f& modelMatrix,
         const MaterialHandle materialHandle,
-        const TextureHandle textureHandle)
+        const TextureHandle textureHandle,
+        const float tilingFactor)
     {
         const Material& material = m_materialManager.Get(materialHandle);
         const Math::Vector4f color{ material.Tint.R, material.Tint.G, material.Tint.B, material.Tint.A };
@@ -81,7 +85,8 @@ namespace Cocoa::Graphics
             modelMatrix,
             color,
             {0.0f, 0.0f},
-            {1.0f, 1.0f}
+            {1.0f, 1.0f},
+            tilingFactor
         );
 
         m_drawCommands.emplace_back(
@@ -94,12 +99,19 @@ namespace Cocoa::Graphics
     void QuadBatch::Draw(
         const Math::Matrix4f& modelMatrix,
         const MaterialHandle materialHandle,
-        const SpriteHandle spriteHandle)
+        const SpriteHandle spriteHandle,
+        const float tilingFactor)
     {
         const Material& material = m_materialManager.Get(materialHandle);
         const Sprite& sprite = m_spriteManager.Get(spriteHandle);
         const Math::Vector4f color{ material.Tint.R, material.Tint.G, material.Tint.B, material.Tint.A };
-        const std::array<QuadVertex, 4> vertices = BuildVertices(modelMatrix, color, sprite.MinUV, sprite.MaxUV);
+        const std::array<QuadVertex, 4> vertices = BuildVertices(
+            modelMatrix,
+            color,
+            sprite.MinUV,
+            sprite.MaxUV,
+            tilingFactor
+        );
 
         m_drawCommands.emplace_back(
             material.Shader,
@@ -226,7 +238,8 @@ namespace Cocoa::Graphics
         const Math::Matrix4f& modelMatrix,
         const Math::Vector4f& color,
         const Math::Vector2f& minUV,
-        const Math::Vector2f& maxUV)
+        const Math::Vector2f& maxUV,
+        const float tilingFactor)
     {
         // Transform the quad's local-space corners into world space.
         const Math::Vector4f worldBottomLeft =
@@ -243,13 +256,49 @@ namespace Cocoa::Graphics
 
         return{
             // Bottom-Left
-            QuadVertex{{ worldBottomLeft.X, worldBottomLeft.Y, worldBottomLeft.Z}, { minUV.X, minUV.Y }, color },
+            QuadVertex
+            {
+                { worldBottomLeft.X, worldBottomLeft.Y, worldBottomLeft.Z},
+                { 0.0f, 0.0f },
+                minUV,
+                maxUV,
+                color,
+                0,
+                tilingFactor
+            },
             // Bottom-Right
-            QuadVertex{{ worldBottomRight.X, worldBottomRight.Y, worldBottomRight.Z }, { maxUV.X, minUV.Y }, color },
+            QuadVertex
+            {
+                { worldBottomRight.X, worldBottomRight.Y, worldBottomRight.Z },
+                { 1.0f, 0.0f },
+                minUV,
+                maxUV,
+                color,
+                0,
+                tilingFactor
+            },
             // Top-Right
-            QuadVertex{{worldTopRight.X, worldTopRight.Y, worldTopRight.Z}, {maxUV.X, maxUV.Y}, color },
+            QuadVertex
+            {
+                {worldTopRight.X, worldTopRight.Y, worldTopRight.Z},
+                {1.0f, 1.0f},
+                minUV,
+                maxUV,
+                color,
+                0,
+                tilingFactor
+            },
             // Top-Left
-            QuadVertex{{worldTopLeft.X, worldTopLeft.Y, worldTopLeft.Z}, { minUV.X, maxUV.Y}, color }
+            QuadVertex
+            {
+                {worldTopLeft.X, worldTopLeft.Y, worldTopLeft.Z},
+                { 0.0f, 1.0f},
+                minUV,
+                maxUV,
+                color,
+                0,
+                tilingFactor
+            }
         };
     }
 }
