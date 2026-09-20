@@ -3,7 +3,7 @@
 #include <Scenes/Components/CameraComponent.hpp>
 #include <Scenes/Components/Renderable2DComponent.hpp>
 #include <Scenes/Systems/CameraSystem.hpp>
-#include <Scenes/Systems/RenderSystem.hpp>
+#include <Scenes/Systems/Render2DSystem.hpp>
 #include <Assets/ResourceLoader.hpp>
 
 namespace Sandbox
@@ -128,11 +128,12 @@ namespace Sandbox
 			Cocoa::Scenes::Renderable2DComponent
 			{
 				.Material = defaultMaterial,
-				.Sprite = loader.LoadSprite("cherry_blossom_tree_02_sprite")
+				.Sprite = loader.LoadSprite("cherry_blossom_tree_02_sprite"),
+				.TilingFactor = 1.0f
 			}
 		);
 
-		m_world.AddSystem<Cocoa::Scenes::RenderSystem>();
+		m_world.AddSystem<Cocoa::Scenes::Render2DSystem>();
     }
 
 	void TestScene::Unload(Cocoa::Assets::ResourceLoader& loader)
