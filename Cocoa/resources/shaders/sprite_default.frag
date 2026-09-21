@@ -3,9 +3,9 @@
 in vec2 v_LocalUV;
 in vec2 v_MinUV;
 in vec2 v_MaxUV;
+in vec2 v_TilingFactor;
 in vec4 v_Color;
 flat in uint v_TexIndex;
-in float v_TilingFactor;
 
 uniform sampler2D u_Textures[32];
 

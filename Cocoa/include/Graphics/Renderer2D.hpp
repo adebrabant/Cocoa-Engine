@@ -30,13 +30,13 @@ namespace Cocoa::Graphics
 			const Math::Matrix4f& modelMatrix,
 			MaterialHandle materialHandle,
 			TextureHandle textureHandle,
-			float tilingFactor
+			const Math::Vector2f& tilingFactor
 		);
 		void DrawQuad(
 			const Math::Matrix4f& modelMatrix,
 			MaterialHandle materialHandle,
 			SpriteHandle spriteHandle,
-			float tilingFactor
+			const Math::Vector2f& tilingFactor
 		);
 		void EndDraw();
 

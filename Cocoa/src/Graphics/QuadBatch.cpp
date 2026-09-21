@@ -57,9 +57,9 @@ namespace Cocoa::Graphics
             { 1, ShaderDataType::Float2, "a_LocalUV" },
             { 2, ShaderDataType::Float2, "a_MinUV" },
             { 3, ShaderDataType::Float2, "a_MaxUV" },
-            { 4, ShaderDataType::Float4, "a_Color" },
-            { 5, ShaderDataType::UInt, "a_TexIndex" },
-            { 6, ShaderDataType::Float, "a_TilingFactor"}
+            { 4, ShaderDataType::Float2, "a_TilingFactor"},
+            { 5, ShaderDataType::Float4, "a_Color" },
+            { 6, ShaderDataType::UInt, "a_TexIndex" }
         };
 
         m_vao = m_graphicsDevice.CreateVertexArray();
@@ -77,7 +77,7 @@ namespace Cocoa::Graphics
         const Math::Matrix4f& modelMatrix,
         const MaterialHandle materialHandle,
         const TextureHandle textureHandle,
-        const float tilingFactor)
+        const Math::Vector2f& tilingFactor)
     {
         const Material& material = m_materialManager.Get(materialHandle);
         const Math::Vector4f color{ material.Tint.R, material.Tint.G, material.Tint.B, material.Tint.A };
@@ -100,7 +100,7 @@ namespace Cocoa::Graphics
         const Math::Matrix4f& modelMatrix,
         const MaterialHandle materialHandle,
         const SpriteHandle spriteHandle,
-        const float tilingFactor)
+        const Math::Vector2f& tilingFactor)
     {
         const Material& material = m_materialManager.Get(materialHandle);
         const Sprite& sprite = m_spriteManager.Get(spriteHandle);
@@ -239,7 +239,7 @@ namespace Cocoa::Graphics
         const Math::Vector4f& color,
         const Math::Vector2f& minUV,
         const Math::Vector2f& maxUV,
-        const float tilingFactor)
+        const Math::Vector2f& tilingFactor)
     {
         // Transform the quad's local-space corners into world space.
         const Math::Vector4f worldBottomLeft =
@@ -262,9 +262,9 @@ namespace Cocoa::Graphics
                 { 0.0f, 0.0f },
                 minUV,
                 maxUV,
+                tilingFactor,
                 color,
                 0,
-                tilingFactor
             },
             // Bottom-Right
             QuadVertex
@@ -273,9 +273,9 @@ namespace Cocoa::Graphics
                 { 1.0f, 0.0f },
                 minUV,
                 maxUV,
+                tilingFactor,
                 color,
                 0,
-                tilingFactor
             },
             // Top-Right
             QuadVertex
@@ -284,9 +284,9 @@ namespace Cocoa::Graphics
                 {1.0f, 1.0f},
                 minUV,
                 maxUV,
+                tilingFactor,
                 color,
                 0,
-                tilingFactor
             },
             // Top-Left
             QuadVertex
@@ -295,9 +295,9 @@ namespace Cocoa::Graphics
                 { 0.0f, 1.0f},
                 minUV,
                 maxUV,
+                tilingFactor,
                 color,
                 0,
-                tilingFactor
             }
         };
     }

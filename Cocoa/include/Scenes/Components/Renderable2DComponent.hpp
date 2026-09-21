@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Math/Vector2f.hpp"
 #include "Graphics/GraphicsHandles.hpp"
 
 namespace Cocoa::Scenes
@@ -8,6 +9,6 @@ namespace Cocoa::Scenes
 	{
 		Graphics::MaterialHandle Material{};
 		Graphics::SpriteHandle Sprite{};
-		float TilingFactor{1.0f};
+		Math::Vector2f TilingFactor{1.0f, 1.0f};
 	};
 }

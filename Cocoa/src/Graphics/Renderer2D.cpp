@@ -39,7 +39,7 @@ namespace Cocoa::Graphics
 		const Math::Matrix4f& modelMatrix,
 		const MaterialHandle materialHandle,
 		const TextureHandle textureHandle,
-		const float tilingFactor)
+		const Math::Vector2f& tilingFactor)
 	{
 		m_quadBatch.Draw(modelMatrix, materialHandle, textureHandle, tilingFactor);
 	}
@@ -48,7 +48,7 @@ namespace Cocoa::Graphics
 		const Math::Matrix4f& modelMatrix,
 		const MaterialHandle materialHandle,
 		const SpriteHandle spriteHandle,
-		const float tilingFactor)
+		const Math::Vector2f& tilingFactor)
 	{
 		m_quadBatch.Draw(modelMatrix, materialHandle, spriteHandle, tilingFactor);
 	}

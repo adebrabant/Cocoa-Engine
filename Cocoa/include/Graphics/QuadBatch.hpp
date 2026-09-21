@@ -39,13 +39,13 @@ namespace Cocoa::Graphics
             const Math::Matrix4f& modelMatrix,
             MaterialHandle materialHandle,
             TextureHandle textureHandle,
-            float tilingFactor
+            const Math::Vector2f& tilingFactor
         );
         void Draw(
             const Math::Matrix4f& modelMatrix,
             MaterialHandle materialHandle,
             SpriteHandle spriteHandle,
-            float tilingFactor
+            const Math::Vector2f& tilingFactor
         );
         void Flush(const Math::Matrix4f& viewProjectionMatrix);
 
@@ -56,9 +56,9 @@ namespace Cocoa::Graphics
             Math::Vector2f LocalUV{};
             Math::Vector2f MinUV{};
             Math::Vector2f MaxUV{};
+            Math::Vector2f TilingFactor{};
             Math::Vector4f Color{};
             uint32_t TexIndex{0};
-            float TilingFactor{1.0f};
         };
         struct QuadDrawCommand
         {
@@ -89,7 +89,7 @@ namespace Cocoa::Graphics
             const Math::Vector4f& color,
             const Math::Vector2f& minUV,
             const Math::Vector2f& maxUV,
-            float tilingFactor
+            const Math::Vector2f& tilingFactor
         );
 
     private:
