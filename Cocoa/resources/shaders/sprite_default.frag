@@ -17,6 +17,8 @@ void main()
 	int textureIndex = int(v_TexIndex);
 	vec2 tiledUV = v_LocalUV * v_TilingFactor;
 	vec2 wrappedUV = fract(tiledUV);
+	vec2 edgeMask = step(1.0, v_LocalUV);
+	wrappedUV = mix(wrappedUV, vec2(1.0), edgeMask);
 	vec2 size = vec2(v_MaxUV.x - v_MinUV.x, v_MaxUV.y - v_MinUV.y);
 	vec2 offset = vec2(size.x * wrappedUV.x, size.y * wrappedUV.y);
 	vec2 textureCoord = vec2(v_MinUV.x + offset.x, v_MinUV.y + offset.y);
