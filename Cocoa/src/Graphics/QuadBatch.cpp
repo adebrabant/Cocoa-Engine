@@ -207,12 +207,30 @@ namespace Cocoa::Graphics
         );
         shader.Bind();
         shader.SetMatrix4("u_ViewProjection", viewProjectionMatrix);
-        shader.SetIntArray("u_Textures", samplerUnits.data(), samplerUnits.size());
+        shader.SetIntArray(
+            "u_Textures",
+            samplerUnits.data(),
+            samplerUnits.size()
+        );
+
+        std::array<Math::Vector2f, TextureSlots::MaxCount> textureHalfTexels{};
         for (uint32_t i = 0; i < batchData.Textures.Count; ++i)
         {
             const Texture2D& texture = m_textureManager.Get(batchData.Textures.Data[i]);
+            textureHalfTexels[i] =
+            {
+                0.5f / texture.GetWidth(),
+                0.5f / texture.GetHeight()
+            };
             texture.Bind(i);
         }
+
+        shader.SetVector2fArray(
+            "u_HalfTexels",
+            textureHalfTexels.data(),
+            batchData.Textures.Count
+        );
+
         const auto quadCount = static_cast<uint32_t>(batchData.Vertices.size() / 4);
         const uint32_t indexCount = quadCount * 6;
         m_graphicsDevice.DrawIndexed(*m_vao, indexCount);

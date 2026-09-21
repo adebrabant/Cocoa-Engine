@@ -7,21 +7,34 @@ in vec2 v_TilingFactor;
 in vec4 v_Color;
 flat in uint v_TexIndex;
 
+uniform vec2 u_HalfTexels[32];
 uniform sampler2D u_Textures[32];
 
 out vec4 FragColor;
 			
 void main()
 {
-	vec4 texColor = v_Color;
 	int textureIndex = int(v_TexIndex);
+	vec4 texColor = v_Color;
+
+	// Convert the quad's local 0..1 UVs into tiled UV space.
 	vec2 tiledUV = v_LocalUV * v_TilingFactor;
+
+	// Wrap interior tile boundaries back into the 0..1 range.
 	vec2 wrappedUV = fract(tiledUV);
+
+	// Preserve the true outer edge of the quad so 1.0 does not wrap back to 0.0.
 	vec2 edgeMask = step(1.0, v_LocalUV);
 	wrappedUV = mix(wrappedUV, vec2(1.0), edgeMask);
-	vec2 size = vec2(v_MaxUV.x - v_MinUV.x, v_MaxUV.y - v_MinUV.y);
-	vec2 offset = vec2(size.x * wrappedUV.x, size.y * wrappedUV.y);
-	vec2 textureCoord = vec2(v_MinUV.x + offset.x, v_MinUV.y + offset.y);
+
+	// Inset the sprite's atlas bounds by half a texel to prevent
+	// linear filtering from sampling neighboring atlas texels.
+	vec2 halfTexel = vec2(u_HalfTexels[textureIndex]);
+	vec2 textureCoord = mix(
+		v_MinUV + halfTexel,
+		v_MaxUV - halfTexel,
+		wrappedUV
+	);
 	switch (textureIndex)
 	{
 		case 0: texColor *= texture(u_Textures[0], textureCoord); break;

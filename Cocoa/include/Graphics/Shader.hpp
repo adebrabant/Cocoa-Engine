@@ -5,6 +5,7 @@
 
 namespace Cocoa::Math
 {
+	struct Vector2f;
 	struct Vector4f;
 	struct Matrix4f;
 }
@@ -22,5 +23,6 @@ namespace Cocoa::Graphics
 		virtual void SetVector4(const std::string& name, const Math::Vector4f& value) const = 0;
 		virtual void SetMatrix4(const std::string& name, const Math::Matrix4f& value) const = 0;
 		virtual void SetIntArray(const std::string& name, const int* values, int count) const = 0;
+		virtual void SetVector2fArray(const std::string& name, const Math::Vector2f* values, int count) const = 0;
 	};
 }
