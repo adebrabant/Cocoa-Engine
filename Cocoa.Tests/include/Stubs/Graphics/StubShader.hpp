@@ -16,5 +16,6 @@ namespace Cocoa::Stubs
 		void SetVector4(const std::string& name, const Math::Vector4f& value) const override;
 		void SetMatrix4(const std::string& name, const Math::Matrix4f& value) const override;
 		void SetIntArray(const std::string& name, const int* values, int count) const override;
+		void SetVector2fArray(const std::string &name, const Math::Vector2f *values, int count) const override;
 	};
 }

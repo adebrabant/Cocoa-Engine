@@ -3,7 +3,7 @@
 #include <Scenes/Components/CameraComponent.hpp>
 #include <Scenes/Components/Renderable2DComponent.hpp>
 #include <Scenes/Systems/CameraSystem.hpp>
-#include <Scenes/Systems/RenderSystem.hpp>
+#include <Scenes/Systems/Render2DSystem.hpp>
 #include <Assets/ResourceLoader.hpp>
 
 namespace Sandbox
@@ -128,11 +128,30 @@ namespace Sandbox
 			Cocoa::Scenes::Renderable2DComponent
 			{
 				.Material = defaultMaterial,
-				.Sprite = loader.LoadSprite("cherry_blossom_tree_02_sprite")
+				.Sprite = loader.LoadSprite("cherry_blossom_tree_02_sprite"),
 			}
 		);
 
-		m_world.AddSystem<Cocoa::Scenes::RenderSystem>();
+		auto darkFloorTile01Entity = m_world.CreateEntity();
+		Cocoa::Scenes::TransformComponent darkFloorTile01Transform
+		{
+			.Position = { -0.05f, -0.72f, 0.0f },
+			.Rotation =  { 0.0f, 0.0f, 0.0f },
+			.Scale = { 3.2f, 0.4f, 1.0f }
+		};
+
+		m_world.AddComponent(darkFloorTile01Entity, darkFloorTile01Transform);
+		m_world.AddComponent(
+			darkFloorTile01Entity,
+			Cocoa::Scenes::Renderable2DComponent
+			{
+				.Material = defaultMaterial,
+				.Sprite = loader.LoadSprite("dark_floor_tile_01_sprite"),
+				.TilingFactor = Cocoa::Math::Vector2f(4.0f, 1.0f)
+			}
+		);
+
+		m_world.AddSystem<Cocoa::Scenes::Render2DSystem>();
     }
 
 	void TestScene::Unload(Cocoa::Assets::ResourceLoader& loader)

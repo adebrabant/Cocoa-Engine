@@ -38,17 +38,19 @@ namespace Cocoa::Graphics
 	void Renderer2D::DrawQuad(
 		const Math::Matrix4f& modelMatrix,
 		const MaterialHandle materialHandle,
-		const TextureHandle textureHandle)
+		const TextureHandle textureHandle,
+		const Math::Vector2f& tilingFactor)
 	{
-		m_quadBatch.Draw(modelMatrix, materialHandle, textureHandle);
+		m_quadBatch.Draw(modelMatrix, materialHandle, textureHandle, tilingFactor);
 	}
 
 	void Renderer2D::DrawQuad(
 		const Math::Matrix4f& modelMatrix,
 		const MaterialHandle materialHandle,
-		const SpriteHandle spriteHandle)
+		const SpriteHandle spriteHandle,
+		const Math::Vector2f& tilingFactor)
 	{
-		m_quadBatch.Draw(modelMatrix, materialHandle, spriteHandle);
+		m_quadBatch.Draw(modelMatrix, materialHandle, spriteHandle, tilingFactor);
 	}
 
 	void Renderer2D::EndDraw()

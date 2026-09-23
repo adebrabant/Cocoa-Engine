@@ -4,7 +4,7 @@
 
 namespace Cocoa::Scenes
 {
-	class RenderSystem : public System
+	class Render2DSystem : public System
 	{
 	public:
 		void Update(World& world, float deltaTime) override;

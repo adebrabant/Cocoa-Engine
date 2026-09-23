@@ -28,5 +28,10 @@
     "texture": "cherry_blossom_tree_01",
     "minPixel": [140.0, 0.0],
     "maxPixel": [267.0, 160.0]
+  },
+  "dark_floor_tile_01_sprite": {
+    "texture": "dark_floor_set_01",
+    "minPixel": [0.0, 0.0],
+    "maxPixel": [95.0, 60.0]
   }
 }

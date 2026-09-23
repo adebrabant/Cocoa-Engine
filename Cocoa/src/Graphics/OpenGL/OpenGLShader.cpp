@@ -1,8 +1,10 @@
 #include "Graphics/OpenGL/OpenGLShader.hpp"
+#include "Math/Vector2f.hpp"
 #include "Math/Vector4f.hpp"
 #include "Math/Matrix4f.hpp"
 
 #include <GL/glew.h>
+#include <vector>
 #include <iostream>
 
 namespace Cocoa::Graphics
@@ -141,6 +143,22 @@ namespace Cocoa::Graphics
 		);
 
 		glUniform1iv(location, count, values);
+	}
+
+	void OpenGLShader::SetVector2fArray(const std::string &name, const Math::Vector2f* values, const int count) const
+	{
+		std::vector<GLfloat> flattened(static_cast<size_t>(count) * 2);
+		for (auto i = 0; i < count; ++i)
+		{
+			flattened[2*i] = values[i].X;
+			flattened[2*i+1] = values[i].Y;
+		}
+		const GLint location = glGetUniformLocation(
+			static_cast<GLuint>(m_rendererId),
+			name.c_str()
+		);
+
+		glUniform2fv(location, count, flattened.data());
 	}
 
 	void OpenGLShader::Destroy() const

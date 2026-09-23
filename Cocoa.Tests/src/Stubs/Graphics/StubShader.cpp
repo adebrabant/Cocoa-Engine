@@ -36,4 +36,9 @@ namespace Cocoa::Stubs
 	{
 
 	}
+
+	void StubShader::SetVector2fArray(const std::string &name, const Math::Vector2f *values, int count) const
+	{
+
+	}
 }

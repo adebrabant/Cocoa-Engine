@@ -113,8 +113,8 @@ namespace Cocoa::Graphics::Tests
 
         constexpr Math::Matrix4f identity = Math::Matrix4f::Identity();
 
-        sut.Draw(identity, materialHandleA, spriteHandle);
-        sut.Draw(identity, materialHandleB, spriteHandle);
+        sut.Draw(identity, materialHandleA, spriteHandle, {1.0f, 1.0f});
+        sut.Draw(identity, materialHandleB, spriteHandle, {1.0f, 1.0f});
 
         sut.Flush(identity);
 
@@ -192,8 +192,8 @@ namespace Cocoa::Graphics::Tests
 
         constexpr Math::Matrix4f identity = Math::Matrix4f::Identity();
 
-        sut.Draw(identity, materialHandleA, spriteHandle);
-        sut.Draw(identity, materialHandleB, spriteHandle);
+        sut.Draw(identity, materialHandleA, spriteHandle, {1.0f, 1.0f});
+        sut.Draw(identity, materialHandleB, spriteHandle, {1.0f, 1.0f});
 
         sut.Flush(identity);
 
@@ -285,8 +285,8 @@ namespace Cocoa::Graphics::Tests
 
         constexpr Math::Matrix4f identity = Math::Matrix4f::Identity();
 
-        sut.Draw(identity, materialHandleA, spriteHandleA);
-        sut.Draw(identity, materialHandleB, spriteHandleB);
+        sut.Draw(identity, materialHandleA, spriteHandleA, {1.0f, 1.0f});
+        sut.Draw(identity, materialHandleB, spriteHandleB, {1.0f, 1.0f});
 
         sut.Flush(identity);
 
@@ -356,8 +356,8 @@ namespace Cocoa::Graphics::Tests
 
         constexpr Math::Matrix4f identity = Math::Matrix4f::Identity();
 
-        sut.Draw(identity, materialHandleA, spriteHandle);
-        sut.Draw(identity, materialHandleB, spriteHandle);
+        sut.Draw(identity, materialHandleA, spriteHandle, {1.0f, 1.0f});
+        sut.Draw(identity, materialHandleB, spriteHandle, {1.0f, 1.0f});
 
         sut.Flush(identity);
 
@@ -401,7 +401,7 @@ namespace Cocoa::Graphics::Tests
 
         for (const auto& spriteHandle : spriteHandles)
         {
-            sut.Draw(identity, materialHandle, spriteHandle);
+            sut.Draw(identity, materialHandle, spriteHandle, {1.0f, 1.0f});
         }
 
         sut.Flush(identity);
@@ -446,10 +446,10 @@ namespace Cocoa::Graphics::Tests
 
         for (const auto& spriteHandle : spriteHandles)
         {
-            sut.Draw(identity, materialHandle, spriteHandle);
+            sut.Draw(identity, materialHandle, spriteHandle, {1.0f, 1.0f});
         }
 
-        sut.Draw(identity, materialHandle, spriteHandles[0]);
+        sut.Draw(identity, materialHandle, spriteHandles[0], {1.0f, 1.0f});
 
         sut.Flush(identity);
 
@@ -516,7 +516,7 @@ namespace Cocoa::Graphics::Tests
 
         for (auto i = 0; i < quadCount; ++i)
         {
-            sut.Draw(identity, materialHandle, spriteHandle);
+            sut.Draw(identity, materialHandle, spriteHandle, {1.0f, 1.0f});
         }
 
         sut.Flush(identity);
@@ -584,7 +584,7 @@ namespace Cocoa::Graphics::Tests
 
         for (auto i = 0; i < quadCount; ++i)
         {
-            sut.Draw(identity, materialHandle, spriteHandle);
+            sut.Draw(identity, materialHandle, spriteHandle, {1.0f, 1.0f});
         }
 
         sut.Flush(identity);
@@ -649,8 +649,8 @@ namespace Cocoa::Graphics::Tests
 
         constexpr Math::Matrix4f identity = Math::Matrix4f::Identity();
 
-        sut.Draw(identity, materialHandle, textureHandle);
-        sut.Draw(identity, materialHandle, spriteHandle);
+        sut.Draw(identity, materialHandle, textureHandle, {1.0f, 1.0f});
+        sut.Draw(identity, materialHandle, spriteHandle, {4.0f, 2.0f});
 
         sut.Flush(identity);
 

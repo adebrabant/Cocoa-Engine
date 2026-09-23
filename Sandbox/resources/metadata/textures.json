@@ -43,5 +43,14 @@
     "wrapS": "ClampToEdge",
     "wrapT": "ClampToEdge",
     "generateMipmaps": false
+  },
+  "dark_floor_set_01": {
+    "path": "textures/floors/floor-set-01.png",
+    "format": "RGBA8",
+    "minFilter": "Nearest",
+    "magFilter": "Nearest",
+    "wrapS": "ClampToEdge",
+    "wrapT": "ClampToEdge",
+    "generateMipmaps": false
   }
 }

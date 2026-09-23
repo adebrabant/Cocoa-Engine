@@ -1,4 +1,4 @@
-#include "Scenes/Systems/RenderSystem.hpp"
+#include "Scenes/Systems/Render2DSystem.hpp"
 #include "Graphics/Renderer2D.hpp"
 #include "Scenes/ECS/World.hpp"
 #include "Scenes/ECS/View.hpp"
@@ -8,12 +8,12 @@
 
 namespace Cocoa::Scenes
 {
-	void RenderSystem::Update(World& world, float deltaTime)
+	void Render2DSystem::Update(World& world, float deltaTime)
 	{
 
 	}
 
-	void RenderSystem::Render(World& world, Graphics::Renderer2D& renderer, float alpha)
+	void Render2DSystem::Render(World& world, Graphics::Renderer2D& renderer, float alpha)
 	{
 		View<TransformComponent, Renderable2DComponent> view(world);
 		for (auto [transform, renderable] : view)
@@ -23,7 +23,12 @@ namespace Cocoa::Scenes
 			Math::Matrix4f scale = Math::Matrix4f::Scale(transform.Scale);
 
 			Math::Matrix4f modelMatrix = translation * zRotation * scale;
-			renderer.DrawQuad(modelMatrix, renderable.Material, renderable.Sprite);
+			renderer.DrawQuad(
+				modelMatrix,
+				renderable.Material,
+				renderable.Sprite,
+				renderable.TilingFactor
+			);
 		}
 	}
 }
