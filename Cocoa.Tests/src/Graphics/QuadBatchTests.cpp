@@ -650,7 +650,7 @@ namespace Cocoa::Graphics::Tests
         constexpr Math::Matrix4f identity = Math::Matrix4f::Identity();
 
         sut.Draw(identity, materialHandle, textureHandle, {1.0f, 1.0f});
-        sut.Draw(identity, materialHandle, spriteHandle, {1.0f, 1.0f});
+        sut.Draw(identity, materialHandle, spriteHandle, {4.0f, 2.0f});
 
         sut.Flush(identity);
 

@@ -219,8 +219,8 @@ namespace Cocoa::Graphics
             const Texture2D& texture = m_textureManager.Get(batchData.Textures.Data[i]);
             textureHalfTexels[i] =
             {
-                0.5f / texture.GetWidth(),
-                0.5f / texture.GetHeight()
+                0.5f / static_cast<float>(texture.GetWidth()),
+                0.5f / static_cast<float>(texture.GetHeight())
             };
             texture.Bind(i);
         }
@@ -228,7 +228,7 @@ namespace Cocoa::Graphics
         shader.SetVector2fArray(
             "u_HalfTexels",
             textureHalfTexels.data(),
-            batchData.Textures.Count
+            static_cast<int>(batchData.Textures.Count)
         );
 
         const auto quadCount = static_cast<uint32_t>(batchData.Vertices.size() / 4);
