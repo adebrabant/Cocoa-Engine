@@ -11,30 +11,26 @@ uniform vec2 u_HalfTexels[32];
 uniform sampler2D u_Textures[32];
 
 out vec4 FragColor;
-			
-void main()
+
+vec2 calculateWrappedUV(vec2 localUV, vec2 tiledUV)
 {
-	int textureIndex = int(v_TexIndex);
-	vec4 texColor = v_Color;
-
-	// Convert the quad's local 0..1 UVs into tiled UV space.
-	vec2 tiledUV = v_LocalUV * v_TilingFactor;
-
-	// Wrap interior tile boundaries back into the 0..1 range.
+	// Wrap interior tile boundaries back into the 0..1 range
 	vec2 wrappedUV = fract(tiledUV);
+	// Preserve the true outer edge of the quad so 1.0 does not wrap back to 0.0
+	vec2 edgeMask = step(1.0, localUV);
+	// Check if the final step lands on a new texture
+	vec2 boundaryMask = step(wrappedUV, vec2(0.0));
+	vec2 combinedMask = edgeMask * boundaryMask;
+	// combinedMask is 0 or 1 per component
+	// 0 keeps the wrapped UV unchanged
+	// 1 replaces that component with 1.0
+	wrappedUV = mix(wrappedUV, vec2(1.0), combinedMask);
 
-	// Preserve the true outer edge of the quad so 1.0 does not wrap back to 0.0.
-	vec2 edgeMask = step(1.0, v_LocalUV);
-	wrappedUV = mix(wrappedUV, vec2(1.0), edgeMask);
+	return wrappedUV;
+}
 
-	// Inset the sprite's atlas bounds by half a texel to prevent
-	// linear filtering from sampling neighboring atlas texels.
-	vec2 halfTexel = vec2(u_HalfTexels[textureIndex]);
-	vec2 textureCoord = mix(
-		v_MinUV + halfTexel,
-		v_MaxUV - halfTexel,
-		wrappedUV
-	);
+vec4 sampleTexture(vec4 texColor, int textureIndex, vec2 textureCoord)
+{
 	switch (textureIndex)
 	{
 		case 0: texColor *= texture(u_Textures[0], textureCoord); break;
@@ -71,5 +67,25 @@ void main()
 		case 31: texColor *= texture(u_Textures[31], textureCoord); break;
 	}
 
-	FragColor = texColor;
+	return texColor;
+}
+			
+void main()
+{
+	int textureIndex = int(v_TexIndex);
+
+	// Convert the quad's local 0..1 UVs into tiled UV space.
+	vec2 tiledUV = v_LocalUV * v_TilingFactor;
+
+	vec2 wrappedUV = calculateWrappedUV(v_LocalUV, tiledUV);
+
+	// Inset the sprite's atlas bounds by half a texel to prevent
+	// linear filtering from sampling neighboring atlas texels.
+	vec2 textureCoord = mix(
+		v_MinUV + u_HalfTexels[textureIndex],
+		v_MaxUV - u_HalfTexels[textureIndex],
+		wrappedUV
+	);
+
+	FragColor = sampleTexture(v_Color, textureIndex, textureCoord);
 }
