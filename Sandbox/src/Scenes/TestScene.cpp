@@ -1,7 +1,7 @@
 #include "Scenes/TestScene.hpp"
 #include <Scenes/Components/TransformComponent.hpp>
 #include <Scenes/Components/CameraComponent.hpp>
-#include <Scenes/Components/Renderable2DComponent.hpp>
+#include <Scenes/Components/SpriteComponent.hpp>
 #include <Scenes/Systems/CameraSystem.hpp>
 #include <Scenes/Systems/Render2DSystem.hpp>
 #include <Assets/ResourceLoader.hpp>
@@ -75,7 +75,7 @@ namespace Sandbox
 		m_world.AddComponent(sunEntity, sunsetTransform);
 		m_world.AddComponent(
 			sunEntity,
-			Cocoa::Scenes::Renderable2DComponent
+			Cocoa::Scenes::SpriteComponent
 			{
 				.Material = defaultMaterial,
 				.Sprite = loader.LoadSprite("sunset_background_01_sprite")
@@ -85,7 +85,7 @@ namespace Sandbox
 		m_world.AddComponent(mountainBackgroundEntity, mountainBackgroundTransform);
 		m_world.AddComponent(
 			mountainBackgroundEntity,
-			Cocoa::Scenes::Renderable2DComponent
+			Cocoa::Scenes::SpriteComponent
 			{
 				.Material = defaultMaterial,
 				.Sprite = loader.LoadSprite("mountains_background_01_sprite")
@@ -95,7 +95,7 @@ namespace Sandbox
 		m_world.AddComponent(forestFogBackground01Entity, forestFogBackground01Transform);
 		m_world.AddComponent(
 			forestFogBackground01Entity,
-			Cocoa::Scenes::Renderable2DComponent
+			Cocoa::Scenes::SpriteComponent
 			{
 				.Material = defaultMaterial,
 				.Sprite = loader.LoadSprite("forest_fog_background_01_sprite")
@@ -105,7 +105,7 @@ namespace Sandbox
 		m_world.AddComponent(forestFogBackground02Entity, forestFogBackground02Transform);
 		m_world.AddComponent(
 			forestFogBackground02Entity,
-			Cocoa::Scenes::Renderable2DComponent
+			Cocoa::Scenes::SpriteComponent
 			{
 				.Material = defaultMaterial,
 				.Sprite = loader.LoadSprite("forest_fog_background_02_sprite")
@@ -115,7 +115,7 @@ namespace Sandbox
 		m_world.AddComponent(cherryBlossomTree01Entity, cherryBlossomTree01Transform);
 		m_world.AddComponent(
 			cherryBlossomTree01Entity,
-			Cocoa::Scenes::Renderable2DComponent
+			Cocoa::Scenes::SpriteComponent
 			{
 				.Material = defaultMaterial,
 				.Sprite = loader.LoadSprite("cherry_blossom_tree_01_sprite")
@@ -125,7 +125,7 @@ namespace Sandbox
 		m_world.AddComponent(cherryBlossomTree02Entity, cherryBlossomTree02Transform);
 		m_world.AddComponent(
 			cherryBlossomTree02Entity,
-			Cocoa::Scenes::Renderable2DComponent
+			Cocoa::Scenes::SpriteComponent
 			{
 				.Material = defaultMaterial,
 				.Sprite = loader.LoadSprite("cherry_blossom_tree_02_sprite"),
@@ -143,7 +143,7 @@ namespace Sandbox
 		m_world.AddComponent(darkFloorTile01Entity, darkFloorTile01Transform);
 		m_world.AddComponent(
 			darkFloorTile01Entity,
-			Cocoa::Scenes::Renderable2DComponent
+			Cocoa::Scenes::SpriteComponent
 			{
 				.Material = defaultMaterial,
 				.Sprite = loader.LoadSprite("dark_floor_tile_01_sprite"),
