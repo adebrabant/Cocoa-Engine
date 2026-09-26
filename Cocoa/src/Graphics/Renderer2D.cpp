@@ -48,9 +48,18 @@ namespace Cocoa::Graphics
 		const Math::Matrix4f& modelMatrix,
 		const MaterialHandle materialHandle,
 		const SpriteHandle spriteHandle,
-		const Math::Vector2f& tilingFactor)
+		const Math::Vector2f& tilingFactor,
+		const bool flipVertical,
+		const bool flipHorizontal)
 	{
-		m_quadBatch.Draw(modelMatrix, materialHandle, spriteHandle, tilingFactor);
+		m_quadBatch.Draw(
+			modelMatrix,
+			materialHandle,
+			spriteHandle,
+			tilingFactor,
+			flipVertical,
+			flipHorizontal
+		);
 	}
 
 	void Renderer2D::EndDraw()

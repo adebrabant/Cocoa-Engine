@@ -66,7 +66,7 @@ set(COCOA_PUBLIC_HEADERS
     include/Scenes/Components/CameraComponent.hpp
     include/Scenes/Components/VelocityComponent.hpp
     include/Scenes/Components/CollisionComponent.hpp
-    include/Scenes/Components/Renderable2DComponent.hpp
+    include/Scenes/Components/SpriteComponent.hpp
 
     include/Scenes/Systems/CameraSystem.hpp
     include/Scenes/Systems/MovementSystem.hpp
