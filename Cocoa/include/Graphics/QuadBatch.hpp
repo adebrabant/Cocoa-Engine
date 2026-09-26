@@ -45,7 +45,9 @@ namespace Cocoa::Graphics
             const Math::Matrix4f& modelMatrix,
             MaterialHandle materialHandle,
             SpriteHandle spriteHandle,
-            const Math::Vector2f& tilingFactor
+            const Math::Vector2f& tilingFactor,
+            bool flipVertical,
+            bool flipHorizontal
         );
         void Flush(const Math::Matrix4f& viewProjectionMatrix);
 
@@ -89,7 +91,9 @@ namespace Cocoa::Graphics
             const Math::Vector4f& color,
             const Math::Vector2f& minUV,
             const Math::Vector2f& maxUV,
-            const Math::Vector2f& tilingFactor
+            const Math::Vector2f& tilingFactor,
+            bool flipVertical,
+            bool flipHorizontal
         );
 
     private:

@@ -36,7 +36,9 @@ namespace Cocoa::Graphics
 			const Math::Matrix4f& modelMatrix,
 			MaterialHandle materialHandle,
 			SpriteHandle spriteHandle,
-			const Math::Vector2f& tilingFactor
+			const Math::Vector2f& tilingFactor,
+			bool flipVertical,
+			bool flipHorizontal
 		);
 		void EndDraw();
 

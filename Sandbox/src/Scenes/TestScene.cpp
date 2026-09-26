@@ -129,6 +129,8 @@ namespace Sandbox
 			{
 				.Material = defaultMaterial,
 				.Sprite = loader.LoadSprite("cherry_blossom_tree_02_sprite"),
+				.FlipVertical = false,
+				.FlipHorizontal = true
 			}
 		);
 

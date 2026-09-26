@@ -27,7 +27,9 @@ namespace Cocoa::Scenes
 				modelMatrix,
 				renderable.Material,
 				renderable.Sprite,
-				renderable.TilingFactor
+				renderable.TilingFactor,
+				renderable.FlipVertical,
+				renderable.FlipHorizontal
 			);
 		}
 	}

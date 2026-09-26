@@ -86,7 +86,9 @@ namespace Cocoa::Graphics
             color,
             {0.0f, 0.0f},
             {1.0f, 1.0f},
-            tilingFactor
+            tilingFactor,
+            false,
+            false
         );
 
         m_drawCommands.emplace_back(
@@ -100,7 +102,9 @@ namespace Cocoa::Graphics
         const Math::Matrix4f& modelMatrix,
         const MaterialHandle materialHandle,
         const SpriteHandle spriteHandle,
-        const Math::Vector2f& tilingFactor)
+        const Math::Vector2f& tilingFactor,
+        const bool flipVertical,
+        const bool flipHorizontal)
     {
         const Material& material = m_materialManager.Get(materialHandle);
         const Sprite& sprite = m_spriteManager.Get(spriteHandle);
@@ -110,7 +114,9 @@ namespace Cocoa::Graphics
             color,
             sprite.MinUV,
             sprite.MaxUV,
-            tilingFactor
+            tilingFactor,
+            flipVertical,
+            flipHorizontal
         );
 
         m_drawCommands.emplace_back(
@@ -257,7 +263,9 @@ namespace Cocoa::Graphics
         const Math::Vector4f& color,
         const Math::Vector2f& minUV,
         const Math::Vector2f& maxUV,
-        const Math::Vector2f& tilingFactor)
+        const Math::Vector2f& tilingFactor,
+        const bool flipVertical,
+        const bool flipHorizontal)
     {
         // Transform the quad's local-space corners into world space.
         const Math::Vector4f worldBottomLeft =
@@ -272,12 +280,32 @@ namespace Cocoa::Graphics
         const Math::Vector4f worldTopLeft =
             modelMatrix * Math::Vector4f{ -0.5f, 0.5f, 0.0f, 1.0f };
 
+        Math::Vector2f bottomLeftUV(0.0f, 0.0f);
+        Math::Vector2f bottomRightUV(1.0f, 0.0f);
+        Math::Vector2f topRightUV(1.0f, 1.0f);
+        Math::Vector2f topLeftUV(0.0f, 1.0f);
+
+        if (flipHorizontal)
+        {
+            bottomLeftUV.X = 1.0f - bottomLeftUV.X;
+            bottomRightUV.X = 1.0f - bottomRightUV.X;
+            topLeftUV.X = 1.0f - topLeftUV.X;
+            topRightUV.X = 1.0f - topRightUV.X;
+        }
+        if (flipVertical)
+        {
+            bottomLeftUV.Y  = 1.0f - bottomLeftUV.Y;
+            bottomRightUV.Y = 1.0f - bottomRightUV.Y;
+            topLeftUV.Y = 1.0f - topLeftUV.Y;
+            topRightUV.Y = 1.0f - topRightUV.Y;
+        }
+
         return{
             // Bottom-Left
             QuadVertex
             {
                 { worldBottomLeft.X, worldBottomLeft.Y, worldBottomLeft.Z},
-                { 0.0f, 0.0f },
+                bottomLeftUV,
                 minUV,
                 maxUV,
                 tilingFactor,
@@ -288,7 +316,7 @@ namespace Cocoa::Graphics
             QuadVertex
             {
                 { worldBottomRight.X, worldBottomRight.Y, worldBottomRight.Z },
-                { 1.0f, 0.0f },
+                bottomRightUV,
                 minUV,
                 maxUV,
                 tilingFactor,
@@ -299,7 +327,7 @@ namespace Cocoa::Graphics
             QuadVertex
             {
                 {worldTopRight.X, worldTopRight.Y, worldTopRight.Z},
-                {1.0f, 1.0f},
+                topRightUV,
                 minUV,
                 maxUV,
                 tilingFactor,
@@ -310,7 +338,7 @@ namespace Cocoa::Graphics
             QuadVertex
             {
                 {worldTopLeft.X, worldTopLeft.Y, worldTopLeft.Z},
-                { 0.0f, 1.0f},
+                topLeftUV,
                 minUV,
                 maxUV,
                 tilingFactor,
