@@ -91,6 +91,7 @@ namespace Cocoa::Assets
 		return m_materialManager.Load(
 			materialId,
 			shaderHandle,
+			record.BlendMode,
 			record.Tint
 		);
 	}
