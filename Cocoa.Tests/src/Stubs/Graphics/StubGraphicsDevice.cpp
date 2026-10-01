@@ -24,6 +24,11 @@ namespace Cocoa::Stubs
 	{
 	}
 
+	void StubGraphicsDevice::SetBlendMode(Graphics::BlendMode mode)
+	{
+
+	}
+
 	void StubGraphicsDevice::SetViewport(int32_t x, int32_t y, uint32_t width, uint32_t height)
 	{
 

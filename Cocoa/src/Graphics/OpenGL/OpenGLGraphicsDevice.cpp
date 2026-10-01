@@ -7,17 +7,12 @@
 #include "Graphics/TextureSpec.hpp"
 #include "Graphics/BufferElement.hpp"
 #include "Graphics/BufferLayout.hpp"
-#include "Utilities/Memory.hpp"
 
 #include <GL/glew.h>
 
 namespace Cocoa::Graphics
 {
-	OpenGLGraphicsDevice::OpenGLGraphicsDevice()
-	{
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	}
+	OpenGLGraphicsDevice::OpenGLGraphicsDevice() = default;
 
 	OpenGLGraphicsDevice::~OpenGLGraphicsDevice() = default;
 
@@ -29,6 +24,36 @@ namespace Cocoa::Graphics
 	void OpenGLGraphicsDevice::EndFrame()
 	{
 		// ToDo: Reserved for per-frame graphics device cleanup/submission
+	}
+
+	void OpenGLGraphicsDevice::SetBlendMode(const BlendMode mode)
+	{
+		switch (mode)
+		{
+		case BlendMode::Opaque:
+			glDisable(GL_BLEND);
+			break;
+		case BlendMode::Alpha:
+			glEnable(GL_BLEND);
+			glBlendEquation(GL_FUNC_ADD);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			break;
+		case BlendMode::Additive:
+			glEnable(GL_BLEND);
+			glBlendEquation(GL_FUNC_ADD);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+			break;
+		case BlendMode::Subtractive:
+			glEnable(GL_BLEND);
+			glBlendEquation(GL_FUNC_SUBTRACT);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+			break;
+		case BlendMode::ReverseSubtract:
+			glEnable(GL_BLEND);
+			glBlendEquation(GL_FUNC_REVERSE_SUBTRACT);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+			break;
+		}
 	}
 
 	void OpenGLGraphicsDevice::SetViewport(
@@ -45,7 +70,7 @@ namespace Cocoa::Graphics
 		);
 	}
 
-	void OpenGLGraphicsDevice::SetClearColor(float red, float green, float blue, float alpha)
+	void OpenGLGraphicsDevice::SetClearColor(const float red, const float green, const float blue, const float alpha)
 	{
 		glClearColor(
 			red,

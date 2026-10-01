@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Utilities/Memory.hpp"
+#include "Graphics/BlendMode.hpp"
 
 #include <string>
 #include <cstdint>
@@ -21,6 +22,7 @@ namespace Cocoa::Graphics
         virtual ~GraphicsDevice() = default;
         virtual void BeginFrame() = 0;
         virtual void EndFrame() = 0;
+        virtual void SetBlendMode(BlendMode mode) = 0;
         virtual void SetViewport(int32_t x, int32_t y, uint32_t width, uint32_t height) = 0;
         virtual void SetClearColor(float red, float green, float blue, float alpha) = 0;
         virtual void Clear() = 0;

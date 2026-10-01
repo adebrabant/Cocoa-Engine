@@ -1,15 +1,45 @@
 #include "Graphics/MaterialManager.hpp"
 #include "Graphics/ShaderManager.hpp"
-#include "Graphics/TextureManager.hpp"
 #include "Graphics/Material.hpp"
 #include "Core/Color.hpp"
 
 #include <string>
 #include <utility>
 #include <stdexcept>
+#include <ranges>
+#include <algorithm>
+#include <cctype>
 
 namespace Cocoa::Graphics
 {
+	static BlendMode ToBlendMode(const std::string& blendMode)
+	{
+		auto scrubbedView = blendMode
+			| std::views::filter([](const unsigned char c) { return !std::isspace(c);})
+			| std::views::transform([](const unsigned char c){ return std::tolower(c);});
+
+		const std::string cleanedBlendMode(scrubbedView.begin(), scrubbedView.end());
+
+		if (cleanedBlendMode == "opaque")
+			return BlendMode::Opaque;
+
+		if (cleanedBlendMode == "alpha")
+			return BlendMode::Alpha;
+
+		if (cleanedBlendMode == "additive")
+			return BlendMode::Additive;
+
+		if (cleanedBlendMode == "subtractive")
+			return BlendMode::Subtractive;
+
+		if (cleanedBlendMode == "reversesubtract")
+			return BlendMode::ReverseSubtract;
+
+		// TODO: Add Warning Logs for default value used
+
+		return BlendMode::Opaque;
+	}
+
 	MaterialManager::MaterialManager() :
 		m_handles(),
 		m_materials(),
@@ -22,8 +52,9 @@ namespace Cocoa::Graphics
 
 	MaterialHandle MaterialManager::Load(
 		const std::string& materialId, 
-		ShaderHandle shaderHandle,
-		Core::Color tint)
+		const ShaderHandle shaderHandle,
+		const std::string& blendMode,
+		const Core::Color tint)
 	{
 		if (const auto it = m_handles.find(materialId); it != m_handles.end())
 		{
@@ -35,7 +66,8 @@ namespace Cocoa::Graphics
 		{
 			.Id = materialId,
 			.Shader = shaderHandle,
-			.Tint = tint
+			.Tint = tint,
+			.Blend =  ToBlendMode(blendMode)
 		};
 		
 		m_handles.emplace(materialId, handle);
@@ -44,7 +76,7 @@ namespace Cocoa::Graphics
 		return handle;
 	}
 
-	const Material& MaterialManager::Get(MaterialHandle handle) const
+	const Material& MaterialManager::Get(const MaterialHandle handle) const
 	{
 		const auto it = m_materials.find(handle.Id);
 

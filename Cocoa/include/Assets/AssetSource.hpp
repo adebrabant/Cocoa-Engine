@@ -10,7 +10,7 @@ namespace Cocoa::Assets
 	{
 	public:
 		virtual ~AssetSource() = default;
-		virtual std::vector<std::byte> ReadBytes(const std::filesystem::path& path) const = 0; 
-		virtual bool Exists(const std::filesystem::path& path) const = 0;
+		[[nodiscard]] virtual std::vector<std::byte> ReadBytes(const std::filesystem::path& path) const = 0;
+		[[nodiscard]] virtual bool Exists(const std::filesystem::path& path) const = 0;
 	};
 }

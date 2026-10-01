@@ -85,12 +85,14 @@ namespace Cocoa::Graphics::Tests
         const MaterialHandle materialHandleA = materialManager.Load(
             "material-a",
             shaderHandle,
+            "opaque",
             tint
         );
 
         const MaterialHandle materialHandleB = materialManager.Load(
             "material-b",
             shaderHandle,
+            "opaque",
             tint
         );
 
@@ -132,7 +134,7 @@ namespace Cocoa::Graphics::Tests
 
         sut.Flush(identity);
 
-        EXPECT_EQ(renderStats.DrawCount, 1);
+        EXPECT_EQ(1, renderStats.DrawCount);
     }
 
     TEST(QuadBatchTests, Flush_ShouldDrawTwice_WhenShaderChanges)
@@ -178,12 +180,14 @@ namespace Cocoa::Graphics::Tests
         const MaterialHandle materialHandleA = materialManager.Load(
             "material-a",
             shaderHandleOne,
+            "opaque",
             tint
         );
 
         const MaterialHandle materialHandleB = materialManager.Load(
             "material-b",
             shaderHandleTwo,
+            "opaque",
             tint
         );
 
@@ -225,7 +229,7 @@ namespace Cocoa::Graphics::Tests
 
         sut.Flush(identity);
 
-        EXPECT_EQ(renderStats.DrawCount, 2);
+        EXPECT_EQ(2, renderStats.DrawCount);
     }
 
     TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenTextureChanges)
@@ -277,12 +281,14 @@ namespace Cocoa::Graphics::Tests
         const MaterialHandle materialHandleA = materialManager.Load(
             "material-a",
             shaderHandle,
+            "opaque",
             tint
         );
 
         const MaterialHandle materialHandleB = materialManager.Load(
             "material-b",
             shaderHandle,
+            "opaque",
             tint
         );
 
@@ -332,7 +338,7 @@ namespace Cocoa::Graphics::Tests
 
         sut.Flush(identity);
 
-        EXPECT_EQ(renderStats.DrawCount, 1);
+        EXPECT_EQ(1, renderStats.DrawCount);
     }
 
     TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenOnlyTintChanges)
@@ -370,12 +376,14 @@ namespace Cocoa::Graphics::Tests
         const MaterialHandle materialHandleA = materialManager.Load(
             "material-a",
             shaderHandle,
+            "opaque",
             Core::Color{0.5, 1.0, 0.5, 1.0f}
         );
 
         const MaterialHandle materialHandleB = materialManager.Load(
             "material-b",
             shaderHandle,
+            "opaque",
             Core::Color{1.0f, 1.0f, 1.0f, 1.0f}
         );
 
@@ -417,7 +425,94 @@ namespace Cocoa::Graphics::Tests
 
         sut.Flush(identity);
 
-        EXPECT_EQ(renderStats.DrawCount, 1);
+        EXPECT_EQ(1, renderStats.DrawCount);
+    }
+
+    TEST(QuadBatchTests, Flush_ShouldDrawTwice_WhenGivenDifferentBlendMode)
+    {
+        Stubs::StubGraphicsDevice graphicsDevice;
+        ShaderManager shaderManager(graphicsDevice);
+        TextureManager textureManager(graphicsDevice);
+        MaterialManager materialManager;
+        SpriteManager spriteManager;
+        RenderStatistics renderStats;
+
+        const ShaderHandle shaderHandle = shaderManager.Load(
+            "test-shader",
+            "vertex-source",
+            "fragment-source"
+        );
+
+        const TextureSpec textureSpec
+        {
+            .Id = "test-texture",
+            .Width = 256,
+            .Height = 256
+        };
+
+        constexpr uint8_t pixelData[]
+        {
+            255, 255, 255, 255
+        };
+
+        const TextureHandle textureHandle = textureManager.Load(
+            textureSpec,
+            pixelData
+        );
+
+        const MaterialHandle materialHandleA = materialManager.Load(
+            "material-a",
+            shaderHandle,
+            "opaque",
+            Core::Color{0.5, 1.0, 0.5, 1.0f}
+        );
+
+        const MaterialHandle materialHandleB = materialManager.Load(
+            "material-b",
+            shaderHandle,
+            "alpha",
+            Core::Color{1.0f, 1.0f, 1.0f, 1.0f}
+        );
+
+        const SpriteHandle spriteHandle = spriteManager.Load(
+            "default-sprite-b",
+            textureHandle,
+            Math::Vector2f(0.0f, 0.0f),
+            Math::Vector2f(256.0f, 256.0f),
+            Math::Vector2f(256.0f, 256.0f)
+        );
+
+        QuadBatch sut(
+            graphicsDevice,
+            shaderManager,
+            textureManager,
+            materialManager,
+            spriteManager,
+            renderStats
+        );
+
+        constexpr Math::Matrix4f identity = Math::Matrix4f::Identity();
+
+        sut.Draw(
+            identity,
+            materialHandleA,
+            spriteHandle,
+            {1.0f, 1.0f},
+            false,
+            false
+        );
+        sut.Draw(
+            identity,
+            materialHandleB,
+            spriteHandle,
+            {1.0f, 1.0f},
+            false,
+            false
+        );
+
+        sut.Flush(identity);
+
+        EXPECT_EQ(2, renderStats.DrawCount);
     }
 
     TEST(QuadBatchTests, Flush_ShouldDrawTwice_WhenGiven33UniqueTextures)
@@ -438,6 +533,7 @@ namespace Cocoa::Graphics::Tests
         const MaterialHandle materialHandle = materialManager.Load(
             "material-a",
             shaderHandle,
+            "opaque",
             Core::Color{1.0f, 1.0f, 1.0f, 1.0f}
         );
 
@@ -469,7 +565,7 @@ namespace Cocoa::Graphics::Tests
 
         sut.Flush(identity);
 
-        EXPECT_EQ(renderStats.DrawCount, 2);
+        EXPECT_EQ(2, renderStats.DrawCount);
     }
 
     TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenGiven32UniqueTexturesAnd1Duplicate)
@@ -490,6 +586,7 @@ namespace Cocoa::Graphics::Tests
         const MaterialHandle materialHandle = materialManager.Load(
             "material-a",
             shaderHandle,
+            "opaque",
             Core::Color{1.0f, 1.0f, 1.0f, 1.0f}
         );
 
@@ -530,7 +627,7 @@ namespace Cocoa::Graphics::Tests
 
         sut.Flush(identity);
 
-        EXPECT_EQ(renderStats.DrawCount, 1);
+        EXPECT_EQ(1, renderStats.DrawCount);
     }
 
     TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenGiven20000QuadsWithSameTexture)
@@ -569,6 +666,7 @@ namespace Cocoa::Graphics::Tests
         const MaterialHandle materialHandle = materialManager.Load(
             "material-a",
             shaderHandle,
+            "opaque",
             Core::Color{0.5, 1.0, 0.5, 1.0f}
         );
 
@@ -605,7 +703,7 @@ namespace Cocoa::Graphics::Tests
 
         sut.Flush(identity);
 
-        EXPECT_EQ(renderStats.DrawCount, 1);
+        EXPECT_EQ(1, renderStats.DrawCount);
     }
 
     TEST(QuadBatchTests, Flush_ShouldDrawTwice_WhenGiven20001QuadsWithSameTexture)
@@ -644,6 +742,7 @@ namespace Cocoa::Graphics::Tests
         const MaterialHandle materialHandle = materialManager.Load(
             "material-a",
             shaderHandle,
+            "opaque",
             Core::Color{0.5, 1.0, 0.5, 1.0f}
         );
 
@@ -680,7 +779,7 @@ namespace Cocoa::Graphics::Tests
 
         sut.Flush(identity);
 
-        EXPECT_EQ(renderStats.DrawCount, 2);
+        EXPECT_EQ(2, renderStats.DrawCount);
     }
 
     TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenGivenSameTextureFromSpriteAndDirectTexture)
@@ -718,6 +817,7 @@ namespace Cocoa::Graphics::Tests
         const MaterialHandle materialHandle = materialManager.Load(
             "material-a",
             shaderHandle,
+            "opaque",
             Core::Color{0.5, 1.0, 0.5, 1.0f}
         );
 
@@ -757,6 +857,6 @@ namespace Cocoa::Graphics::Tests
 
         sut.Flush(identity);
 
-        EXPECT_EQ(renderStats.DrawCount, 1);
+        EXPECT_EQ(1, renderStats.DrawCount);
     }
 }

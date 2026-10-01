@@ -34,6 +34,7 @@ set(COCOA_PUBLIC_HEADERS
     include/Graphics/Viewport.hpp
     include/Graphics/QuadBatch.hpp
     include/Graphics/RenderStatistics.hpp
+    include/Graphics/BlendMode.hpp
 
     include/Assets/AssetManager.hpp
     include/Assets/AssetLoader.hpp

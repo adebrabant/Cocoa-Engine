@@ -1,6 +1,7 @@
 {
   "default_material": {
     "shader": "sprite_default_shader",
+    "blendMode": "alpha",
     "tint": [ 1.0, 1.0, 1.0, 1.0 ]
   }
 }
