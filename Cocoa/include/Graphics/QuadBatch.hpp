@@ -5,6 +5,7 @@
 #include "Math/Vector2f.hpp"
 #include "Math/Vector4f.hpp"
 #include "Math/Matrix4f.hpp"
+#include "Graphics/BlendMode.hpp"
 #include "Graphics/GraphicsHandles.hpp"
 
 #include <array>
@@ -66,6 +67,7 @@ namespace Cocoa::Graphics
         {
             ShaderHandle Shader{};
             TextureHandle Texture {};
+            BlendMode Blend{};
             std::array<QuadVertex, 4> Vertices{};
         };
         struct TextureSlots
@@ -78,6 +80,7 @@ namespace Cocoa::Graphics
         {
             ShaderHandle Shader;
             TextureSlots Textures;
+            BlendMode Blend;
             std::vector<QuadVertex> Vertices;
         };
         void BuildBatch(const Math::Matrix4f& viewProjectionMatrix);

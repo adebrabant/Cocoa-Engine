@@ -94,6 +94,7 @@ namespace Cocoa::Graphics
         m_drawCommands.emplace_back(
             material.Shader,
             textureHandle,
+            material.Blend,
             vertices
         );
     }
@@ -122,6 +123,7 @@ namespace Cocoa::Graphics
         m_drawCommands.emplace_back(
             material.Shader,
             sprite.Texture,
+            material.Blend,
             vertices
         );
     }
@@ -140,7 +142,11 @@ namespace Cocoa::Graphics
     void QuadBatch::BuildBatch(const Math::Matrix4f& viewProjectionMatrix)
     {
         uint32_t batchCounter{ 0 };
-        BatchData batchData{.Shader =  m_drawCommands[0].Shader};
+        BatchData batchData
+        {
+            .Shader =  m_drawCommands[0].Shader,
+            .Blend = m_drawCommands[0].Blend,
+        };
 
         for (QuadDrawCommand& command : m_drawCommands)
         {
@@ -155,6 +161,7 @@ namespace Cocoa::Graphics
             );
 
             if (command.Shader.Id != batchData.Shader.Id ||
+                command.Blend != batchData.Blend ||
                 (texSlotIterator == texSlotActiveEnd && batchData.Textures.Count == TextureSlots::MaxCount) ||
                 batchCounter == m_maxQuadCount)
             {
@@ -164,6 +171,7 @@ namespace Cocoa::Graphics
                 batchData.Vertices.clear();
                 texSlotActiveEnd = batchData.Textures.Data.begin();
                 texSlotIterator = texSlotActiveEnd;
+                batchData.Blend = command.Blend;
                 batchData.Shader = command.Shader;
             }
 
@@ -207,6 +215,7 @@ namespace Cocoa::Graphics
         const Shader& shader = m_shaderManager.Get(batchData.Shader);
         const std::array samplerUnits = CreateSamplerUnits();
 
+        m_graphicsDevice.SetBlendMode(batchData.Blend);
         m_vbo->SetData(
             batchData.Vertices.data(),
             static_cast<uint32_t>(batchData.Vertices.size() * sizeof(QuadVertex))
