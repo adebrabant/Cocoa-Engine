@@ -206,6 +206,7 @@ namespace Cocoa::Assets
 			{
 				.Id = id,
 				.ShaderId = materialJson.at("shader").get<std::string>(),
+				.BlendMode = materialJson.at("blendMode").get<std::string>(),
 				.Tint = Core::Color
 				{
 					materialJson.at("tint").at(0).get<float>(),

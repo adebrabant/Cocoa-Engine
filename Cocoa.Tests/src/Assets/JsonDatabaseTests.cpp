@@ -64,13 +64,13 @@ namespace Cocoa::Assets::Tests
 
 		const auto& result = sut.GetTextureInfo("dummy_idle1");
 
-		EXPECT_EQ(result.Id, "dummy_idle1");
-		EXPECT_EQ(result.Path, "Textures/dummy-idle1.png");
-		EXPECT_EQ(result.Format, "RGBA8");
-		EXPECT_EQ(result.MinFilter, "Linear");
-		EXPECT_EQ(result.MagFilter, "Linear");
-		EXPECT_EQ(result.WrapS, "ClampToEdge");
-		EXPECT_EQ(result.WrapT, "ClampToEdge");
+		EXPECT_EQ("dummy_idle1", result.Id);
+		EXPECT_EQ("Textures/dummy-idle1.png", result.Path);
+		EXPECT_EQ("RGBA8", result.Format);
+		EXPECT_EQ("Linear", result.MinFilter);
+		EXPECT_EQ("Linear", result.MagFilter);
+		EXPECT_EQ("ClampToEdge", result.WrapS);
+		EXPECT_EQ("ClampToEdge", result.WrapT);
 		EXPECT_FALSE(result.GenerateMipmaps);
 	}
 
@@ -90,8 +90,8 @@ namespace Cocoa::Assets::Tests
 
 		const auto& result = sut.GetShaderInfo("dummy_shader");
 
-		EXPECT_EQ(result.VertexPath, "Shaders/Sprite.vert");
-		EXPECT_EQ(result.FragmentPath, "Shaders/Sprite.frag");
+		EXPECT_EQ("Shaders/Sprite.vert", result.VertexPath);
+		EXPECT_EQ("Shaders/Sprite.frag", result.FragmentPath);
 	}
 
 	TEST(JsonAssetDatabaseTests, GetShaderInfo_ShouldThrowError_WhenGivenInvalidId)
@@ -110,11 +110,12 @@ namespace Cocoa::Assets::Tests
 
 		const auto& result = sut.GetMaterialInfo("dummy_material");
 
-		EXPECT_EQ(result.ShaderId, "dummy_shader");
-		EXPECT_EQ(result.Tint.R, 1.0);
-		EXPECT_EQ(result.Tint.G, 1.0);
-		EXPECT_EQ(result.Tint.B, 1.0);
-		EXPECT_EQ(result.Tint.A, 1.0);
+		EXPECT_EQ("dummy_shader", result.ShaderId);
+		EXPECT_EQ("Opaque", result.BlendMode);
+		EXPECT_EQ(1.0, result.Tint.R);
+		EXPECT_EQ(1.0, result.Tint.G);
+		EXPECT_EQ(1.0, result.Tint.B);
+		EXPECT_EQ(1.0, result.Tint.A);
 	}
 
 	TEST(JsonAssetDatabaseTests, GetMaterialInfo_ShouldThrowError_WhenGivenInvalidId)
@@ -134,12 +135,12 @@ namespace Cocoa::Assets::Tests
 
 		const auto& result = sut.GetSpriteInfo(name);
 
-		EXPECT_EQ(result.Id, name);
-		EXPECT_EQ(result.TextureId, "dummy_idle1");
-		EXPECT_EQ(result.MinPixel.X, 0.0);
-		EXPECT_EQ(result.MinPixel.Y, 0.0);
-		EXPECT_EQ(result.MaxPixel.X, 320.0);
-		EXPECT_EQ(result.MaxPixel.Y, 180.0);
+		EXPECT_EQ(name, result.Id);
+		EXPECT_EQ("dummy_idle1", result.TextureId);
+		EXPECT_EQ(0.0, result.MinPixel.X);
+		EXPECT_EQ(0.0, result.MinPixel.Y);
+		EXPECT_EQ(320.0, result.MaxPixel.X);
+		EXPECT_EQ(180.0, result.MaxPixel.Y);
 	}
 
 	TEST(JsonAssetDatabaseTests, GetSpriteInfo_ShouldThrowError_WhenGivenInvalidId)

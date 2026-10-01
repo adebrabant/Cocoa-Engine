@@ -30,6 +30,7 @@ namespace Cocoa::Assets
 	{
 		std::string Id;
 		std::string ShaderId;
+		std::string BlendMode;
 		Core::Color Tint;
 	};
 

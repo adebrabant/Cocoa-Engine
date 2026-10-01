@@ -50,7 +50,7 @@ namespace Cocoa::Assets::Tests
 
         EXPECT_THROW(
             {
-                sut.LoadText(path);
+                auto value = sut.LoadText(path);
             },
             std::runtime_error
         );
