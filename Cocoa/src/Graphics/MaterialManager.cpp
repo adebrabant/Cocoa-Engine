@@ -35,6 +35,8 @@ namespace Cocoa::Graphics
 		if (cleanedBlendMode == "reversesubtract")
 			return BlendMode::ReverseSubtract;
 
+		// TODO: Add Warning Logs for default value used
+
 		return BlendMode::Opaque;
 	}
 
