@@ -111,7 +111,7 @@ namespace Cocoa::Assets::Tests
 		const auto& result = sut.GetMaterialInfo("dummy_material");
 
 		EXPECT_EQ("dummy_shader", result.ShaderId);
-		EXPECT_EQ("Opaque", result.BlendMode);
+		EXPECT_EQ("opaque", result.BlendMode);
 		EXPECT_EQ(1.0, result.Tint.R);
 		EXPECT_EQ(1.0, result.Tint.G);
 		EXPECT_EQ(1.0, result.Tint.B);
