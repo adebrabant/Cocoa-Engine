@@ -2,6 +2,7 @@
 
 #include "Math/Matrix4f.hpp"
 #include "Graphics/QuadBatch.hpp"
+#include "Graphics/SortLayer.hpp"
 #include "Graphics/GraphicsHandles.hpp"
 #include "Graphics/RenderStatistics.hpp"
 
@@ -30,19 +31,45 @@ namespace Cocoa::Graphics
 			const Math::Matrix4f& modelMatrix,
 			MaterialHandle materialHandle,
 			TextureHandle textureHandle,
-			const Math::Vector2f& tilingFactor
-		);
+			const Math::Vector2f& tilingFactor,
+			SortLayer sortingLayer,
+			int sortingOrder);
+
 		void DrawQuad(
 			const Math::Matrix4f& modelMatrix,
 			MaterialHandle materialHandle,
 			SpriteHandle spriteHandle,
 			const Math::Vector2f& tilingFactor,
 			bool flipVertical,
-			bool flipHorizontal
+			bool flipHorizontal,
+			SortLayer sortingLayer,
+			int sortingOrder
 		);
 		void EndDraw();
 
 		[[nodiscard]] const RenderStatistics& GetRenderStatistics() const { return m_renderStatistics; }
+
+	private:
+		struct QuadDrawSubmission
+		{
+			Math::Matrix4f ModelMatrix{};
+			MaterialHandle Material{};
+			TextureHandle Texture{};
+			Math::Vector2f TilingFactor{};
+			SortLayer SortingLayer{};
+			int SortingOrder{};
+		};
+		struct SpriteDrawSubmission
+		{
+			Math::Matrix4f ModelMatrix{};
+			MaterialHandle Material{};
+			SpriteHandle Sprite{};
+			Math::Vector2f TilingFactor{};
+			bool FlipVertical{};
+			bool FlipHorizontal{};
+			SortLayer SortingLayer{};
+			int SortingOrder{};
+		};
 
 	private:
 		RenderStatistics m_renderStatistics;

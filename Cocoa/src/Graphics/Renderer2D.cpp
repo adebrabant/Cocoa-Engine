@@ -39,7 +39,9 @@ namespace Cocoa::Graphics
 		const Math::Matrix4f& modelMatrix,
 		const MaterialHandle materialHandle,
 		const TextureHandle textureHandle,
-		const Math::Vector2f& tilingFactor)
+		const Math::Vector2f& tilingFactor,
+		const SortLayer sortingLayer,
+		const int sortingOrder)
 	{
 		m_quadBatch.Draw(modelMatrix, materialHandle, textureHandle, tilingFactor);
 	}
@@ -50,7 +52,9 @@ namespace Cocoa::Graphics
 		const SpriteHandle spriteHandle,
 		const Math::Vector2f& tilingFactor,
 		const bool flipVertical,
-		const bool flipHorizontal)
+		const bool flipHorizontal,
+		const SortLayer sortingLayer,
+		const int sortingOrder)
 	{
 		m_quadBatch.Draw(
 			modelMatrix,
