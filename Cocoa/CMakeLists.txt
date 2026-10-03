@@ -35,6 +35,7 @@ set(COCOA_PUBLIC_HEADERS
     include/Graphics/QuadBatch.hpp
     include/Graphics/RenderStatistics.hpp
     include/Graphics/BlendMode.hpp
+    include/Graphics/SortLayer.hpp
 
     include/Assets/AssetManager.hpp
     include/Assets/AssetLoader.hpp
@@ -68,6 +69,7 @@ set(COCOA_PUBLIC_HEADERS
     include/Scenes/Components/VelocityComponent.hpp
     include/Scenes/Components/CollisionComponent.hpp
     include/Scenes/Components/SpriteComponent.hpp
+    include/Scenes/Components/QuadComponent.hpp
 
     include/Scenes/Systems/CameraSystem.hpp
     include/Scenes/Systems/MovementSystem.hpp
@@ -79,7 +81,6 @@ set(COCOA_PUBLIC_HEADERS
     include/Inputs/InputHandler.hpp
 
     include/Events/EventBus.hpp
-    include/Graphics/SortLayer.hpp
 )
 
 set(COCOA_PRIVATE_SOURCES
