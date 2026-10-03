@@ -79,6 +79,7 @@ set(COCOA_PUBLIC_HEADERS
     include/Inputs/InputHandler.hpp
 
     include/Events/EventBus.hpp
+    include/Graphics/SortLayer.hpp
 )
 
 set(COCOA_PRIVATE_SOURCES
