@@ -109,12 +109,6 @@ namespace Cocoa::Graphics
 					quadData->Texture,
 					quadData->TilingFactor
 				);
-
-				if (i == m_drawSubmissions.size() - 1 ||
-					m_drawSubmissions[i].Batch != m_drawSubmissions[i+1].Batch)
-				{
-					m_quadBatch.Flush(m_viewProjectionMatrix);
-				}
 			}
 			else if (const auto* spriteData = std::get_if<SpriteDrawSubmission>(&m_drawSubmissions[i].Data))
 			{
