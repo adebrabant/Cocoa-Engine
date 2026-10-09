@@ -6,6 +6,8 @@
 #include "Graphics/GraphicsHandles.hpp"
 #include "Graphics/RenderStatistics.hpp"
 
+#include <variant>
+
 namespace Cocoa::Graphics
 {
 	class GraphicsDevice;
@@ -50,14 +52,16 @@ namespace Cocoa::Graphics
 		[[nodiscard]] const RenderStatistics& GetRenderStatistics() const { return m_renderStatistics; }
 
 	private:
+		enum class BatchType
+		{
+			Quad
+		};
 		struct QuadDrawSubmission
 		{
 			Math::Matrix4f ModelMatrix{};
 			MaterialHandle Material{};
 			TextureHandle Texture{};
 			Math::Vector2f TilingFactor{};
-			SortLayer SortingLayer{};
-			int SortingOrder{};
 		};
 		struct SpriteDrawSubmission
 		{
@@ -67,11 +71,19 @@ namespace Cocoa::Graphics
 			Math::Vector2f TilingFactor{};
 			bool FlipVertical{};
 			bool FlipHorizontal{};
+		};
+		struct DrawSubmission
+		{
 			SortLayer SortingLayer{};
 			int SortingOrder{};
+			BatchType Batch{};
+			std::variant<
+				QuadDrawSubmission,
+				SpriteDrawSubmission> Data;
 		};
 
 	private:
+		std::vector<DrawSubmission> m_drawSubmissions;
 		RenderStatistics m_renderStatistics;
 		QuadBatch m_quadBatch;
 		Math::Matrix4f m_viewProjectionMatrix;
