@@ -8,8 +8,8 @@
 
   "configurePresets": [
     {
-      "name": "default",
-      "displayName": "Default build using vcpkg (Windows)",
+      "name": "windows",
+      "displayName": "Windows",
       "description": "Builds using Visual Studio 17 2022 and vcpkg toolchain",
       "generator": "Visual Studio 17 2022",
       "binaryDir": "${sourceDir}/build",
@@ -20,46 +20,73 @@
     },
 
     {
-      "name": "linux",
-      "displayName": "Linux build using vcpkg",
+      "name": "linux-debug",
+      "displayName": "Linux Debug",
       "description": "Builds using Unix Makefiles and vcpkg toolchain",
       "generator": "Unix Makefiles",
-      "binaryDir": "${sourceDir}/build-linux",
+      "binaryDir": "${sourceDir}/build-linux-debug",
       "cacheVariables": {
         "CMAKE_EXPORT_COMPILE_COMMANDS": "YES",
         "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake",
         "VCPKG_TARGET_TRIPLET": "x64-linux",
         "CMAKE_BUILD_TYPE": "Debug"
       }
+    },
+    {
+      "name": "linux-release",
+      "displayName": "Linux Release",
+      "description": "Builds using Unix Makefiles and vcpkg toolchain",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build-linux-release",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "YES",
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "VCPKG_TARGET_TRIPLET": "x64-linux",
+        "CMAKE_BUILD_TYPE": "Release"
+      }
     }
   ],
 
   "buildPresets": [
     {
-      "name": "default",
-      "configurePreset": "default",
-      "description": "Build the default Windows preset",
+      "name": "windows",
+      "configurePreset": "windows",
+      "description": "Build Windows preset",
       "jobs": 4
     },
     {
-      "name": "linux",
-      "configurePreset": "linux",
-      "description": "Build the Linux preset",
+      "name": "linux-debug",
+      "configurePreset": "linux-debug",
+      "description": "Build the Linux Debug preset",
+      "jobs": 4
+    },
+    {
+      "name": "linux-release",
+      "configurePreset": "linux-release",
+      "description": "Build Linux Release preset",
       "jobs": 4
     }
   ],
 
   "testPresets": [
     {
-      "name": "default",
-      "configurePreset": "default",
+      "name": "windows",
+      "configurePreset": "windows",
+      "configuration": "Debug",
       "output": {
         "outputOnFailure": true
       }
     },
     {
-      "name": "linux",
-      "configurePreset": "linux",
+      "name": "linux-debug",
+      "configurePreset": "linux-debug",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "linux-release",
+      "configurePreset": "linux-release",
       "output": {
         "outputOnFailure": true
       }
