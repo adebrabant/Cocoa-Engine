@@ -21,11 +21,11 @@ jobs:
         shell: cmd
         run: setup.bat
 
-      - name: Configure project with CMake (using default preset)
-        run: cmake --preset default
+      - name: Configure project with CMake (using windows preset)
+        run: cmake --preset windows
 
       - name: Build project
-        run: cmake --build --preset default
+        run: cmake --build --preset windows
 
       - name: Run tests
         working-directory: build
