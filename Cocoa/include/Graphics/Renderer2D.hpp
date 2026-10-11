@@ -81,7 +81,7 @@ namespace Cocoa::Graphics
 				QuadDrawSubmission,
 				SpriteDrawSubmission> Data;
 		};
-
+	
 	private:
 		std::vector<DrawSubmission> m_drawSubmissions;
 		RenderStatistics m_renderStatistics;

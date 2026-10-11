@@ -88,8 +88,29 @@ namespace Cocoa::Graphics
 		if (m_drawSubmissions.empty())
 			return;
 
-		std::stable_sort(m_drawSubmissions.begin(), m_drawSubmissions.end(),
-			[](const DrawSubmission& a, const DrawSubmission& b)
+		struct SortedDrawSubmission
+		{
+			SortLayer SortingLayer;
+			int SortingOrder;
+			BatchType Batch;
+			size_t Index;
+		};
+
+		std::vector<SortedDrawSubmission> sortedDrawSubmissions;
+		sortedDrawSubmissions.reserve(m_drawSubmissions.size());
+
+		for (auto i = 0; i < m_drawSubmissions.size(); ++i)
+		{
+			sortedDrawSubmissions.emplace_back(
+				m_drawSubmissions[i].SortingLayer,
+				m_drawSubmissions[i].SortingOrder,
+				m_drawSubmissions[i].Batch,
+				i
+			);
+		}
+
+		std::stable_sort(sortedDrawSubmissions.begin(), sortedDrawSubmissions.end(),
+			[](const SortedDrawSubmission& a, const SortedDrawSubmission& b)
 			{
 				if (a.SortingLayer != b.SortingLayer)
 				{
@@ -99,9 +120,10 @@ namespace Cocoa::Graphics
 				return a.SortingOrder < b.SortingOrder;
 			});
 
-		for (size_t i = 0; i < m_drawSubmissions.size(); ++i)
+		for (size_t i = 0; i < sortedDrawSubmissions.size(); ++i)
 		{
-			if (const auto* quadData = std::get_if<QuadDrawSubmission>(&m_drawSubmissions[i].Data))
+			const auto& drawSubmission = m_drawSubmissions[sortedDrawSubmissions[i].Index];
+			if (const auto* quadData = std::get_if<QuadDrawSubmission>(&drawSubmission.Data))
 			{
 				m_quadBatch.Draw(
 					quadData->ModelMatrix,
@@ -110,7 +132,7 @@ namespace Cocoa::Graphics
 					quadData->TilingFactor
 				);
 			}
-			else if (const auto* spriteData = std::get_if<SpriteDrawSubmission>(&m_drawSubmissions[i].Data))
+			else if (const auto* spriteData = std::get_if<SpriteDrawSubmission>(&drawSubmission.Data))
 			{
 				m_quadBatch.Draw(
 					spriteData->ModelMatrix,
@@ -123,9 +145,9 @@ namespace Cocoa::Graphics
 			}
 
 			if (i == m_drawSubmissions.size() - 1 ||
-				m_drawSubmissions[i].Batch != m_drawSubmissions[i+1].Batch)
+				drawSubmission.Batch != m_drawSubmissions[sortedDrawSubmissions[i+1].Index].Batch)
 			{
-				switch (m_drawSubmissions[i].Batch)
+				switch (drawSubmission.Batch)
 				{
 				case BatchType::Quad:
 					m_quadBatch.Flush(m_viewProjectionMatrix);
