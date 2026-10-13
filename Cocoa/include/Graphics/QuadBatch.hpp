@@ -21,7 +21,7 @@ namespace Cocoa::Graphics
     class VertexArray;
     class VertexBuffer;
     class IndexBuffer;
-    class RenderStatistics;
+    struct RenderStatistics;
 
     class QuadBatch
     {

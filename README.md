@@ -123,13 +123,13 @@ setup.bat
 Configure the project:
 
 ```bash
-cmake --preset default
+cmake --preset windows
 ```
 
 Build the project:
 
 ```bash
-cmake --build --preset default
+cmake --build --preset windows
 ```
 
 Open the generated Visual Studio solution:

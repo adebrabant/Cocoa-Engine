@@ -56,14 +56,6 @@ namespace Sandbox
 			.Scale = { 3.56f, 2.0f, 1.0f }
 		};
 
-		auto cherryBlossomTree01Entity = m_world.CreateEntity();
-		Cocoa::Scenes::TransformComponent cherryBlossomTree01Transform
-		{
-			.Position = { -1.20f, -0.35f, 0.0f },
-			.Rotation =  { 0.0f, 0.0f, 0.0f },
-			.Scale = { 0.75f, 0.75f, 1.0f }
-		};
-
 		auto cherryBlossomTree02Entity = m_world.CreateEntity();
 		Cocoa::Scenes::TransformComponent cherryBlossomTree02Transform
 		{
@@ -78,7 +70,9 @@ namespace Sandbox
 			Cocoa::Scenes::SpriteComponent
 			{
 				.Material = defaultMaterial,
-				.Sprite = loader.LoadSprite("sunset_background_01_sprite")
+				.Sprite = loader.LoadSprite("sunset_background_01_sprite"),
+				.SortingLayer = Cocoa::Graphics::SortLayer::Background,
+				.SortingOrder = 0
 			}
 		);
 
@@ -88,7 +82,9 @@ namespace Sandbox
 			Cocoa::Scenes::SpriteComponent
 			{
 				.Material = defaultMaterial,
-				.Sprite = loader.LoadSprite("mountains_background_01_sprite")
+				.Sprite = loader.LoadSprite("mountains_background_01_sprite"),
+				.SortingLayer = Cocoa::Graphics::SortLayer::Background,
+				.SortingOrder = 1
 			}
 		);
 
@@ -98,7 +94,9 @@ namespace Sandbox
 			Cocoa::Scenes::SpriteComponent
 			{
 				.Material = defaultMaterial,
-				.Sprite = loader.LoadSprite("forest_fog_background_01_sprite")
+				.Sprite = loader.LoadSprite("forest_fog_background_01_sprite"),
+				.SortingLayer = Cocoa::Graphics::SortLayer::Background,
+				.SortingOrder = 2
 			}
 		);
 
@@ -108,17 +106,9 @@ namespace Sandbox
 			Cocoa::Scenes::SpriteComponent
 			{
 				.Material = defaultMaterial,
-				.Sprite = loader.LoadSprite("forest_fog_background_02_sprite")
-			}
-		);
-
-		m_world.AddComponent(cherryBlossomTree01Entity, cherryBlossomTree01Transform);
-		m_world.AddComponent(
-			cherryBlossomTree01Entity,
-			Cocoa::Scenes::SpriteComponent
-			{
-				.Material = defaultMaterial,
-				.Sprite = loader.LoadSprite("cherry_blossom_tree_01_sprite")
+				.Sprite = loader.LoadSprite("forest_fog_background_02_sprite"),
+				.SortingLayer = Cocoa::Graphics::SortLayer::Background,
+				.SortingOrder = 3
 			}
 		);
 
@@ -130,7 +120,9 @@ namespace Sandbox
 				.Material = defaultMaterial,
 				.Sprite = loader.LoadSprite("cherry_blossom_tree_02_sprite"),
 				.FlipVertical = false,
-				.FlipHorizontal = true
+				.FlipHorizontal = true,
+				.SortingLayer = Cocoa::Graphics::SortLayer::World,
+				.SortingOrder = 0
 			}
 		);
 
@@ -149,7 +141,28 @@ namespace Sandbox
 			{
 				.Material = defaultMaterial,
 				.Sprite = loader.LoadSprite("dark_floor_tile_01_sprite"),
-				.TilingFactor = Cocoa::Math::Vector2f(4.0f, 1.0f)
+				.TilingFactor = Cocoa::Math::Vector2f(4.0f, 1.0f),
+				.SortingLayer = Cocoa::Graphics::SortLayer::World,
+				.SortingOrder = 1
+			}
+		);
+
+		auto cherryBlossomTree01Entity = m_world.CreateEntity();
+		Cocoa::Scenes::TransformComponent cherryBlossomTree01Transform
+		{
+			.Position = { -1.20f, -0.35f, 0.0f },
+			.Rotation =  { 0.0f, 0.0f, 0.0f },
+			.Scale = { 0.75f, 0.75f, 1.0f }
+		};
+		m_world.AddComponent(cherryBlossomTree01Entity, cherryBlossomTree01Transform);
+		m_world.AddComponent(
+			cherryBlossomTree01Entity,
+			Cocoa::Scenes::SpriteComponent
+			{
+				.Material = defaultMaterial,
+				.Sprite = loader.LoadSprite("cherry_blossom_tree_01_sprite"),
+				.SortingLayer = Cocoa::Graphics::SortLayer::World,
+				.SortingOrder = 0
 			}
 		);
 

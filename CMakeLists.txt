@@ -12,7 +12,8 @@ set(CMAKE_CXX_EXTENSIONS        OFF)
 set(COCOA_TARGET_NAME Cocoa)
 set(SANDBOX_TARGET_NAME Sandbox)
 
-set(COCOA_TESTS_TARGET_NAME Cocoa.Tests)
+set(COCOA_TESTS_TARGET_NAME CocoaTests)
+set(COCOA_BENCHMARKS_TARGET_NAME CocoaBenchmarks)
 
 enable_testing()
 
@@ -20,6 +21,7 @@ add_subdirectory(${COCOA_TARGET_NAME})
 add_subdirectory(${SANDBOX_TARGET_NAME})
 
 add_subdirectory(${COCOA_TESTS_TARGET_NAME})
+add_subdirectory(${COCOA_BENCHMARKS_TARGET_NAME})
 
 if (CMAKE_GENERATOR MATCHES "Visual Studio")
     set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT ${SANDBOX_TARGET_NAME})
