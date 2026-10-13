@@ -36,6 +36,7 @@ set(COCOA_TEST_SOURCES
     src/Graphics/OrthographicCameraTests.cpp
     src/Graphics/RenderStatisticsTests.cpp
     src/Graphics/QuadBatchTests.cpp
+    src/Graphics/Renderer2DTests.cpp
 
     src/Stubs/Graphics/StubGraphicsDevice.cpp
     src/Stubs/Graphics/StubShader.cpp
