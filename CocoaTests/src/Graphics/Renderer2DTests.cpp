@@ -86,10 +86,9 @@ namespace CocoaTests::Graphics
 
         for (size_t i = 0; i < expectedSubmissionOrder.size(); ++i)
         {
-            const size_t originalIndex = expectedSubmissionOrder[i];
-            const auto& expected = submissions[originalIndex];
+            const auto& expected = submissions[expectedSubmissionOrder[i]];
 
-            EXPECT_EQ(originalIndex, actual[i].Index);
+            EXPECT_EQ(expectedSubmissionOrder[i], actual[i].Index);
             EXPECT_EQ(expected.SortingOrder, actual[i].SortingOrder);
             EXPECT_EQ(expected.SortingLayer, actual[i].SortingLayer);
             EXPECT_EQ(expected.SubmissionType, actual[i].SubmissionType);
