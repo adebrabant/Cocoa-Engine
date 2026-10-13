@@ -15,7 +15,7 @@ namespace Cocoa::Graphics
 
     struct DrawSubmissionInfo
     {
-        int Index;
+        size_t Index;
         int SortingOrder;
         SortLayer SortingLayer;
         DrawSubmissionType SubmissionType;

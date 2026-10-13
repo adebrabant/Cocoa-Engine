@@ -92,7 +92,6 @@ namespace Cocoa::Graphics
 		{
 			SortLayer SortingLayer;
 			int SortingOrder;
-			BatchType Batch;
 			size_t Index;
 		};
 
@@ -104,7 +103,6 @@ namespace Cocoa::Graphics
 			sortedDrawSubmissions.emplace_back(
 				m_drawSubmissions[i].SortingLayer,
 				m_drawSubmissions[i].SortingOrder,
-				m_drawSubmissions[i].Batch,
 				i
 			);
 		}
