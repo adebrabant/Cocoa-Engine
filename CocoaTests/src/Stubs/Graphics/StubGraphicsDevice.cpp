@@ -15,6 +15,12 @@
 
 namespace CocoaTests::Stubs
 {
+	StubGraphicsDevice::StubGraphicsDevice()
+		: m_vertexBufferCapture()
+	{
+
+	}
+
 	void StubGraphicsDevice::BeginFrame()
 	{
 
@@ -56,13 +62,13 @@ namespace CocoaTests::Stubs
 	Cocoa::Unique<Cocoa::Graphics::VertexBuffer> StubGraphicsDevice::CreateVertexBuffer(
 		uint32_t size, const Cocoa::Graphics::BufferLayout& bufferLayout)
 	{
-		return Cocoa::CreateUnique<StubVertexBuffer>(size, bufferLayout);
+		return Cocoa::CreateUnique<StubVertexBuffer>(size, bufferLayout, m_vertexBufferCapture);
 	}
 
 	Cocoa::Unique<Cocoa::Graphics::VertexBuffer> StubGraphicsDevice::CreateVertexBuffer(
 		const void* vertices, uint32_t size, const Cocoa::Graphics::BufferLayout& bufferLayout)
 	{
-		return Cocoa::CreateUnique<StubVertexBuffer>(vertices, size, bufferLayout);
+		return Cocoa::CreateUnique<StubVertexBuffer>(vertices, size, bufferLayout, m_vertexBufferCapture);
 	}
 
 	Cocoa::Unique<Cocoa::Graphics::IndexBuffer> StubGraphicsDevice::CreateIndexBuffer(const uint32_t* indices, uint32_t count)

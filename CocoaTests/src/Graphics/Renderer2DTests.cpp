@@ -8,22 +8,32 @@
 #include "Stubs/Graphics/StubGraphicsDevice.hpp"
 
 #include <gtest/gtest.h>
+#include <cstring>
 
 namespace CocoaTests::Graphics
 {
     TEST(Renderer2DTests, EndDraw_ShouldSortDrawSubmissionOrder_WhenGivenDrawSubmissions)
     {
-        const std::vector<Cocoa::Graphics::DrawSubmissionInfo> submissions
+        struct Submission
         {
-            {0, 3, Cocoa::Graphics::SortLayer::Background, Cocoa::Graphics::DrawSubmissionType::RawQuad},
-            {1, 0, Cocoa::Graphics::SortLayer::Background, Cocoa::Graphics::DrawSubmissionType::RawQuad},
-            {2, 1, Cocoa::Graphics::SortLayer::Background, Cocoa::Graphics::DrawSubmissionType::RawQuad},
-            {3, 2, Cocoa::Graphics::SortLayer::Background, Cocoa::Graphics::DrawSubmissionType::RawQuad}
+            float X;
+            int SortingOrder;
         };
 
-        constexpr std::array<size_t, 4> expectedSubmissionOrder{1, 2, 3, 0};
+        constexpr std::array submissions{
+            Submission{30.0f, 3},
+            Submission{10.0f, 0},
+            Submission{20.0f, 1},
+            Submission{40.0f, 2}
+        };
+
+        // Expected first-vertex X coordinates after sorting.
+        constexpr std::array expectedX{
+            9.5f, 19.5f, 39.5f, 29.5f
+        };
 
         Stubs::StubGraphicsDevice stubGraphicsDevice;
+
         Cocoa::Graphics::SpriteManager spriteManager;
         Cocoa::Graphics::ShaderManager shaderManager(stubGraphicsDevice);
         Cocoa::Graphics::TextureManager textureManager(stubGraphicsDevice);
@@ -37,7 +47,7 @@ namespace CocoaTests::Graphics
             spriteManager
         );
 
-        auto shaderHandle = shaderManager.Load("test_shader", "", "");
+        const auto shaderHandle = shaderManager.Load("test_shader", "", "");
 
         const Cocoa::Graphics::TextureSpec spec{
             .Id = "test_texture",
@@ -52,63 +62,90 @@ namespace CocoaTests::Graphics
             255, 255, 255, 255
         };
 
-        auto textureHandle = textureManager.Load(spec, pixels.data());
+        const auto textureHandle = textureManager.Load(spec, pixels.data());
 
-        auto materialHandle = materialManager.Load(
+        const auto materialHandle = materialManager.Load(
             "test_material",
             shaderHandle,
             "alpha",
             Cocoa::Core::Color{}
         );
 
-        constexpr Cocoa::Math::Matrix4f modelMatrix{};
         constexpr Cocoa::Math::Vector2f tilingFactor{};
 
         sut.BeginDraw(Cocoa::Math::Matrix4f{});
 
         for (const auto& submission : submissions)
         {
+            const auto modelMatrix = Cocoa::Math::Matrix4f::Translation(
+                Cocoa::Math::Vector2f{submission.X, 0.0f}
+            );
+
             sut.DrawQuad(
                 modelMatrix,
                 materialHandle,
                 textureHandle,
                 tilingFactor,
-                submission.SortingLayer,
+                Cocoa::Graphics::SortLayer::Background,
                 submission.SortingOrder
             );
         }
 
         sut.EndDraw();
 
-        const auto& actual = sut.GetRenderStatistics().DrawSubmissionsInfo;
+        const auto& capture = stubGraphicsDevice.GetVertexBufferCapture();
 
-        ASSERT_EQ(expectedSubmissionOrder.size(), actual.size());
+        ASSERT_GT(capture.Stride, 0u);
+        ASSERT_EQ(expectedX.size() * 4 * capture.Stride, capture.Data.size());
 
-        for (size_t i = 0; i < expectedSubmissionOrder.size(); ++i)
+        for (size_t i = 0; i < expectedX.size(); ++i)
         {
-            const auto& expected = submissions[expectedSubmissionOrder[i]];
+            float actualX{};
 
-            EXPECT_EQ(expectedSubmissionOrder[i], actual[i].Index);
-            EXPECT_EQ(expected.SortingOrder, actual[i].SortingOrder);
-            EXPECT_EQ(expected.SortingLayer, actual[i].SortingLayer);
-            EXPECT_EQ(expected.SubmissionType, actual[i].SubmissionType);
+            const size_t offset = i * 4 * capture.Stride;
+
+            std::memcpy(
+                &actualX,
+                capture.Data.data() + offset,
+                sizeof(float)
+            );
+
+            EXPECT_FLOAT_EQ(expectedX[i], actualX);
         }
     }
 
     TEST(Renderer2DTests, EndDraw_ShouldSortMixedDrawSubmissions_WhenGivenSpritesAndRawQuads)
     {
-        const std::vector<Cocoa::Graphics::DrawSubmissionInfo> submissions
+        enum class TestDrawType
         {
-            {0, 2, Cocoa::Graphics::SortLayer::World, Cocoa::Graphics::DrawSubmissionType::RawQuad},
-            {1, 0, Cocoa::Graphics::SortLayer::UI, Cocoa::Graphics::DrawSubmissionType::Sprite},
-            {2, 1, Cocoa::Graphics::SortLayer::Background, Cocoa::Graphics::DrawSubmissionType::Sprite},
-            {3, 1, Cocoa::Graphics::SortLayer::Background, Cocoa::Graphics::DrawSubmissionType::RawQuad},
-            {4, 2, Cocoa::Graphics::SortLayer::World, Cocoa::Graphics::DrawSubmissionType::Sprite}
+            RawQuad,
+            Sprite
         };
 
-        constexpr std::array<size_t, 5> expectedSubmissionOrder{2, 3, 0, 4, 1};
+        struct TestSubmission
+        {
+            float X;
+            int SortingOrder;
+            Cocoa::Graphics::SortLayer SortingLayer;
+            TestDrawType DrawType;
+        };
+
+        constexpr std::array testSubmissions{
+            TestSubmission{10.0f, 2, Cocoa::Graphics::SortLayer::World, TestDrawType::RawQuad},
+            TestSubmission{20.0f, 0, Cocoa::Graphics::SortLayer::UI, TestDrawType::Sprite},
+            TestSubmission{30.0f, 1, Cocoa::Graphics::SortLayer::Background, TestDrawType::Sprite},
+            TestSubmission{40.0f, 1, Cocoa::Graphics::SortLayer::Background, TestDrawType::RawQuad},
+            TestSubmission{50.0f, 2, Cocoa::Graphics::SortLayer::World, TestDrawType::Sprite}
+        };
+
+        // Expected submission indices: 2, 3, 0, 4, 1.
+        // Equal sorting keys must retain insertion order.
+        constexpr std::array expectedX{
+            29.5f, 39.5f, 9.5f, 49.5f, 19.5f
+        };
 
         Stubs::StubGraphicsDevice stubGraphicsDevice;
+
         Cocoa::Graphics::SpriteManager spriteManager;
         Cocoa::Graphics::ShaderManager shaderManager(stubGraphicsDevice);
         Cocoa::Graphics::TextureManager textureManager(stubGraphicsDevice);
@@ -154,26 +191,29 @@ namespace CocoaTests::Graphics
             Cocoa::Math::Vector2f{2.0f, 2.0f}
         );
 
-        constexpr Cocoa::Math::Matrix4f modelMatrix{};
         constexpr Cocoa::Math::Vector2f tilingFactor{};
 
         sut.BeginDraw(Cocoa::Math::Matrix4f{});
 
-        for (const auto& submission : submissions)
+        for (const auto& testSubmission : testSubmissions)
         {
-            if (submission.SubmissionType == Cocoa::Graphics::DrawSubmissionType::RawQuad)
+            const auto modelMatrix = Cocoa::Math::Matrix4f::Translation(
+                Cocoa::Math::Vector2f{testSubmission.X, 0.0f}
+            );
+
+            switch (testSubmission.DrawType)
             {
+            case TestDrawType::RawQuad:
                 sut.DrawQuad(
                     modelMatrix,
                     materialHandle,
                     textureHandle,
                     tilingFactor,
-                    submission.SortingLayer,
-                    submission.SortingOrder
+                    testSubmission.SortingLayer,
+                    testSubmission.SortingOrder
                 );
-            }
-            else
-            {
+                break;
+            case TestDrawType::Sprite:
                 sut.DrawQuad(
                     modelMatrix,
                     materialHandle,
@@ -181,26 +221,33 @@ namespace CocoaTests::Graphics
                     tilingFactor,
                     false,
                     false,
-                    submission.SortingLayer,
-                    submission.SortingOrder
+                    testSubmission.SortingLayer,
+                    testSubmission.SortingOrder
                 );
+                break;
             }
         }
 
         sut.EndDraw();
 
-        const auto& actual = sut.GetRenderStatistics().DrawSubmissionsInfo;
+        const auto& capture = stubGraphicsDevice.GetVertexBufferCapture();
 
-        ASSERT_EQ(expectedSubmissionOrder.size(), actual.size());
+        ASSERT_GT(capture.Stride, 0u);
+        ASSERT_EQ(expectedX.size() * 4 * capture.Stride, capture.Data.size());
 
-        for (size_t i = 0; i < expectedSubmissionOrder.size(); ++i)
+        for (size_t i = 0; i < expectedX.size(); ++i)
         {
-            const auto& expected = submissions[expectedSubmissionOrder[i]];
+            float actualX{};
 
-            EXPECT_EQ(expectedSubmissionOrder[i], actual[i].Index);
-            EXPECT_EQ(expected.SortingOrder, actual[i].SortingOrder);
-            EXPECT_EQ(expected.SortingLayer, actual[i].SortingLayer);
-            EXPECT_EQ(expected.SubmissionType, actual[i].SubmissionType);
+            const size_t offset = i * 4 * capture.Stride;
+
+            std::memcpy(
+                &actualX,
+                capture.Data.data() + offset,
+                sizeof(float)
+            );
+
+            EXPECT_FLOAT_EQ(expectedX[i], actualX);
         }
     }
 }
