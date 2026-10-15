@@ -8,6 +8,7 @@
 #include "Stubs/Graphics/StubGraphicsDevice.hpp"
 
 #include <gtest/gtest.h>
+#include <cstring>
 
 namespace CocoaTests::Graphics
 {

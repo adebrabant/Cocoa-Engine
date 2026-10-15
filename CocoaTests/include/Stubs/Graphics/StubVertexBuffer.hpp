@@ -10,7 +10,7 @@ namespace CocoaTests::Stubs
     struct VertexBufferCapture
     {
         std::vector<std::byte> Data;
-        size_t Stride;
+        size_t Stride{};
     };
 
     class StubVertexBuffer : public Cocoa::Graphics::VertexBuffer
