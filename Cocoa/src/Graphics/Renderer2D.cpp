@@ -129,13 +129,6 @@ namespace Cocoa::Graphics
 					quadData->Texture,
 					quadData->TilingFactor
 				);
-
-				m_renderStatistics.DrawSubmissionsInfo.emplace_back(
-					sortedDrawSubmissions[i].Index,
-					drawSubmission.SortingOrder,
-					drawSubmission.SortingLayer,
-					DrawSubmissionType::RawQuad
-				);
 			}
 			else if (const auto* spriteData = std::get_if<SpriteDrawSubmission>(&drawSubmission.Data))
 			{
@@ -146,13 +139,6 @@ namespace Cocoa::Graphics
 					spriteData->TilingFactor,
 					spriteData->FlipVertical,
 					spriteData->FlipHorizontal
-				);
-
-				m_renderStatistics.DrawSubmissionsInfo.emplace_back(
-					sortedDrawSubmissions[i].Index,
-					drawSubmission.SortingOrder,
-					drawSubmission.SortingLayer,
-					DrawSubmissionType::Sprite
 				);
 			}
 

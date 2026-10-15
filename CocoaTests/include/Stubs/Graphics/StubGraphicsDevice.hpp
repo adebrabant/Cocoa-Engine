@@ -1,13 +1,16 @@
 #pragma once
 
 #include <Graphics/GraphicsDevice.hpp>
+#include "StubVertexBuffer.hpp"
 
 namespace CocoaTests::Stubs
 {
+	struct VertexBufferCapture;
+
 	class StubGraphicsDevice : public Cocoa::Graphics::GraphicsDevice
 	{
 	public:
-		StubGraphicsDevice() = default;
+		StubGraphicsDevice();
 		~StubGraphicsDevice() override = default;
 		void BeginFrame() override;
 		void EndFrame() override;
@@ -22,5 +25,10 @@ namespace CocoaTests::Stubs
 		Cocoa::Unique<Cocoa::Graphics::IndexBuffer> CreateIndexBuffer(const uint32_t* indices, uint32_t count) override;
 		Cocoa::Unique<Cocoa::Graphics::Texture2D> CreateTexture2D(Cocoa::Graphics::TextureSpec textureSpec, const unsigned char* pixels) override;
 		void DrawIndexed(const Cocoa::Graphics::VertexArray& vertexArray, uint32_t indexCount) override;
+
+		[[nodiscard]]const VertexBufferCapture& GetVertexBufferCapture() const { return m_vertexBufferCapture; }
+
+	private:
+		VertexBufferCapture m_vertexBufferCapture;
 	};
 }
