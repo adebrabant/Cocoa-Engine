@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Scenes/SceneCamera.hpp"
 #include "Scenes/ECS/World.hpp"
 
 namespace Cocoa::Assets
@@ -18,7 +17,7 @@ namespace Cocoa::Scenes
 	class Scene
 	{
 	public:
-		explicit Scene(const Graphics::Viewport& viewport);
+		Scene();
 		virtual ~Scene() = default;
 		virtual void Load(Assets::ResourceLoader& loader) = 0;
 		virtual void Unload(Assets::ResourceLoader& loader) = 0;
@@ -26,7 +25,6 @@ namespace Cocoa::Scenes
 		virtual void Render(Graphics::Renderer2D& renderer, float alpha);
 
 	protected:
-		SceneCamera m_camera;
 		World m_world;
 	};
 }

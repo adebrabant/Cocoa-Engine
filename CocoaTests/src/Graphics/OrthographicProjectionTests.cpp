@@ -1,14 +1,14 @@
-#include <Graphics/OrthographicCamera.hpp>
+#include <Graphics/OrthographicProjection.hpp>
 #include <Math/Matrix4f.hpp>
 #include <Math/Vector3f.hpp>
 #include <gtest/gtest.h>
 
 namespace CocoaTests::Graphics
 {
-    TEST(OrthographicCameraTests, Constructor_ShouldCreateProjectionMatrix_WhenGivenValidBounds)
+    TEST(OrthographicProjectionTests, Constructor_ShouldCreateProjectionMatrix_WhenGivenValidBounds)
     {
         constexpr float aspectRatio = 800.0f / 600.0f;
-        const Cocoa::Graphics::OrthographicCamera sut(
+        const Cocoa::Graphics::OrthographicProjection sut(
             -aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
 
         const Cocoa::Math::Matrix4f result = sut.GetProjectionMatrix();
@@ -31,11 +31,11 @@ namespace CocoaTests::Graphics
         EXPECT_FLOAT_EQ(result[15], 1.0f);
     }
 
-    TEST(OrthographicCameraTests, SetPosition_ShouldSetCamerasPosition_WhenGivenVector3)
+    TEST(OrthographicProjectionTests, SetPosition_ShouldSetCamerasPosition_WhenGivenVector3)
     {
         constexpr Cocoa::Math::Vector3f expectedPosition = Cocoa::Math::Vector3f(2.0f, 1.5f, 1.0f);
         constexpr float aspectRatio = 800.0f / 600.0f;
-        Cocoa::Graphics::OrthographicCamera sut(-aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
+        Cocoa::Graphics::OrthographicProjection sut(-aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
 
         sut.SetPosition(expectedPosition);
         const Cocoa::Math::Vector3f result = sut.GetPosition();
@@ -45,10 +45,10 @@ namespace CocoaTests::Graphics
         ASSERT_FLOAT_EQ(result.Z, expectedPosition.Z);
     }
 
-    TEST(OrthographicCameraTests, GetPosition_ShouldReturnVector3_WhenCalled)
+    TEST(OrthographicProjectionTests, GetPosition_ShouldReturnVector3_WhenCalled)
     {
         constexpr float aspectRatio = 800.0f / 600.0f;
-        const Cocoa::Graphics::OrthographicCamera sut(-aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
+        const Cocoa::Graphics::OrthographicProjection sut(-aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
 
         const Cocoa::Math::Vector3f result = sut.GetPosition();
 
@@ -57,10 +57,10 @@ namespace CocoaTests::Graphics
         ASSERT_FLOAT_EQ(result.Z, 0.0f);
     }
 
-    TEST(OrthographicCameraTests, GetViewProjectionMatrix_ShouldReturnProjectionMatrixTimesViewMatrix_WhenCalled)
+    TEST(OrthographicProjectionTests, GetViewProjectionMatrix_ShouldReturnProjectionMatrixTimesViewMatrix_WhenCalled)
     {
         constexpr float aspectRatio = 800.0f / 600.0f;
-        Cocoa::Graphics::OrthographicCamera sut(-aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
+        Cocoa::Graphics::OrthographicProjection sut(-aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
         sut.SetPosition({ 5.0f, 2.0f, 3.0f});
         sut.SetRotation(1.5f);
 
@@ -84,10 +84,10 @@ namespace CocoaTests::Graphics
         EXPECT_FLOAT_EQ(result[15], 1.0f);
     }
 
-    TEST(OrthographicCameraTests, SetProjection_ShouldSetOrthoProjectMatrix_WhenGivenValidInput)
+    TEST(OrthographicProjectionTests, SetProjection_ShouldSetOrthoProjectMatrix_WhenGivenValidInput)
     {
         constexpr float aspectRatio = 800.0f / 600.0f;
-        Cocoa::Graphics::OrthographicCamera sut(-aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
+        Cocoa::Graphics::OrthographicProjection sut(-aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
 
         sut.SetProjection(
             -3.0f, 5.0f,
@@ -118,11 +118,11 @@ namespace CocoaTests::Graphics
         EXPECT_FLOAT_EQ(result[15], 1.0f);
     }
 
-    TEST(OrthographicCameraTests, SetRotation_ShouldSetCameraRotation_WhenGivenValidInput)
+    TEST(OrthographicProjectionTests, SetRotation_ShouldSetCameraRotation_WhenGivenValidInput)
     {
         constexpr float expectedRotation = 5.0f;
         constexpr float aspectRatio = 800.0f / 600.0f;
-        Cocoa::Graphics::OrthographicCamera sut(-aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
+        Cocoa::Graphics::OrthographicProjection sut(-aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
 
         sut.SetRotation(expectedRotation);
         const float result = sut.GetRotation();

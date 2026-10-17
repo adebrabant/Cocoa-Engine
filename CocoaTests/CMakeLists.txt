@@ -33,7 +33,7 @@ set(COCOA_TEST_SOURCES
     src/Graphics/TextureManagerTests.cpp
     src/Graphics/MaterialManagerTests.cpp
     src/Graphics/SpriteManagerTests.cpp
-    src/Graphics/OrthographicCameraTests.cpp
+    src/Graphics/OrthographicProjectionTests.cpp
     src/Graphics/RenderStatisticsTests.cpp
     src/Graphics/QuadBatchTests.cpp
     src/Graphics/Renderer2DTests.cpp
@@ -46,8 +46,6 @@ set(COCOA_TEST_SOURCES
     src/Stubs/Graphics/StubIndexBuffer.cpp
 
     src/Events/EventBusTests.cpp
-
-    src/Scenes/SceneCameraTests.cpp
 
     src/Core/ColorTests.cpp
 )

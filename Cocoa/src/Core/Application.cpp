@@ -22,7 +22,6 @@ namespace Cocoa::Core
         m_assetPathProvider(),
 		m_frameClock(0.25f, 1.0f / 60.0f),
         m_windowProps(windowWidth, windowHeight, title),
-        m_viewport(0, 0, windowWidth, windowHeight),
 		m_eventBus(),
 		m_graphicsDevice(nullptr),
 		m_FramebufferResizeEventToken()
@@ -41,7 +40,7 @@ namespace Cocoa::Core
         Graphics::OpenGLContext openGLContext;
 
 		m_graphicsDevice = CreateUnique<Graphics::OpenGLGraphicsDevice>();
-        m_graphicsDevice->SetViewport(m_viewport.X, m_viewport.Y, m_viewport.Width, m_viewport.Height);
+        m_graphicsDevice->SetViewport(0, 0, m_windowProps.GetWidth(), m_windowProps.GetHeight());
         m_graphicsDevice->SetClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
         Assets::AssetManager assetManager;
@@ -71,7 +70,7 @@ namespace Cocoa::Core
             spriteManager
         );
 
-        Scenes::SceneManager sceneManager(resourceLoader, m_viewport);
+        Scenes::SceneManager sceneManager(resourceLoader);
 
         ConfigureScenes(sceneManager);
 
@@ -114,7 +113,6 @@ namespace Cocoa::Core
 					return;
 
 				m_graphicsDevice->SetViewport(0,0, evt.Width, evt.Height);
-				m_viewport.Resize(0, 0, evt.Width, evt.Height);
 			});
 	}
 

@@ -5,6 +5,7 @@
 #include "Graphics/SortLayer.hpp"
 #include "Graphics/GraphicsHandles.hpp"
 #include "Graphics/RenderStatistics.hpp"
+#include "Graphics/Viewport.hpp"
 
 #include <variant>
 
@@ -50,6 +51,7 @@ namespace Cocoa::Graphics
 		void EndDraw();
 
 		[[nodiscard]] const RenderStatistics& GetRenderStatistics() const { return m_renderStatistics; }
+		[[nodiscard]] const Viewport& GetViewport() const;
 
 	private:
 		enum class BatchType
@@ -85,6 +87,7 @@ namespace Cocoa::Graphics
 	private:
 		std::vector<DrawSubmission> m_drawSubmissions;
 		RenderStatistics m_renderStatistics;
+		GraphicsDevice& m_graphicsDevice;
 		QuadBatch m_quadBatch;
 		Math::Matrix4f m_viewProjectionMatrix;
 	};

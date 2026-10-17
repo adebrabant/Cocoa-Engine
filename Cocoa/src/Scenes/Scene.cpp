@@ -3,8 +3,7 @@
 
 namespace Cocoa::Scenes
 {
-	Scene::Scene(const Graphics::Viewport& viewport) :
-		m_camera(viewport),
+	Scene::Scene() :
 		m_world()
 	{
 
@@ -17,7 +16,7 @@ namespace Cocoa::Scenes
 
 	void Scene::Render(Graphics::Renderer2D& renderer, const float alpha)
 	{
-		renderer.BeginDraw(m_camera.GetViewProjectionMatrix());
+		m_world.BeforeRender(renderer, alpha);
 		m_world.Render(renderer, alpha);
 		renderer.EndDraw();
 	}

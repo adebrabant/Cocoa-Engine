@@ -21,6 +21,7 @@ namespace Cocoa::Scenes
 		World();
 		~World() = default;
 		void Update(float deltaTime);
+		void BeforeRender(Graphics::Renderer2D& renderer, float alpha);
 		void Render(Graphics::Renderer2D& renderer, float alpha);
 		Entity CreateEntity();
 		void DestroyEntity(const Entity& entity);

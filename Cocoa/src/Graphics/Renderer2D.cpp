@@ -18,6 +18,7 @@ namespace Cocoa::Graphics
 	) :
 		m_drawSubmissions(),
 		m_renderStatistics(),
+		m_graphicsDevice(graphicsDevice),
 		m_quadBatch(
 			graphicsDevice,
 			shaderManager,
@@ -153,5 +154,10 @@ namespace Cocoa::Graphics
 				}
 			}
 		}
+	}
+
+	const Viewport& Renderer2D::GetViewport() const
+	{
+		return m_graphicsDevice.GetViewport();
 	}
 }

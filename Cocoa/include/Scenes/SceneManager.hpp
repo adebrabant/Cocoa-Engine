@@ -2,6 +2,7 @@
 
 #include "Scenes/Scene.hpp"
 #include "Utilities/Memory.hpp"
+
 #include <vector>
 #include <type_traits>
 
@@ -13,7 +14,6 @@ namespace Cocoa::Assets
 namespace Cocoa::Graphics
 {
 	class Renderer2D;
-	struct Viewport;
 }
 
 namespace Cocoa::Scenes
@@ -21,7 +21,7 @@ namespace Cocoa::Scenes
 	class SceneManager
 	{
 	public:
-		explicit SceneManager(Assets::ResourceLoader& loader, const Graphics::Viewport& viewport);
+		explicit SceneManager(Assets::ResourceLoader& loader);
 		~SceneManager() = default;
 		[[nodiscard]] Scene* GetCurrentScene() const;
 		void FixedUpdate(float fixedDeltaTime) const;
@@ -37,7 +37,6 @@ namespace Cocoa::Scenes
 	private:
 		std::vector<Unique<Scene>> m_scenes;
 		Assets::ResourceLoader& m_resourceLoader;
-		const Graphics::Viewport& m_viewport;
 		Scene* m_currentScene = nullptr;
 	};
 
@@ -73,7 +72,7 @@ namespace Cocoa::Scenes
 			return;
 		}
 
-		m_scenes.emplace_back(CreateUnique<TScene>(m_viewport));
+		m_scenes.emplace_back(CreateUnique<TScene>());
 	}
 
 	template<typename TScene>

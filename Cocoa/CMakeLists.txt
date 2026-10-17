@@ -30,7 +30,7 @@ set(COCOA_PUBLIC_HEADERS
     include/Graphics/Sprite.hpp
     include/Graphics/SpriteManager.hpp
     include/Graphics/GraphicsHandles.hpp
-    include/Graphics/OrthographicCamera.hpp
+    include/Graphics/OrthographicProjection.hpp
     include/Graphics/Viewport.hpp
     include/Graphics/QuadBatch.hpp
     include/Graphics/RenderStatistics.hpp
@@ -57,7 +57,6 @@ set(COCOA_PUBLIC_HEADERS
 
     include/Scenes/SceneManager.hpp
     include/Scenes/Scene.hpp
-    include/Scenes/SceneCamera.hpp
     include/Scenes/ECS/World.hpp
     include/Scenes/ECS/Entity.hpp
     include/Scenes/ECS/ComponentType.hpp
@@ -81,6 +80,7 @@ set(COCOA_PUBLIC_HEADERS
     include/Inputs/InputHandler.hpp
 
     include/Events/EventBus.hpp
+    include/Scenes/Components/ProjectionComponent.hpp
 )
 
 set(COCOA_PRIVATE_SOURCES
@@ -112,7 +112,7 @@ set(COCOA_PRIVATE_SOURCES
     src/Graphics/ShaderManager.cpp
     src/Graphics/MaterialManager.cpp
     src/Graphics/SpriteManager.cpp
-    src/Graphics/OrthographicCamera.cpp
+    src/Graphics/OrthographicProjection.cpp
     src/Graphics/QuadBatch.cpp
 
     src/Assets/AssetManager.cpp
@@ -124,7 +124,6 @@ set(COCOA_PRIVATE_SOURCES
 
     src/Scenes/SceneManager.cpp
     src/Scenes/Scene.cpp
-    src/Scenes/SceneCamera.cpp
     src/Scenes/ECS/World.cpp
     src/Scenes/ECS/Entity.cpp
     src/Scenes/Systems/CameraSystem.cpp

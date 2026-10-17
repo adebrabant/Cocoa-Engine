@@ -9,6 +9,11 @@ namespace Cocoa::Scenes
 
 	}
 
+	void CollisionSystem::BeginRender(World& world, Graphics::Renderer2D& renderer, float alpha)
+	{
+		
+	}
+
 	void CollisionSystem::Render(World& world, Graphics::Renderer2D& renderer, float alpha)
 	{
 

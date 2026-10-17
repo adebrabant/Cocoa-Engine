@@ -14,6 +14,11 @@ namespace Cocoa::Scenes
 
 	}
 
+	void Render2DSystem::BeginRender(World& world, Graphics::Renderer2D& renderer, float alpha)
+	{
+		
+	}
+
 	void Render2DSystem::Render(World& world, Graphics::Renderer2D& renderer, float alpha)
 	{
 		View<TransformComponent, QuadComponent> quadView(world);

@@ -15,8 +15,9 @@
 
 namespace CocoaTests::Stubs
 {
-	StubGraphicsDevice::StubGraphicsDevice()
-		: m_vertexBufferCapture()
+	StubGraphicsDevice::StubGraphicsDevice() :
+		m_vertexBufferCapture(),
+		m_viewport(0, 0, 1920, 1080)
 	{
 
 	}
