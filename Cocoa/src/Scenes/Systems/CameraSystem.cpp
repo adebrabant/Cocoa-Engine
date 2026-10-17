@@ -20,6 +20,7 @@ namespace Cocoa::Scenes
 
 		for (auto [transformComponent, cameraComponent, projectionComponent] : view)
 		{
+			// TODO: Add multi camera support
 			if (cameraComponent.IsActive)
 			{
 				auto viewport = renderer.GetViewport();
