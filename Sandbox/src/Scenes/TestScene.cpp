@@ -6,20 +6,18 @@
 #include <Scenes/Systems/Render2DSystem.hpp>
 #include <Assets/ResourceLoader.hpp>
 
+#include "Scenes/Components/ProjectionComponent.hpp"
+
 namespace Sandbox
 {
-	TestScene::TestScene(const Cocoa::Graphics::Viewport& viewport)
-		: Scene(viewport)
-	{
-
-	}
-
 	TestScene::~TestScene() = default;
 
 	void TestScene::Load(Cocoa::Assets::ResourceLoader& loader)
     {
         auto cameraEntity = m_world.CreateEntity();
-        m_world.AddComponent(cameraEntity, Cocoa::Scenes::CameraComponent{ 0, 0, 0, 60.0f });
+        m_world.AddComponent(cameraEntity, Cocoa::Scenes::CameraComponent{ true });
+		m_world.AddComponent(cameraEntity, Cocoa::Scenes::ProjectionComponent{});
+		m_world.AddComponent(cameraEntity, Cocoa::Scenes::TransformComponent{});
         m_world.AddSystem<Cocoa::Scenes::CameraSystem>();
 
 		const auto defaultMaterial = loader.LoadMaterial("default_material");

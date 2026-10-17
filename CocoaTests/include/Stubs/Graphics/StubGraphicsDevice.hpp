@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Graphics/GraphicsDevice.hpp>
+#include <Graphics/Viewport.hpp>
 #include "StubVertexBuffer.hpp"
 
 namespace CocoaTests::Stubs
@@ -16,6 +17,7 @@ namespace CocoaTests::Stubs
 		void EndFrame() override;
 		void SetBlendMode(Cocoa::Graphics::BlendMode mode) override;
 		void SetViewport(int32_t x, int32_t y, uint32_t width, uint32_t height) override;
+		[[nodiscard]] const Cocoa::Graphics::Viewport& GetViewport() const override { return m_viewport; }
 		void SetClearColor(float red, float green, float blue, float alpha) override;
 		void Clear() override;
 		Cocoa::Unique<Cocoa::Graphics::Shader> CreateShader(const std::string& vertexSource, const std::string& fragmentSource) override;
@@ -30,5 +32,6 @@ namespace CocoaTests::Stubs
 
 	private:
 		VertexBufferCapture m_vertexBufferCapture;
+		Cocoa::Graphics::Viewport m_viewport;
 	};
 }

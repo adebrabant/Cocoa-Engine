@@ -15,8 +15,9 @@
 
 namespace CocoaTests::Stubs
 {
-	StubGraphicsDevice::StubGraphicsDevice()
-		: m_vertexBufferCapture()
+	StubGraphicsDevice::StubGraphicsDevice() :
+		m_vertexBufferCapture(),
+		m_viewport(0, 0, 1920, 1080)
 	{
 
 	}
@@ -37,7 +38,7 @@ namespace CocoaTests::Stubs
 
 	void StubGraphicsDevice::SetViewport(int32_t x, int32_t y, uint32_t width, uint32_t height)
 	{
-
+		m_viewport.Resize(x, y, width, height);
 	}
 
 	void StubGraphicsDevice::SetClearColor(float red, float green, float blue, float alpha)

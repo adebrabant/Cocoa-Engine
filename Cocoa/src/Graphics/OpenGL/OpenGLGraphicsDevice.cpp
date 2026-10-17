@@ -12,7 +12,11 @@
 
 namespace Cocoa::Graphics
 {
-	OpenGLGraphicsDevice::OpenGLGraphicsDevice() = default;
+	OpenGLGraphicsDevice::OpenGLGraphicsDevice() :
+		m_viewport(0, 0, 10, 10)
+	{
+
+	}
 
 	OpenGLGraphicsDevice::~OpenGLGraphicsDevice() = default;
 
@@ -68,6 +72,8 @@ namespace Cocoa::Graphics
 			static_cast<GLsizei>(width),
 			static_cast<GLsizei>(height)
 		);
+
+		m_viewport.Resize(x, y, width, height);
 	}
 
 	void OpenGLGraphicsDevice::SetClearColor(const float red, const float green, const float blue, const float alpha)

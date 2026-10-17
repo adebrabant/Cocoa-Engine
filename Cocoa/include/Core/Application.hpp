@@ -3,7 +3,6 @@
 #include "Chronos/FrameClock.hpp"
 #include "Assets/AssetPathProvider.hpp"
 #include "Platforms/WindowProperties.hpp"
-#include "Graphics/Viewport.hpp"
 #include "Events/EventBus.hpp"
 #include "Utilities/Memory.hpp"
 
@@ -40,7 +39,6 @@ namespace Cocoa::Core
 		Assets::AssetPathProvider m_assetPathProvider;
 		Chronos::FrameClock m_frameClock;
 		Platforms::WindowProperties m_windowProps;
-		Graphics::Viewport m_viewport;
 		Events::EventBus m_eventBus;
 		Unique<Graphics::GraphicsDevice> m_graphicsDevice;
 		Events::EventBus::SubscriptionToken m_FramebufferResizeEventToken;

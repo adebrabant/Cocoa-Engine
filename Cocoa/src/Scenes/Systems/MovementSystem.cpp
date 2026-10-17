@@ -9,6 +9,11 @@ namespace Cocoa::Scenes
 
 	}
 
+	void MovementSystem::BeginRender(World& world, Graphics::Renderer2D& renderer, float alpha)
+	{
+		
+	}
+
 	void MovementSystem::Render(World& world, Graphics::Renderer2D& renderer, float alpha)
 	{
 

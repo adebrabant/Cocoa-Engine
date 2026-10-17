@@ -19,7 +19,7 @@ namespace CocoaBenchmarks
     class StubGraphicsDevice final : public Cocoa::Graphics::GraphicsDevice
     {
     public:
-        StubGraphicsDevice() = default;
+        StubGraphicsDevice() : m_viewport(0, 0, 1920, 1080) { }
         ~StubGraphicsDevice() override = default;
 
         void BeginFrame() override { }
@@ -33,6 +33,8 @@ namespace CocoaBenchmarks
             int32_t y,
             uint32_t width,
             uint32_t height) override { }
+
+        [[nodiscard]] const Cocoa::Graphics::Viewport& GetViewport() const override { return m_viewport; }
 
         void SetClearColor(
             float red,
@@ -84,5 +86,8 @@ namespace CocoaBenchmarks
         }
 
         void DrawIndexed(const Cocoa::Graphics::VertexArray& vertexArray, uint32_t indexCount) override { }
+
+    private:
+        Cocoa::Graphics::Viewport m_viewport;
     };
 }

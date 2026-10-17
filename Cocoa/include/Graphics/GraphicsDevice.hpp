@@ -15,6 +15,7 @@ namespace Cocoa::Graphics
     class Texture2D;
     class BufferLayout;
     struct TextureSpec;
+    struct Viewport;
 
     class GraphicsDevice
     {
@@ -24,6 +25,7 @@ namespace Cocoa::Graphics
         virtual void EndFrame() = 0;
         virtual void SetBlendMode(BlendMode mode) = 0;
         virtual void SetViewport(int32_t x, int32_t y, uint32_t width, uint32_t height) = 0;
+        [[nodiscard]] virtual const Viewport& GetViewport() const = 0;
         virtual void SetClearColor(float red, float green, float blue, float alpha) = 0;
         virtual void Clear() = 0;
 

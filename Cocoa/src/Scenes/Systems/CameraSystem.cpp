@@ -3,19 +3,41 @@
 #include "Scenes/ECS/View.hpp"
 #include "Scenes/Components/TransformComponent.hpp"
 #include "Scenes/Components/CameraComponent.hpp"
+#include "Scenes/Components/ProjectionComponent.hpp"
 #include "Graphics/Renderer2D.hpp"
-
-#include <iostream> 
+#include "Graphics/OrthographicProjection.hpp"
 
 namespace Cocoa::Scenes
 {
 	void CameraSystem::Update(World& world, float deltaTime)
 	{
-		View<TransformComponent, CameraComponent> view(world);
 
-		for (auto [transform, camera] : view)
+	}
+
+	// TODO: Look into fallback or required components if not found
+	void CameraSystem::BeginRender(World& world, Graphics::Renderer2D& renderer, float alpha)
+	{
+		View<TransformComponent, CameraComponent, ProjectionComponent> view(world);
+
+		for (auto [transformComponent, cameraComponent, projectionComponent] : view)
 		{
+			// TODO: Add multi camera support
+			if (cameraComponent.IsActive)
+			{
+				auto viewport = renderer.GetViewport();
 
+				const auto ratio = viewport.GetAspectRatio();
+				// TODO: Look into hardcoded values
+				projectionComponent.Projection.SetProjection(
+					-ratio, ratio,
+					-1.0f, 1.0f,
+					-1.0f, 1.0f
+				);
+				projectionComponent.Projection.SetPosition(transformComponent.Position);
+				projectionComponent.Projection.SetRotation(transformComponent.Rotation.Z);
+
+				renderer.BeginDraw(projectionComponent.Projection.GetViewProjectionMatrix());
+			}
 		}
 	}
 

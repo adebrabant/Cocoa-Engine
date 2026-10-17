@@ -21,7 +21,15 @@ namespace Cocoa::Scenes
 	{
 		for (auto& system : m_systems)
 		{
-			system.get()->Update(*this, deltaTime);
+			system->Update(*this, deltaTime);
+		}
+	}
+
+	void World::BeforeRender(Graphics::Renderer2D& renderer, float alpha)
+	{
+		for (auto& system : m_systems)
+		{
+			system->BeginRender(*this, renderer, alpha);
 		}
 	}
 
@@ -29,7 +37,7 @@ namespace Cocoa::Scenes
 	{ 
 		for (auto& system : m_systems)
 		{
-			system.get()->Render(*this, renderer, alpha);
+			system->Render(*this, renderer, alpha);
 		}
 	}
 

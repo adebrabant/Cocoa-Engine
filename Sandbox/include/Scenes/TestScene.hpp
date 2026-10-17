@@ -7,7 +7,7 @@ namespace Sandbox
 	class TestScene : public Cocoa::Scenes::Scene
 	{
 	public:
-		explicit TestScene(const Cocoa::Graphics::Viewport& viewport);
+		TestScene() = default;
 		~TestScene() override;
 		void Load(Cocoa::Assets::ResourceLoader& loader) override;
 		void Unload(Cocoa::Assets::ResourceLoader& loader) override;

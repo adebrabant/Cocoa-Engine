@@ -424,4 +424,24 @@ namespace CocoaTests::Math
 			"cannot normalize a zero vector"
 		);
 	}
+
+	TEST(Vector3fTests, EqualOperator_ShouldReturnTrue_WhenGivenEqualVectors)
+	{
+		constexpr Cocoa::Math::Vector3f sut{ 10.f, 11.5f, 15.9f };
+		constexpr Cocoa::Math::Vector3f other{ 10.f, 11.5f, 15.9f };
+
+		const auto result = sut == other;
+
+		EXPECT_TRUE(result);
+	}
+
+	TEST(Vector3fTests, EqualOperator_ShouldReturnFalse_WhenGivenNonEqualVectors)
+	{
+		constexpr Cocoa::Math::Vector3f sut{ 10.0f, 11.5f, 15.9f };
+		constexpr Cocoa::Math::Vector3f other{ 1.0f, 5.5f, 7.9f };
+
+		const auto result = sut == other;
+
+		EXPECT_FALSE(result);
+	}
 }

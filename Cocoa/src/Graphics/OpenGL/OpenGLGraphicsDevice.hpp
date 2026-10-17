@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Graphics/GraphicsDevice.hpp"
+#include "Graphics/Viewport.hpp"
 #include "Utilities/Memory.hpp"
 
 #include <cstdint>
@@ -16,6 +17,7 @@ namespace Cocoa::Graphics
 		void EndFrame() override;
 		void SetBlendMode(BlendMode mode) override;
 		void SetViewport(int32_t x, int32_t y, uint32_t width, uint32_t height) override;
+		[[nodiscard]] const Viewport& GetViewport() const override { return m_viewport; }
 		void SetClearColor(float red, float green, float blue, float alpha) override;
 		void Clear() override;
 
@@ -27,5 +29,8 @@ namespace Cocoa::Graphics
 		Unique<Texture2D> CreateTexture2D(TextureSpec textureSpec, const unsigned char* pixels) override;
 
 		void DrawIndexed(const VertexArray& vertexArray, uint32_t indexCount) override;
+
+	private:
+		Viewport m_viewport;
 	};
 }

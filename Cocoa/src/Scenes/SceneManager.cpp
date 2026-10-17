@@ -1,14 +1,12 @@
 #include "Scenes/SceneManager.hpp"
 #include "Graphics/Renderer2D.hpp"
-#include "Graphics/Viewport.hpp"
 #include "Assets/ResourceLoader.hpp"
 #include "Scenes/Scene.hpp"
 
 namespace Cocoa::Scenes
 {
-	SceneManager::SceneManager(Assets::ResourceLoader& loader, const Graphics::Viewport& viewport) :
-		m_resourceLoader(loader),
-		m_viewport(viewport)
+	SceneManager::SceneManager(Assets::ResourceLoader& loader) :
+		m_resourceLoader(loader)
 	{
 
 	}
