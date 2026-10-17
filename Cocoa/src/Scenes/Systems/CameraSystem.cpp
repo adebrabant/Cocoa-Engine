@@ -14,6 +14,7 @@ namespace Cocoa::Scenes
 
 	}
 
+	// TODO: Look into fallback or required components if not found
 	void CameraSystem::BeginRender(World& world, Graphics::Renderer2D& renderer, float alpha)
 	{
 		View<TransformComponent, CameraComponent, ProjectionComponent> view(world);
