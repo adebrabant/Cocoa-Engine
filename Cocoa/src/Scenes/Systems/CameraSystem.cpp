@@ -20,21 +20,21 @@ namespace Cocoa::Scenes
 
 		for (auto [transformComponent, cameraComponent, projectionComponent] : view)
 		{
-			if (!cameraComponent.IsActive)
-				return;
+			if (cameraComponent.IsActive)
+			{
+				auto viewport = renderer.GetViewport();
 
-			auto viewport = renderer.GetViewport();
+				const auto ratio = viewport.GetAspectRatio();
+				projectionComponent.Projection.SetProjection(
+					-ratio, ratio,
+					-1.0f, 1.0f,
+					-1.0f, 1.0f
+				);
+				projectionComponent.Projection.SetPosition(transformComponent.Position);
+				projectionComponent.Projection.SetRotation(transformComponent.Rotation.Z);
 
-			const auto ratio = viewport.GetAspectRatio();
-			projectionComponent.Projection.SetProjection(
-				-ratio, ratio,
-				-1.0f, 1.0f,
-				-1.0f, 1.0f
-			);
-			projectionComponent.Projection.SetPosition(transformComponent.Position);
-			projectionComponent.Projection.SetRotation(transformComponent.Rotation.Z);
-
-			renderer.BeginDraw(projectionComponent.Projection.GetViewProjectionMatrix());
+				renderer.BeginDraw(projectionComponent.Projection.GetViewProjectionMatrix());
+			}
 		}
 	}
 
