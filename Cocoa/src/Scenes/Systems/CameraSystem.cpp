@@ -25,6 +25,7 @@ namespace Cocoa::Scenes
 				auto viewport = renderer.GetViewport();
 
 				const auto ratio = viewport.GetAspectRatio();
+				// TODO: Look into hardcoded values
 				projectionComponent.Projection.SetProjection(
 					-ratio, ratio,
 					-1.0f, 1.0f,
