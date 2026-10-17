@@ -143,6 +143,16 @@ namespace Cocoa::Math
 		}
 
 		/// <summary>
+		/// Compares this vector with another vector for exact component-wise equality.
+		/// </summary>
+		/// <param name="other">The vector to compare against.</param>
+		/// <returns>True if all components are equal; otherwise, false.</returns>
+		bool operator==(const Vector3f& other) const
+		{
+			return X == other.X && Y == other.Y && Z == other.Z;
+		}
+
+		/// <summary>
 		/// Multiplies this vector by another vector component by component.
 		/// </summary>
 		/// <param name="other">The vector containing the component values to multiply by.</param>

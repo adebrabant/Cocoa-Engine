@@ -20,6 +20,9 @@ namespace Cocoa::Scenes
 
 		for (auto [transformComponent, cameraComponent, projectionComponent] : view)
 		{
+			if (!cameraComponent.IsActive)
+				return;
+
 			auto viewport = renderer.GetViewport();
 
 			const auto ratio = viewport.GetAspectRatio();
@@ -28,6 +31,8 @@ namespace Cocoa::Scenes
 				-1.0f, 1.0f,
 				-1.0f, 1.0f
 			);
+			projectionComponent.Projection.SetPosition(transformComponent.Position);
+			projectionComponent.Projection.SetRotation(transformComponent.Rotation.Z);
 
 			renderer.BeginDraw(projectionComponent.Projection.GetViewProjectionMatrix());
 		}

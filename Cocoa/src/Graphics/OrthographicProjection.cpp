@@ -50,12 +50,18 @@ namespace Cocoa::Graphics
 
     void OrthographicProjection::SetPosition(const Math::Vector3f& position)
     {
+        if (m_position == position)
+            return;
+
         m_position = position;
         RecalculateViewProjectionMatrix();
     }
 
     void OrthographicProjection::SetRotation(const float rotation)
     {
+        if (m_rotation == rotation)
+            return;
+
         m_rotation = rotation;
         RecalculateViewProjectionMatrix();
     }

@@ -15,7 +15,7 @@ namespace Sandbox
 	void TestScene::Load(Cocoa::Assets::ResourceLoader& loader)
     {
         auto cameraEntity = m_world.CreateEntity();
-        m_world.AddComponent(cameraEntity, Cocoa::Scenes::CameraComponent{ 0, 0, 0, 60.0f });
+        m_world.AddComponent(cameraEntity, Cocoa::Scenes::CameraComponent{ true });
 		m_world.AddComponent(cameraEntity, Cocoa::Scenes::ProjectionComponent{});
 		m_world.AddComponent(cameraEntity, Cocoa::Scenes::TransformComponent{});
         m_world.AddSystem<Cocoa::Scenes::CameraSystem>();
