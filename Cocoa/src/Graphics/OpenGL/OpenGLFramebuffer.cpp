@@ -1,6 +1,6 @@
 #include "Graphics/OpenGL/OpenGLFramebuffer.hpp"
 
-#include <stdexcept>
+#include <iostream>
 #include <GL/glew.h>
 
 namespace Cocoa::Graphics
@@ -15,7 +15,7 @@ namespace Cocoa::Graphics
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER)
         {
-            throw std::runtime_error("Framebuffer creation failed!");
+            std::cerr << "Framebuffer creation failed!" << std::endl;
         }
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
