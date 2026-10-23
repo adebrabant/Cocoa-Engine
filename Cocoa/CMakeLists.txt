@@ -36,6 +36,7 @@ set(COCOA_PUBLIC_HEADERS
     include/Graphics/RenderStatistics.hpp
     include/Graphics/BlendMode.hpp
     include/Graphics/SortLayer.hpp
+    include/Graphics/Framebuffer.hpp
 
     include/Assets/AssetManager.hpp
     include/Assets/AssetLoader.hpp
@@ -108,6 +109,8 @@ set(COCOA_PRIVATE_SOURCES
     src/Graphics/OpenGL/OpenGLIndexBuffer.cpp
     src/Graphics/OpenGL/OpenGLTexture2D.hpp
     src/Graphics/OpenGL/OpenGLTexture2D.cpp
+    src/Graphics/OpenGL/OpenGLFramebuffer.cpp
+    src/Graphics/OpenGL/OpenGLFramebuffer.hpp
     src/Graphics/TextureManager.cpp
     src/Graphics/ShaderManager.cpp
     src/Graphics/MaterialManager.cpp
