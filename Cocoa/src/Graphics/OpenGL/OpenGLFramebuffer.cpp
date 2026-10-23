@@ -34,7 +34,7 @@ namespace Cocoa::Graphics
         other.m_fbo = 0;
     }
 
-    OpenGLFramebuffer& OpenGLFramebuffer::operator==(OpenGLFramebuffer&& other) noexcept
+    OpenGLFramebuffer& OpenGLFramebuffer::operator=(OpenGLFramebuffer&& other) noexcept
     {
         if (this == &other)
             return *this;

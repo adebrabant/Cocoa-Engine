@@ -11,10 +11,10 @@ namespace Cocoa::Graphics
         ~OpenGLFramebuffer() override;
 
         OpenGLFramebuffer(const OpenGLFramebuffer&) = delete;
-        OpenGLFramebuffer& operator=(OpenGLFramebuffer&& other) = delete;
+        OpenGLFramebuffer& operator=(OpenGLFramebuffer&) = delete;
 
         OpenGLFramebuffer(OpenGLFramebuffer&& other) noexcept;
-        OpenGLFramebuffer& operator==(OpenGLFramebuffer&& other) noexcept;
+        OpenGLFramebuffer& operator=(OpenGLFramebuffer&& other) noexcept;
 
         void Bind() const override;
         void UnBind() const override;
