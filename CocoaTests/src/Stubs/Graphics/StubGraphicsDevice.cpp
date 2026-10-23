@@ -4,6 +4,7 @@
 #include "Stubs/Graphics/StubTexture2D.hpp"
 #include "Stubs/Graphics/StubVertexBuffer.hpp"
 #include "Stubs/Graphics/StubIndexBuffer.hpp"
+#include "Stubs/Graphics/StubFramebuffer.hpp"
 
 #include <Graphics/IndexBuffer.hpp>
 #include <Graphics/TextureSpec.hpp>
@@ -80,6 +81,11 @@ namespace CocoaTests::Stubs
 	Cocoa::Unique<Cocoa::Graphics::Texture2D> StubGraphicsDevice::CreateTexture2D(Cocoa::Graphics::TextureSpec textureSpec, const unsigned char* pixels)
 	{
 		return Cocoa::CreateUnique<StubTexture2D>();
+	}
+
+	Cocoa::Unique<Cocoa::Graphics::Framebuffer> StubGraphicsDevice::CreateFramebuffer(Cocoa::Graphics::FramebufferSpec framebufferSpec)
+	{
+		return Cocoa::CreateUnique<StubFramebuffer>(framebufferSpec);
 	}
 
 	void StubGraphicsDevice::DrawIndexed(const Cocoa::Graphics::VertexArray& vertexArray, uint32_t indexCount)

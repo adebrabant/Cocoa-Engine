@@ -8,6 +8,8 @@
 #include <Graphics/IndexBuffer.hpp>
 #include <Graphics/Texture2D.hpp>
 #include <Graphics/TextureSpec.hpp>
+
+#include "StubFramebuffer.hpp"
 #include "StubShader.hpp"
 #include "StubIndexBuffer.hpp"
 #include "StubVertexArray.hpp"
@@ -83,6 +85,12 @@ namespace CocoaBenchmarks
             const unsigned char* pixels) override
         {
             return Cocoa::CreateUnique<StubTexture2D>(textureSpec, pixels);
+        }
+
+        Cocoa::Unique<Cocoa::Graphics::Framebuffer> CreateFramebuffer(
+            Cocoa::Graphics::FramebufferSpec framebufferSpec) override
+        {
+            return Cocoa::CreateUnique<StubFramebuffer>(framebufferSpec);
         }
 
         void DrawIndexed(const Cocoa::Graphics::VertexArray& vertexArray, uint32_t indexCount) override { }

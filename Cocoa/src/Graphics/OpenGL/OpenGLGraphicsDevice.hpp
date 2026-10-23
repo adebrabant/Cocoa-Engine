@@ -27,6 +27,7 @@ namespace Cocoa::Graphics
 		Unique<VertexBuffer> CreateVertexBuffer(const void* vertices, uint32_t size, const BufferLayout& bufferLayout) override;
 		Unique<IndexBuffer> CreateIndexBuffer(const uint32_t* indices, uint32_t count) override;
 		Unique<Texture2D> CreateTexture2D(TextureSpec textureSpec, const unsigned char* pixels) override;
+		Unique<Framebuffer> CreateFramebuffer(FramebufferSpec framebufferSpec) override;
 
 		void DrawIndexed(const VertexArray& vertexArray, uint32_t indexCount) override;
 

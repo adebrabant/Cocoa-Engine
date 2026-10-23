@@ -57,6 +57,11 @@ namespace Cocoa::Graphics
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
+    void OpenGLFramebuffer::SetFramebufferSpec(const FramebufferSpec spec)
+    {
+        m_framebufferSpec = spec;
+    }
+
     void OpenGLFramebuffer::Destroy() const
     {
         if (m_fbo <= 0)

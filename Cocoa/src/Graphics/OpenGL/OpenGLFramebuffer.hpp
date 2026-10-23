@@ -18,6 +18,7 @@ namespace Cocoa::Graphics
 
         void Bind() const override;
         void UnBind() const override;
+        void SetFramebufferSpec(FramebufferSpec spec);
 
     private:
         void Destroy() const;

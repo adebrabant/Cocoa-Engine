@@ -7,6 +7,7 @@ set(COCOA_TEST_HEADERS
     include/Stubs/Graphics/StubVertexArray.hpp
     include/Stubs/Graphics/StubVertexBuffer.hpp
     include/Stubs/Graphics/StubIndexBuffer.hpp
+    include/Stubs/Graphics/StubFramebuffer.hpp
     include/Helpers/TestFileReader.hpp
 )
 

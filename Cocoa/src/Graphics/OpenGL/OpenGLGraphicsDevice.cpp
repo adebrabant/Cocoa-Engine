@@ -4,6 +4,7 @@
 #include "Graphics/OpenGL/OpenGLVertexArray.hpp"
 #include "Graphics/OpenGL/OpenGLIndexBuffer.hpp"
 #include "Graphics/OpenGL/OpenGLTexture2D.hpp"
+#include "Graphics/OpenGL/OpenGLFramebuffer.hpp"
 #include "Graphics/TextureSpec.hpp"
 #include "Graphics/BufferElement.hpp"
 #include "Graphics/BufferLayout.hpp"
@@ -119,6 +120,11 @@ namespace Cocoa::Graphics
 	Unique<Texture2D> OpenGLGraphicsDevice::CreateTexture2D(TextureSpec textureSpec, const unsigned char* pixels)
 	{
 		return CreateUnique<OpenGLTexture2D>(textureSpec, pixels);
+	}
+
+	Unique<Framebuffer> OpenGLGraphicsDevice::CreateFramebuffer(FramebufferSpec framebufferSpec)
+	{
+		return CreateUnique<OpenGLFramebuffer>(framebufferSpec);
 	}
 
 	void OpenGLGraphicsDevice::DrawIndexed(const VertexArray& vertexArray, uint32_t indexCount)
