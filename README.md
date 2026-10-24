@@ -1,6 +1,6 @@
 # Cocoa Engine
 
-Cocoa is a work-in-progress game engine I'm building from scratch in modern C++, with a custom renderer at its core.
+Cocoa is a work in progress game engine I'm building from scratch in modern C++, with a custom renderer at its core.
 
 The project started as a way to explore graphics programming and better understand what goes into building a game engine. Rather than relying on an existing engine, I wanted to build the underlying systems myself, learn how they work, and make my own architectural decisions along the way.
 
@@ -47,6 +47,8 @@ Cocoa currently supports development on Windows and Linux.
 
 **Windows**
 
+Requires Visual Studio 2022 with the **Desktop development with C++** workload.
+
 Run the setup script to install dependencies:
 
 `setup.bat`
@@ -79,9 +81,9 @@ Much of Cocoa's development is guided by studying graphics programming, renderin
 
 Some of the resources I'm using include:
 
-- **LearnOpenGL** — Joey de Vries
-- **Real-Time Rendering** — Tomas Akenine-Möller, Eric Haines, Naty Hoffman, and others
-- **Foundations of Game Engine Development, Volume 2: Rendering** — Eric Lengyel
+- **LearnOpenGL** - Joey de Vries
+- **Real-Time Rendering** - Tomas Akenine-Möller, Eric Haines, Naty Hoffman, and others
+- **Foundations of Game Engine Development, Volume 2: Rendering** - Eric Lengyel
 
 These resources provide the theory and techniques that I explore and implement within Cocoa.
 
