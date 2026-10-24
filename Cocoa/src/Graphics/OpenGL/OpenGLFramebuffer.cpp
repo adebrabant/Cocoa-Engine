@@ -146,12 +146,13 @@ namespace Cocoa::Graphics
     }
 
     OpenGLFramebuffer::OpenGLFramebuffer(OpenGLFramebuffer&& other) noexcept :
-        m_colorAttachments(other.m_colorAttachments),
-        m_framebufferSpec(other.m_framebufferSpec),
+        m_colorAttachments(std::move(other.m_colorAttachments)),
+        m_framebufferSpec(std::move(other.m_framebufferSpec)),
         m_fbo(other.m_fbo),
         m_rbo(other.m_rbo)
     {
         other.m_fbo = 0;
+        other.m_rbo = 0;
     }
 
     OpenGLFramebuffer& OpenGLFramebuffer::operator=(OpenGLFramebuffer&& other) noexcept
@@ -160,11 +161,13 @@ namespace Cocoa::Graphics
             return *this;
 
         Destroy();
-        m_colorAttachments = other.m_colorAttachments;
-        m_framebufferSpec = other.m_framebufferSpec;
+        m_colorAttachments = std::move(other.m_colorAttachments);
+        m_framebufferSpec = std::move(other.m_framebufferSpec);
         m_fbo = other.m_fbo;
         m_rbo = other.m_rbo;
+
         other.m_fbo = 0;
+        other.m_rbo = 0;
 
         return *this;
     }
@@ -186,10 +189,25 @@ namespace Cocoa::Graphics
 
     void OpenGLFramebuffer::Destroy()
     {
-        if (m_fbo <= 0)
-            return;
+        if (m_fbo > 0)
+        {
+            glDeleteFramebuffers(1, &m_fbo);
+            m_fbo = 0;
+        }
 
-        glDeleteFramebuffers(1, &m_fbo);
-        m_fbo = 0;
+        if (!m_colorAttachments.empty())
+        {
+            for (const auto& colorAttachment : m_colorAttachments)
+            {
+                glDeleteTextures(1, &colorAttachment);
+            }
+            m_colorAttachments.clear();
+        }
+
+        if (m_rbo > 0)
+        {
+            glDeleteRenderbuffers(1, &m_rbo);
+            m_rbo = 0;
+        }
     }
 }
