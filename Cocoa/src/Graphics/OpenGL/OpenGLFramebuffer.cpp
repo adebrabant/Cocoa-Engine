@@ -108,7 +108,18 @@ namespace Cocoa::Graphics
             m_colorAttachments.push_back(textureColorbuffer);
         }
 
-        glDrawBuffers(static_cast<GLsizei>(colorAttachmentIndexes.size()), colorAttachmentIndexes.data());
+        if (!m_colorAttachments.empty())
+        {
+            glDrawBuffers(
+                static_cast<GLsizei>(colorAttachmentIndexes.size()),
+                colorAttachmentIndexes.data()
+            );
+        }
+        else
+        {
+            glDrawBuffer(GL_NONE);
+            glReadBuffer(GL_NONE);
+        }
 
         if (framebufferSpec.DepthStencil != DepthStencilFormat::None)
         {
