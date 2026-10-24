@@ -1,175 +1,90 @@
 # Cocoa Engine
 
-**Cocoa Engine** is a C++ ECS-based 2D game engine focused on rendering architecture, asset management, reusable engine systems, and clear separation between simulation, rendering, and gameplay-facing logic.
+Cocoa is a work-in-progress game engine I'm building from scratch in modern C++, with a custom renderer at its core.
 
-The goal of this project is to build a small but real engine from the ground up while developing the systems that sit underneath a 2D game or editor workflow.
+The project started as a way to explore graphics programming and better understand what goes into building a game engine. Rather than relying on an existing engine, I wanted to build the underlying systems myself, learn how they work, and make my own architectural decisions along the way.
 
-## Project Overview
+Cocoa is currently focused on 2D rendering, with plans to expand into 3D graphics in the future.
 
-Cocoa Engine is not a game-specific codebase. The engine is designed as a reusable C++ framework with a sandbox application used to test and validate engine features as they are developed.
+## Current Features
 
-```plaintext
-Cocoa Engine = full repository / engine project
-Cocoa        = reusable engine library
-Sandbox      = testbed application for exercising the engine
-```
+The engine is being developed incrementally. Some of the functionality implemented so far includes:
 
-The sandbox exists to prove that engine systems work together without coupling the engine directly to one game.
-
-## Project Goals
-
-- Build a custom C++ 2D game engine
-- Use OpenGL for rendering
-- Keep reusable engine code separate from sandbox/application code
-- Build reusable systems for rendering, input, assets, scenes, and ECS
-- Use handles and managers for resource ownership
-- Support testable engine systems where practical
-- Grow the engine incrementally without over-engineering early systems
-
-## Technical Stack
-
-- C++
-- CMake
-- OpenGL
-- GLFW
-- GLEW
-- GoogleTest
-- JSON-based asset metadata
-- Custom ECS, rendering, asset, and resource systems
-
-## Current Focus
-
-The current focus is building the foundation of the engine:
-
-- Application lifecycle
-- Window creation
-- OpenGL context setup
+- Custom OpenGL 2D renderer with batched drawing
+- Texture, shader, sprite, and material management
+- Entity Component System (ECS)
+- Scene cameras and orthographic projection
+- Sprite layering, sorting, and blending
+- Asset loading and resource management
 - Graphics device abstraction
-- Basic renderer commands
-- Renderer2D architecture
-- Texture, shader, and material managers
-- Asset metadata and resource loading
-- Input handling
-- Scene and entity structure
-- ECS-driven rendering direction
+- Unit testing with GoogleTest
+- Benchmark testing with GoogleBenchmark
 
-## Engine Architecture
+The repository also includes a Sandbox application for experimenting with and validating engine features as they're developed.
 
-Cocoa Engine is organized around reusable engine systems that can be composed by a sandbox or future game/editor layer.
+## Technology
 
-```plaintext
-Sandbox Application
-   ↓
-Scene / ECS
-   ↓
-Renderer2D
-   ↓
-Material / Shader / Texture Managers
-   ↓
-GraphicsDevice
-   ↓
-OpenGL Backend
-```
+Cocoa is written in modern C++ and uses:
 
-The engine is being built around clear ownership boundaries:
+- **OpenGL** — Graphics rendering
+- **GLFW / GLEW** — Windowing, OpenGL context, and extension loading
+- **CMake / vcpkg** — Build system and dependency management
+- **GoogleTest** — Automated testing
+- **GoogleBenchmark** — Benchmark testing
 
-- Scene and ECS systems describe what exists
-- Render systems decide what should be drawn
-- Renderer2D converts draw requests into commands
-- Managers own reusable resources like textures, shaders, and materials
-- GraphicsDevice hides the low-level graphics backend
+The engine is organized into independent subsystems, keeping rendering, assets, scenes, and other functionality separated.
 
-## Asset Pipeline
+## Building Cocoa
 
-The asset pipeline is designed around stable resource IDs and metadata instead of passing raw file paths throughout the engine.
+Cocoa currently supports development on Windows and Linux.
 
-Target flow:
+**Prerequisites**
 
-```plaintext
-Resource ID
-   ↓
-AssetDatabase metadata lookup
-   ↓
-AssetSource reads bytes
-   ↓
-AssetManager loads image/shader source
-   ↓
-TextureManager / ShaderManager create GPU resources
-   ↓
-MaterialManager combines shader + texture + material data
-   ↓
-Renderer2D draws using MaterialHandle
-```
-
-This keeps asset lookup, file loading, GPU resource creation, and rendering responsibilities separated.
-
-## Setting Up the Project
-
-### Prerequisites
-
-- CMake 3.20 or higher
-- Visual Studio or another C++ compiler
+- CMake 3.20+
+- A C++ compiler
 - Git
-- vcpkg dependencies installed through the setup script
+- OpenGL development support
 
-### Setup
+**Windows**
+
+Run the setup script to install dependencies:
+
+`setup.bat`
+
+Configure and build:
+
+```bash
+cmake --preset windows
+cmake --build --preset windows
+```
+
+**Linux (Ubuntu-based distributions)**
 
 Run the setup script:
 
 ```bash
-setup.bat
+./setup.sh
 ```
 
-Configure the project:
+Configure and build:
 
 ```bash
-cmake --preset windows
+cmake --preset linux-debug
+cmake --build --preset linux-debug
 ```
 
-Build the project:
+## Learning Resources
 
-```bash
-cmake --build --preset windows
-```
+Much of Cocoa's development is guided by studying graphics programming, rendering techniques, and game engine architecture.
 
-Open the generated Visual Studio solution:
+Some of the resources I'm using include:
 
-```bash
-start build\CocoaEngine.sln
-```
+- **LearnOpenGL** — Joey de Vries
+- **Real-Time Rendering** — Tomas Akenine-Möller, Eric Haines, Naty Hoffman, and others
+- **Foundations of Game Engine Development, Volume 2: Rendering** — Eric Lengyel
 
-## Project Structure
+These resources provide the theory and techniques that I explore and implement within Cocoa.
 
-```plaintext
-Cocoa-Engine/
-├── Cocoa/
-│   ├── include/
-│   └── src/
-│       ├── Assets/
-│       ├── Chronos/
-│       ├── Core/
-│       ├── ECS/
-│       ├── Graphics/
-│       │   └── OpenGL/
-│       ├── Inputs/
-│       ├── Platforms/
-│       └── Scenes/
-├── Sandbox/
-│   ├── include/
-│   ├── src/
-│   └── Assets/
-├── Cocoa.Tests/
-├── CMakeLists.txt
-├── CMakePresets.json
-├── setup.bat
-├── vcpkg.json
-└── README.md
-```
+---
 
-## Current Status
-
-Cocoa Engine is in active development.
-
-The main goal right now is to build a solid 2D engine foundation with C++, OpenGL, ECS, asset management, Renderer2D, and clear separation between reusable engine code and sandbox/application code.
-
-The project is intentionally being developed incrementally, with each system added as the engine needs it rather than trying to design the entire engine upfront.
+Cocoa is a personal project and is still in active development. The goal isn't to rush toward a feature-complete engine, but to build something useful while continuing to improve my understanding of graphics programming and engine development.
