@@ -13,7 +13,7 @@ namespace Cocoa::Graphics
         glGenFramebuffers(1, &fbo);
         glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
-        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER)
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         {
             std::cerr << "Framebuffer creation failed!" << std::endl;
         }
@@ -62,11 +62,12 @@ namespace Cocoa::Graphics
         m_framebufferSpec = spec;
     }
 
-    void OpenGLFramebuffer::Destroy() const
+    void OpenGLFramebuffer::Destroy()
     {
         if (m_fbo <= 0)
             return;
 
         glDeleteFramebuffers(1, &m_fbo);
+        m_fbo = 0;
     }
 }

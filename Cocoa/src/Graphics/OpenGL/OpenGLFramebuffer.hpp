@@ -21,7 +21,7 @@ namespace Cocoa::Graphics
         void SetFramebufferSpec(FramebufferSpec spec);
 
     private:
-        void Destroy() const;
+        void Destroy();
 
     private:
         FramebufferSpec m_framebufferSpec;
