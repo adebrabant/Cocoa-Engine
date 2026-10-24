@@ -85,18 +85,23 @@ namespace Cocoa::Graphics
             glTexImage2D(
                 GL_TEXTURE_2D,
                 0,
+                // Tell Open GL how to store the channels
                 static_cast<GLint>(ToOpenGLColorFormat(colorFormat)),
                 static_cast<GLsizei>(framebufferSpec.Width),
                 static_cast<GLsizei>(framebufferSpec.Height),
                 0,
+                // Tell OpenGL the order of the channels
                 ToOpenGLColorDataFormat(colorFormat),
+                // Tell OpenGL the type of data of the channels
                 GL_UNSIGNED_BYTE,
+                // No initial pixel data, rendering into the framebuffer will populate the texture
                 nullptr
             );
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glBindTexture(GL_TEXTURE_2D, 0);
 
+            // Attach the texture to its corresponding framebuffer color attachment point
             auto glColorAttachmentIndex = GL_COLOR_ATTACHMENT0+static_cast<GLenum>(i);
             glFramebufferTexture2D(
                 GL_FRAMEBUFFER,
@@ -110,6 +115,7 @@ namespace Cocoa::Graphics
 
         if (!m_colorAttachments.empty())
         {
+            // Tell OpenGL which color attachments should receive fragment shader outputs
             glDrawBuffers(
                 static_cast<GLsizei>(colorAttachmentIndexes.size()),
                 colorAttachmentIndexes.data()
@@ -117,6 +123,7 @@ namespace Cocoa::Graphics
         }
         else
         {
+            // Disable color reading and writing because the framebuffer has no color attachments
             glDrawBuffer(GL_NONE);
             glReadBuffer(GL_NONE);
         }
@@ -128,6 +135,7 @@ namespace Cocoa::Graphics
             glBindRenderbuffer(GL_RENDERBUFFER, rbo);
             glRenderbufferStorage(
                 GL_RENDERBUFFER,
+                // Tell OpenGL how to store the depth stencils
                 ToOpenGLDepthStencilFormat(framebufferSpec.DepthStencil),
                 static_cast<GLsizei>(framebufferSpec.Width),
                 static_cast<GLsizei>(framebufferSpec.Height)
@@ -135,6 +143,7 @@ namespace Cocoa::Graphics
             glBindRenderbuffer(GL_RENDERBUFFER, 0);
             glFramebufferRenderbuffer(
                 GL_FRAMEBUFFER,
+                // Tell the framebuffer what type of attachment the rbo is
                 ToOpenGLDepthStencilAttachment(framebufferSpec.DepthStencil),
                 GL_RENDERBUFFER,
                 rbo
