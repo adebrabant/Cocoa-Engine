@@ -27,5 +27,6 @@ namespace Cocoa::Graphics
         std::vector<uint32_t> m_colorAttachments;
         FramebufferSpec m_framebufferSpec;
         uint32_t m_fbo;
+        uint32_t m_rbo;
     };
 }

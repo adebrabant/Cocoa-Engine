@@ -122,7 +122,7 @@ namespace Cocoa::Graphics
 		return CreateUnique<OpenGLTexture2D>(textureSpec, pixels);
 	}
 
-	Unique<Framebuffer> OpenGLGraphicsDevice::CreateFramebuffer(FramebufferSpec framebufferSpec)
+	Unique<Framebuffer> OpenGLGraphicsDevice::CreateFramebuffer(const FramebufferSpec& framebufferSpec)
 	{
 		return CreateUnique<OpenGLFramebuffer>(framebufferSpec);
 	}

@@ -7,7 +7,6 @@ namespace Cocoa::Graphics
 {
     enum class ColorFormat
     {
-        None,
         RGBA8,
         RGB8,
         RGBA16F
