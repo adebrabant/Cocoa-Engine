@@ -7,7 +7,7 @@ namespace Cocoa::Graphics
     class OpenGLFramebuffer : public Framebuffer
     {
     public:
-        explicit OpenGLFramebuffer(FramebufferSpec framebufferSpec);
+        explicit OpenGLFramebuffer(const FramebufferSpec& framebufferSpec);
         ~OpenGLFramebuffer() override;
 
         OpenGLFramebuffer(const OpenGLFramebuffer&) = delete;
@@ -18,12 +18,13 @@ namespace Cocoa::Graphics
 
         void Bind() const override;
         void UnBind() const override;
-        void SetFramebufferSpec(FramebufferSpec spec);
+        void SetFramebufferSpec(const FramebufferSpec& spec);
 
     private:
         void Destroy();
 
     private:
+        std::vector<uint32_t> m_colorAttachments;
         FramebufferSpec m_framebufferSpec;
         uint32_t m_fbo;
     };

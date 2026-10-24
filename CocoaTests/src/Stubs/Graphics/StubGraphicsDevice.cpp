@@ -83,7 +83,7 @@ namespace CocoaTests::Stubs
 		return Cocoa::CreateUnique<StubTexture2D>();
 	}
 
-	Cocoa::Unique<Cocoa::Graphics::Framebuffer> StubGraphicsDevice::CreateFramebuffer(Cocoa::Graphics::FramebufferSpec framebufferSpec)
+	Cocoa::Unique<Cocoa::Graphics::Framebuffer> StubGraphicsDevice::CreateFramebuffer(const Cocoa::Graphics::FramebufferSpec& framebufferSpec)
 	{
 		return Cocoa::CreateUnique<StubFramebuffer>(framebufferSpec);
 	}

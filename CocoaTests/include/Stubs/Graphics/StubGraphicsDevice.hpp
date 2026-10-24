@@ -26,7 +26,7 @@ namespace CocoaTests::Stubs
 		Cocoa::Unique<Cocoa::Graphics::VertexBuffer> CreateVertexBuffer(const void* vertices, uint32_t size, const Cocoa::Graphics::BufferLayout& bufferLayout) override;
 		Cocoa::Unique<Cocoa::Graphics::IndexBuffer> CreateIndexBuffer(const uint32_t* indices, uint32_t count) override;
 		Cocoa::Unique<Cocoa::Graphics::Texture2D> CreateTexture2D(Cocoa::Graphics::TextureSpec textureSpec, const unsigned char* pixels) override;
-		Cocoa::Unique<Cocoa::Graphics::Framebuffer> CreateFramebuffer(Cocoa::Graphics::FramebufferSpec framebufferSpec) override;
+		Cocoa::Unique<Cocoa::Graphics::Framebuffer> CreateFramebuffer(const Cocoa::Graphics::FramebufferSpec& framebufferSpec) override;
 		void DrawIndexed(const Cocoa::Graphics::VertexArray& vertexArray, uint32_t indexCount) override;
 
 		[[nodiscard]]const VertexBufferCapture& GetVertexBufferCapture() const { return m_vertexBufferCapture; }

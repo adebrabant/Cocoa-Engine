@@ -88,7 +88,7 @@ namespace CocoaBenchmarks
         }
 
         Cocoa::Unique<Cocoa::Graphics::Framebuffer> CreateFramebuffer(
-            Cocoa::Graphics::FramebufferSpec framebufferSpec) override
+            const Cocoa::Graphics::FramebufferSpec& framebufferSpec) override
         {
             return Cocoa::CreateUnique<StubFramebuffer>(framebufferSpec);
         }

@@ -5,13 +5,16 @@
 
 namespace Cocoa::Graphics
 {
-    OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpec framebufferSpec) :
+    OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpec& framebufferSpec) :
         m_framebufferSpec(framebufferSpec),
         m_fbo(0)
     {
         GLuint fbo{0};
         glGenFramebuffers(1, &fbo);
         glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+
+        // Create the textures and bind them to the fbo
+        // Read the learn open gl book to understand what this Rbo is? Is it needed? 
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         {
@@ -57,7 +60,7 @@ namespace Cocoa::Graphics
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
-    void OpenGLFramebuffer::SetFramebufferSpec(const FramebufferSpec spec)
+    void OpenGLFramebuffer::SetFramebufferSpec(const FramebufferSpec& spec)
     {
         m_framebufferSpec = spec;
     }

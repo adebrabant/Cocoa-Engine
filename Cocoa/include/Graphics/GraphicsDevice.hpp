@@ -37,7 +37,7 @@ namespace Cocoa::Graphics
         virtual Unique<VertexBuffer> CreateVertexBuffer(const void* vertices, uint32_t size, const BufferLayout& bufferLayout) = 0;
         virtual Unique<IndexBuffer> CreateIndexBuffer(const uint32_t* indices, uint32_t count) = 0;
         virtual Unique<Texture2D> CreateTexture2D(TextureSpec textureSpec, const unsigned char* pixels) = 0;
-        virtual Unique<Framebuffer> CreateFramebuffer(FramebufferSpec framebufferSpec) = 0;
+        virtual Unique<Framebuffer> CreateFramebuffer(const FramebufferSpec& framebufferSpec) = 0;
 
         virtual void DrawIndexed(const VertexArray& vertexArray, uint32_t indexCount) = 0;
         // ToDo:
