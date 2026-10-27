@@ -202,9 +202,45 @@ namespace Cocoa::Graphics
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
-    void OpenGLFramebuffer::SetFramebufferSpec(const FramebufferSpec& spec)
+    void OpenGLFramebuffer::Resize(const uint32_t width, const uint32_t height)
     {
-        m_framebufferSpec = spec;
+        if (width == 0 || height == 0 ||
+            (m_framebufferSpec.Width == width && m_framebufferSpec.Height == height))
+            return;
+
+        m_framebufferSpec.Width = width;
+        m_framebufferSpec.Height = height;
+
+        for (auto i = 0; i < m_colorAttachments.size(); ++i)
+        {
+            auto colorFormat = m_framebufferSpec.ColorFormats[i];
+            auto colorBuffer = m_colorAttachments[i];
+            glBindTexture(GL_TEXTURE_2D, colorBuffer);
+            glTexImage2D(
+                GL_TEXTURE_2D,
+                0,
+                static_cast<GLint>(ToOpenGLColorFormat(colorFormat)),
+                static_cast<GLsizei>(m_framebufferSpec.Width),
+                static_cast<GLsizei>(m_framebufferSpec.Height),
+                0,
+                ToOpenGLColorDataFormat(colorFormat),
+                GL_UNSIGNED_BYTE,
+                nullptr
+            );
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
+
+        if (m_rbo > 0)
+        {
+            glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
+            glRenderbufferStorage(
+                GL_RENDERBUFFER,
+                ToOpenGLDepthStencilFormat(m_framebufferSpec.DepthStencil),
+                static_cast<GLsizei>(m_framebufferSpec.Width),
+                static_cast<GLsizei>(m_framebufferSpec.Height)
+            );
+            glBindRenderbuffer(GL_RENDERBUFFER, 0);
+        }
     }
 
     void OpenGLFramebuffer::Destroy()
