@@ -1,0 +1,24 @@
+BasedOnStyle: LLVM
+Language: Cpp
+
+AccessModifierOffset: -2
+AlignAfterOpenBracket: Align
+AlignOperands: Align
+BreakBeforeBraces: Allman
+ColumnLimit: 120
+FixNamespaceComments: true
+IndentCaseLabels: false
+IndentPPDirectives: None
+IndentWidth: 4
+NamespaceIndentation: None
+PointerAlignment: Left
+SortIncludes: true
+SpaceAfterCStyleCast: false
+SpaceBeforeParens: ControlStatements
+TabWidth: 4
+UseTab: Never
+
+AllowShortBlocksOnASingleLine: Never
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false

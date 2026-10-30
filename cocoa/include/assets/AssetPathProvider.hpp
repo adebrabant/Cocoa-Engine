@@ -1,0 +1,22 @@
+#pragma once
+
+#include <string>
+#include <filesystem>
+
+namespace cocoa::Assets
+{
+	class AssetPathProvider
+	{
+	public:
+		AssetPathProvider();
+		[[nodiscard]] const std::filesystem::path& GetAssetsPath() const { return m_assetPath; }
+		[[nodiscard]] const std::filesystem::path& GetMetaDataPath() const { return m_metadataPath; };
+
+	private:
+		std::filesystem::path FindPath(const std::string& path);
+
+	private:
+		std::filesystem::path m_assetPath;
+		std::filesystem::path m_metadataPath;
+	};
+}

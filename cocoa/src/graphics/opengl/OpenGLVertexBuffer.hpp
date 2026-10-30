@@ -1,0 +1,36 @@
+#pragma once
+
+#include "graphics/BufferLayout.hpp"
+#include "graphics/VertexBuffer.hpp"
+
+#include <cstdint>
+
+namespace cocoa::Graphics
+{
+	class OpenGLVertexBuffer : public VertexBuffer
+	{
+	public:
+		OpenGLVertexBuffer(uint32_t size, const BufferLayout& bufferLayout);
+		OpenGLVertexBuffer(const void* vertices, uint32_t size, const BufferLayout& bufferLayout);
+		~OpenGLVertexBuffer() override;
+
+		OpenGLVertexBuffer(const OpenGLVertexBuffer&) = delete;
+		OpenGLVertexBuffer& operator=(const OpenGLVertexBuffer&) = delete;
+
+		OpenGLVertexBuffer(OpenGLVertexBuffer&& other) noexcept;
+		OpenGLVertexBuffer& operator=(OpenGLVertexBuffer&& other) noexcept;
+
+		void Bind() const override;
+		void Unbind() const override;
+		void SetData(const void* data, uint32_t size) const override;
+
+		[[nodiscard]] const BufferLayout& GetLayout() const override { return m_bufferLayout; }
+
+	private:
+		void Destroy();
+
+	private:
+		BufferLayout m_bufferLayout;
+		uint32_t m_vbo;
+	};
+}

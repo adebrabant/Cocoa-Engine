@@ -9,11 +9,11 @@ set(CMAKE_CXX_STANDARD           20)
 set(CMAKE_CXX_STANDARD_REQUIRED  ON)
 set(CMAKE_CXX_EXTENSIONS        OFF)
 
-set(COCOA_TARGET_NAME Cocoa)
-set(SANDBOX_TARGET_NAME Sandbox)
+set(COCOA_TARGET_NAME cocoa)
+set(SANDBOX_TARGET_NAME sandbox)
 
-set(COCOA_TESTS_TARGET_NAME CocoaTests)
-set(COCOA_BENCHMARKS_TARGET_NAME CocoaBenchmarks)
+set(COCOA_TESTS_TARGET_NAME cocoa_tests)
+set(COCOA_BENCHMARKS_TARGET_NAME cocoa_benchmarks)
 
 enable_testing()
 

@@ -1,0 +1,31 @@
+#pragma once
+
+#include <chrono>
+
+namespace cocoa::Chronos
+{
+	class FrameClock
+	{
+	public:
+		FrameClock(float maxDelta, float fixedDelta, float targetFrameRate = 1.0f / 60.0f);
+		void Reset();            
+		void Tick();
+		void ConsumeUpdate();
+		void SleepNextFrame() const;
+		[[nodiscard]] bool CanUpdate() const;
+		[[nodiscard]] float GetDelta() const;
+		[[nodiscard]] float GetFixedDelta() const;
+		[[nodiscard]] float GetAlpha() const;
+		[[nodiscard]] float GetElapsed() const;
+		[[nodiscard]] float GetRemainingFrameTime() const;
+
+	private:
+		std::chrono::high_resolution_clock::time_point m_start;
+		std::chrono::high_resolution_clock::time_point m_last;
+		float m_maxDelta;
+		float m_fixedDelta;
+		float m_targetFrameTime;
+		float m_accumulator;
+		float m_deltaTime;
+	};
+}
