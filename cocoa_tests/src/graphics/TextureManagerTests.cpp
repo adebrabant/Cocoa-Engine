@@ -15,44 +15,44 @@ namespace cocoa_tests::graphics
         cocoa::graphics::TextureManager sut(stubGraphicsDevice);
         cocoa::graphics::TextureSpec spec;
 
-        cocoa::graphics::TextureHandle result = sut.Load(spec, "pixels");
+        cocoa::graphics::TextureHandle result = sut.load(spec, "pixels");
 
-        EXPECT_EQ(result.Id, 1);
+        EXPECT_EQ(result.id, 1);
     }
 
     TEST(TextureManagerTests, Load_ShouldReturnSameTextureHandleId_WhenProvidingSameTextureSpecId)
     {
         stubs::StubGraphicsDevice stubGraphicsDevice;
         cocoa::graphics::TextureManager sut(stubGraphicsDevice);
-        cocoa::graphics::TextureSpec spec { .Id = "default" };
+        cocoa::graphics::TextureSpec spec { .id = "default" };
 
-        cocoa::graphics::TextureHandle result1 = sut.Load(spec, "pixels");
-        cocoa::graphics::TextureHandle result2 = sut.Load(spec, "pixels");
+        cocoa::graphics::TextureHandle result1 = sut.load(spec, "pixels");
+        cocoa::graphics::TextureHandle result2 = sut.load(spec, "pixels");
 
-        EXPECT_EQ(result1.Id, result2.Id);
+        EXPECT_EQ(result1.id, result2.id);
     }
 
     TEST(TextureManagerTests, Load_ShouldReturnDifferentTextureHandleId_WhenProvidingDifferentTextureSpecId)
     {
         stubs::StubGraphicsDevice stubGraphicsDevice;
         cocoa::graphics::TextureManager sut(stubGraphicsDevice);
-        cocoa::graphics::TextureSpec spec1{ .Id = "default" };
-        cocoa::graphics::TextureSpec spec2{ .Id = "non-default" };
+        cocoa::graphics::TextureSpec spec1{ .id = "default" };
+        cocoa::graphics::TextureSpec spec2{ .id = "non-default" };
 
-        cocoa::graphics::TextureHandle result1 = sut.Load(spec1, "pixels");
-        cocoa::graphics::TextureHandle result2 = sut.Load(spec2, "pixels");
+        cocoa::graphics::TextureHandle result1 = sut.load(spec1, "pixels");
+        cocoa::graphics::TextureHandle result2 = sut.load(spec2, "pixels");
 
-        EXPECT_NE(result1.Id, result2.Id);
+        EXPECT_NE(result1.id, result2.id);
     }
 
     TEST(TextureManagerTests, Get_ShouldReturnTexture2D_WhenProvidingValidHandle)
     {
         stubs::StubGraphicsDevice stubGraphicsDevice;
         cocoa::graphics::TextureManager sut(stubGraphicsDevice);
-        cocoa::graphics::TextureSpec spec{ .Id = "default" };
+        cocoa::graphics::TextureSpec spec{ .id = "default" };
 
-        cocoa::graphics::TextureHandle handle = sut.Load(spec, "default");
-        const cocoa::graphics::Texture2D& texture = sut.Get(handle);
+        cocoa::graphics::TextureHandle handle = sut.load(spec, "default");
+        const cocoa::graphics::Texture2D& texture = sut.get(handle);
 
         EXPECT_NE(&texture, nullptr);
     }
@@ -61,13 +61,13 @@ namespace cocoa_tests::graphics
     {
         stubs::StubGraphicsDevice stubGraphicsDevice;
         cocoa::graphics::TextureManager sut(stubGraphicsDevice);
-        cocoa::graphics::TextureSpec spec1{ .Id = "default" };
-        cocoa::graphics::TextureSpec spec2{ .Id = "non-default" };
+        cocoa::graphics::TextureSpec spec1{ .id = "default" };
+        cocoa::graphics::TextureSpec spec2{ .id = "non-default" };
 
-        cocoa::graphics::TextureHandle handle1 = sut.Load(spec1, "pixels");
-        cocoa::graphics::TextureHandle handle2 = sut.Load(spec2, "pixels");
-        const cocoa::graphics::Texture2D& texture1 = sut.Get(handle1);
-        const cocoa::graphics::Texture2D& texture2 = sut.Get(handle2);
+        cocoa::graphics::TextureHandle handle1 = sut.load(spec1, "pixels");
+        cocoa::graphics::TextureHandle handle2 = sut.load(spec2, "pixels");
+        const cocoa::graphics::Texture2D& texture1 = sut.get(handle1);
+        const cocoa::graphics::Texture2D& texture2 = sut.get(handle2);
 
         EXPECT_NE(&texture1, &texture2);
     }
@@ -76,11 +76,11 @@ namespace cocoa_tests::graphics
     {
         stubs::StubGraphicsDevice stubGraphicsDevice;
         cocoa::graphics::TextureManager sut(stubGraphicsDevice);
-        cocoa::graphics::TextureSpec spec{ .Id = "default" };
+        cocoa::graphics::TextureSpec spec{ .id = "default" };
 
-        cocoa::graphics::TextureHandle handle = sut.Load(spec, "pixels");
-        const cocoa::graphics::Texture2D& texture1 = sut.Get(handle);
-        const cocoa::graphics::Texture2D& texture2 = sut.Get(handle);
+        cocoa::graphics::TextureHandle handle = sut.load(spec, "pixels");
+        const cocoa::graphics::Texture2D& texture1 = sut.get(handle);
+        const cocoa::graphics::Texture2D& texture2 = sut.get(handle);
 
         EXPECT_EQ(&texture1, &texture2);
     }
@@ -90,11 +90,11 @@ namespace cocoa_tests::graphics
         stubs::StubGraphicsDevice stubGraphicsDevice;
         cocoa::graphics::TextureManager sut(stubGraphicsDevice);
 
-        cocoa::graphics::TextureHandle handle{ .Id = 9999 };
+        cocoa::graphics::TextureHandle handle{ .id = 9999 };
 
         EXPECT_THROW(
             {
-                sut.Get(handle);
+                sut.get(handle);
             },
             std::runtime_error
         );
@@ -104,27 +104,27 @@ namespace cocoa_tests::graphics
     {
         stubs::StubGraphicsDevice stubGraphicsDevice;
         cocoa::graphics::TextureManager sut(stubGraphicsDevice);
-        cocoa::graphics::TextureSpec spec{ .Id = "default" };
-        cocoa::graphics::TextureHandle expectedHandle = sut.Load(spec, "pixels");
+        cocoa::graphics::TextureSpec spec{ .id = "default" };
+        cocoa::graphics::TextureHandle expectedHandle = sut.load(spec, "pixels");
 
         cocoa::graphics::TextureHandle outHandle;
-        bool result = sut.TryGetHandle(spec.Id, outHandle);
+        bool result = sut.tryGetHandle(spec.id, outHandle);
 
         EXPECT_TRUE(result);
-        EXPECT_EQ(outHandle.Id, expectedHandle.Id);
+        EXPECT_EQ(outHandle.id, expectedHandle.id);
     }
 
     TEST(TextureManagerTests, TryGetHandle_ShouldReturnFalseAndOutHandle_WhenIdDoesNotExist)
     {
         stubs::StubGraphicsDevice stubGraphicsDevice;
         cocoa::graphics::TextureManager sut(stubGraphicsDevice);
-        cocoa::graphics::TextureSpec spec{ .Id = "default" };
-        sut.Load(spec, "pixels");
+        cocoa::graphics::TextureSpec spec{ .id = "default" };
+        sut.load(spec, "pixels");
 
         cocoa::graphics::TextureHandle outHandle;
-        bool result = sut.TryGetHandle("badId", outHandle);
+        bool result = sut.tryGetHandle("badId", outHandle);
 
         EXPECT_FALSE(result);
-        EXPECT_EQ(outHandle.Id, 0);
+        EXPECT_EQ(outHandle.id, 0);
     }
 }

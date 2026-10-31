@@ -10,8 +10,8 @@ namespace cocoa::graphics
 
         for (auto& element : m_elements)
         {
-            element.Offset = element.Offset > 0 ? element.Offset : offset;
-            offset = element.Offset + element.Size;
+            element.offset = element.offset > 0 ? element.offset : offset;
+            offset = element.offset + element.size;
             m_stride = offset;
         }
 	}

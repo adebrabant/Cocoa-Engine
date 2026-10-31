@@ -12,9 +12,9 @@ namespace cocoa_tests::events
 	{
 		cocoa::events::EventBus eventBus;
 
-		auto eventToken = eventBus.Subscribe<MockTestEvent>([](const MockTestEvent&){ });
+		auto eventToken = eventBus.subscribe<MockTestEvent>([](const MockTestEvent&){ });
 
-		EXPECT_TRUE(eventBus.HasSubscriber<MockTestEvent>(eventToken));
+		EXPECT_TRUE(eventBus.hasSubscriber<MockTestEvent>(eventToken));
 	}
 
 	TEST(EventBusTests, Subscribe_ShouldAllowMultipleSubscriptions_UsingSameHandler)
@@ -24,10 +24,10 @@ namespace cocoa_tests::events
 
 		auto handler = [&](const MockTestEvent&) { ++callCount; };
 
-		eventBus.Subscribe<MockTestEvent>(handler);
-		eventBus.Subscribe<MockTestEvent>(handler);
+		eventBus.subscribe<MockTestEvent>(handler);
+		eventBus.subscribe<MockTestEvent>(handler);
 
-		eventBus.Publish(MockTestEvent{});
+		eventBus.publish(MockTestEvent{});
 
 		EXPECT_EQ(callCount, 2);
 	}
@@ -36,24 +36,24 @@ namespace cocoa_tests::events
 	{
 		cocoa::events::EventBus eventBus;
 
-		auto eventToken = eventBus.Subscribe<MockTestEvent>([](const MockTestEvent&){ });
-		eventBus.Unsubscribe<MockTestEvent>(eventToken);
+		auto eventToken = eventBus.subscribe<MockTestEvent>([](const MockTestEvent&){ });
+		eventBus.unsubscribe<MockTestEvent>(eventToken);
 
-		EXPECT_FALSE(eventBus.HasSubscriber<MockTestEvent>(eventToken));
+		EXPECT_FALSE(eventBus.hasSubscriber<MockTestEvent>(eventToken));
 	}
 
 	TEST(EventBusTests, Publish_ShouldNotifyAllSubscribers_WhenEventIsPublished)
 	{
 		cocoa::events::EventBus eventBus;
 		bool isNotified = false;
-		auto eventToken = eventBus.Subscribe<MockTestEvent>(
+		auto eventToken = eventBus.subscribe<MockTestEvent>(
 			[&isNotified](const MockTestEvent&)
 			{
 				isNotified = true;
 			}
 		);
 
-		eventBus.Publish(MockTestEvent{ 200.f });
+		eventBus.publish(MockTestEvent{ 200.f });
 
 		EXPECT_TRUE(isNotified);
 	}
@@ -63,10 +63,10 @@ namespace cocoa_tests::events
 		cocoa::events::EventBus eventBus;
 		int notificationCount = 0;
 
-		eventBus.Subscribe<MockTestEvent>([&notificationCount](const MockTestEvent&) { ++notificationCount; });
-		eventBus.Subscribe<MockTestEvent>([&notificationCount](const MockTestEvent&) { ++notificationCount; });
+		eventBus.subscribe<MockTestEvent>([&notificationCount](const MockTestEvent&) { ++notificationCount; });
+		eventBus.subscribe<MockTestEvent>([&notificationCount](const MockTestEvent&) { ++notificationCount; });
 
-		eventBus.Publish(MockTestEvent{ });
+		eventBus.publish(MockTestEvent{ });
 
 		EXPECT_EQ(notificationCount, 2);
 	}
@@ -75,15 +75,15 @@ namespace cocoa_tests::events
 	{
 		cocoa::events::EventBus eventBus;
 		bool isNotified = false;
-		auto eventToken = eventBus.Subscribe<MockTestEvent>(
+		auto eventToken = eventBus.subscribe<MockTestEvent>(
 			[&isNotified](const MockTestEvent&)
 			{
 				isNotified = true;
 			}
 		);
 
-		eventBus.Unsubscribe<MockTestEvent>(eventToken);
-		eventBus.Publish(MockTestEvent{ });
+		eventBus.unsubscribe<MockTestEvent>(eventToken);
+		eventBus.publish(MockTestEvent{ });
 
 		EXPECT_FALSE(isNotified);
 	}
@@ -92,8 +92,8 @@ namespace cocoa_tests::events
 	{
 		cocoa::events::EventBus eventBus;
 
-		EXPECT_NO_THROW(eventBus.Publish(MockTestEvent{ 100.f }));
-		EXPECT_NO_THROW(eventBus.Publish(MockTestEvent{ 100.f }));
+		EXPECT_NO_THROW(eventBus.publish(MockTestEvent{ 100.f }));
+		EXPECT_NO_THROW(eventBus.publish(MockTestEvent{ 100.f }));
 	}
 
 	TEST(EventBusTests, Publish_ShouldPassCorrectEventData_ToSubscribers)
@@ -101,13 +101,13 @@ namespace cocoa_tests::events
 		cocoa::events::EventBus eventBus;
 		float receivedValue = 0.f;
 
-		eventBus.Subscribe<MockTestEvent>(
+		eventBus.subscribe<MockTestEvent>(
 			[&](const MockTestEvent& evt) {
 				receivedValue = evt.Value;
 			}
 		);
 
-		eventBus.Publish(MockTestEvent{ 42.0f });
+		eventBus.publish(MockTestEvent{ 42.0f });
 
 		EXPECT_FLOAT_EQ(receivedValue, 42.0f);
 	}
@@ -115,9 +115,9 @@ namespace cocoa_tests::events
 	TEST(EventBusTests, HasSubscriber_ShouldReturnTrue_WhenSubcribersExist)
 	{
 		cocoa::events::EventBus eventBus;
-		auto eventToken = eventBus.Subscribe<MockTestEvent>([](const MockTestEvent&) {});
+		auto eventToken = eventBus.subscribe<MockTestEvent>([](const MockTestEvent&) {});
 
-		EXPECT_TRUE(eventBus.HasSubscriber<MockTestEvent>(eventToken));
+		EXPECT_TRUE(eventBus.hasSubscriber<MockTestEvent>(eventToken));
 	}
 
 	TEST(EventBusTests, HasSubscriber_ShouldReturnFalse_WhenSubcribersDoNotExist)
@@ -125,6 +125,6 @@ namespace cocoa_tests::events
 		cocoa::events::EventBus eventBus;
 		auto eventToken = 1;
 
-		EXPECT_FALSE(eventBus.HasSubscriber<MockTestEvent>(eventToken));
+		EXPECT_FALSE(eventBus.hasSubscriber<MockTestEvent>(eventToken));
 	}
 }

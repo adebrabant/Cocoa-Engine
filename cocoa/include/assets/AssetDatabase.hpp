@@ -11,44 +11,44 @@ namespace cocoa::assets
 	{
 		std::string id;
 		std::string path;
-		std::string Format;
-		std::string MinFilter;
-		std::string MagFilter;
-		std::string WrapS;
-		std::string WrapT;
-		bool GenerateMipmaps;
+		std::string format;
+		std::string minFilter;
+		std::string magFilter;
+		std::string wrapS;
+		std::string wrapT;
+		bool generateMipmaps;
 	};
 
 	struct ShaderRecord
 	{
-		std::string Id;
-		std::string VertexPath;
-		std::string FragmentPath;
+		std::string id;
+		std::string vertexPath;
+		std::string fragmentPath;
 	};
 
 	struct MaterialRecord
 	{
-		std::string Id;
-		std::string ShaderId;
-		std::string BlendMode;
-		core::Color Tint;
+		std::string id;
+		std::string shaderId;
+		std::string blendMode;
+		core::Color tint;
 	};
 
 	struct SpriteRecord
 	{
-		std::string Id;
-		std::string TextureId;
-		math::Vector2f MinPixel;
-		math::Vector2f MaxPixel;
+		std::string id;
+		std::string textureId;
+		math::Vector2f minPixel;
+		math::Vector2f maxPixel;
 	};
 
 	class AssetDatabase
 	{
 	public:
 		virtual ~AssetDatabase() = default;
-		[[nodiscard]] virtual const TextureRecord& GetTextureInfo(const std::string& id) const = 0;
-		[[nodiscard]] virtual const ShaderRecord& GetShaderInfo(const std::string& id) const = 0;
-		[[nodiscard]] virtual const MaterialRecord& GetMaterialInfo(const std::string& id) const = 0;
-		[[nodiscard]] virtual const SpriteRecord& GetSpriteInfo(const std::string& id) const = 0;
+		[[nodiscard]] virtual const TextureRecord& getTextureInfo(const std::string& id) const = 0;
+		[[nodiscard]] virtual const ShaderRecord& getShaderInfo(const std::string& id) const = 0;
+		[[nodiscard]] virtual const MaterialRecord& getMaterialInfo(const std::string& id) const = 0;
+		[[nodiscard]] virtual const SpriteRecord& getSpriteInfo(const std::string& id) const = 0;
 	};
 }

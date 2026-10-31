@@ -21,13 +21,13 @@ namespace cocoa::platforms
 		GLFWWindow(const GLFWWindow&) = delete;
 		GLFWWindow& operator = (const GLFWWindow&) = delete;
 
-		void OnUpdate() override;
-		void ProcessEvents() override;
-		void WaitForEvents(float duration) const override;
-		[[nodiscard]] bool IsOpen() const override;
-		[[nodiscard]] uint32_t GetWidth() const override;
-		[[nodiscard]] uint32_t GetHeight() const override;
-		[[nodiscard]] void* GetNative() const override;
+		void onUpdate() override;
+		void processEvents() override;
+		void waitForEvents(float duration) const override;
+		[[nodiscard]] bool isOpen() const override;
+		[[nodiscard]] uint32_t getWidth() const override;
+		[[nodiscard]] uint32_t getHeight() const override;
+		[[nodiscard]] void* getNative() const override;
 
 	private:
 		static void FrameBufferSizeCallback(

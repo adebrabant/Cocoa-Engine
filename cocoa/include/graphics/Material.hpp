@@ -9,9 +9,9 @@ namespace cocoa::graphics
 {
 	struct Material
 	{
-		std::string Id;
-		ShaderHandle Shader;
-		core::Color Tint;
-		BlendMode Blend;
+		std::string id;
+		ShaderHandle shaderHandle;
+		core::Color tint;
+		BlendMode blendMode;
 	};
 }

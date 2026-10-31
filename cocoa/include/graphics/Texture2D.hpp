@@ -8,8 +8,8 @@ namespace cocoa::graphics
 	{
 	public:
 		virtual ~Texture2D() = default;
-		virtual void Bind(uint32_t slot) const = 0;
-		[[nodiscard]] virtual uint32_t GetWidth() const = 0;
-		[[nodiscard]] virtual uint32_t GetHeight() const = 0;
+		virtual void bind(uint32_t slot) const = 0;
+		[[nodiscard]] virtual uint32_t getWidth() const = 0;
+		[[nodiscard]] virtual uint32_t getHeight() const = 0;
 	};
 }

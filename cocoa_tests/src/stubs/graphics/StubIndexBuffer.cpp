@@ -10,17 +10,17 @@ namespace cocoa_tests::stubs
 
     StubIndexBuffer::~StubIndexBuffer() = default;
 
-    void StubIndexBuffer::Bind() const
+    void StubIndexBuffer::bind() const
     {
 
     }
 
-    void StubIndexBuffer::Unbind() const
+    void StubIndexBuffer::unbind() const
     {
 
     }
 
-    uint32_t StubIndexBuffer::GetCount() const
+    uint32_t StubIndexBuffer::getCount() const
     {
         return m_count;
     }

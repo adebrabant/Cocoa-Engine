@@ -21,22 +21,22 @@ namespace cocoa_benchmarks
     public:
         void SetUp(const benchmark::State&) override
         {
-            m_shader = m_shaderManager.Load("benchmark_shader", "", "");
+            m_shader = m_shaderManager.load("benchmark_shader", "", "");
 
             const cocoa::graphics::TextureSpec spec{
-                .Id = "benchmark_texture",
-                .Width = 2,
-                .Height = 2
+                .id = "benchmark_texture",
+                .width = 2,
+                .height = 2
             };
             constexpr std::array<unsigned char, 16> pixels{
                 255, 255, 255, 255, 255, 255, 255, 255,
                 255, 255, 255, 255, 255, 255, 255, 255
             };
-            m_texture = m_textureManager.Load(spec, pixels.data());
-            m_material = m_materialManager.Load(
+            m_texture = m_textureManager.load(spec, pixels.data());
+            m_material = m_materialManager.load(
                 "benchmark_material", m_shader, "alpha", cocoa::core::Color{}
             );
-            m_sprite = m_spriteManager.Load(
+            m_sprite = m_spriteManager.load(
                 "benchmark_sprite", m_texture,
                 cocoa::math::Vector2f{0.0f, 0.0f},
                 cocoa::math::Vector2f{2.0f, 2.0f},

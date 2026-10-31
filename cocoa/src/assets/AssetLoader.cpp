@@ -15,7 +15,7 @@ namespace cocoa::assets
 		stbi_set_flip_vertically_on_load(true);
 	}
 
-	Image AssetLoader::LoadImage(const std::filesystem::path& path) const
+	Image AssetLoader::loadImage(const std::filesystem::path& path) const
 	{
 		Image image;
 		int width = 0;
@@ -35,21 +35,21 @@ namespace cocoa::assets
 			return image;
 		}
 
-		image.Width = width;
-		image.Height = height;
-		image.Channels = 4;
+		image.width = width;
+		image.height = height;
+		image.channels = 4;
 
 		const size_t size = static_cast<size_t>(width) * height * 4;
 
-		image.Pixels.resize(size);
-		std::memcpy(image.Pixels.data(), data, size);
+		image.pixels.resize(size);
+		std::memcpy(image.pixels.data(), data, size);
 
 		stbi_image_free(data);
 
 		return image;
 	}
 
-	Image AssetLoader::LoadImage(const std::vector<std::byte>& bytes) const
+	Image AssetLoader::loadImage(const std::vector<std::byte>& bytes) const
 	{
 		Image image;
 		int width = 0;
@@ -70,21 +70,21 @@ namespace cocoa::assets
 			return image;
 		}
 
-		image.Width = width;
-		image.Height = height;
-		image.Channels = 4;
+		image.width = width;
+		image.height = height;
+		image.channels = 4;
 
 		const size_t size = static_cast<size_t>(width) * height * 4;
 
-		image.Pixels.resize(size);
-		std::memcpy(image.Pixels.data(), data, size);
+		image.pixels.resize(size);
+		std::memcpy(image.pixels.data(), data, size);
 
 		stbi_image_free(data);
 
 		return image;
 	}
 
-	std::string AssetLoader::LoadText(const std::filesystem::path& path) const
+	std::string AssetLoader::loadText(const std::filesystem::path& path) const
 	{
 		std::ifstream file(path, std::ios::in | std::ios::binary);
 
@@ -101,7 +101,7 @@ namespace cocoa::assets
 		return contents.str();
 	}
 
-	std::string AssetLoader::LoadText(const std::vector<std::byte>& bytes) const
+	std::string AssetLoader::loadText(const std::vector<std::byte>& bytes) const
 	{
 		if (bytes.empty())
 			return std::string();

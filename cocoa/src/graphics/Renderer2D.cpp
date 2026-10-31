@@ -33,14 +33,14 @@ namespace cocoa::graphics
 
 	Renderer2D::~Renderer2D() = default;
 
-	void Renderer2D::BeginDraw(const math::Matrix4f& viewProjectionMatrix)
+	void Renderer2D::beginDraw(const math::Matrix4f& viewProjectionMatrix)
 	{
-		m_renderStatistics.Reset();
+		m_renderStatistics.reset();
 		m_drawSubmissions.clear();
 		m_viewProjectionMatrix = viewProjectionMatrix;
 	}
 
-	void Renderer2D::DrawQuad(
+	void Renderer2D::drawQuad(
 		const math::Matrix4f& modelMatrix,
 		const MaterialHandle materialHandle,
 		const TextureHandle textureHandle,
@@ -60,7 +60,7 @@ namespace cocoa::graphics
 		);
 	}
 
-	void Renderer2D::DrawQuad(
+	void Renderer2D::drawQuad(
 		const math::Matrix4f& modelMatrix,
 		const MaterialHandle materialHandle,
 		const SpriteHandle spriteHandle,
@@ -84,7 +84,7 @@ namespace cocoa::graphics
 		);
 	}
 
-	void Renderer2D::EndDraw()
+	void Renderer2D::endDraw()
 	{
 		if (m_drawSubmissions.empty())
 			return;
@@ -102,8 +102,8 @@ namespace cocoa::graphics
 		for (auto i = 0; i < m_drawSubmissions.size(); ++i)
 		{
 			sortedDrawSubmissions.emplace_back(
-				m_drawSubmissions[i].SortingLayer,
-				m_drawSubmissions[i].SortingOrder,
+				m_drawSubmissions[i].sortingLayer,
+				m_drawSubmissions[i].sortingOrder,
 				i
 			);
 		}
@@ -122,42 +122,42 @@ namespace cocoa::graphics
 		for (size_t i = 0; i < sortedDrawSubmissions.size(); ++i)
 		{
 			const auto& drawSubmission = m_drawSubmissions[sortedDrawSubmissions[i].Index];
-			if (const auto* quadData = std::get_if<QuadDrawSubmission>(&drawSubmission.Data))
+			if (const auto* quadData = std::get_if<QuadDrawSubmission>(&drawSubmission.data))
 			{
-				m_quadBatch.Draw(
-					quadData->ModelMatrix,
-					quadData->Material,
-					quadData->Texture,
-					quadData->TilingFactor
+				m_quadBatch.draw(
+					quadData->modelMatrix,
+					quadData->materialHandle,
+					quadData->textureHandle,
+					quadData->tilingFactor
 				);
 			}
-			else if (const auto* spriteData = std::get_if<SpriteDrawSubmission>(&drawSubmission.Data))
+			else if (const auto* spriteData = std::get_if<SpriteDrawSubmission>(&drawSubmission.data))
 			{
-				m_quadBatch.Draw(
-					spriteData->ModelMatrix,
-					spriteData->Material,
-					spriteData->Sprite,
-					spriteData->TilingFactor,
-					spriteData->FlipVertical,
-					spriteData->FlipHorizontal
+				m_quadBatch.draw(
+					spriteData->modelMatrix,
+					spriteData->materialHandle,
+					spriteData->spriteHandle,
+					spriteData->tilingFactor,
+					spriteData->flipVertical,
+					spriteData->flipHorizontal
 				);
 			}
 
 			if (i == m_drawSubmissions.size() - 1 ||
-				drawSubmission.Batch != m_drawSubmissions[sortedDrawSubmissions[i+1].Index].Batch)
+				drawSubmission.batchType != m_drawSubmissions[sortedDrawSubmissions[i+1].Index].batchType)
 			{
-				switch (drawSubmission.Batch)
+				switch (drawSubmission.batchType)
 				{
 				case BatchType::Quad:
-					m_quadBatch.Flush(m_viewProjectionMatrix);
+					m_quadBatch.flush(m_viewProjectionMatrix);
 					break;
 				}
 			}
 		}
 	}
 
-	const Viewport& Renderer2D::GetViewport() const
+	const Viewport& Renderer2D::getViewport() const
 	{
-		return m_graphicsDevice.GetViewport();
+		return m_graphicsDevice.getViewport();
 	}
 }

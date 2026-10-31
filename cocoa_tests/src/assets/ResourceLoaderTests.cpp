@@ -38,9 +38,9 @@ namespace cocoa_tests::assets
 			spriteManager
 		);
 
-		cocoa::graphics::TextureHandle result = sut.LoadTexture("dummy_idle1");
+		cocoa::graphics::TextureHandle result = sut.loadTexture("dummy_idle1");
 
-		EXPECT_EQ(result.Id, 1);
+		EXPECT_EQ(result.id, 1);
 	}
 
 	TEST(ResourceLoaderTests, LoadShader_ShouldReturnShaderHandle_WhenProvidingShaderId)
@@ -63,9 +63,9 @@ namespace cocoa_tests::assets
 			spriteManager
 		);
 
-		cocoa::graphics::ShaderHandle result = sut.LoadShader("dummy_shader");
+		cocoa::graphics::ShaderHandle result = sut.loadShader("dummy_shader");
 
-		EXPECT_EQ(result.Id, 1);
+		EXPECT_EQ(result.id, 1);
 	}
 
 	TEST(ResourceLoaderTests, LoadMaterial_ShouldReturnMaterialHandle_WhenProvidingMaterialId)
@@ -88,9 +88,9 @@ namespace cocoa_tests::assets
 			spriteManager
 		);
 
-		cocoa::graphics::MaterialHandle result = sut.LoadMaterial("dummy_material");
+		cocoa::graphics::MaterialHandle result = sut.loadMaterial("dummy_material");
 
-		EXPECT_EQ(result.Id, 1);
+		EXPECT_EQ(result.id, 1);
 	}
 
 	TEST(ResourceLoaderTests, LoadSprite_ShouldReturnSpriteHandle_WhenProvidingSpriteId)
@@ -113,8 +113,8 @@ namespace cocoa_tests::assets
 			spriteManager
 		);
 
-		const cocoa::graphics::SpriteHandle result = sut.LoadSprite("dummy_sprite");
+		const cocoa::graphics::SpriteHandle result = sut.loadSprite("dummy_sprite");
 
-		EXPECT_EQ(result.Id, 1);
+		EXPECT_EQ(result.id, 1);
 	}
 }

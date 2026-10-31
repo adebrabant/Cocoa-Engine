@@ -13,7 +13,7 @@ namespace cocoa_tests::assets
 		const auto expectedSize = std::filesystem::file_size(rootPath / relativePath);
 		const cocoa::assets::FilesystemAssetSource sut(rootPath);
 
-		auto results = sut.ReadBytes(relativePath);
+		auto results = sut.readBytes(relativePath);
 
 		EXPECT_EQ(results.size(), expectedSize);
 	}
@@ -25,7 +25,7 @@ namespace cocoa_tests::assets
 		const auto expectedSize = std::filesystem::file_size(rootPath / relativePath);
 		const cocoa::assets::FilesystemAssetSource sut(rootPath);
 
-		auto results = sut.ReadBytes(relativePath);
+		auto results = sut.readBytes(relativePath);
 
 		EXPECT_EQ(results.size(), expectedSize);
 	}
@@ -37,7 +37,7 @@ namespace cocoa_tests::assets
 
 		EXPECT_THROW(
 			{
-				sut.ReadBytes("badValue");
+				sut.readBytes("badValue");
 			},
 			std::runtime_error
 		);
@@ -49,7 +49,7 @@ namespace cocoa_tests::assets
 		const std::filesystem::path relativePath = "images/test.png";
 		const cocoa::assets::FilesystemAssetSource sut(rootPath);
 
-		auto result = sut.Exists(relativePath);
+		auto result = sut.exists(relativePath);
 
 		EXPECT_TRUE(result);
 	}
@@ -59,7 +59,7 @@ namespace cocoa_tests::assets
 		const std::filesystem::path rootPath = "test_data/resources";
 		const cocoa::assets::FilesystemAssetSource sut(rootPath);
 
-		auto result = sut.Exists("badValue");
+		auto result = sut.exists("badValue");
 
 		EXPECT_FALSE(result);
 	}

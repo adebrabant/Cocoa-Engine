@@ -9,7 +9,7 @@ namespace cocoa
     using Unique = std::unique_ptr<T>;
 
     template<typename T, typename... Args>
-    Unique<T> CreateUnique(Args&&... args)
+    Unique<T> createUnique(Args&&... args)
     {
         return std::make_unique<T>(std::forward<Args>(args)...);
     }
@@ -18,7 +18,7 @@ namespace cocoa
     using Shared = std::shared_ptr<T>;
 
     template<typename T, typename... Args>
-    Shared<T> CreateShared(Args&&... args)
+    Shared<T> createShared(Args&&... args)
     {
         return std::make_shared<T>(std::forward<Args>(args)...);
     }

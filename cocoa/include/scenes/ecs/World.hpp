@@ -10,7 +10,7 @@
 #include <unordered_map>
 #include <vector>
 
-// ToDo: Remove for Memory.hpp
+// ToDo: remove for Memory.hpp
 #include <memory>
 
 namespace cocoa::scenes
@@ -20,27 +20,27 @@ namespace cocoa::scenes
 	public:
 		World();
 		~World() = default;
-		void Update(float deltaTime);
-		void BeforeRender(graphics::Renderer2D& renderer, float alpha);
-		void Render(graphics::Renderer2D& renderer, float alpha);
-		Entity CreateEntity();
-		void DestroyEntity(const Entity& entity);
+		void update(float deltaTime);
+		void beforeRender(graphics::Renderer2D& renderer, float alpha);
+		void render(graphics::Renderer2D& renderer, float alpha);
+		Entity createEntity();
+		void destroyEntity(const Entity& entity);
 
 		template<typename TComponent>
-		void AddComponent(Entity entity, const TComponent& component);
+		void addComponent(Entity entity, const TComponent& component);
 
 		template<typename TComponent>
-		TComponent& GetComponent(Entity entity);
+		TComponent& getComponent(Entity entity);
 
 		template<typename TComponent>
-		void RemoveComponent(Entity entity);
+		void removeComponent(Entity entity);
 
 		template<typename TCompoent>
-		ComponentStorage<TCompoent>* GetComponentStorage();
+		ComponentStorage<TCompoent>* getComponentStorage();
 
 		template<typename TSystem, typename... TArgs>
 		requires std::derived_from<TSystem, System>
-		TSystem& AddSystem(TArgs&&... args);
+		TSystem& addSystem(TArgs&&... args);
 
 	private:
 		uint32_t m_nextEntityId;
@@ -51,38 +51,38 @@ namespace cocoa::scenes
 	};
 
 	template<typename TComponent>
-	inline void World::AddComponent(Entity entity, const TComponent& component)
+	inline void World::addComponent(Entity entity, const TComponent& component)
 	{
-		uint32_t typeId = ComponentType<TComponent>::GetId();
+		uint32_t typeId = ComponentType<TComponent>::getId();
 		if (m_componentStorages.find(typeId) == m_componentStorages.end())
 		{
 			m_componentStorages[typeId] = std::make_shared<ComponentStorage<TComponent>>();
 		}
 
 		auto componentStorage = std::static_pointer_cast<ComponentStorage<TComponent>>(m_componentStorages[typeId]);
-		componentStorage->Add(entity.GetId(), component);
+		componentStorage->add(entity.getId(), component);
 	}
 
 	template<typename TComponent>
-	inline TComponent& World::GetComponent(Entity entity)
+	inline TComponent& World::getComponent(Entity entity)
 	{
-		uint32_t typeId = ComponentType<TComponent>::GetId();
+		uint32_t typeId = ComponentType<TComponent>::getId();
 		auto componentStorage = std::static_pointer_cast<ComponentStorage<TComponent>>(m_componentStorages[typeId]);
-		return componentStorage->Get(entity.GetId());
+		return componentStorage->get(entity.getId());
 	}
 
 	template<typename TComponent>
-	inline void World::RemoveComponent(Entity entity)
+	inline void World::removeComponent(Entity entity)
 	{
-		uint32_t typeId = ComponentType<TComponent>::GetId();
+		uint32_t typeId = ComponentType<TComponent>::getId();
 		auto componentStorage = std::static_pointer_cast<ComponentStorage<TComponent>>(m_componentStorages[typeId]);
-		componentStorage->Remove(entity.GetId());
+		componentStorage->remove(entity.getId());
 	}
 
 	template<typename TComponent>
-	inline ComponentStorage<TComponent>* World::GetComponentStorage()
+	inline ComponentStorage<TComponent>* World::getComponentStorage()
 	{
-		uint32_t typeId = ComponentType<TComponent>::GetId();
+		uint32_t typeId = ComponentType<TComponent>::getId();
 
 		auto it = m_componentStorages.find(typeId);
 		if (it == m_componentStorages.end())
@@ -93,7 +93,7 @@ namespace cocoa::scenes
 
 	template<typename TSystem, typename... TArgs>
 		requires std::derived_from<TSystem, System>
-	inline TSystem& World::AddSystem(TArgs&&... args)
+	inline TSystem& World::addSystem(TArgs&&... args)
 	{
 		auto system = std::make_unique<TSystem>(std::forward<TArgs>(args)...);
 		TSystem& reference = *system;

@@ -10,15 +10,15 @@ namespace cocoa::math
     /// </summary>
     struct Vector4f
     {
-        float X{0.0f};
-        float Y{0.0f};
-        float Z{0.0f};
-        float W{0.0f};
+        float x{0.0f};
+        float y{0.0f};
+        float z{0.0f};
+        float w{0.0f};
 
         constexpr Vector4f() = default;
 
         constexpr Vector4f(const float x, const float y, const float z, const float w) :
-            X(x), Y(y), Z(z), W(w)
+            x(x), y(y), z(z), w(w)
         {
 
         }
@@ -30,10 +30,10 @@ namespace cocoa::math
 		/// <returns>A new vector containing the component-wise sum.</returns>
 		[[nodiscard]] constexpr Vector4f operator+(const Vector4f& other) const
 		{
-			const auto xSum = X + other.X;
-			const auto ySum = Y + other.Y;
-			const auto zSum = Z + other.Z;
-        	const auto wSum = W + other.W;
+			const auto xSum = x + other.x;
+			const auto ySum = y + other.y;
+			const auto zSum = z + other.z;
+        	const auto wSum = w + other.w;
 
 			return Vector4f(xSum, ySum, zSum, wSum);
 		}
@@ -45,10 +45,10 @@ namespace cocoa::math
 		/// <returns>A reference to this vector after the addition.</returns>
 		constexpr Vector4f& operator+=(const Vector4f& other)
 		{
-			X += other.X;
-			Y += other.Y;
-			Z += other.Z;
-        	W += other.W;
+			x += other.x;
+			y += other.y;
+			z += other.z;
+        	w += other.w;
 
 			return *this;
 		}
@@ -60,10 +60,10 @@ namespace cocoa::math
 		/// <returns>A new vector containing the component-wise difference.</returns>
 		[[nodiscard]] constexpr Vector4f operator-(const Vector4f& other) const
 		{
-			const auto xDifference = X - other.X;
-			const auto yDifference = Y - other.Y;
-			const auto zDifference = Z - other.Z;
-        	const auto wDifference = W - other.W;
+			const auto xDifference = x - other.x;
+			const auto yDifference = y - other.y;
+			const auto zDifference = z - other.z;
+        	const auto wDifference = w - other.w;
 
 			return Vector4f(xDifference, yDifference, zDifference, wDifference);
 		}
@@ -75,10 +75,10 @@ namespace cocoa::math
 		/// <returns>A reference to this vector after the subtraction.</returns>
 		constexpr Vector4f& operator-=(const Vector4f& other)
 		{
-			X -= other.X;
-			Y -= other.Y;
-			Z -= other.Z;
-        	W -= other.W;
+			x -= other.x;
+			y -= other.y;
+			z -= other.z;
+        	w -= other.w;
 
 			return *this;
 		}
@@ -90,10 +90,10 @@ namespace cocoa::math
 		/// <returns>A new vector scaled by the provided scalar.</returns>
 		[[nodiscard]] constexpr Vector4f operator*(const float scalar) const
 		{
-			const auto xProduct = X * scalar;
-			const auto yProduct = Y * scalar;
-			const auto zProduct = Z * scalar;
-        	const auto wProduct = W * scalar;
+			const auto xProduct = x * scalar;
+			const auto yProduct = y * scalar;
+			const auto zProduct = z * scalar;
+        	const auto wProduct = w * scalar;
 
 			return Vector4f(xProduct, yProduct, zProduct, wProduct);
 		}
@@ -105,10 +105,10 @@ namespace cocoa::math
 		/// <returns>A reference to this vector after scaling.</returns>
 		constexpr Vector4f& operator*=(const float scalar)
 		{
-			X *= scalar;
-			Y *= scalar;
-			Z *= scalar;
-        	W *= scalar;
+			x *= scalar;
+			y *= scalar;
+			z *= scalar;
+        	w *= scalar;
 
 			return *this;
 		}
@@ -124,10 +124,10 @@ namespace cocoa::math
 		[[nodiscard]] constexpr Vector4f operator/(const float scalar) const
 		{
 			assert(scalar != 0.0f && "Vector4f::operator/ cannot divide by zero scalar");
-			const auto xQuotient = X / scalar;
-			const auto yQuotient = Y / scalar;
-			const auto zQuotient = Z / scalar;
-        	const auto wQuotient = W / scalar;
+			const auto xQuotient = x / scalar;
+			const auto yQuotient = y / scalar;
+			const auto zQuotient = z / scalar;
+        	const auto wQuotient = w / scalar;
 
 			return Vector4f(xQuotient, yQuotient, zQuotient, wQuotient);
 		}
@@ -143,10 +143,10 @@ namespace cocoa::math
 		constexpr Vector4f& operator/=(const float scalar)
 		{
 			assert(scalar != 0.0f && "Vector4f::operator/= cannot divide by zero scalar");
-			X /= scalar;
-			Y /= scalar;
-			Z /= scalar;
-        	W /= scalar;
+			x /= scalar;
+			y /= scalar;
+			z /= scalar;
+        	w /= scalar;
 
 			return *this;
 		}
@@ -157,14 +157,14 @@ namespace cocoa::math
 		/// <param name="other">The vector containing the component values to multiply by.</param>
 		/// <returns>A new vector containing the component-wise product.</returns>
 		/// <remarks>
-		/// This is not a dot product. Use <c>Dot</c> for dot product operations.
+		/// This is not a dot product. Use <c>dot</c> for dot product operations.
 		/// </remarks>
 		[[nodiscard]] constexpr Vector4f ComponentWiseMultiply(const Vector4f& other) const
 		{
-			const auto xProduct = X * other.X;
-			const auto yProduct = Y * other.Y;
-			const auto zProduct = Z * other.Z;
-        	const auto wProduct = W * other.W;
+			const auto xProduct = x * other.x;
+			const auto yProduct = y * other.y;
+			const auto zProduct = z * other.z;
+        	const auto wProduct = w * other.w;
 
 			return Vector4f(xProduct, yProduct, zProduct, wProduct);
 		}
@@ -179,14 +179,14 @@ namespace cocoa::math
 		/// </remarks>
 		[[nodiscard]] constexpr Vector4f ComponentWiseDivide(const Vector4f& other) const
 		{
-			assert(other.X != 0.0f && "Vector4f::ComponentWiseDivide() cannot divide by zero X component");
-			assert(other.Y != 0.0f && "Vector4f::ComponentWiseDivide() cannot divide by zero Y component");
-			assert(other.Z != 0.0f && "Vector4f::ComponentWiseDivide() cannot divide by zero Z component");
-			assert(other.W != 0.0f && "Vector4f::ComponentWiseDivide() cannot divide by zero W component");
-			const auto xQuotient = (X / other.X);
-			const auto yQuotient = (Y / other.Y);
-			const auto zQuotient = (Z / other.Z);
-        	const auto wQuotient = (W / other.W);
+			assert(other.x != 0.0f && "Vector4f::componentWiseDivide() cannot divide by zero x component");
+			assert(other.y != 0.0f && "Vector4f::componentWiseDivide() cannot divide by zero y component");
+			assert(other.z != 0.0f && "Vector4f::componentWiseDivide() cannot divide by zero z component");
+			assert(other.w != 0.0f && "Vector4f::componentWiseDivide() cannot divide by zero w component");
+			const auto xQuotient = (x / other.x);
+			const auto yQuotient = (y / other.y);
+			const auto zQuotient = (z / other.z);
+        	const auto wQuotient = (w / other.w);
 
 			return Vector4f(xQuotient, yQuotient, zQuotient, wQuotient);
 		}
@@ -195,9 +195,9 @@ namespace cocoa::math
 		/// Calculates the length, or magnitude, of this vector.
 		/// </summary>
 		/// <returns>The length of this vector.</returns>
-		[[nodiscard]] float Length() const
+		[[nodiscard]] float length() const
 		{
-			return std::sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
+			return std::sqrt((x * x) + (y * y) + (z * z) + (w * w));
 		}
 
 		/// <summary>
@@ -205,11 +205,11 @@ namespace cocoa::math
 		/// </summary>
 		/// <returns>The squared length of this vector.</returns>
 		/// <remarks>
-		/// This avoids the square root used by <c>Length</c> and is useful for distance comparisons.
+		/// This avoids the square root used by <c>length</c> and is useful for distance comparisons.
 		/// </remarks>
-		[[nodiscard]] constexpr float LengthSquared() const
+		[[nodiscard]] constexpr float lengthSquared() const
 		{
-			return (X * X) + (Y * Y) + (Z * Z) + (W * W);
+			return (x * x) + (y * y) + (z * z) + (w * w);
 		}
 
 		/// <summary>
@@ -217,9 +217,9 @@ namespace cocoa::math
 		/// </summary>
 		/// <param name="other">The other vector used in the dot product calculation.</param>
 		/// <returns>The dot product of the two vectors.</returns>
-		[[nodiscard]] constexpr float Dot(const Vector4f& other) const
+		[[nodiscard]] constexpr float dot(const Vector4f& other) const
 		{
-			return (X * other.X) + (Y * other.Y) + (Z * other.Z) + (W * other.W);
+			return (x * other.x) + (y * other.y) + (z * other.z) + (w * other.w);
 		}
 
 		/// <summary>
@@ -229,11 +229,11 @@ namespace cocoa::math
 		/// <remarks>
 		/// Asserts in debug builds when attempting to normalize a zero-length vector.
 		/// </remarks>
-		[[nodiscard]] Vector4f Normalized() const
+		[[nodiscard]] Vector4f normalized() const
 		{
-			const float magnitude = Length();
-			assert(magnitude != 0.0f && "Vector4f::Normalized() cannot normalize a zero vector");
-			return Vector4f(X / magnitude, Y / magnitude, Z / magnitude, W / magnitude);
+			const float magnitude = length();
+			assert(magnitude != 0.0f && "Vector4f::normalized() cannot normalize a zero vector");
+			return Vector4f(x / magnitude, y / magnitude, z / magnitude, w / magnitude);
 		}
 	};
 }

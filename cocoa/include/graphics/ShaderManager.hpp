@@ -21,13 +21,13 @@ namespace cocoa::graphics
 		ShaderManager(const ShaderManager&) = delete;
 		ShaderManager& operator=(const ShaderManager&) = delete;
 
-		ShaderHandle Load(
+		ShaderHandle load(
 			const std::string& shaderId,
 			const std::string& vertexSource,
 			const std::string& fragmentSource
 		);
-		const Shader& Get(ShaderHandle handle) const;
-		const bool TryGetHandle(const std::string& id, ShaderHandle& outHandle) const;
+		const Shader& get(ShaderHandle handle) const;
+		const bool tryGetHandle(const std::string& id, ShaderHandle& outHandle) const;
 
 	private:
 		GraphicsDevice& m_graphicsDevice;

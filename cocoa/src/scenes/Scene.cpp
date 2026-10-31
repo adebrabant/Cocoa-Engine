@@ -9,15 +9,15 @@ namespace cocoa::scenes
 
 	}
 
-	void Scene::Update(const float deltaTime)
+	void Scene::update(const float deltaTime)
 	{
-		m_world.Update(deltaTime);
+		m_world.update(deltaTime);
 	}
 
-	void Scene::Render(graphics::Renderer2D& renderer, const float alpha)
+	void Scene::render(graphics::Renderer2D& renderer, const float alpha)
 	{
-		m_world.BeforeRender(renderer, alpha);
-		m_world.Render(renderer, alpha);
-		renderer.EndDraw();
+		m_world.beforeRender(renderer, alpha);
+		m_world.render(renderer, alpha);
+		renderer.endDraw();
 	}
 }

@@ -62,16 +62,16 @@ namespace cocoa_tests::assets
 	{
 		const auto sut = cocoa::assets::JsonAssetDatabase(testMetadataPath);
 
-		const auto& result = sut.GetTextureInfo("dummy_idle1");
+		const auto& result = sut.getTextureInfo("dummy_idle1");
 
 		EXPECT_EQ("dummy_idle1", result.id);
 		EXPECT_EQ("textures/dummy-idle1.png", result.path);
-		EXPECT_EQ("RGBA8", result.Format);
-		EXPECT_EQ("Linear", result.MinFilter);
-		EXPECT_EQ("Linear", result.MagFilter);
-		EXPECT_EQ("ClampToEdge", result.WrapS);
-		EXPECT_EQ("ClampToEdge", result.WrapT);
-		EXPECT_FALSE(result.GenerateMipmaps);
+		EXPECT_EQ("RGBA8", result.format);
+		EXPECT_EQ("Linear", result.minFilter);
+		EXPECT_EQ("Linear", result.magFilter);
+		EXPECT_EQ("ClampToEdge", result.wrapS);
+		EXPECT_EQ("ClampToEdge", result.wrapT);
+		EXPECT_FALSE(result.generateMipmaps);
 	}
 
 	TEST(JsonAssetDatabaseTests, GetTextureInfo_ShouldThrowError_WhenGivenInvalidId)
@@ -79,7 +79,7 @@ namespace cocoa_tests::assets
 		const auto sut = cocoa::assets::JsonAssetDatabase(testMetadataPath);
 
 		EXPECT_THROW(
-			auto record = sut.GetTextureInfo("missing_texture"),
+			auto record = sut.getTextureInfo("missing_texture"),
 			std::runtime_error
 		);
 	}
@@ -88,10 +88,10 @@ namespace cocoa_tests::assets
 	{
 		const auto sut = cocoa::assets::JsonAssetDatabase(testMetadataPath);
 
-		const auto& result = sut.GetShaderInfo("dummy_shader");
+		const auto& result = sut.getShaderInfo("dummy_shader");
 
-		EXPECT_EQ("shaders/sprite.vert", result.VertexPath);
-		EXPECT_EQ("shaders/sprite.frag", result.FragmentPath);
+		EXPECT_EQ("shaders/sprite.vert", result.vertexPath);
+		EXPECT_EQ("shaders/sprite.frag", result.fragmentPath);
 	}
 
 	TEST(JsonAssetDatabaseTests, GetShaderInfo_ShouldThrowError_WhenGivenInvalidId)
@@ -99,7 +99,7 @@ namespace cocoa_tests::assets
 		const auto sut = cocoa::assets::JsonAssetDatabase(testMetadataPath);
 
 		EXPECT_THROW(
-			auto record = sut.GetShaderInfo("missing_shader"),
+			auto record = sut.getShaderInfo("missing_shader"),
 			std::runtime_error
 		);
 	}
@@ -108,14 +108,14 @@ namespace cocoa_tests::assets
 	{
 		const auto sut = cocoa::assets::JsonAssetDatabase(testMetadataPath);
 
-		const auto& result = sut.GetMaterialInfo("dummy_material");
+		const auto& result = sut.getMaterialInfo("dummy_material");
 
-		EXPECT_EQ("dummy_shader", result.ShaderId);
-		EXPECT_EQ("opaque", result.BlendMode);
-		EXPECT_EQ(1.0, result.Tint.R);
-		EXPECT_EQ(1.0, result.Tint.G);
-		EXPECT_EQ(1.0, result.Tint.B);
-		EXPECT_EQ(1.0, result.Tint.A);
+		EXPECT_EQ("dummy_shader", result.shaderId);
+		EXPECT_EQ("opaque", result.blendMode);
+		EXPECT_EQ(1.0, result.tint.r);
+		EXPECT_EQ(1.0, result.tint.g);
+		EXPECT_EQ(1.0, result.tint.b);
+		EXPECT_EQ(1.0, result.tint.a);
 	}
 
 	TEST(JsonAssetDatabaseTests, GetMaterialInfo_ShouldThrowError_WhenGivenInvalidId)
@@ -123,7 +123,7 @@ namespace cocoa_tests::assets
 		const auto sut = cocoa::assets::JsonAssetDatabase(testMetadataPath);
 
 		EXPECT_THROW(
-			auto record = sut.GetMaterialInfo("missing_material"),
+			auto record = sut.getMaterialInfo("missing_material"),
 			std::runtime_error
 		);
 	}
@@ -133,14 +133,14 @@ namespace cocoa_tests::assets
 		const std::string name{"dummy_sprite"};
 		const auto sut = cocoa::assets::JsonAssetDatabase(testMetadataPath);
 
-		const auto& result = sut.GetSpriteInfo(name);
+		const auto& result = sut.getSpriteInfo(name);
 
-		EXPECT_EQ(name, result.Id);
-		EXPECT_EQ("dummy_idle1", result.TextureId);
-		EXPECT_EQ(0.0, result.MinPixel.X);
-		EXPECT_EQ(0.0, result.MinPixel.Y);
-		EXPECT_EQ(320.0, result.MaxPixel.X);
-		EXPECT_EQ(180.0, result.MaxPixel.Y);
+		EXPECT_EQ(name, result.id);
+		EXPECT_EQ("dummy_idle1", result.textureId);
+		EXPECT_EQ(0.0, result.minPixel.x);
+		EXPECT_EQ(0.0, result.minPixel.y);
+		EXPECT_EQ(320.0, result.maxPixel.x);
+		EXPECT_EQ(180.0, result.maxPixel.y);
 	}
 
 	TEST(JsonAssetDatabaseTests, GetSpriteInfo_ShouldThrowError_WhenGivenInvalidId)
@@ -148,7 +148,7 @@ namespace cocoa_tests::assets
 		const auto sut = cocoa::assets::JsonAssetDatabase(testMetadataPath);
 
 		EXPECT_THROW(
-			auto record = sut.GetSpriteInfo("missing_sprite"),
+			auto record = sut.getSpriteInfo("missing_sprite"),
 			std::runtime_error
 		);
 	}

@@ -19,9 +19,9 @@ namespace cocoa::graphics
 
 	TextureManager::~TextureManager() = default;
 
-	TextureHandle TextureManager::Load(const TextureSpec& spec, const void* pixels)
+	TextureHandle TextureManager::load(const TextureSpec& spec, const void* pixels)
 	{
-		if (const auto it = m_handles.find(spec.Id); it != m_handles.end())
+		if (const auto it = m_handles.find(spec.id); it != m_handles.end())
 		{
 			return it->second;
 		}
@@ -31,34 +31,34 @@ namespace cocoa::graphics
 			throw std::runtime_error("Texture pixels cannot be null.");
 		}
 
-		TextureHandle handle{ .Id = m_nextId++ };
-		Unique<Texture2D> texture = m_graphicsDevice.CreateTexture2D(
+		TextureHandle handle{ .id = m_nextId++ };
+		Unique<Texture2D> texture = m_graphicsDevice.createTexture2D(
 			spec,
 			static_cast<const unsigned char*>(pixels)
 		);
 
-		m_handles.emplace(spec.Id, handle);
-		m_textures.emplace(handle.Id, std::move(texture));
+		m_handles.emplace(spec.id, handle);
+		m_textures.emplace(handle.id, std::move(texture));
 
 		return handle;
 	}
 
-	const Texture2D& TextureManager::Get(TextureHandle handle) const
+	const Texture2D& TextureManager::get(TextureHandle handle) const
 	{
-		const auto it = m_textures.find(handle.Id);
+		const auto it = m_textures.find(handle.id);
 
 		if (it == m_textures.end())
 		{
 			throw std::runtime_error(
 				"No Texture found with the texture handle id: " +
-				std::to_string(handle.Id)
+				std::to_string(handle.id)
 			);
 		}
 
 		return *it->second;
 	}
 
-	bool TextureManager::TryGetHandle(const std::string& id, TextureHandle& outHandle) const
+	bool TextureManager::tryGetHandle(const std::string& id, TextureHandle& outHandle) const
 	{
 		if (const auto it = m_handles.find(id); it != m_handles.end())
 		{
@@ -66,7 +66,7 @@ namespace cocoa::graphics
 			return true;
 		}
 
-		outHandle = TextureHandle{ .Id = 0 };
+		outHandle = TextureHandle{ .id = 0 };
 		return false;
 	}
 }

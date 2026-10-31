@@ -12,19 +12,19 @@ namespace cocoa::graphics
         OrthographicProjection();
         OrthographicProjection(float left, float right, float bottom, float top, float near, float far);
 
-        void SetProjection(float left, float right, float bottom, float top, float near, float far);
-        [[nodiscard]] const math::Matrix4f& GetProjectionMatrix() const { return m_projectionMatrix; }
+        void setProjection(float left, float right, float bottom, float top, float near, float far);
+        [[nodiscard]] const math::Matrix4f& getProjectionMatrix() const { return m_projectionMatrix; }
 
-        [[nodiscard]] const math::Matrix4f& GetViewProjectionMatrix() const { return m_viewProjectionMatrix; }
+        [[nodiscard]] const math::Matrix4f& getViewProjectionMatrix() const { return m_viewProjectionMatrix; }
 
-        void SetPosition(const math::Vector3f& position);
-        [[nodiscard]] const math::Vector3f& GetPosition() const { return m_position; }
+        void setPosition(const math::Vector3f& position);
+        [[nodiscard]] const math::Vector3f& getPosition() const { return m_position; }
 
-        void SetRotation(float rotation);
-        [[nodiscard]] float GetRotation() const { return m_rotation; }
+        void setRotation(float rotation);
+        [[nodiscard]] float getRotation() const { return m_rotation; }
 
     private:
-        void RecalculateViewProjectionMatrix();
+        void recalculateViewProjectionMatrix();
 
     private:
         math::Matrix4f m_projectionMatrix;

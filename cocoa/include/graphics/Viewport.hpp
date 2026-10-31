@@ -7,37 +7,37 @@ namespace cocoa::graphics
 {
     struct Viewport
     {
-        int32_t X;
-        int32_t Y;
-        uint32_t Width;
-        uint32_t Height;
+        int32_t x;
+        int32_t y;
+        uint32_t width;
+        uint32_t height;
 
         Viewport(const int32_t x, const int32_t y, const uint32_t width, const uint32_t height) :
-            X(x),
-            Y(y),
-            Width(width),
-            Height(height)
+            x(x),
+            y(y),
+            width(width),
+            height(height)
         {
             assert(height != 0 && "Viewport::Viewport() height cannot be zero");
         }
 
-        void Resize(
-            const int32_t x,
-            const int32_t y,
-            const uint32_t width,
-            const uint32_t height)
+        void resize(
+            const int32_t newX,
+            const int32_t newY,
+            const uint32_t newWidth,
+            const uint32_t newHeight)
         {
-            assert(height != 0 && "Viewport::Resize() height cannot be zero");
-            X = x;
-            Y = y;
-            Width = width;
-            Height = height;
+            assert(newHeight != 0 && "Viewport::resize() height cannot be zero");
+            x = newX;
+            y = newY;
+            width = newWidth;
+            height = newHeight;
         }
 
         [[nodiscard]] float GetAspectRatio() const
         {
-            assert(Height != 0 && "Viewport::GetAspectRatio() cannot divide by zero height");
-            return static_cast<float>(Width) / static_cast<float>(Height);
+            assert(height != 0 && "Viewport::GetAspectRatio() cannot divide by zero height");
+            return static_cast<float>(width) / static_cast<float>(height);
         }
     };
 }

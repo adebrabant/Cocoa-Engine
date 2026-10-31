@@ -13,8 +13,8 @@ namespace cocoa::graphics
 		BufferLayout(std::initializer_list<BufferElement> elements);
 		~BufferLayout() = default;
 
-		uint32_t GetStride() const { return m_stride; }
-		const std::vector<BufferElement>& GetElements() const { return m_elements; }
+		[[nodiscard]] uint32_t getStride() const { return m_stride; }
+		[[nodiscard]] const std::vector<BufferElement>& getElements() const { return m_elements; }
 
 	private:
 		std::vector<BufferElement> m_elements;

@@ -6,7 +6,7 @@ namespace cocoa::assets
 {
 	struct ShaderSource
 	{
-		std::string Vertex;
-		std::string Fragment;
+		std::string vertex;
+		std::string fragment;
 	};
 }

@@ -17,9 +17,9 @@ namespace cocoa::graphics
 		OpenGLIndexBuffer(OpenGLIndexBuffer&& other) noexcept;
 		OpenGLIndexBuffer& operator=(OpenGLIndexBuffer&& other) noexcept;
 
-		void Bind() const override;
-		void Unbind() const override;
-		[[nodiscard]] uint32_t GetCount() const override;
+		void bind() const override;
+		void unbind() const override;
+		[[nodiscard]] uint32_t getCount() const override;
 
 	private:
 		void Destroy() const;

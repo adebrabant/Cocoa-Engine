@@ -63,21 +63,21 @@ namespace cocoa::graphics
 		return *this;
 	}
 
-	void OpenGLVertexBuffer::Bind() const
+	void OpenGLVertexBuffer::bind() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, static_cast<GLuint>(m_vbo));
 	}
 
-	void OpenGLVertexBuffer::Unbind() const
+	void OpenGLVertexBuffer::unbind() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
-	void OpenGLVertexBuffer::SetData(const void* data, uint32_t size) const
+	void OpenGLVertexBuffer::setData(const void* data, uint32_t size) const
 	{
-		Bind();
+		bind();
 		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
-		Unbind();
+		unbind();
 	}
 
 	void OpenGLVertexBuffer::Destroy()

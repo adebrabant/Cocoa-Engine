@@ -6,6 +6,6 @@ namespace cocoa::scenes
 {
     struct ProjectionComponent
     {
-        graphics::OrthographicProjection Projection;
+        graphics::OrthographicProjection projection;
     };
 }

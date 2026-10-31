@@ -8,12 +8,12 @@ namespace cocoa::scenes
 {
 	struct SpriteComponent
 	{
-		graphics::MaterialHandle Material{};
-		graphics::SpriteHandle Sprite{};
-		math::Vector2f TilingFactor{1.0f, 1.0f};
-		bool FlipVertical{false};
-		bool FlipHorizontal{false};
-		graphics::SortLayer SortingLayer{graphics::SortLayer::World};
-		int SortingOrder{0};
+		graphics::MaterialHandle materialHandle{};
+		graphics::SpriteHandle spriteHandle{};
+		math::Vector2f tilingFactor{1.0f, 1.0f};
+		bool flipVertical{false};
+		bool flipHorizontal{false};
+		graphics::SortLayer sortingLayer{graphics::SortLayer::World};
+		int sortingOrder{0};
 	};
 }

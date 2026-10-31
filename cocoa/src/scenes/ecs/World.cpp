@@ -17,31 +17,31 @@ namespace cocoa::scenes
 
 	}
 
-	void World::Update(float deltaTime)
+	void World::update(float deltaTime)
 	{
 		for (auto& system : m_systems)
 		{
-			system->Update(*this, deltaTime);
+			system->update(*this, deltaTime);
 		}
 	}
 
-	void World::BeforeRender(graphics::Renderer2D& renderer, float alpha)
+	void World::beforeRender(graphics::Renderer2D& renderer, float alpha)
 	{
 		for (auto& system : m_systems)
 		{
-			system->BeginRender(*this, renderer, alpha);
+			system->beginRender(*this, renderer, alpha);
 		}
 	}
 
-	void World::Render(graphics::Renderer2D& renderer, float alpha)
+	void World::render(graphics::Renderer2D& renderer, float alpha)
 	{
 		for (auto& system : m_systems)
 		{
-			system->Render(*this, renderer, alpha);
+			system->render(*this, renderer, alpha);
 		}
 	}
 
-	Entity World::CreateEntity()
+	Entity World::createEntity()
 	{
 		uint32_t entityId;
 		if (!m_freeEntityIds.empty())
@@ -59,9 +59,9 @@ namespace cocoa::scenes
 		return Entity(entityId);
 	}
 
-	void World::DestroyEntity(const Entity& entity)
+	void World::destroyEntity(const Entity& entity)
 	{
-		uint32_t entityId = entity.GetId();
+		uint32_t entityId = entity.getId();
 		auto it = m_activeEntities.find(entityId);
 		if (it != m_activeEntities.end())
 		{

@@ -22,9 +22,9 @@ namespace cocoa_tests::math
 	{
 		const cocoa::math::Vector4f sut;
 
-		EXPECT_FLOAT_EQ(sut.X, 0.0f);
-		EXPECT_FLOAT_EQ(sut.Y, 0.0f);
-		EXPECT_FLOAT_EQ(sut.Z, 0.0f);
+		EXPECT_FLOAT_EQ(sut.x, 0.0f);
+		EXPECT_FLOAT_EQ(sut.y, 0.0f);
+		EXPECT_FLOAT_EQ(sut.z, 0.0f);
 	}
 
 	TEST(Vector4fTests, Constructor_ShouldSetComponents_WhenProvidingValues)
@@ -36,10 +36,10 @@ namespace cocoa_tests::math
 
 		const cocoa::math::Vector4f sut(expectedX, expectedY, expectedZ, expectedW);
 
-		EXPECT_FLOAT_EQ(sut.X, expectedX);
-		EXPECT_FLOAT_EQ(sut.Y, expectedY);
-		EXPECT_FLOAT_EQ(sut.Z, expectedZ);
-		EXPECT_FLOAT_EQ(sut.W, expectedW);
+		EXPECT_FLOAT_EQ(sut.x, expectedX);
+		EXPECT_FLOAT_EQ(sut.y, expectedY);
+		EXPECT_FLOAT_EQ(sut.z, expectedZ);
+		EXPECT_FLOAT_EQ(sut.w, expectedW);
 	}
 
 	class Vector4fAddTests : public testing::TestWithParam<Vector4fTestCase> { };
@@ -75,10 +75,10 @@ namespace cocoa_tests::math
 
 		const cocoa::math::Vector4f result = testCase.Left + testCase.Right;
 
-		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
-		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
-		EXPECT_FLOAT_EQ(result.Z, testCase.Expected.Z);
-		EXPECT_FLOAT_EQ(result.W, testCase.Expected.W);
+		EXPECT_FLOAT_EQ(result.x, testCase.Expected.x);
+		EXPECT_FLOAT_EQ(result.y, testCase.Expected.y);
+		EXPECT_FLOAT_EQ(result.z, testCase.Expected.z);
+		EXPECT_FLOAT_EQ(result.w, testCase.Expected.w);
 	}
 
 	TEST_P(Vector4fAddTests, AddAssignOperator_ShouldMutateVector_WhenAddingOtherVector)
@@ -89,10 +89,10 @@ namespace cocoa_tests::math
 		cocoa::math::Vector4f& result = sut += testCase.Right;
 
 		EXPECT_EQ(&result, &sut);
-		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
-		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
-		EXPECT_FLOAT_EQ(result.Z, testCase.Expected.Z);
-		EXPECT_FLOAT_EQ(result.W, testCase.Expected.W);
+		EXPECT_FLOAT_EQ(result.x, testCase.Expected.x);
+		EXPECT_FLOAT_EQ(result.y, testCase.Expected.y);
+		EXPECT_FLOAT_EQ(result.z, testCase.Expected.z);
+		EXPECT_FLOAT_EQ(result.w, testCase.Expected.w);
 	}
 
 	class Vector4fSubtractTests : public testing::TestWithParam<Vector4fTestCase> {};
@@ -128,10 +128,10 @@ namespace cocoa_tests::math
 
 		const cocoa::math::Vector4f result = testCase.Left - testCase.Right;
 
-		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
-		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
-		EXPECT_FLOAT_EQ(result.Z, testCase.Expected.Z);
-		EXPECT_FLOAT_EQ(result.W, testCase.Expected.W);
+		EXPECT_FLOAT_EQ(result.x, testCase.Expected.x);
+		EXPECT_FLOAT_EQ(result.y, testCase.Expected.y);
+		EXPECT_FLOAT_EQ(result.z, testCase.Expected.z);
+		EXPECT_FLOAT_EQ(result.w, testCase.Expected.w);
 	}
 
 	TEST_P(Vector4fSubtractTests, SubtractAssignOperator_ShouldMutateVector_WhenSubtractingOtherVector)
@@ -142,10 +142,10 @@ namespace cocoa_tests::math
 		cocoa::math::Vector4f& result = sut -= testCase.Right;
 
 		EXPECT_EQ(&result, &sut);
-		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
-		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
-		EXPECT_FLOAT_EQ(result.Z, testCase.Expected.Z);
-		EXPECT_FLOAT_EQ(result.W, testCase.Expected.W);
+		EXPECT_FLOAT_EQ(result.x, testCase.Expected.x);
+		EXPECT_FLOAT_EQ(result.y, testCase.Expected.y);
+		EXPECT_FLOAT_EQ(result.z, testCase.Expected.z);
+		EXPECT_FLOAT_EQ(result.w, testCase.Expected.w);
 	}
 
 	class Vector4fMultiplyScalarTests : public testing::TestWithParam<Vector4fScalarTestCase> {};
@@ -181,10 +181,10 @@ namespace cocoa_tests::math
 
 		const cocoa::math::Vector4f result = testCase.Left * testCase.Scalar;
 
-		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
-		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
-		EXPECT_FLOAT_EQ(result.Z, testCase.Expected.Z);
-		EXPECT_FLOAT_EQ(result.W, testCase.Expected.W);
+		EXPECT_FLOAT_EQ(result.x, testCase.Expected.x);
+		EXPECT_FLOAT_EQ(result.y, testCase.Expected.y);
+		EXPECT_FLOAT_EQ(result.z, testCase.Expected.z);
+		EXPECT_FLOAT_EQ(result.w, testCase.Expected.w);
 	}
 
 	TEST_P(Vector4fMultiplyScalarTests, MultiplyAssignOperator_ShouldMutateVector_WhenMultiplyByScalar)
@@ -195,10 +195,10 @@ namespace cocoa_tests::math
 		cocoa::math::Vector4f& result = sut *= testCase.Scalar;
 
 		EXPECT_EQ(&result, &sut);
-		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
-		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
-		EXPECT_FLOAT_EQ(result.Z, testCase.Expected.Z);
-		EXPECT_FLOAT_EQ(result.W, testCase.Expected.W);
+		EXPECT_FLOAT_EQ(result.x, testCase.Expected.x);
+		EXPECT_FLOAT_EQ(result.y, testCase.Expected.y);
+		EXPECT_FLOAT_EQ(result.z, testCase.Expected.z);
+		EXPECT_FLOAT_EQ(result.w, testCase.Expected.w);
 	}
 
 	class Vector4fDivideScalarTests : public testing::TestWithParam<Vector4fScalarTestCase> {};
@@ -234,10 +234,10 @@ namespace cocoa_tests::math
 
 		const cocoa::math::Vector4f result = testCase.Left / testCase.Scalar;
 
-		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
-		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
-		EXPECT_FLOAT_EQ(result.Z, testCase.Expected.Z);
-		EXPECT_FLOAT_EQ(result.W, testCase.Expected.W);
+		EXPECT_FLOAT_EQ(result.x, testCase.Expected.x);
+		EXPECT_FLOAT_EQ(result.y, testCase.Expected.y);
+		EXPECT_FLOAT_EQ(result.z, testCase.Expected.z);
+		EXPECT_FLOAT_EQ(result.w, testCase.Expected.w);
 	}
 
 	TEST(Vector4fTests, DivideOperator_ShouldAssert_WhenDividingByZeroScalar)
@@ -262,9 +262,9 @@ namespace cocoa_tests::math
 		cocoa::math::Vector4f& result = sut /= testCase.Scalar;
 
 		EXPECT_EQ(&sut, &result);
-		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
-		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
-		EXPECT_FLOAT_EQ(result.Z, testCase.Expected.Z);
+		EXPECT_FLOAT_EQ(result.x, testCase.Expected.x);
+		EXPECT_FLOAT_EQ(result.y, testCase.Expected.y);
+		EXPECT_FLOAT_EQ(result.z, testCase.Expected.z);
 	}
 
 	TEST(Vector4fTests, DivideAssignOperator_ShouldAssert_WhenDividingByZeroScalar)
@@ -313,10 +313,10 @@ namespace cocoa_tests::math
 
 		const cocoa::math::Vector4f result = testCase.Left.ComponentWiseMultiply(testCase.Right);
 
-		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
-		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
-		EXPECT_FLOAT_EQ(result.Z, testCase.Expected.Z);
-		EXPECT_FLOAT_EQ(result.W, testCase.Expected.W);
+		EXPECT_FLOAT_EQ(result.x, testCase.Expected.x);
+		EXPECT_FLOAT_EQ(result.y, testCase.Expected.y);
+		EXPECT_FLOAT_EQ(result.z, testCase.Expected.z);
+		EXPECT_FLOAT_EQ(result.w, testCase.Expected.w);
 	}
 
 	class Vector4fDivideComponentWiseTests : public testing::TestWithParam<Vector4fTestCase> {};
@@ -352,10 +352,10 @@ namespace cocoa_tests::math
 
 		const cocoa::math::Vector4f result = testCase.Left.ComponentWiseDivide(testCase.Right);
 
-		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
-		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
-		EXPECT_FLOAT_EQ(result.Z, testCase.Expected.Z);
-		EXPECT_FLOAT_EQ(result.W, testCase.Expected.W);
+		EXPECT_FLOAT_EQ(result.x, testCase.Expected.x);
+		EXPECT_FLOAT_EQ(result.y, testCase.Expected.y);
+		EXPECT_FLOAT_EQ(result.z, testCase.Expected.z);
+		EXPECT_FLOAT_EQ(result.w, testCase.Expected.w);
 	}
 
 	TEST(Vector4fTests, ComponentWiseDivide_ShouldAssert_WhenDividingByZeroXComponent)
@@ -376,7 +376,7 @@ namespace cocoa_tests::math
 	{
 		const cocoa::math::Vector4f sut(2.0f, 3.0f, 6.0f, 1.0f);
 
-		const float result = sut.Length();
+		const float result = sut.length();
 
 		EXPECT_FLOAT_EQ(result, 7.0710678f);
 	}
@@ -385,7 +385,7 @@ namespace cocoa_tests::math
 	{
 		const cocoa::math::Vector4f sut{ 3.0f, 4.0f, 3.0f, 1.0f };
 
-		const float result = sut.LengthSquared();
+		const float result = sut.lengthSquared();
 
 		EXPECT_FLOAT_EQ(result, 35.0f);
 	}
@@ -395,7 +395,7 @@ namespace cocoa_tests::math
 		const cocoa::math::Vector4f left{ 1.0f, 2.0f, 2.0f, 1.0f };
 		const cocoa::math::Vector4f right{ 3.0f, 4.0f, 3.0f, 1.0f };
 
-		const float result = left.Dot(right);
+		const float result = left.dot(right);
 
 		EXPECT_FLOAT_EQ(result, 18.0f);
 	}
@@ -404,12 +404,12 @@ namespace cocoa_tests::math
 	{
 		const cocoa::math::Vector4f sut{ 2.0f, 3.0f, 4.0f, 1.0f };
 
-		const cocoa::math::Vector4f result = sut.Normalized();
+		const cocoa::math::Vector4f result = sut.normalized();
 
-		EXPECT_FLOAT_EQ(result.X, 0.36514837f);
-		EXPECT_FLOAT_EQ(result.Y, 0.54772252f);
-		EXPECT_FLOAT_EQ(result.Z, 0.73029673f);
-		EXPECT_FLOAT_EQ(result.W, 0.182574186);
+		EXPECT_FLOAT_EQ(result.x, 0.36514837f);
+		EXPECT_FLOAT_EQ(result.y, 0.54772252f);
+		EXPECT_FLOAT_EQ(result.z, 0.73029673f);
+		EXPECT_FLOAT_EQ(result.w, 0.182574186);
 	}
 
 	TEST(Vector4fTests, Normalized_ShouldAssert_WhenLengthIsZero)
@@ -418,7 +418,7 @@ namespace cocoa_tests::math
 
 		EXPECT_DEBUG_DEATH(
 			{
-				const cocoa::math::Vector4f result = sut.Normalized();
+				const cocoa::math::Vector4f result = sut.normalized();
 				(void)result;
 			},
 			"cannot normalize a zero vector"

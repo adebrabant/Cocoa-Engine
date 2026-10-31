@@ -8,16 +8,16 @@ namespace cocoa::core
 	{
 	public:
 		FrameClock(float maxDelta, float fixedDelta, float targetFrameRate = 1.0f / 60.0f);
-		void Reset();
-		void Tick();
-		void ConsumeUpdate();
-		void SleepNextFrame() const;
-		[[nodiscard]] bool CanUpdate() const;
-		[[nodiscard]] float GetDelta() const;
-		[[nodiscard]] float GetFixedDelta() const;
-		[[nodiscard]] float GetAlpha() const;
-		[[nodiscard]] float GetElapsed() const;
-		[[nodiscard]] float GetRemainingFrameTime() const;
+		void reset();
+		void tick();
+		void consumeUpdate();
+		void sleepNextFrame() const;
+		[[nodiscard]] bool canUpdate() const;
+		[[nodiscard]] float getDelta() const;
+		[[nodiscard]] float getFixedDelta() const;
+		[[nodiscard]] float getAlpha() const;
+		[[nodiscard]] float getElapsed() const;
+		[[nodiscard]] float getRemainingFrameTime() const;
 
 	private:
 		std::chrono::high_resolution_clock::time_point m_start;

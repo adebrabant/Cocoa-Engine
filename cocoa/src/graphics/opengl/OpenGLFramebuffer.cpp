@@ -76,9 +76,9 @@ namespace cocoa::graphics
 
         // Create the textures and bind them to the fbo
         std::vector<GLenum> colorAttachmentIndexes;
-        for (auto i = 0; i < m_framebufferSpec.ColorFormats.size(); ++i)
+        for (auto i = 0; i < m_framebufferSpec.colorFormats.size(); ++i)
         {
-            auto colorFormat = m_framebufferSpec.ColorFormats[i];
+            auto colorFormat = m_framebufferSpec.colorFormats[i];
             GLuint textureColorbuffer;
             glGenTextures(1, &textureColorbuffer);
             glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
@@ -87,8 +87,8 @@ namespace cocoa::graphics
                 0,
                 // Tell Open GL how to store the channels
                 static_cast<GLint>(ToOpenGLColorFormat(colorFormat)),
-                static_cast<GLsizei>(framebufferSpec.Width),
-                static_cast<GLsizei>(framebufferSpec.Height),
+                static_cast<GLsizei>(framebufferSpec.width),
+                static_cast<GLsizei>(framebufferSpec.height),
                 0,
                 // Tell OpenGL the order of the channels
                 ToOpenGLColorDataFormat(colorFormat),
@@ -128,7 +128,7 @@ namespace cocoa::graphics
             glReadBuffer(GL_NONE);
         }
 
-        if (framebufferSpec.DepthStencil != DepthStencilFormat::None)
+        if (framebufferSpec.depthStencilFormat != DepthStencilFormat::None)
         {
             GLuint rbo;
             glGenRenderbuffers(1, &rbo);
@@ -136,15 +136,15 @@ namespace cocoa::graphics
             glRenderbufferStorage(
                 GL_RENDERBUFFER,
                 // Tell OpenGL how to store the depth stencils
-                ToOpenGLDepthStencilFormat(framebufferSpec.DepthStencil),
-                static_cast<GLsizei>(framebufferSpec.Width),
-                static_cast<GLsizei>(framebufferSpec.Height)
+                ToOpenGLDepthStencilFormat(framebufferSpec.depthStencilFormat),
+                static_cast<GLsizei>(framebufferSpec.width),
+                static_cast<GLsizei>(framebufferSpec.height)
             );
             glBindRenderbuffer(GL_RENDERBUFFER, 0);
             glFramebufferRenderbuffer(
                 GL_FRAMEBUFFER,
                 // Tell the framebuffer what type of attachment the rbo is
-                ToOpenGLDepthStencilAttachment(framebufferSpec.DepthStencil),
+                ToOpenGLDepthStencilAttachment(framebufferSpec.depthStencilFormat),
                 GL_RENDERBUFFER,
                 rbo
             );
@@ -192,36 +192,36 @@ namespace cocoa::graphics
         return *this;
     }
 
-    void OpenGLFramebuffer::Bind() const
+    void OpenGLFramebuffer::bind() const
     {
         glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
     }
 
-    void OpenGLFramebuffer::UnBind() const
+    void OpenGLFramebuffer::unBind() const
     {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
-    void OpenGLFramebuffer::Resize(const uint32_t width, const uint32_t height)
+    void OpenGLFramebuffer::resize(const uint32_t width, const uint32_t height)
     {
         if (width == 0 || height == 0 ||
-            (m_framebufferSpec.Width == width && m_framebufferSpec.Height == height))
+            (m_framebufferSpec.width == width && m_framebufferSpec.height == height))
             return;
 
-        m_framebufferSpec.Width = width;
-        m_framebufferSpec.Height = height;
+        m_framebufferSpec.width = width;
+        m_framebufferSpec.height = height;
 
         for (auto i = 0; i < m_colorAttachments.size(); ++i)
         {
-            auto colorFormat = m_framebufferSpec.ColorFormats[i];
+            auto colorFormat = m_framebufferSpec.colorFormats[i];
             auto colorBuffer = m_colorAttachments[i];
             glBindTexture(GL_TEXTURE_2D, colorBuffer);
             glTexImage2D(
                 GL_TEXTURE_2D,
                 0,
                 static_cast<GLint>(ToOpenGLColorFormat(colorFormat)),
-                static_cast<GLsizei>(m_framebufferSpec.Width),
-                static_cast<GLsizei>(m_framebufferSpec.Height),
+                static_cast<GLsizei>(m_framebufferSpec.width),
+                static_cast<GLsizei>(m_framebufferSpec.height),
                 0,
                 ToOpenGLColorDataFormat(colorFormat),
                 GL_UNSIGNED_BYTE,
@@ -235,9 +235,9 @@ namespace cocoa::graphics
             glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
             glRenderbufferStorage(
                 GL_RENDERBUFFER,
-                ToOpenGLDepthStencilFormat(m_framebufferSpec.DepthStencil),
-                static_cast<GLsizei>(m_framebufferSpec.Width),
-                static_cast<GLsizei>(m_framebufferSpec.Height)
+                ToOpenGLDepthStencilFormat(m_framebufferSpec.depthStencilFormat),
+                static_cast<GLsizei>(m_framebufferSpec.width),
+                static_cast<GLsizei>(m_framebufferSpec.height)
             );
             glBindRenderbuffer(GL_RENDERBUFFER, 0);
         }

@@ -18,7 +18,7 @@ namespace cocoa::graphics
 
 	ShaderManager::~ShaderManager() = default;
 
-	ShaderHandle ShaderManager::Load(
+	ShaderHandle ShaderManager::load(
 		const std::string& shaderId,
 		const std::string& vertexSource,
 		const std::string& fragmentSource)
@@ -28,34 +28,34 @@ namespace cocoa::graphics
 			return it->second;
 		}
 
-		ShaderHandle handle{ .Id = m_nextId++ };
-		Unique<Shader> shader = m_graphicsDevice.CreateShader(
+		ShaderHandle handle{ .id = m_nextId++ };
+		Unique<Shader> shader = m_graphicsDevice.createShader(
 			vertexSource,
 			fragmentSource
 		);
 
 		m_handles.emplace(shaderId, handle);
-		m_shaders.emplace(handle.Id, std::move(shader));
+		m_shaders.emplace(handle.id, std::move(shader));
 
 		return handle;
 	}
 
-	const Shader& ShaderManager::Get(ShaderHandle handle) const
+	const Shader& ShaderManager::get(ShaderHandle handle) const
 	{
-		auto it = m_shaders.find(handle.Id);
+		auto it = m_shaders.find(handle.id);
 
 		if (it == m_shaders.end())
 		{
 			throw std::runtime_error(
 				"No Shader found with the shader handle id: " +
-				std::to_string(handle.Id)
+				std::to_string(handle.id)
 			);
 		}
 
 		return *it->second;
 	}
 
-	const bool ShaderManager::TryGetHandle(const std::string& id, ShaderHandle& outHandle) const
+	const bool ShaderManager::tryGetHandle(const std::string& id, ShaderHandle& outHandle) const
 	{
 		if (auto it = m_handles.find(id); it != m_handles.end())
 		{
@@ -63,7 +63,7 @@ namespace cocoa::graphics
 			return true;
 		}
 
-		outHandle = ShaderHandle{ .Id = 0 };
+		outHandle = ShaderHandle{ .id = 0 };
 		return false;
 	}
 }

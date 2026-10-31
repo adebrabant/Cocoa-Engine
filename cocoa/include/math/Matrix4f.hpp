@@ -178,14 +178,14 @@ namespace cocoa::math
         /// <returns>The transformed vector.</returns>
         [[nodiscard]] constexpr Vector4f operator*(const Vector4f& vector) const
         {
-            // X indexes times each vector component
-            const float x = (m_elements[0] * vector.X) + (m_elements[4] * vector.Y) + (m_elements[8] * vector.Z) + (m_elements[12] * vector.W);
-            // Y indexes times each vector component
-            const float y = (m_elements[1] * vector.X) + (m_elements[5] * vector.Y) + (m_elements[9] * vector.Z) + (m_elements[13] * vector.W);
-            // Z indexes times each vector component
-            const float z = (m_elements[2] * vector.X) + (m_elements[6] * vector.Y) + (m_elements[10] * vector.Z) + (m_elements[14] * vector.W);
-            // W indexes times each vector component
-            const float w = (m_elements[3] * vector.X) + (m_elements[7] * vector.Y) + (m_elements[11] * vector.Z) + (m_elements[15] * vector.W);
+            // x indexes times each vector component
+            const float x = (m_elements[0] * vector.x) + (m_elements[4] * vector.y) + (m_elements[8] * vector.z) + (m_elements[12] * vector.w);
+            // y indexes times each vector component
+            const float y = (m_elements[1] * vector.x) + (m_elements[5] * vector.y) + (m_elements[9] * vector.z) + (m_elements[13] * vector.w);
+            // z indexes times each vector component
+            const float z = (m_elements[2] * vector.x) + (m_elements[6] * vector.y) + (m_elements[10] * vector.z) + (m_elements[14] * vector.w);
+            // w indexes times each vector component
+            const float w = (m_elements[3] * vector.x) + (m_elements[7] * vector.y) + (m_elements[11] * vector.z) + (m_elements[15] * vector.w);
 
             return Vector4f(x, y, z, w);
         }
@@ -194,7 +194,7 @@ namespace cocoa::math
         /// Creates an identity matrix.
         /// </summary>
         /// <returns>A matrix that leaves values unchanged when multiplied.</returns>
-        [[nodiscard]] static constexpr Matrix4f Identity()
+        [[nodiscard]] static constexpr Matrix4f identity()
         {
             return Matrix4f(
                 1.0f, 0.0f, 0.0f, 0.0f,
@@ -207,14 +207,14 @@ namespace cocoa::math
         /// <summary>
         /// Creates a three-dimensional scaling matrix.
         /// </summary>
-        /// <param name="scale">The scale applied along the X, Y, and Z axes.</param>
+        /// <param name="scale">The scale applied along the x, y, and z axes.</param>
         /// <returns>A matrix representing the requested scale.</returns>
-        [[nodiscard]] static constexpr Matrix4f Scale(const Vector3f& scale)
+        [[nodiscard]] static constexpr Matrix4f scale(const Vector3f& scale)
         {
             return Matrix4f(
-                scale.X, 0.0f, 0.0f, 0.0f,
-                0.0f, scale.Y, 0.0f, 0.0f,
-                0.0f, 0.0f, scale.Z, 0.0f,
+                scale.x, 0.0f, 0.0f, 0.0f,
+                0.0f, scale.y, 0.0f, 0.0f,
+                0.0f, 0.0f, scale.z, 0.0f,
                 0.0f, 0.0f, 0.0f, 1.0f
             );
         }
@@ -222,24 +222,24 @@ namespace cocoa::math
         /// <summary>
         /// Creates a two-dimensional scaling matrix using homogeneous coordinates.
         /// </summary>
-        /// <param name="scale">The scale applied along the X and Y axes.</param>
+        /// <param name="scale">The scale applied along the x and y axes.</param>
         /// <returns>A matrix representing the requested scale.</returns>
-        [[nodiscard]] static constexpr Matrix4f Scale(const Vector2f& scale)
+        [[nodiscard]] static constexpr Matrix4f scale(const Vector2f& scale)
         {
             return Matrix4f(
-                scale.X, 0.0f, 0.0f, 0.0f,
-                0.0f, scale.Y, 0.0f, 0.0f,
+                scale.x, 0.0f, 0.0f, 0.0f,
+                0.0f, scale.y, 0.0f, 0.0f,
                 0.0f, 0.0f, 1.0f, 0.0f,
                 0.0f, 0.0f, 0.0f, 1.0f
             );
         }
 
         /// <summary>
-        /// Creates a counterclockwise rotation matrix around the X axis.
+        /// Creates a counterclockwise rotation matrix around the x axis.
         /// </summary>
         /// <param name="angle">The rotation angle in radians.</param>
         /// <returns>A matrix representing the requested rotation.</returns>
-        [[nodiscard]] static Matrix4f RotationX(const float angle)
+        [[nodiscard]] static Matrix4f rotationX(const float angle)
         {
             const float cos = std::cos(angle);
             const float sin = std::sin(angle);
@@ -252,11 +252,11 @@ namespace cocoa::math
         }
 
         /// <summary>
-        /// Creates a counterclockwise rotation matrix around the Y axis.
+        /// Creates a counterclockwise rotation matrix around the y axis.
         /// </summary>
         /// <param name="angle">The rotation angle in radians.</param>
         /// <returns>A matrix representing the requested rotation.</returns>
-        [[nodiscard]] static Matrix4f RotationY(const float angle)
+        [[nodiscard]] static Matrix4f rotationY(const float angle)
         {
             const float cos = std::cos(angle);
             const float sin = std::sin(angle);
@@ -270,11 +270,11 @@ namespace cocoa::math
         }
 
         /// <summary>
-        /// Creates a counterclockwise rotation matrix around the Z axis.
+        /// Creates a counterclockwise rotation matrix around the z axis.
         /// </summary>
         /// <param name="angle">The rotation angle in radians.</param>
         /// <returns>A matrix representing the requested rotation.</returns>
-        [[nodiscard]] static Matrix4f RotationZ(const float angle)
+        [[nodiscard]] static Matrix4f rotationZ(const float angle)
         {
             const float cos = std::cos(angle);
             const float sin = std::sin(angle);
@@ -290,30 +290,30 @@ namespace cocoa::math
         /// <summary>
         /// Creates a three-dimensional translation matrix using homogeneous coordinates.
         /// </summary>
-        /// <param name="vector">The translation applied along the X, Y, and Z axes.</param>
+        /// <param name="vector">The translation applied along the x, y, and z axes.</param>
         /// <returns>A matrix representing the requested translation.</returns>
-        [[nodiscard]] static constexpr Matrix4f Translation(const Vector3f& vector)
+        [[nodiscard]] static constexpr Matrix4f translation(const Vector3f& vector)
         {
             return Matrix4f(
                 1.0f, 0.0f, 0.0f, 0.0f,
                 0.0f, 1.0f, 0.0f, 0.0f,
                 0.0f, 0.0f, 1.0f, 0.0f,
-                vector.X, vector.Y, vector.Z, 1.0f
+                vector.x, vector.y, vector.z, 1.0f
             );
         }
 
         /// <summary>
         /// Creates a two-dimensional translation matrix using homogeneous coordinates.
         /// </summary>
-        /// <param name="vector">The translation applied along the X and Y axes.</param>
+        /// <param name="vector">The translation applied along the x and y axes.</param>
         /// <returns>A matrix representing the requested translation.</returns>
-        [[nodiscard]] static constexpr Matrix4f Translation(const Vector2f& vector)
+        [[nodiscard]] static constexpr Matrix4f translation(const Vector2f& vector)
         {
             return Matrix4f(
                 1.0f, 0.0f, 0.0f, 0.0f,
                 0.0f, 1.0f, 0.0f, 0.0f,
                 0.0f, 0.0f, 1.0f, 0.0f,
-                vector.X, vector.Y, 0.0f, 1.0f
+                vector.x, vector.y, 0.0f, 1.0f
             );
         }
 
@@ -327,7 +327,7 @@ namespace cocoa::math
         /// <param name="near">The distance to the near clipping plane.</param>
         /// <param name="far">The distance to the far clipping plane.</param>
         /// <returns> A matrix representing the orthographic projection.</returns>
-        [[nodiscard]] static constexpr Matrix4f Ortho(
+        [[nodiscard]] static constexpr Matrix4f ortho(
             const float left, const float right,
             const float bottom, const float top,
             const float near, const float far)
@@ -364,7 +364,7 @@ namespace cocoa::math
         /// The matrix must be invertible; an assertion will fail if the determinant is
         /// sufficiently close to zero.
         /// </remarks>
-        [[nodiscard]] constexpr Matrix4f Inverse() const
+        [[nodiscard]] constexpr Matrix4f inverse() const
         {
             const float v1xMinor =
                 m_elements[5] * ((m_elements[10] * m_elements[15]) - (m_elements[14] * m_elements[11])) -

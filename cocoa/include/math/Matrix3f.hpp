@@ -152,12 +152,12 @@ namespace cocoa::math
         /// <returns>The transformed vector.</returns>
         [[nodiscard]] constexpr Vector3f operator*(const Vector3f& vector) const
         {
-            // X indexes times each vector component
-            const float x = (m_elements[0] * vector.X) + (m_elements[3] * vector.Y) + (m_elements[6] * vector.Z);
-            // Y indexes times each vector component
-            const float y = (m_elements[1] * vector.X) + (m_elements[4] * vector.Y) + (m_elements[7] * vector.Z);
-            // Z indexes times each vector component
-            const float z = (m_elements[2] * vector.X) + (m_elements[5] * vector.Y) + (m_elements[8] * vector.Z);
+            // x indexes times each vector component
+            const float x = (m_elements[0] * vector.x) + (m_elements[3] * vector.y) + (m_elements[6] * vector.z);
+            // y indexes times each vector component
+            const float y = (m_elements[1] * vector.x) + (m_elements[4] * vector.y) + (m_elements[7] * vector.z);
+            // z indexes times each vector component
+            const float z = (m_elements[2] * vector.x) + (m_elements[5] * vector.y) + (m_elements[8] * vector.z);
 
             return Vector3f(x, y, z);
         }
@@ -166,7 +166,7 @@ namespace cocoa::math
         /// Creates an identity matrix.
         /// </summary>
         /// <returns>A matrix that leaves values unchanged when multiplied.</returns>
-        [[nodiscard]] static constexpr Matrix3f Identity()
+        [[nodiscard]] static constexpr Matrix3f identity()
         {
             return Matrix3f(
                 1.0f, 0.0f, 0.0f,
@@ -178,37 +178,37 @@ namespace cocoa::math
         /// <summary>
         /// Creates a three-dimensional scaling matrix.
         /// </summary>
-        /// <param name="scale">The scale applied along the X, Y, and Z axes.</param>
+        /// <param name="scale">The scale applied along the x, y, and z axes.</param>
         /// <returns>A matrix representing the requested scale.</returns>
-        [[nodiscard]] static constexpr Matrix3f Scale(const Vector3f& scale)
+        [[nodiscard]] static constexpr Matrix3f scale(const Vector3f& scale)
         {
             return Matrix3f(
-                scale.X, 0.0f, 0.0f,
-                0.0f, scale.Y, 0.0f,
-                0.0f, 0.0f, scale.Z
+                scale.x, 0.0f, 0.0f,
+                0.0f, scale.y, 0.0f,
+                0.0f, 0.0f, scale.z
             );
         }
 
         /// <summary>
         /// Creates a two-dimensional scaling matrix using homogeneous coordinates.
         /// </summary>
-        /// <param name="scale">The scale applied along the X and Y axes.</param>
+        /// <param name="scale">The scale applied along the x and y axes.</param>
         /// <returns>A matrix representing the requested scale.</returns>
-        [[nodiscard]] static constexpr Matrix3f Scale(const Vector2f& scale)
+        [[nodiscard]] static constexpr Matrix3f scale(const Vector2f& scale)
         {
             return Matrix3f(
-                scale.X, 0.0f, 0.0f,
-                0.0f, scale.Y, 0.0f,
+                scale.x, 0.0f, 0.0f,
+                0.0f, scale.y, 0.0f,
                 0.0f, 0.0f, 1.0f
             );
         }
 
         /// <summary>
-        /// Creates a counterclockwise rotation matrix around the X axis.
+        /// Creates a counterclockwise rotation matrix around the x axis.
         /// </summary>
         /// <param name="angle">The rotation angle in radians.</param>
         /// <returns>A matrix representing the requested rotation.</returns>
-        [[nodiscard]] static Matrix3f RotationX(const float angle)
+        [[nodiscard]] static Matrix3f rotationX(const float angle)
         {
             const float cos = std::cos(angle);
             const float sin = std::sin(angle);
@@ -220,11 +220,11 @@ namespace cocoa::math
         }
 
         /// <summary>
-        /// Creates a counterclockwise rotation matrix around the Y axis.
+        /// Creates a counterclockwise rotation matrix around the y axis.
         /// </summary>
         /// <param name="angle">The rotation angle in radians.</param>
         /// <returns>A matrix representing the requested rotation.</returns>
-        [[nodiscard]] static Matrix3f RotationY(const float angle)
+        [[nodiscard]] static Matrix3f rotationY(const float angle)
         {
             const float cos = std::cos(angle);
             const float sin = std::sin(angle);
@@ -236,11 +236,11 @@ namespace cocoa::math
         }
 
         /// <summary>
-        /// Creates a counterclockwise rotation matrix around the Z axis.
+        /// Creates a counterclockwise rotation matrix around the z axis.
         /// </summary>
         /// <param name="angle">The rotation angle in radians.</param>
         /// <returns>A matrix representing the requested rotation.</returns>
-        [[nodiscard]] static Matrix3f RotationZ(const float angle)
+        [[nodiscard]] static Matrix3f rotationZ(const float angle)
         {
             const float cos = std::cos(angle);
             const float sin = std::sin(angle);
@@ -254,14 +254,14 @@ namespace cocoa::math
         /// <summary>
         /// Creates a two-dimensional translation matrix using homogeneous coordinates.
         /// </summary>
-        /// <param name="vector">The translation applied along the X and Y axes.</param>
+        /// <param name="vector">The translation applied along the x and y axes.</param>
         /// <returns>A matrix representing the requested translation.</returns>
-        [[nodiscard]] static constexpr Matrix3f Translation(const Vector2f& vector)
+        [[nodiscard]] static constexpr Matrix3f translation(const Vector2f& vector)
         {
             return Matrix3f(
                 1.0f, 0.0f, 0.0f,
                 0.0f, 1.0f, 0.0f,
-                vector.X, vector.Y, 1.0f
+                vector.x, vector.y, 1.0f
             );
         }
 

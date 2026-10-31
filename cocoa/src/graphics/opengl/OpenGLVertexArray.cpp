@@ -39,7 +39,7 @@ namespace cocoa::graphics
 		case cocoa::graphics::ShaderDataType::Bool:
 			return GL_BOOL;
 		default:
-			throw std::runtime_error("Invalid Shader Type.");
+			throw std::runtime_error("Invalid Shader shaderDataType.");
 		}
 	}
 
@@ -74,56 +74,56 @@ namespace cocoa::graphics
 		return *this;
 	}
 
-	void OpenGLVertexArray::Bind() const
+	void OpenGLVertexArray::bind() const
 	{
 		glBindVertexArray(static_cast<GLuint>(m_vao));
 	}
 
-	void OpenGLVertexArray::Unbind() const
+	void OpenGLVertexArray::unbind() const
 	{
 		glBindVertexArray(0);
 	}
 
-	void OpenGLVertexArray::AddVertexBuffer(const VertexBuffer& vertexBuffer)
+	void OpenGLVertexArray::addVertexBuffer(const VertexBuffer& vertexBuffer)
 	{
-		Bind();
-		vertexBuffer.Bind();
+		bind();
+		vertexBuffer.bind();
 
-		for (const auto& element : vertexBuffer.GetLayout().GetElements())
+		for (const auto& element : vertexBuffer.getLayout().getElements())
 		{
-			glEnableVertexAttribArray(element.Location);
-			if (element.IsInteger())
+			glEnableVertexAttribArray(element.location);
+			if (element.isInteger())
 			{
 				glVertexAttribIPointer(
-					element.Location,
-					static_cast<GLint>(element.GetScalarCount()),
-					ToOpenGLScalarType(element.Type),
-					static_cast<GLsizei>(vertexBuffer.GetLayout().GetStride()),
-					reinterpret_cast<const void*>(static_cast<uintptr_t>(element.Offset))
+					element.location,
+					static_cast<GLint>(element.getScalarCount()),
+					ToOpenGLScalarType(element.shaderDataType),
+					static_cast<GLsizei>(vertexBuffer.getLayout().getStride()),
+					reinterpret_cast<const void*>(static_cast<uintptr_t>(element.offset))
 				);
 			}
 			else
 			{
 				glVertexAttribPointer(
-					element.Location,
-					static_cast<GLint>(element.GetScalarCount()),
-					ToOpenGLScalarType(element.Type),
-					element.Normalized ? GL_TRUE : GL_FALSE,
-					static_cast<GLsizei>(vertexBuffer.GetLayout().GetStride()),
-					reinterpret_cast<const void*>(static_cast<uintptr_t>(element.Offset))
+					element.location,
+					static_cast<GLint>(element.getScalarCount()),
+					ToOpenGLScalarType(element.shaderDataType),
+					element.normalized ? GL_TRUE : GL_FALSE,
+					static_cast<GLsizei>(vertexBuffer.getLayout().getStride()),
+					reinterpret_cast<const void*>(static_cast<uintptr_t>(element.offset))
 				);
 			}
 		}
 
-		vertexBuffer.Unbind();
-		Unbind();
+		vertexBuffer.unbind();
+		unbind();
 	}
 
-	void OpenGLVertexArray::SetIndexBuffer(const IndexBuffer& indexBuffer)
+	void OpenGLVertexArray::setIndexBuffer(const IndexBuffer& indexBuffer)
 	{
-		Bind();
-		indexBuffer.Bind();
-		Unbind();
+		bind();
+		indexBuffer.bind();
+		unbind();
 	}
 
 	void OpenGLVertexArray::Destroy() const

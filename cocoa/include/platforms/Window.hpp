@@ -8,12 +8,12 @@ namespace cocoa::platforms
 	{
 	public:
 		virtual ~Window() = default;
-		virtual void ProcessEvents() = 0;
-		virtual void WaitForEvents(float duration) const = 0;
-		virtual void OnUpdate() = 0;
-		[[nodiscard]] virtual bool IsOpen() const = 0;
-		[[nodiscard]] virtual uint32_t GetWidth() const = 0;
-		[[nodiscard]] virtual uint32_t GetHeight() const = 0;
-		[[nodiscard]] virtual void* GetNative() const = 0;
+		virtual void processEvents() = 0;
+		virtual void waitForEvents(float duration) const = 0;
+		virtual void onUpdate() = 0;
+		[[nodiscard]] virtual bool isOpen() const = 0;
+		[[nodiscard]] virtual uint32_t getWidth() const = 0;
+		[[nodiscard]] virtual uint32_t getHeight() const = 0;
+		[[nodiscard]] virtual void* getNative() const = 0;
 	};
 }

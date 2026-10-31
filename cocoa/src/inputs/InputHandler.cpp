@@ -2,7 +2,7 @@
 
 namespace cocoa::inputs
 {
-	void InputHandler::Update()
+	void InputHandler::update()
 	{
 
 	}

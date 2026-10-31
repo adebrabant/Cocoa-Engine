@@ -18,14 +18,14 @@ namespace cocoa::graphics
         SpriteManager(const SpriteManager&) = delete;
         SpriteManager& operator=(const SpriteManager&) = delete;
 
-        SpriteHandle Load(
+        SpriteHandle load(
             const std::string& spriteId,
             const TextureHandle& textureHandle,
             const math::Vector2f& minPixel,
             const math::Vector2f& maxPixel,
             const math::Vector2f& textureSize
         );
-        const Sprite& Get(const SpriteHandle& handle) const;
+        const Sprite& get(const SpriteHandle& handle) const;
 
     private:
         std::unordered_map<uint32_t, Sprite> m_sprites;

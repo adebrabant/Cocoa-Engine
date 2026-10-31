@@ -2,7 +2,7 @@
 
 namespace cocoa
 {
-    void SafeJoin(std::thread& thread)
+    void safeJoin(std::thread& thread)
     {
         if (thread.joinable())
         {

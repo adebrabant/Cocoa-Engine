@@ -11,9 +11,9 @@ namespace sandbox
 
 	}
 
-	void GameApplication::ConfigureScenes(cocoa::scenes::SceneManager& sceneManager)
+	void GameApplication::configureScenes(cocoa::scenes::SceneManager& sceneManager)
 	{
-		sceneManager.AddScene<TestScene>();
-		sceneManager.SetScene<TestScene>();
+		sceneManager.addScene<TestScene>();
+		sceneManager.setScene<TestScene>();
 	}
 }

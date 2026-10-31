@@ -36,81 +36,81 @@ namespace cocoa::assets
 
 	}
 
-	graphics::TextureHandle ResourceLoader::LoadTexture(const std::string& textureId) const
+	graphics::TextureHandle ResourceLoader::loadTexture(const std::string& textureId) const
 	{
-		const TextureRecord& record = m_assetDatabase.GetTextureInfo(textureId);
+		const TextureRecord& record = m_assetDatabase.getTextureInfo(textureId);
 
-		if (graphics::TextureHandle handle; m_textureManager.TryGetHandle(record.id, handle))
+		if (graphics::TextureHandle handle; m_textureManager.tryGetHandle(record.id, handle))
 			return handle;
 
-		const Image& image = m_assetManager.LoadImage(
+		const Image& image = m_assetManager.loadImage(
 			record.path,
-			m_assetSource.ReadBytes(record.path)
+			m_assetSource.readBytes(record.path)
 		);
 		const graphics::TextureSpec spec
 		{
-			.Id = record.id,
-			.Width = static_cast<uint32_t>(image.Width),
-			.Height = static_cast<uint32_t>(image.Height),
-			.Format = graphics::TextureSpec::ParseFormat(record.Format, image.Channels),
-			.MinFilter = graphics::TextureSpec::ParseFilter(record.MinFilter),
-			.MagFilter = graphics::TextureSpec::ParseFilter(record.MagFilter),
-			.WrapS = graphics::TextureSpec::ParseWrap(record.WrapS),
-			.WrapT = graphics::TextureSpec::ParseWrap(record.WrapT),
-			.GenerateMipmaps = record.GenerateMipmaps
+			.id = record.id,
+			.width = static_cast<uint32_t>(image.width),
+			.height = static_cast<uint32_t>(image.height),
+			.textureFormat = graphics::TextureSpec::parseFormat(record.format, image.channels),
+			.minFilter = graphics::TextureSpec::parseFilter(record.minFilter),
+			.magFilter = graphics::TextureSpec::parseFilter(record.magFilter),
+			.wrapS = graphics::TextureSpec::parseWrap(record.wrapS),
+			.wrapT = graphics::TextureSpec::parseWrap(record.wrapT),
+			.generateMipmaps = record.generateMipmaps
 		};
 
-		return m_textureManager.Load(spec, image.Pixels.data());
+		return m_textureManager.load(spec, image.pixels.data());
 	}
 
-	graphics::ShaderHandle ResourceLoader::LoadShader(const std::string& shaderId) const
+	graphics::ShaderHandle ResourceLoader::loadShader(const std::string& shaderId) const
 	{
-		const ShaderRecord& record = m_assetDatabase.GetShaderInfo(shaderId);
+		const ShaderRecord& record = m_assetDatabase.getShaderInfo(shaderId);
 
-		if (graphics::ShaderHandle handle; m_shaderManager.TryGetHandle(record.Id, handle))
+		if (graphics::ShaderHandle handle; m_shaderManager.tryGetHandle(record.id, handle))
 			return handle;
 
-		const ShaderSource& source = m_assetManager.LoadShader(
-			record.Id,
-			m_assetSource.ReadBytes(record.VertexPath),
-			m_assetSource.ReadBytes(record.FragmentPath)
+		const ShaderSource& source = m_assetManager.loadShader(
+			record.id,
+			m_assetSource.readBytes(record.vertexPath),
+			m_assetSource.readBytes(record.fragmentPath)
 		);
 
-		return m_shaderManager.Load(
-			record.Id,
-			source.Vertex,
-			source.Fragment
+		return m_shaderManager.load(
+			record.id,
+			source.vertex,
+			source.fragment
 		);
 	}
 
-	graphics::MaterialHandle ResourceLoader::LoadMaterial(const std::string& materialId) const
+	graphics::MaterialHandle ResourceLoader::loadMaterial(const std::string& materialId) const
 	{
-		const MaterialRecord& record = m_assetDatabase.GetMaterialInfo(materialId);
-		const graphics::ShaderHandle shaderHandle = LoadShader(record.ShaderId);
+		const MaterialRecord& record = m_assetDatabase.getMaterialInfo(materialId);
+		const graphics::ShaderHandle shaderHandle = loadShader(record.shaderId);
 
-		return m_materialManager.Load(
+		return m_materialManager.load(
 			materialId,
 			shaderHandle,
-			record.BlendMode,
-			record.Tint
+			record.blendMode,
+			record.tint
 		);
 	}
 
-	graphics::SpriteHandle ResourceLoader::LoadSprite(const std::string& spriteId) const
+	graphics::SpriteHandle ResourceLoader::loadSprite(const std::string& spriteId) const
 	{
-		const SpriteRecord& record = m_assetDatabase.GetSpriteInfo(spriteId);
-		const graphics::TextureHandle textureHandle = LoadTexture(record.TextureId);
-		const graphics::Texture2D& texture2D = m_textureManager.Get(textureHandle);
+		const SpriteRecord& record = m_assetDatabase.getSpriteInfo(spriteId);
+		const graphics::TextureHandle textureHandle = loadTexture(record.textureId);
+		const graphics::Texture2D& texture2D = m_textureManager.get(textureHandle);
 		const math::Vector2f textureSize(
-			static_cast<float>(texture2D.GetWidth()),
-			static_cast<float>(texture2D.GetHeight())
+			static_cast<float>(texture2D.getWidth()),
+			static_cast<float>(texture2D.getHeight())
 		);
 
-		return m_spriteManager.Load(
-			record.Id,
+		return m_spriteManager.load(
+			record.id,
 			textureHandle,
-			record.MinPixel,
-			record.MaxPixel,
+			record.minPixel,
+			record.maxPixel,
 			textureSize
 		);
 	}

@@ -30,23 +30,23 @@ namespace cocoa::graphics
 
 	struct TextureSpec
 	{
-		std::string Id{ "" };
+		std::string id{ "" };
 
-		uint32_t Width{ 0 };
-		uint32_t Height{ 0 };
+		uint32_t width{ 0 };
+		uint32_t height{ 0 };
 
-		TextureFormat Format{ TextureFormat::RGBA8 };
+		TextureFormat textureFormat{ TextureFormat::RGBA8 };
 
-		TextureFilter MinFilter{ TextureFilter::Linear };
-		TextureFilter MagFilter{ TextureFilter::Linear };
+		TextureFilter minFilter{ TextureFilter::Linear };
+		TextureFilter magFilter{ TextureFilter::Linear };
 
-		TextureWrap WrapS{ TextureWrap::ClampToEdge };
-		TextureWrap WrapT{ TextureWrap::ClampToEdge };
+		TextureWrap wrapS{ TextureWrap::ClampToEdge };
+		TextureWrap wrapT{ TextureWrap::ClampToEdge };
 
-		bool GenerateMipmaps{ false };
+		bool generateMipmaps{ false };
 
-		static TextureFormat ParseFormat(std::string_view value, uint32_t channels);
-		static TextureFilter ParseFilter(std::string_view value);
-		static TextureWrap ParseWrap(std::string_view value);
+		static TextureFormat parseFormat(std::string_view value, uint32_t channels);
+		static TextureFilter parseFilter(std::string_view value);
+		static TextureWrap parseWrap(std::string_view value);
 	};
 }

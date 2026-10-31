@@ -26,12 +26,12 @@ namespace cocoa::core
 		m_graphicsDevice(nullptr),
 		m_FramebufferResizeEventToken()
 	{
-		RegisterEventHandlers();
+		registerEventHandlers();
 	}
 
 	Application::~Application()
 	{
-		UnregisterEventHandlers();
+		unregisterEventHandlers();
 	}
 
     void Application::Run()
@@ -39,13 +39,13 @@ namespace cocoa::core
         platforms::GLFWWindow window(m_eventBus, m_windowProps);
         graphics::OpenGLContext openGLContext;
 
-		m_graphicsDevice = CreateUnique<graphics::OpenGLGraphicsDevice>();
-        m_graphicsDevice->SetViewport(0, 0, m_windowProps.GetWidth(), m_windowProps.GetHeight());
-        m_graphicsDevice->SetClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		m_graphicsDevice = createUnique<graphics::OpenGLGraphicsDevice>();
+        m_graphicsDevice->setViewport(0, 0, m_windowProps.getWidth(), m_windowProps.getHeight());
+        m_graphicsDevice->setClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
         assets::AssetManager assetManager;
-        assets::FilesystemAssetSource assetSource(m_assetPathProvider.GetAssetsPath());
-        assets::JsonAssetDatabase jsonAssetDatabase(m_assetPathProvider.GetMetaDataPath());
+        assets::FilesystemAssetSource assetSource(m_assetPathProvider.getAssetsPath());
+        assets::JsonAssetDatabase jsonAssetDatabase(m_assetPathProvider.getMetaDataPath());
 
         graphics::ShaderManager shaderManager(*m_graphicsDevice);
         graphics::TextureManager textureManager(*m_graphicsDevice);
@@ -72,52 +72,52 @@ namespace cocoa::core
 
         scenes::SceneManager sceneManager(resourceLoader);
 
-        ConfigureScenes(sceneManager);
+        configureScenes(sceneManager);
 
-        m_frameClock.Reset();
+        m_frameClock.reset();
 
-        while (window.IsOpen())
+        while (window.isOpen())
         {
-            m_frameClock.Tick();
-        	window.ProcessEvents();
-            while (m_frameClock.CanUpdate())
+            m_frameClock.tick();
+        	window.processEvents();
+            while (m_frameClock.canUpdate())
             {
-            	sceneManager.FixedUpdate(m_frameClock.GetFixedDelta());
-                m_frameClock.ConsumeUpdate();
+            	sceneManager.fixedUpdate(m_frameClock.getFixedDelta());
+                m_frameClock.consumeUpdate();
             }
 
-        	sceneManager.Update(m_frameClock.GetDelta());
+        	sceneManager.update(m_frameClock.getDelta());
 
-            m_graphicsDevice->BeginFrame();
-            m_graphicsDevice->Clear();
-        	sceneManager.Render(renderer2d, m_frameClock.GetAlpha());
-            m_graphicsDevice->EndFrame();
+            m_graphicsDevice->beginFrame();
+            m_graphicsDevice->clear();
+        	sceneManager.render(renderer2d, m_frameClock.getAlpha());
+            m_graphicsDevice->endFrame();
 
-            window.OnUpdate();
+            window.onUpdate();
 
-        	window.WaitForEvents(m_frameClock.GetRemainingFrameTime());
+        	window.waitForEvents(m_frameClock.getRemainingFrameTime());
         }
     }
 
-    void Application::ConfigureScenes(scenes::SceneManager& sceneManager)
+    void Application::configureScenes(scenes::SceneManager& sceneManager)
     {
 
     }
 
-	void Application::RegisterEventHandlers()
+	void Application::registerEventHandlers()
 	{
-		m_FramebufferResizeEventToken = m_eventBus.Subscribe<platforms::FramebufferResizeEvent>(
+		m_FramebufferResizeEventToken = m_eventBus.subscribe<platforms::FramebufferResizeEvent>(
 			[this](const platforms::FramebufferResizeEvent& evt)
 			{
-				if (evt.Width == 0 || evt.Height == 0)
+				if (evt.width == 0 || evt.height == 0)
 					return;
 
-				m_graphicsDevice->SetViewport(0,0, evt.Width, evt.Height);
+				m_graphicsDevice->setViewport(0,0, evt.width, evt.height);
 			});
 	}
 
-    void Application::UnregisterEventHandlers()
+    void Application::unregisterEventHandlers()
     {
-		m_eventBus.Unsubscribe<platforms::FramebufferResizeEvent>(m_FramebufferResizeEventToken);
+		m_eventBus.unsubscribe<platforms::FramebufferResizeEvent>(m_FramebufferResizeEventToken);
     }
 }

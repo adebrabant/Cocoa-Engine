@@ -19,10 +19,10 @@ namespace cocoa::scenes
 	public:
 		Scene();
 		virtual ~Scene() = default;
-		virtual void Load(assets::ResourceLoader& loader) = 0;
-		virtual void Unload(assets::ResourceLoader& loader) = 0;
-		virtual void Update(float deltaTime);
-		virtual void Render(graphics::Renderer2D& renderer, float alpha);
+		virtual void load(assets::ResourceLoader& loader) = 0;
+		virtual void unload(assets::ResourceLoader& loader) = 0;
+		virtual void update(float deltaTime);
+		virtual void render(graphics::Renderer2D& renderer, float alpha);
 
 	protected:
 		World m_world;

@@ -101,13 +101,13 @@ namespace cocoa_tests::math
 
         constexpr cocoa::math::Vector2f result = sut * scale;
 
-        EXPECT_FLOAT_EQ(result.X, 7.0f);
-        EXPECT_FLOAT_EQ(result.Y, 17.0f);
+        EXPECT_FLOAT_EQ(result.x, 7.0f);
+        EXPECT_FLOAT_EQ(result.y, 17.0f);
     }
 
     TEST(Matrix2fTests, Identity_ShouldReturnDefaults_WhenCalled)
     {
-        constexpr cocoa::math::Matrix2f result = cocoa::math::Matrix2f::Identity();
+        constexpr cocoa::math::Matrix2f result = cocoa::math::Matrix2f::identity();
 
         EXPECT_FLOAT_EQ(result[0], 1.0f);
         EXPECT_FLOAT_EQ(result[1], 0.0f);
@@ -119,12 +119,12 @@ namespace cocoa_tests::math
     {
         constexpr cocoa::math::Vector2f scale(2.0f, 3.0f);
 
-        constexpr cocoa::math::Matrix2f result = cocoa::math::Matrix2f::Scale(scale);
+        constexpr cocoa::math::Matrix2f result = cocoa::math::Matrix2f::scale(scale);
 
-        EXPECT_FLOAT_EQ(result[0], scale.X);
+        EXPECT_FLOAT_EQ(result[0], scale.x);
         EXPECT_FLOAT_EQ(result[1], 0.0f);
         EXPECT_FLOAT_EQ(result[2], 0.0f);
-        EXPECT_FLOAT_EQ(result[3], scale.Y);
+        EXPECT_FLOAT_EQ(result[3], scale.y);
     }
 
     TEST(Matrix2fTests, Rotation_ShouldRotateVectorCounterClockwise)
@@ -132,10 +132,10 @@ namespace cocoa_tests::math
         constexpr float angle = std::numbers::pi_v<float> / 2.0f;
         constexpr cocoa::math::Vector2f vector(0.0f, 4.0f);
 
-        const cocoa::math::Matrix2f sut = cocoa::math::Matrix2f::Rotation(angle);
+        const cocoa::math::Matrix2f sut = cocoa::math::Matrix2f::rotation(angle);
         const cocoa::math::Vector2f result = sut * vector;
 
-        EXPECT_NEAR(result.X, -4.0f, 0.0001f);
-        EXPECT_NEAR(result.Y, 0.0f, 0.0001f);
+        EXPECT_NEAR(result.x, -4.0f, 0.0001f);
+        EXPECT_NEAR(result.y, 0.0f, 0.0001f);
     }
 }

@@ -11,29 +11,29 @@ namespace cocoa::scenes
 
 	}
 
-	Scene* SceneManager::GetCurrentScene() const
+	Scene* SceneManager::getCurrentScene() const
 	{
 		return m_currentScene;
 	}
 
-	void SceneManager::FixedUpdate(float fixedDeltaTime) const
+	void SceneManager::fixedUpdate(float fixedDeltaTime) const
 	{
 		// ToDo: Handle when physics is ready
 	}
 
-	void SceneManager::Update(float deltaTime) const
+	void SceneManager::update(float deltaTime) const
 	{
 		if (m_currentScene)
 		{
-			m_currentScene->Update(deltaTime);
+			m_currentScene->update(deltaTime);
 		}
 	}
 
-	void SceneManager::Render(graphics::Renderer2D& renderer, const float alpha) const
+	void SceneManager::render(graphics::Renderer2D& renderer, const float alpha) const
 	{
 		if (m_currentScene)
 		{
-			m_currentScene->Render(renderer, alpha);
+			m_currentScene->render(renderer, alpha);
 		}
 	}
 }

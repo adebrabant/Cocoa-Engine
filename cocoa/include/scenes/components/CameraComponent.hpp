@@ -4,6 +4,6 @@ namespace cocoa::scenes
 {
 	struct CameraComponent
 	{
-		bool IsActive{false};
+		bool isActive{false};
 	};
 }

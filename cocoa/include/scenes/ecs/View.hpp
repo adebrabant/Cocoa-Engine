@@ -14,9 +14,9 @@ namespace cocoa::scenes
 	class View
 	{
 	public:
-		View(World& world) : m_world(world)
+        explicit View(World& world) : m_world(world)
 		{
-			m_componentStorages = std::make_tuple(m_world.GetComponentStorage<TComponents>()...);
+			m_componentStorages = std::make_tuple(m_world.getComponentStorage<TComponents>()...);
 			m_primaryStorage = std::get<0>(m_componentStorages);
 		}
 
@@ -25,7 +25,7 @@ namespace cocoa::scenes
 		public:
 			Iterator(View* view, size_t index) : m_view(view), m_index(index)
 			{
-				SkipInvalid();
+				skipInvalid();
 			}
 
 			bool operator!=(const Iterator& other) const
@@ -36,21 +36,21 @@ namespace cocoa::scenes
 			Iterator& operator++()
 			{
 				++m_index;
-				SkipInvalid();
+				skipInvalid();
 				return *this;
 			}
 
 			auto operator*()
 			{
-				uint32_t entityId = m_view->m_primaryStorage->GetEntity(m_index);
+				uint32_t entityId = m_view->m_primaryStorage->getEntity(m_index);
 
 				return std::tuple<TComponents&...>(
-					m_view->m_world.GetComponent<TComponents>(Entity(entityId))...
+					m_view->m_world.getComponent<TComponents>(Entity(entityId))...
 				);
 			}
 
 		private:
-			void SkipInvalid()
+			void skipInvalid()
 			{
 				if (!m_view->m_primaryStorage)
 				{
@@ -58,13 +58,13 @@ namespace cocoa::scenes
 					return;
 				}
 
-				while (m_index < m_view->m_primaryStorage->Size())
+				while (m_index < m_view->m_primaryStorage->size())
 				{
-					uint32_t entityId = m_view->m_primaryStorage->GetEntity(m_index);
+					uint32_t entityId = m_view->m_primaryStorage->getEntity(m_index);
 					bool valid = true;
 					std::apply([&](auto*... storage)
 						{
-							((valid &= storage && storage->Has(entityId)), ...);
+							((valid &= storage && storage->has(entityId)), ...);
 						}, m_view->m_componentStorages);
 
 					if (valid)
@@ -89,7 +89,7 @@ namespace cocoa::scenes
 
 		Iterator end()
 		{
-			return Iterator(this, m_primaryStorage ? m_primaryStorage->Size() : 0);
+			return Iterator(this, m_primaryStorage ? m_primaryStorage->size() : 0);
 		}
 
 	private:

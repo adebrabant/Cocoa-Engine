@@ -84,24 +84,24 @@ namespace cocoa::graphics
 		glGenTextures(1, &texture);
 		glBindTexture(GL_TEXTURE_2D, texture);
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, ToWrap(m_textureSpec.WrapS));
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, ToWrap(m_textureSpec.WrapT));
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, ToFilter(m_textureSpec.MinFilter));
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, ToFilter(m_textureSpec.MagFilter));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, ToWrap(m_textureSpec.wrapS));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, ToWrap(m_textureSpec.wrapT));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, ToFilter(m_textureSpec.minFilter));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, ToFilter(m_textureSpec.magFilter));
 
 		glTexImage2D(
 			GL_TEXTURE_2D,
 			0,
-			ToInternalFormat(m_textureSpec.Format),
-			static_cast<GLsizei>(m_textureSpec.Width),
-			static_cast<GLsizei>(m_textureSpec.Height),
+			ToInternalFormat(m_textureSpec.textureFormat),
+			static_cast<GLsizei>(m_textureSpec.width),
+			static_cast<GLsizei>(m_textureSpec.height),
 			0,
-			ToDataFormat(m_textureSpec.Format),
+			ToDataFormat(m_textureSpec.textureFormat),
 			GL_UNSIGNED_BYTE,
 			pixels
 		);
 
-		if (m_textureSpec.GenerateMipmaps)
+		if (m_textureSpec.generateMipmaps)
 		{
 			glGenerateMipmap(GL_TEXTURE_2D);
 		}
@@ -136,21 +136,21 @@ namespace cocoa::graphics
 		return *this;
 	}
 
-	void OpenGLTexture2D::Bind(uint32_t slot) const
+	void OpenGLTexture2D::bind(uint32_t slot) const
 	{
 		assert(m_textureId != 0);
 		glActiveTexture(GL_TEXTURE0 + slot);
 		glBindTexture(GL_TEXTURE_2D, m_textureId);
 	}
 
-	uint32_t OpenGLTexture2D::GetWidth() const
+	uint32_t OpenGLTexture2D::getWidth() const
 	{
-		return m_textureSpec.Width;
+		return m_textureSpec.width;
 	}
 
-	uint32_t OpenGLTexture2D::GetHeight() const
+	uint32_t OpenGLTexture2D::getHeight() const
 	{
-		return m_textureSpec.Height;
+		return m_textureSpec.height;
 	}
 
 	void OpenGLTexture2D::Destroy()

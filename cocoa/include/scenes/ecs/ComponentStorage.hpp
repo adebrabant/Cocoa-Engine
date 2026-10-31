@@ -7,12 +7,12 @@
 
 namespace cocoa::scenes
 {
-	// ToDo: Remove I Prefix
+	// ToDo: remove I Prefix
 	class IComponentStorage
 	{
 	public:
 		virtual ~IComponentStorage() = default;
-		virtual void EntityDestroyed(uint32_t entityId) = 0;
+		virtual void entityDestroyed(uint32_t entityId) = 0;
 	};
 
 	template<typename TComponent>
@@ -20,7 +20,7 @@ namespace cocoa::scenes
 	{
 
 	public:
-		void Add(uint32_t entity, const TComponent& component)
+		void add(uint32_t entity, const TComponent& component)
 		{
 			size_t newIndex = m_components.size();
 			m_components.emplace_back(component);
@@ -28,7 +28,7 @@ namespace cocoa::scenes
 			m_entityToIndex[entity] = newIndex;
 		}
 
-		void Remove(uint32_t entity)
+		void remove(uint32_t entity)
 		{
 			size_t index = m_entityToIndex[entity];
 			size_t lastIndex = m_components.size() - 1;
@@ -42,31 +42,31 @@ namespace cocoa::scenes
 			m_entityToIndex.erase(entity);
 		}
 
-		TComponent& Get(uint32_t entity)
+		TComponent& get(uint32_t entity)
 		{
 			return m_components[m_entityToIndex[entity]];
 		}
 
-		bool Has(uint32_t entity) const
+		bool has(uint32_t entity) const
 		{
 			return m_entityToIndex.find(entity) != m_entityToIndex.end();
 		}
 
-		size_t Size() const
+		size_t size() const
 		{
 			return m_components.size();
 		}
 
-		uint32_t GetEntity(size_t index) const
+		uint32_t getEntity(size_t index) const
 		{
 			return m_entities[index];
 		}
 
-		void EntityDestroyed(uint32_t entityId) override
+		void entityDestroyed(uint32_t entityId) override
 		{
 			if (m_entityToIndex.find(entityId) != m_entityToIndex.end())
 			{
-				Remove(entityId);
+				remove(entityId);
 			}
 		}
 

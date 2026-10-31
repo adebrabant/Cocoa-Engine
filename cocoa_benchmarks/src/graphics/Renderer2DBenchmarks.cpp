@@ -22,12 +22,12 @@ namespace cocoa_benchmarks
         for (auto _ : state)
         {
             state.PauseTiming();
-            m_renderer.BeginDraw(cocoa::math::Matrix4f{});
+            m_renderer.beginDraw(cocoa::math::Matrix4f{});
             state.ResumeTiming();
 
             for (auto i = 0; i < state.range(0); ++i)
             {
-                m_renderer.DrawQuad(
+                m_renderer.drawQuad(
                     cocoa::math::Matrix4f {},
                     m_material,
                     m_texture,
@@ -37,7 +37,7 @@ namespace cocoa_benchmarks
                 );
             }
 
-            m_renderer.EndDraw();
+            m_renderer.endDraw();
         }
     }
 
@@ -78,12 +78,12 @@ namespace cocoa_benchmarks
         for (auto _ : state)
         {
             state.PauseTiming();
-            m_renderer.BeginDraw(cocoa::math::Matrix4f{});
+            m_renderer.beginDraw(cocoa::math::Matrix4f{});
             state.ResumeTiming();
 
             for (auto i = 0; i < state.range(0); ++i)
             {
-                m_renderer.DrawQuad(
+                m_renderer.drawQuad(
                     cocoa::math::Matrix4f {},
                     m_material,
                     m_texture,
@@ -93,7 +93,7 @@ namespace cocoa_benchmarks
                 );
             }
 
-            m_renderer.EndDraw();
+            m_renderer.endDraw();
         }
     }
 

@@ -10,6 +10,6 @@ namespace sandbox
 		GameApplication();
 
 	protected:
-		void ConfigureScenes(cocoa::scenes::SceneManager& sceneManager) override;
+		void configureScenes(cocoa::scenes::SceneManager& sceneManager) override;
 	};
 }

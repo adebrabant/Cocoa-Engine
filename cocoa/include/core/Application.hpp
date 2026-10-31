@@ -29,11 +29,11 @@ namespace cocoa::core
 
 	protected:
 		// ToDo: Need to come back to this
-		virtual void ConfigureScenes(scenes::SceneManager& sceneManager);
+		virtual void configureScenes(scenes::SceneManager& sceneManager);
 
 	private:
-		void RegisterEventHandlers();
-		void UnregisterEventHandlers();
+		void registerEventHandlers();
+		void unregisterEventHandlers();
 
 	private:
 		assets::AssetPathProvider m_assetPathProvider;

@@ -14,11 +14,11 @@ namespace cocoa_benchmarks
         StubVertexBuffer(const void* vertices, uint32_t size, const cocoa::graphics::BufferLayout& bufferLayout)
             : m_bufferLayout(bufferLayout) { }
         ~StubVertexBuffer() override = default;
-        void Bind() const override { }
-        void Unbind() const override { }
-        void SetData(const void* data, uint32_t size) const override { }
+        void bind() const override { }
+        void unbind() const override { }
+        void setData(const void* data, uint32_t size) const override { }
 
-        [[nodiscard]] const cocoa::graphics::BufferLayout& GetLayout() const override { return m_bufferLayout;}
+        [[nodiscard]] const cocoa::graphics::BufferLayout& getLayout() const override { return m_bufferLayout;}
 
     private:
         cocoa::graphics::BufferLayout m_bufferLayout;

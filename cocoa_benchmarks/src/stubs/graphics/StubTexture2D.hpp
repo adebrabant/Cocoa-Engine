@@ -9,8 +9,8 @@ namespace cocoa_benchmarks
 	public:
 		StubTexture2D(cocoa::graphics::TextureSpec textureSpec, const unsigned char* pixels) { }
 		~StubTexture2D() override = default;
-		void Bind(uint32_t slot) const override { }
-		[[nodiscard]] uint32_t GetWidth() const override { return 32; }
-		[[nodiscard]] uint32_t GetHeight() const override { return 32; }
+		void bind(uint32_t slot) const override { }
+		[[nodiscard]] uint32_t getWidth() const override { return 32; }
+		[[nodiscard]] uint32_t getHeight() const override { return 32; }
 	};
 }

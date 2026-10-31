@@ -26,14 +26,14 @@ namespace cocoa::graphics
 		MaterialManager(const MaterialManager&) = delete;
 		MaterialManager& operator=(const MaterialManager&) = delete;
 
-		MaterialHandle Load(
+		MaterialHandle load(
 			const std::string& materialId,
 			ShaderHandle shaderHandle,
 			const std::string& blendMode,
 			core::Color tint
 		);
 
-		const Material& Get(MaterialHandle handle) const;
+		const Material& get(MaterialHandle handle) const;
 
 	private:
 		std::unordered_map<std::string, MaterialHandle> m_handles;

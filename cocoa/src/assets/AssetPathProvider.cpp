@@ -7,13 +7,13 @@ namespace cocoa::assets
 {
     AssetPathProvider::AssetPathProvider()
     {
-        m_assetPath = FindPath("resources");
+        m_assetPath = findPath("resources");
 
         if (!m_assetPath.empty())
             m_metadataPath = m_assetPath / "metadata";
     }
 
-    std::filesystem::path AssetPathProvider::FindPath(const std::string& path)
+    std::filesystem::path AssetPathProvider::findPath(const std::string& path)
     {
         try
         {

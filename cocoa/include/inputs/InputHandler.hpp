@@ -7,16 +7,16 @@ namespace cocoa::inputs
 	public:
 		InputHandler() = default;
 		~InputHandler() = default;
-        void Update();
-        bool IsUpPressed()    const { return Up; }
-        bool IsDownPressed()  const { return Down; }
-        bool IsLeftPressed()  const { return Left; }
-        bool IsRightPressed() const { return Right; }
+        void update();
+        bool isUpPressed()    const { return m_up; }
+        bool isDownPressed()  const { return m_down; }
+        bool isLeftPressed()  const { return m_left; }
+        bool isRightPressed() const { return m_right; }
 
     private:
-        bool Up = false;
-        bool Down = false;
-        bool Left = false;
-        bool Right = false;
+        bool m_up = false;
+        bool m_down = false;
+        bool m_left = false;
+        bool m_right = false;
 	};
 }

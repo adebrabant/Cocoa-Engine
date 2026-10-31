@@ -4,7 +4,7 @@ namespace cocoa::scenes
 {
 	struct VelocityComponent
 	{
-		float DeltaX;
-		float DeltaY;
+		float deltaX;
+		float deltaY;
 	};
 }

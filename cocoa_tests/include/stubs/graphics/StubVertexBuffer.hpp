@@ -19,10 +19,10 @@ namespace cocoa_tests::stubs
         StubVertexBuffer(uint32_t size, const cocoa::graphics::BufferLayout& bufferLayout, VertexBufferCapture& vertexBufferCapture);
         StubVertexBuffer(const void* vertices, uint32_t size, const cocoa::graphics::BufferLayout& bufferLayout, VertexBufferCapture& vertexBufferCapture);
         ~StubVertexBuffer() override;
-        void Bind() const override;
-        void Unbind() const override;
-        void SetData(const void* data, uint32_t size) const override;
-        [[nodiscard]] const cocoa::graphics::BufferLayout& GetLayout() const override;
+        void bind() const override;
+        void unbind() const override;
+        void setData(const void* data, uint32_t size) const override;
+        [[nodiscard]] const cocoa::graphics::BufferLayout& getLayout() const override;
 
     private:
         cocoa::graphics::BufferLayout m_bufferLayout;

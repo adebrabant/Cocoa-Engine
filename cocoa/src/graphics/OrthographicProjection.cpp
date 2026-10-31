@@ -3,7 +3,7 @@
 namespace cocoa::graphics
 {
     OrthographicProjection::OrthographicProjection() :
-        m_viewMatrix(math::Matrix4f::Identity()),
+        m_viewMatrix(math::Matrix4f::identity()),
         m_position(0.f, 0.0f, 0.0f),
         m_rotation(0.0f)
     {
@@ -15,8 +15,8 @@ namespace cocoa::graphics
         const float bottom, const float top,
         const float near, const float far)
     :
-        m_projectionMatrix(math::Matrix4f::Ortho(left, right, bottom, top, near, far)),
-        m_viewMatrix(math::Matrix4f::Identity()),
+        m_projectionMatrix(math::Matrix4f::ortho(left, right, bottom, top, near, far)),
+        m_viewMatrix(math::Matrix4f::identity()),
         m_position(0.f, 0.0f, 0.0f),
         m_horizontalBounds(left, right),
         m_verticalBounds(bottom, top),
@@ -26,53 +26,53 @@ namespace cocoa::graphics
         m_viewProjectionMatrix = m_projectionMatrix * m_viewMatrix;
     }
 
-    void OrthographicProjection::SetProjection(
+    void OrthographicProjection::setProjection(
         const float left, const float right,
         const float bottom, const float top,
         const float near, const float far)
     {
-        if (m_horizontalBounds.X == left && m_horizontalBounds.Y == right &&
-            m_verticalBounds.X == bottom && m_verticalBounds.Y == top &&
-            m_depthBounds.X == near && m_depthBounds.Y == far) return;
+        if (m_horizontalBounds.x == left && m_horizontalBounds.y == right &&
+            m_verticalBounds.x == bottom && m_verticalBounds.y == top &&
+            m_depthBounds.x == near && m_depthBounds.y == far) return;
 
-        m_projectionMatrix = math::Matrix4f::Ortho(left, right, bottom, top, near, far);
+        m_projectionMatrix = math::Matrix4f::ortho(left, right, bottom, top, near, far);
         m_viewProjectionMatrix = m_projectionMatrix * m_viewMatrix;
 
-        m_horizontalBounds.X = left;
-        m_horizontalBounds.Y = right;
+        m_horizontalBounds.x = left;
+        m_horizontalBounds.y = right;
 
-        m_verticalBounds.X = bottom;
-        m_verticalBounds.Y = top;
+        m_verticalBounds.x = bottom;
+        m_verticalBounds.y = top;
 
-        m_depthBounds.X = near;
-        m_depthBounds.Y = far;
+        m_depthBounds.x = near;
+        m_depthBounds.y = far;
     }
 
-    void OrthographicProjection::SetPosition(const math::Vector3f& position)
+    void OrthographicProjection::setPosition(const math::Vector3f& position)
     {
         if (m_position == position)
             return;
 
         m_position = position;
-        RecalculateViewProjectionMatrix();
+        recalculateViewProjectionMatrix();
     }
 
-    void OrthographicProjection::SetRotation(const float rotation)
+    void OrthographicProjection::setRotation(const float rotation)
     {
         if (m_rotation == rotation)
             return;
 
         m_rotation = rotation;
-        RecalculateViewProjectionMatrix();
+        recalculateViewProjectionMatrix();
     }
 
-    void OrthographicProjection::RecalculateViewProjectionMatrix()
+    void OrthographicProjection::recalculateViewProjectionMatrix()
     {
-        const math::Matrix4f translation = math::Matrix4f::Translation(m_position);
-        const math::Matrix4f rotation = math::Matrix4f::RotationZ(m_rotation);
+        const math::Matrix4f translation = math::Matrix4f::translation(m_position);
+        const math::Matrix4f rotation = math::Matrix4f::rotationZ(m_rotation);
         const math::Matrix4f transform = translation * rotation;
 
-        m_viewMatrix = transform.Inverse();
+        m_viewMatrix = transform.inverse();
         m_viewProjectionMatrix = m_projectionMatrix * m_viewMatrix;
     }
 }

@@ -16,7 +16,7 @@ namespace cocoa_tests::assets
         const std::filesystem::path path =
             "test_data/resources/texts/sample.txt";
 
-        const std::string result = sut.LoadText(path);
+        const std::string result = sut.loadText(path);
 
         EXPECT_EQ(result, "Hello from AssetLoader test.");
     }
@@ -27,7 +27,7 @@ namespace cocoa_tests::assets
         std::vector<std::byte> bytes = Helpers::ReadFileBytes(
             "test_data/resources/texts/sample.txt");
 
-        const std::string result = sut.LoadText(bytes);
+        const std::string result = sut.loadText(bytes);
 
         EXPECT_EQ(result, "Hello from AssetLoader test.");
     }
@@ -37,7 +37,7 @@ namespace cocoa_tests::assets
         cocoa::assets::AssetLoader sut;
         std::vector<std::byte> bytes;
 
-        const std::string result = sut.LoadText(bytes);
+        const std::string result = sut.loadText(bytes);
 
         EXPECT_EQ(result, "");
     }
@@ -50,7 +50,7 @@ namespace cocoa_tests::assets
 
         EXPECT_THROW(
             {
-                auto value = sut.LoadText(path);
+                auto value = sut.loadText(path);
             },
             std::runtime_error
         );
@@ -62,12 +62,12 @@ namespace cocoa_tests::assets
         const std::filesystem::path path =
             "test_data/resources/images/test.png";
 
-        const cocoa::assets::Image result = sut.LoadImage(path);
+        const cocoa::assets::Image result = sut.loadImage(path);
 
-        EXPECT_GT(result.Width, 0);
-        EXPECT_GT(result.Height, 0);
-        EXPECT_EQ(result.Channels, 4);
-        EXPECT_FALSE(result.Pixels.empty());
+        EXPECT_GT(result.width, 0);
+        EXPECT_GT(result.height, 0);
+        EXPECT_EQ(result.channels, 4);
+        EXPECT_FALSE(result.pixels.empty());
     }
 
     TEST(AssetLoaderTests, LoadImage_ShouldReturnEmptyImage_WhenFileDoesNotExist)
@@ -76,12 +76,12 @@ namespace cocoa_tests::assets
         const std::filesystem::path path =
             "test_data/resources/images/missing.png";
 
-        const cocoa::assets::Image result = sut.LoadImage(path);
+        const cocoa::assets::Image result = sut.loadImage(path);
 
-        EXPECT_EQ(result.Width, 0);
-        EXPECT_EQ(result.Height, 0);
-        EXPECT_EQ(result.Channels, 4);
-        EXPECT_TRUE(result.Pixels.empty());
+        EXPECT_EQ(result.width, 0);
+        EXPECT_EQ(result.height, 0);
+        EXPECT_EQ(result.channels, 4);
+        EXPECT_TRUE(result.pixels.empty());
     }
 
     TEST(AssetLoaderTests, LoadImage_ShouldSetPixelSize_WhenFileExists)
@@ -90,14 +90,14 @@ namespace cocoa_tests::assets
         const std::filesystem::path path =
             "test_data/resources/images/test.png";
 
-        const cocoa::assets::Image result = sut.LoadImage(path);
+        const cocoa::assets::Image result = sut.loadImage(path);
 
         const size_t expectedSize =
-            static_cast<size_t>(result.Width) *
-            static_cast<size_t>(result.Height) *
+            static_cast<size_t>(result.width) *
+            static_cast<size_t>(result.height) *
             4;
 
-        EXPECT_EQ(result.Pixels.size(), expectedSize);
+        EXPECT_EQ(result.pixels.size(), expectedSize);
     }
 
     TEST(AssetLoaderTests, LoadImage_ShouldForceFourChannels_WhenLoadingImage)
@@ -106,9 +106,9 @@ namespace cocoa_tests::assets
         const std::filesystem::path path =
             "test_data/resources/images/test.png";
 
-        const cocoa::assets::Image result = sut.LoadImage(path);
+        const cocoa::assets::Image result = sut.loadImage(path);
 
-        EXPECT_EQ(result.Channels, 4);
+        EXPECT_EQ(result.channels, 4);
     }
 
     TEST(AssetLoaderTests, LoadImage_ShouldReturnImage_WhenBytesExist)
@@ -117,12 +117,12 @@ namespace cocoa_tests::assets
         std::vector<std::byte> bytes = Helpers::ReadFileBytes(
             "test_data/resources/images/test.png");
 
-        const cocoa::assets::Image result = sut.LoadImage(bytes);
+        const cocoa::assets::Image result = sut.loadImage(bytes);
 
-        EXPECT_GT(result.Width, 0);
-        EXPECT_GT(result.Height, 0);
-        EXPECT_EQ(result.Channels, 4);
-        EXPECT_FALSE(result.Pixels.empty());
+        EXPECT_GT(result.width, 0);
+        EXPECT_GT(result.height, 0);
+        EXPECT_EQ(result.channels, 4);
+        EXPECT_FALSE(result.pixels.empty());
     }
 
     TEST(AssetLoaderTests, LoadImage_ShouldReturnEmptyImage_WhenBytesAreEmpty)
@@ -130,12 +130,12 @@ namespace cocoa_tests::assets
         cocoa::assets::AssetLoader sut;
         std::vector<std::byte> bytes;
 
-        const cocoa::assets::Image result = sut.LoadImage(bytes);
+        const cocoa::assets::Image result = sut.loadImage(bytes);
 
-        EXPECT_EQ(result.Width, 0);
-        EXPECT_EQ(result.Height, 0);
-        EXPECT_EQ(result.Channels, 4);
-        EXPECT_TRUE(result.Pixels.empty());
+        EXPECT_EQ(result.width, 0);
+        EXPECT_EQ(result.height, 0);
+        EXPECT_EQ(result.channels, 4);
+        EXPECT_TRUE(result.pixels.empty());
     }
 
     TEST(AssetLoaderTests, LoadImage_ShouldSetPixelSize_WhenBytesExist)
@@ -144,14 +144,14 @@ namespace cocoa_tests::assets
         std::vector<std::byte> bytes = Helpers::ReadFileBytes(
             "test_data/resources/images/test.png");
 
-        const cocoa::assets::Image result = sut.LoadImage(bytes);
+        const cocoa::assets::Image result = sut.loadImage(bytes);
 
         const size_t expectedSize =
-            static_cast<size_t>(result.Width) *
-            static_cast<size_t>(result.Height) *
+            static_cast<size_t>(result.width) *
+            static_cast<size_t>(result.height) *
             4;
 
-        EXPECT_EQ(result.Pixels.size(), expectedSize);
+        EXPECT_EQ(result.pixels.size(), expectedSize);
     }
 
     TEST(AssetLoaderTests, LoadImage_ShouldForceFourChannels_WhenLoadingImageFromBytes)
@@ -160,8 +160,8 @@ namespace cocoa_tests::assets
         std::vector<std::byte> bytes = Helpers::ReadFileBytes(
             "test_data/resources/images/test.png");
 
-        const cocoa::assets::Image result = sut.LoadImage(bytes);
+        const cocoa::assets::Image result = sut.loadImage(bytes);
 
-        EXPECT_EQ(result.Channels, 4);
+        EXPECT_EQ(result.channels, 4);
     }
 }

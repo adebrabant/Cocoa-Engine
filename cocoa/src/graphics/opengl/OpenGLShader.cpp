@@ -85,17 +85,17 @@ namespace cocoa::graphics
 		return *this;
 	}
 
-	void OpenGLShader::Bind() const
+	void OpenGLShader::bind() const
 	{
 		glUseProgram(static_cast<GLuint>(m_rendererId));
 	}
 
-	void OpenGLShader::Unbind() const
+	void OpenGLShader::unbind() const
 	{
 		glUseProgram(0);
 	}
 
-	void OpenGLShader::SetInt(const std::string& name, int value) const
+	void OpenGLShader::setInt(const std::string& name, int value) const
 	{
 		const GLint location = glGetUniformLocation(
 			static_cast<GLuint>(m_rendererId),
@@ -105,7 +105,7 @@ namespace cocoa::graphics
 		glUniform1i(location, value);
 	}
 
-	void OpenGLShader::SetFloat(const std::string& name, float value) const
+	void OpenGLShader::setFloat(const std::string& name, float value) const
 	{
 		const GLint location = glGetUniformLocation(
 			static_cast<GLuint>(m_rendererId),
@@ -115,17 +115,17 @@ namespace cocoa::graphics
 		glUniform1f(location, value);
 	}
 
-	void OpenGLShader::SetVector4(const std::string& name, const math::Vector4f& value) const
+	void OpenGLShader::setVector4(const std::string& name, const math::Vector4f& value) const
 	{
 		const GLint location = glGetUniformLocation(
 			static_cast<GLuint>(m_rendererId),
 			name.c_str()
 		);
 
-		glUniform4f(location, value.X, value.Y, value.Z, value.W);
+		glUniform4f(location, value.x, value.y, value.z, value.w);
 	}
 
-	void OpenGLShader::SetMatrix4(const std::string& name, const math::Matrix4f& value) const
+	void OpenGLShader::setMatrix4(const std::string& name, const math::Matrix4f& value) const
 	{
 		const GLint location = glGetUniformLocation(
 			static_cast<GLuint>(m_rendererId),
@@ -135,7 +135,7 @@ namespace cocoa::graphics
 		glUniformMatrix4fv(location, 1, GL_FALSE, &value[0]);
 	}
 
-	void OpenGLShader::SetIntArray(const std::string& name, const int* values, const int count) const
+	void OpenGLShader::setIntArray(const std::string& name, const int* values, const int count) const
 	{
 		const GLint location = glGetUniformLocation(
 			static_cast<GLuint>(m_rendererId),
@@ -145,13 +145,13 @@ namespace cocoa::graphics
 		glUniform1iv(location, count, values);
 	}
 
-	void OpenGLShader::SetVector2fArray(const std::string &name, const math::Vector2f* values, const int count) const
+	void OpenGLShader::setVector2fArray(const std::string &name, const math::Vector2f* values, const int count) const
 	{
 		std::vector<GLfloat> flattened(static_cast<size_t>(count) * 2);
 		for (auto i = 0; i < count; ++i)
 		{
-			flattened[2*i] = values[i].X;
-			flattened[2*i+1] = values[i].Y;
+			flattened[2*i] = values[i].x;
+			flattened[2*i+1] = values[i].y;
 		}
 		const GLint location = glGetUniformLocation(
 			static_cast<GLuint>(m_rendererId),

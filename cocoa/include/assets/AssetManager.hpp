@@ -18,12 +18,12 @@ namespace cocoa::assets
 		AssetManager(const AssetManager&) = delete;
 		AssetManager& operator=(const AssetManager&) = delete;
 
-		const Image& LoadImage(
+		const Image& loadImage(
 			const std::string& assetId,
 			const std::vector<std::byte>& assetBytes
 		);
 
-		const ShaderSource& LoadShader(
+		const ShaderSource& loadShader(
 			const std::string& shaderId,
 			const std::vector<std::byte>& vertexBytes,
 			const std::vector<std::byte>& fragmentBytes

@@ -18,24 +18,24 @@ namespace cocoa_tests::stubs
 
     StubVertexBuffer::~StubVertexBuffer() = default;
 
-    void StubVertexBuffer::Bind() const
+    void StubVertexBuffer::bind() const
     {
 
     }
 
-    void StubVertexBuffer::Unbind() const
+    void StubVertexBuffer::unbind() const
     {
 
     }
 
-    void StubVertexBuffer::SetData(const void* data, uint32_t size) const
+    void StubVertexBuffer::setData(const void* data, uint32_t size) const
     {
         const auto* bytes = static_cast<const std::byte*>(data);
         m_vertexBufferCapture.Data.assign(bytes, bytes + size);
-        m_vertexBufferCapture.Stride = m_bufferLayout.GetStride();
+        m_vertexBufferCapture.Stride = m_bufferLayout.getStride();
     }
 
-    const cocoa::graphics::BufferLayout& StubVertexBuffer::GetLayout() const
+    const cocoa::graphics::BufferLayout& StubVertexBuffer::getLayout() const
     {
         return m_bufferLayout;
     }

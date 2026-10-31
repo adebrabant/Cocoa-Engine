@@ -29,8 +29,8 @@ namespace cocoa::graphics
 		);
 		~Renderer2D();
 
-		void BeginDraw(const math::Matrix4f& viewProjectionMatrix);
-		void DrawQuad(
+		void beginDraw(const math::Matrix4f& viewProjectionMatrix);
+		void drawQuad(
 			const math::Matrix4f& modelMatrix,
 			MaterialHandle materialHandle,
 			TextureHandle textureHandle,
@@ -38,7 +38,7 @@ namespace cocoa::graphics
 			SortLayer sortingLayer,
 			int sortingOrder);
 
-		void DrawQuad(
+		void drawQuad(
 			const math::Matrix4f& modelMatrix,
 			MaterialHandle materialHandle,
 			SpriteHandle spriteHandle,
@@ -48,10 +48,10 @@ namespace cocoa::graphics
 			SortLayer sortingLayer,
 			int sortingOrder
 		);
-		void EndDraw();
+		void endDraw();
 
-		[[nodiscard]] const RenderStatistics& GetRenderStatistics() const { return m_renderStatistics; }
-		[[nodiscard]] const Viewport& GetViewport() const;
+		[[nodiscard]] const RenderStatistics& getRenderStatistics() const { return m_renderStatistics; }
+		[[nodiscard]] const Viewport& getViewport() const;
 
 	private:
 		enum class BatchType
@@ -60,28 +60,28 @@ namespace cocoa::graphics
 		};
 		struct QuadDrawSubmission
 		{
-			math::Matrix4f ModelMatrix{};
-			MaterialHandle Material{};
-			TextureHandle Texture{};
-			math::Vector2f TilingFactor{};
+			math::Matrix4f modelMatrix{};
+			MaterialHandle materialHandle{};
+			TextureHandle textureHandle{};
+			math::Vector2f tilingFactor{};
 		};
 		struct SpriteDrawSubmission
 		{
-			math::Matrix4f ModelMatrix{};
-			MaterialHandle Material{};
-			SpriteHandle Sprite{};
-			math::Vector2f TilingFactor{};
-			bool FlipVertical{};
-			bool FlipHorizontal{};
+			math::Matrix4f modelMatrix{};
+			MaterialHandle materialHandle{};
+			SpriteHandle spriteHandle{};
+			math::Vector2f tilingFactor{};
+			bool flipVertical{};
+			bool flipHorizontal{};
 		};
 		struct DrawSubmission
 		{
-			SortLayer SortingLayer{};
-			int SortingOrder{};
-			BatchType Batch{};
+			SortLayer sortingLayer{};
+			int sortingOrder{};
+			BatchType batchType{};
 			std::variant<
 				QuadDrawSubmission,
-				SpriteDrawSubmission> Data;
+				SpriteDrawSubmission> data;
 		};
 
 	private:

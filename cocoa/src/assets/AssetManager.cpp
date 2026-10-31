@@ -11,7 +11,7 @@ namespace cocoa::assets
 
 	}
 
-	const Image& AssetManager::LoadImage(
+	const Image& AssetManager::loadImage(
 		const std::string& assetId,
 		const std::vector<std::byte>& assetBytes)
 	{
@@ -20,14 +20,14 @@ namespace cocoa::assets
 			return it->second;
 		}
 
-		Image image = m_assetLoader.LoadImage(assetBytes);
+		Image image = m_assetLoader.loadImage(assetBytes);
 
 		auto [it, inserted] = m_images.emplace(assetId, std::move(image));
 
 		return it->second;
 	}
 
-	const ShaderSource& AssetManager::LoadShader(
+	const ShaderSource& AssetManager::loadShader(
 		const std::string& shaderId,
 		const std::vector<std::byte>& vertexBytes,
 		const std::vector<std::byte>& fragmentBytes)
@@ -39,8 +39,8 @@ namespace cocoa::assets
 
 		ShaderSource shaderSource
 		{
-			.Vertex = m_assetLoader.LoadText(vertexBytes),
-			.Fragment = m_assetLoader.LoadText(fragmentBytes)
+			.vertex = m_assetLoader.loadText(vertexBytes),
+			.fragment = m_assetLoader.loadText(fragmentBytes)
 		};
 
 		auto [it, inserted] = m_shaderSources.emplace(shaderId, std::move(shaderSource));

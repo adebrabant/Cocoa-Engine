@@ -25,7 +25,7 @@ namespace cocoa::graphics
         }
     }
 
-	TextureFormat TextureSpec::ParseFormat(std::string_view value, uint32_t channels)
+	TextureFormat TextureSpec::parseFormat(std::string_view value, uint32_t channels)
 	{
         const std::string normalized = Normalize(value);
 
@@ -41,7 +41,7 @@ namespace cocoa::graphics
         throw std::runtime_error("Invalid Texture format: " + std::string(value));
 	}
 
-	TextureFilter TextureSpec::ParseFilter(std::string_view value)
+	TextureFilter TextureSpec::parseFilter(std::string_view value)
 	{
         const std::string normalized = Normalize(value);
 
@@ -66,7 +66,7 @@ namespace cocoa::graphics
         throw std::runtime_error("Invalid texture filter: " + std::string(value));
 	}
 
-	TextureWrap TextureSpec::ParseWrap(std::string_view value)
+	TextureWrap TextureSpec::parseWrap(std::string_view value)
 	{
         const std::string normalized = Normalize(value);
 

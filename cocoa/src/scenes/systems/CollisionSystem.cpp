@@ -4,17 +4,17 @@
 
 namespace cocoa::scenes
 {
-	void CollisionSystem::Update(World& world, float deltaTime)
+	void CollisionSystem::update(World& world, float deltaTime)
 	{
 
 	}
 
-	void CollisionSystem::BeginRender(World& world, graphics::Renderer2D& renderer, float alpha)
+	void CollisionSystem::beginRender(World& world, graphics::Renderer2D& renderer, float alpha)
 	{
 
 	}
 
-	void CollisionSystem::Render(World& world, graphics::Renderer2D& renderer, float alpha)
+	void CollisionSystem::render(World& world, graphics::Renderer2D& renderer, float alpha)
 	{
 
 	}

@@ -9,11 +9,11 @@ namespace cocoa::assets
 	{
 	public:
 		AssetPathProvider();
-		[[nodiscard]] const std::filesystem::path& GetAssetsPath() const { return m_assetPath; }
-		[[nodiscard]] const std::filesystem::path& GetMetaDataPath() const { return m_metadataPath; };
+		[[nodiscard]] const std::filesystem::path& getAssetsPath() const { return m_assetPath; }
+		[[nodiscard]] const std::filesystem::path& getMetaDataPath() const { return m_metadataPath; };
 
 	private:
-		std::filesystem::path FindPath(const std::string& path);
+		std::filesystem::path findPath(const std::string& path);
 
 	private:
 		std::filesystem::path m_assetPath;

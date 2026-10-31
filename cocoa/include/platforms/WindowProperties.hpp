@@ -13,9 +13,9 @@ namespace cocoa::platforms
 			m_width(width),
 			m_height(height) { }
 
-		[[nodiscard]] uint32_t GetWidth() const { return m_width; }
-		[[nodiscard]] uint32_t GetHeight() const { return m_height; }
-		[[nodiscard]] const std::string& GetTitle() const { return m_title; }
+		[[nodiscard]] uint32_t getWidth() const { return m_width; }
+		[[nodiscard]] uint32_t getHeight() const { return m_height; }
+		[[nodiscard]] const std::string& getTitle() const { return m_title; }
 
 	private:
 		std::string m_title;

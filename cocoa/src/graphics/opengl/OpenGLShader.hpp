@@ -16,15 +16,15 @@ namespace cocoa::graphics
 		OpenGLShader(OpenGLShader&& other) noexcept;
 		OpenGLShader& operator==(OpenGLShader&& other) noexcept;
 
-		void Bind() const override;
-		void Unbind() const override;
+		void bind() const override;
+		void unbind() const override;
 
-		void SetInt(const std::string& name, int value) const override;
-		void SetFloat(const std::string& name, float value) const override;
-		void SetVector4(const std::string& name, const math::Vector4f& value) const override;
-		void SetMatrix4(const std::string& name, const math::Matrix4f& value) const override;
-		void SetIntArray(const std::string& name, const int* values, int count) const override;
-		void SetVector2fArray(const std::string& name, const math::Vector2f* values, int count) const override;
+		void setInt(const std::string& name, int value) const override;
+		void setFloat(const std::string& name, float value) const override;
+		void setVector4(const std::string& name, const math::Vector4f& value) const override;
+		void setMatrix4(const std::string& name, const math::Matrix4f& value) const override;
+		void setIntArray(const std::string& name, const int* values, int count) const override;
+		void setVector2fArray(const std::string& name, const math::Vector2f* values, int count) const override;
 
 	private:
 		void Destroy() const;

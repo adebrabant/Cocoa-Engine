@@ -9,53 +9,53 @@
 
 namespace cocoa::scenes
 {
-	void Render2DSystem::Update(World& world, float deltaTime)
+	void Render2DSystem::update(World& world, float deltaTime)
 	{
 
 	}
 
-	void Render2DSystem::BeginRender(World& world, graphics::Renderer2D& renderer, float alpha)
+	void Render2DSystem::beginRender(World& world, graphics::Renderer2D& renderer, float alpha)
 	{
 
 	}
 
-	void Render2DSystem::Render(World& world, graphics::Renderer2D& renderer, float alpha)
+	void Render2DSystem::render(World& world, graphics::Renderer2D& renderer, float alpha)
 	{
 		View<TransformComponent, QuadComponent> quadView(world);
 		for (auto [transform, quadComponent] : quadView)
 		{
-			math::Matrix4f translation = math::Matrix4f::Translation(transform.Position);
-			math::Matrix4f zRotation = math::Matrix4f::RotationZ(transform.Rotation.Z);
-			math::Matrix4f scale = math::Matrix4f::Scale(transform.Scale);
+			math::Matrix4f translation = math::Matrix4f::translation(transform.position);
+			math::Matrix4f zRotation = math::Matrix4f::rotationZ(transform.rotation.z);
+			math::Matrix4f scale = math::Matrix4f::scale(transform.scale);
 
 			math::Matrix4f modelMatrix = translation * zRotation * scale;
-			renderer.DrawQuad(
+			renderer.drawQuad(
 				modelMatrix,
-				quadComponent.Material,
-				quadComponent.Texture,
-				quadComponent.TilingFactor,
-				quadComponent.SortingLayer,
-				quadComponent.SortingOrder
+				quadComponent.materialHandle,
+				quadComponent.textureHandle,
+				quadComponent.tilingFactor,
+				quadComponent.sortingLayer,
+				quadComponent.sortingOrder
 			);
 		}
 
 		View<TransformComponent, SpriteComponent> spriteView(world);
 		for (auto [transform, spriteComponent] : spriteView)
 		{
-			math::Matrix4f translation = math::Matrix4f::Translation(transform.Position);
-			math::Matrix4f zRotation = math::Matrix4f::RotationZ(transform.Rotation.Z);
-			math::Matrix4f scale = math::Matrix4f::Scale(transform.Scale);
+			math::Matrix4f translation = math::Matrix4f::translation(transform.position);
+			math::Matrix4f zRotation = math::Matrix4f::rotationZ(transform.rotation.z);
+			math::Matrix4f scale = math::Matrix4f::scale(transform.scale);
 
 			math::Matrix4f modelMatrix = translation * zRotation * scale;
-			renderer.DrawQuad(
+			renderer.drawQuad(
 				modelMatrix,
-				spriteComponent.Material,
-				spriteComponent.Sprite,
-				spriteComponent.TilingFactor,
-				spriteComponent.FlipVertical,
-				spriteComponent.FlipHorizontal,
-				spriteComponent.SortingLayer,
-				spriteComponent.SortingOrder
+				spriteComponent.materialHandle,
+				spriteComponent.spriteHandle,
+				spriteComponent.tilingFactor,
+				spriteComponent.flipVertical,
+				spriteComponent.flipHorizontal,
+				spriteComponent.sortingLayer,
+				spriteComponent.sortingOrder
 			);
 		}
 	}

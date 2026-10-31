@@ -19,9 +19,9 @@ namespace cocoa::graphics
 		OpenGLTexture2D(OpenGLTexture2D&& other) noexcept;
 		OpenGLTexture2D& operator=(OpenGLTexture2D&& other) noexcept;
 
-		void Bind(uint32_t slot) const override;
-		[[nodiscard]] uint32_t GetWidth() const override;
-		[[nodiscard]] uint32_t GetHeight() const override;
+		void bind(uint32_t slot) const override;
+		[[nodiscard]] uint32_t getWidth() const override;
+		[[nodiscard]] uint32_t getHeight() const override;
 
 	private:
 		void Destroy();

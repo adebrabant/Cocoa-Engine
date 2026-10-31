@@ -5,7 +5,7 @@ namespace cocoa::platforms
 {
     struct FramebufferResizeEvent
     {
-        uint32_t Width;
-        uint32_t Height;
+        uint32_t width;
+        uint32_t height;
     };
 }

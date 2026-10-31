@@ -24,12 +24,12 @@ namespace cocoa::graphics
 
 	struct BufferElement
 	{
-		uint32_t Location;
-		ShaderDataType Type;
-		std::string Name;
-		uint32_t Size;
-		uint32_t Offset;
-		bool Normalized;
+		uint32_t location;
+		ShaderDataType shaderDataType;
+		std::string name;
+		uint32_t size;
+		uint32_t offset;
+		bool normalized;
 
 		BufferElement(
 			uint32_t shaderLocation,
@@ -38,19 +38,19 @@ namespace cocoa::graphics
 			uint32_t offset = 0,
 			bool normalized = false
 		) :
-			Location(shaderLocation),
-			Type(shaderType),
-			Name(name),
-			Size(ShaderDataTypeSize(shaderType)),
-			Offset(offset),
-			Normalized(normalized)
+			location(shaderLocation),
+			shaderDataType(shaderType),
+			name(name),
+			size(shaderDataTypeSize(shaderType)),
+			offset(offset),
+			normalized(normalized)
 		{
 
 		}
 
-		[[nodiscard]] bool IsInteger() const
+		[[nodiscard]] bool isInteger() const
 		{
-			switch (Type)
+			switch (shaderDataType)
 			{
 			case ShaderDataType::Int:  return true;
 			case ShaderDataType::Int2: return true;
@@ -61,9 +61,9 @@ namespace cocoa::graphics
 			}
 		}
 
-		[[nodiscard]] uint32_t GetScalarCount() const
+		[[nodiscard]] uint32_t getScalarCount() const
 		{
-			switch (Type)
+			switch (shaderDataType)
 			{
 			case ShaderDataType::Float:  return 1;
 			case ShaderDataType::Float2: return 2;
@@ -85,7 +85,7 @@ namespace cocoa::graphics
 		}
 
 	private:
-		static uint32_t ShaderDataTypeSize(ShaderDataType type)
+		static uint32_t shaderDataTypeSize(ShaderDataType type)
 		{
 			switch (type)
 			{

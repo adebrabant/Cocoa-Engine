@@ -14,7 +14,7 @@ namespace cocoa::graphics
 
     SpriteManager::~SpriteManager() = default;
 
-    SpriteHandle SpriteManager::Load(
+    SpriteHandle SpriteManager::load(
         const std::string& spriteId,
         const TextureHandle& textureHandle,
         const math::Vector2f& minPixel,
@@ -26,29 +26,29 @@ namespace cocoa::graphics
             return it->second;
         }
 
-        SpriteHandle handle {.Id = m_nextId++ };
+        SpriteHandle handle {.id = m_nextId++ };
         Sprite sprite
         {
-            .Id = spriteId,
-            .Texture = textureHandle,
-            .MinUV = {minPixel.X / textureSize.X, minPixel.Y / textureSize.Y},
-            .MaxUV = {maxPixel.X / textureSize.X, maxPixel.Y / textureSize.Y}
+            .id = spriteId,
+            .textureHandle = textureHandle,
+            .minUV = {minPixel.x / textureSize.x, minPixel.y / textureSize.y},
+            .maxUV = {maxPixel.x / textureSize.x, maxPixel.y / textureSize.y}
         };
 
-        m_sprites.emplace(handle.Id, sprite);
+        m_sprites.emplace(handle.id, sprite);
         m_handles.emplace(spriteId, handle);
 
         return handle;
     }
 
-    const Sprite& SpriteManager::Get(const SpriteHandle& handle) const
+    const Sprite& SpriteManager::get(const SpriteHandle& handle) const
     {
-        const auto it = m_sprites.find(handle.Id);
+        const auto it = m_sprites.find(handle.id);
         if (it == m_sprites.end())
         {
             throw std::runtime_error(
                 "No Sprite found with the sprite id: " +
-                std::to_string(handle.Id)
+                std::to_string(handle.id)
             );
         }
 

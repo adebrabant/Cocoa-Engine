@@ -18,11 +18,11 @@ namespace cocoa::graphics
 		OpenGLVertexArray(OpenGLVertexArray&& other) noexcept;
 		OpenGLVertexArray& operator=(OpenGLVertexArray&& other) noexcept;
 
-		void Bind() const override;
-		void Unbind() const override;
+		void bind() const override;
+		void unbind() const override;
 
-		void AddVertexBuffer(const VertexBuffer& vertexBuffer) override;
-		void SetIndexBuffer(const IndexBuffer& indexBuffer) override;
+		void addVertexBuffer(const VertexBuffer& vertexBuffer) override;
+		void setIndexBuffer(const IndexBuffer& indexBuffer) override;
 
 	private:
 		void Destroy() const;

@@ -20,8 +20,8 @@ namespace cocoa_tests::scenes
 		bool loaded = false;
 		bool unloaded = false;
 
-		void Load(cocoa::assets::ResourceLoader& loader) override { loaded = true; }
-		void Unload(cocoa::assets::ResourceLoader& loader) override { unloaded = true; }
+		void load(cocoa::assets::ResourceLoader& loader) override { loaded = true; }
+		void unload(cocoa::assets::ResourceLoader& loader) override { unloaded = true; }
 	};
 
 	struct AnotherTestScene : public cocoa::scenes::Scene
@@ -29,8 +29,8 @@ namespace cocoa_tests::scenes
 		bool loaded = false;
 		bool unloaded = false;
 
-		void Load(cocoa::assets::ResourceLoader& loader) override { loaded = true; }
-		void Unload(cocoa::assets::ResourceLoader& loader) override { unloaded = true; }
+		void load(cocoa::assets::ResourceLoader& loader) override { loaded = true; }
+		void unload(cocoa::assets::ResourceLoader& loader) override { unloaded = true; }
 	};
 
 	struct CountingScene : public cocoa::scenes::Scene
@@ -38,8 +38,8 @@ namespace cocoa_tests::scenes
 		int loadCount = 0;
 		int unloadCount = 0;
 
-		void Load(cocoa::assets::ResourceLoader& loader) override { ++loadCount; }
-		void Unload(cocoa::assets::ResourceLoader& loader) override { ++unloadCount; }
+		void load(cocoa::assets::ResourceLoader& loader) override { ++loadCount; }
+		void unload(cocoa::assets::ResourceLoader& loader) override { ++unloadCount; }
 	};
 
 	struct ResourceLoaderTestContext
@@ -73,8 +73,8 @@ namespace cocoa_tests::scenes
 		ResourceLoaderTestContext loaderContext;
 		cocoa::scenes::SceneManager manager(loaderContext.ResourceLoader);
 
-		manager.SetScene<TestScene>();
-		auto testScene = manager.GetScene<TestScene>();
+		manager.setScene<TestScene>();
+		auto testScene = manager.getScene<TestScene>();
 
 		ASSERT_NE(testScene, nullptr);
 		EXPECT_TRUE(testScene->loaded);
@@ -86,10 +86,10 @@ namespace cocoa_tests::scenes
 		ResourceLoaderTestContext loaderContext;
 		cocoa::scenes::SceneManager manager(loaderContext.ResourceLoader);
 
-		manager.SetScene<TestScene>();
-		manager.SetScene<AnotherTestScene>();
-		auto firstScene = manager.GetScene<TestScene>();
-		auto secondScene = manager.GetScene<AnotherTestScene>();
+		manager.setScene<TestScene>();
+		manager.setScene<AnotherTestScene>();
+		auto firstScene = manager.getScene<TestScene>();
+		auto secondScene = manager.getScene<AnotherTestScene>();
 
 		ASSERT_NE(firstScene, nullptr);
 		ASSERT_NE(secondScene, nullptr);
@@ -102,8 +102,8 @@ namespace cocoa_tests::scenes
 		ResourceLoaderTestContext loaderContext;
 		cocoa::scenes::SceneManager manager(loaderContext.ResourceLoader);
 
-		manager.AddScene<TestScene>();
-		const auto scene = manager.GetScene<TestScene>();
+		manager.addScene<TestScene>();
+		const auto scene = manager.getScene<TestScene>();
 
 		ASSERT_NE(scene, nullptr);
 	}
@@ -113,9 +113,9 @@ namespace cocoa_tests::scenes
 		ResourceLoaderTestContext loaderContext;
 		cocoa::scenes::SceneManager manager(loaderContext.ResourceLoader);
 
-		manager.SetScene<TestScene>();
-		const auto currentScene = dynamic_cast<TestScene*>(manager.GetCurrentScene());
-		manager.SetScene<TestScene>();
+		manager.setScene<TestScene>();
+		const auto currentScene = dynamic_cast<TestScene*>(manager.getCurrentScene());
+		manager.setScene<TestScene>();
 
 		ASSERT_NE(currentScene, nullptr);
 		EXPECT_FALSE(currentScene->unloaded);
@@ -126,10 +126,10 @@ namespace cocoa_tests::scenes
 		ResourceLoaderTestContext loaderContext;
 		cocoa::scenes::SceneManager manager(loaderContext.ResourceLoader);
 
-		manager.AddScene<TestScene>();
-		manager.SetScene<TestScene>();
-		auto secondScene = manager.GetScene<TestScene>();
-		manager.AddScene<TestScene>();
+		manager.addScene<TestScene>();
+		manager.setScene<TestScene>();
+		auto secondScene = manager.getScene<TestScene>();
+		manager.addScene<TestScene>();
 
 		ASSERT_NE(secondScene, nullptr);
 	}
@@ -139,7 +139,7 @@ namespace cocoa_tests::scenes
 		ResourceLoaderTestContext loaderContext;
 		cocoa::scenes::SceneManager manager(loaderContext.ResourceLoader);
 
-		auto scene = manager.GetScene<TestScene>();
+		auto scene = manager.getScene<TestScene>();
 
 		EXPECT_EQ(scene, nullptr);
 	}
@@ -149,8 +149,8 @@ namespace cocoa_tests::scenes
 		ResourceLoaderTestContext loaderContext;
 		cocoa::scenes::SceneManager manager(loaderContext.ResourceLoader);
 
-		manager.SetScene<TestScene>();
-		auto current = manager.GetCurrentScene();
+		manager.setScene<TestScene>();
+		auto current = manager.getCurrentScene();
 
 		ASSERT_NE(current, nullptr);
 		EXPECT_NE(dynamic_cast<TestScene*>(current), nullptr);
@@ -161,10 +161,10 @@ namespace cocoa_tests::scenes
 		ResourceLoaderTestContext loaderContext;
 		cocoa::scenes::SceneManager manager(loaderContext.ResourceLoader);
 
-		manager.SetScene<CountingScene>();
-		manager.SetScene<AnotherTestScene>();
+		manager.setScene<CountingScene>();
+		manager.setScene<AnotherTestScene>();
 
-		auto scene = manager.GetScene<CountingScene>();
+		auto scene = manager.getScene<CountingScene>();
 
 		ASSERT_NE(scene, nullptr);
 		EXPECT_EQ(scene->loadCount, 1);

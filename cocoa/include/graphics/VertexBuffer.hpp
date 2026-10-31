@@ -10,9 +10,9 @@ namespace cocoa::graphics
 	{
 	public:
 		virtual ~VertexBuffer() = default;
-		virtual void Bind() const = 0;
-		virtual void Unbind() const = 0;
-		virtual void SetData(const void* data, uint32_t size) const = 0;
-		[[nodiscard]] virtual const BufferLayout& GetLayout() const = 0;
+		virtual void bind() const = 0;
+		virtual void unbind() const = 0;
+		virtual void setData(const void* data, uint32_t size) const = 0;
+		[[nodiscard]] virtual const BufferLayout& getLayout() const = 0;
 	};
 }

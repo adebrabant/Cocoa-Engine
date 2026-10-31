@@ -10,9 +10,9 @@ namespace cocoa::platforms
 	GLFWWindow::GLFWWindow(const cocoa::events::EventBus& eventBus, const WindowProperties& properties) :
 		m_eventBus(eventBus),
 		m_window(nullptr),
-		m_title(properties.GetTitle()),
-		m_width(properties.GetWidth()),
-		m_height(properties.GetHeight())
+		m_title(properties.getTitle()),
+		m_width(properties.getWidth()),
+		m_height(properties.getHeight())
 	{
 		if (m_window)
 			throw std::logic_error("GLFWWindow is already initialized.");
@@ -51,12 +51,12 @@ namespace cocoa::platforms
 		Shutdown();
 	}
 
-	void GLFWWindow::ProcessEvents()
+	void GLFWWindow::processEvents()
 	{
 		glfwPollEvents();
 	}
 
-	void GLFWWindow::WaitForEvents(const float duration) const
+	void GLFWWindow::waitForEvents(const float duration) const
 	{
 		if (duration <= 0.0f)
 			return;
@@ -64,20 +64,20 @@ namespace cocoa::platforms
 		glfwWaitEventsTimeout(duration);
 	}
 
-	void GLFWWindow::OnUpdate()
+	void GLFWWindow::onUpdate()
 	{
 		if (!m_window)
-			throw std::logic_error("GLFWWindow must be initialized before OnUpdate.");
+			throw std::logic_error("GLFWWindow must be initialized before onUpdate.");
 
 		glfwSwapBuffers(m_window);
 	}
 
-	bool GLFWWindow::IsOpen() const
+	bool GLFWWindow::isOpen() const
 	{
 		return m_window && !glfwWindowShouldClose(m_window);
 	}
 
-	uint32_t GLFWWindow::GetWidth() const
+	uint32_t GLFWWindow::getWidth() const
 	{
 		int width = 0;
 		int height = 0;
@@ -85,7 +85,7 @@ namespace cocoa::platforms
 		return static_cast<uint32_t>(width);
 	}
 
-	uint32_t GLFWWindow::GetHeight() const
+	uint32_t GLFWWindow::getHeight() const
 	{
 		int width = 0;
 		int height = 0;
@@ -93,7 +93,7 @@ namespace cocoa::platforms
 		return static_cast<uint32_t>(height);
 	}
 
-	void* GLFWWindow::GetNative() const
+	void* GLFWWindow::getNative() const
 	{
 		return m_window;
 	}
@@ -104,10 +104,10 @@ namespace cocoa::platforms
 		if (!self)
 			return;
 
-		self->m_eventBus.Publish(
+		self->m_eventBus.publish(
 			FramebufferResizeEvent{
-				.Width = static_cast<uint32_t>(width),
-				.Height = static_cast<uint32_t>(height)
+				.width = static_cast<uint32_t>(width),
+				.height = static_cast<uint32_t>(height)
 			});
 	}
 

@@ -10,9 +10,9 @@ namespace cocoa_tests::stubs
     public:
         StubIndexBuffer(const uint32_t* indices, uint32_t count);
         ~StubIndexBuffer() override;
-        void Bind() const override;
-        void Unbind() const override;
-        [[nodiscard]] uint32_t GetCount() const override;
+        void bind() const override;
+        void unbind() const override;
+        [[nodiscard]] uint32_t getCount() const override;
 
     private:
         uint32_t m_count;

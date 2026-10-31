@@ -9,7 +9,7 @@ namespace sandbox
 	public:
 		TestScene() = default;
 		~TestScene() override;
-		void Load(cocoa::assets::ResourceLoader& loader) override;
-		void Unload(cocoa::assets::ResourceLoader& loader) override;
+		void load(cocoa::assets::ResourceLoader& loader) override;
+		void unload(cocoa::assets::ResourceLoader& loader) override;
 	};
 }

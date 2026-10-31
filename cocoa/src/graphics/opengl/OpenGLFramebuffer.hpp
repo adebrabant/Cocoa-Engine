@@ -16,9 +16,9 @@ namespace cocoa::graphics
         OpenGLFramebuffer(OpenGLFramebuffer&& other) noexcept;
         OpenGLFramebuffer& operator=(OpenGLFramebuffer&& other) noexcept;
 
-        void Bind() const override;
-        void UnBind() const override;
-        void Resize(uint32_t width, uint32_t height) override;
+        void bind() const override;
+        void unBind() const override;
+        void resize(uint32_t width, uint32_t height) override;
 
     private:
         void Destroy();

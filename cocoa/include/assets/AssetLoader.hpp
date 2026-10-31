@@ -13,9 +13,9 @@ namespace cocoa::assets
 	public:
 		AssetLoader();
 		~AssetLoader() = default;
-		[[nodiscard]] Image LoadImage(const std::filesystem::path& path) const;
-		[[nodiscard]] Image LoadImage(const std::vector<std::byte>& bytes) const;
-		[[nodiscard]] std::string LoadText(const std::filesystem::path& path) const;
-		[[nodiscard]] std::string LoadText(const std::vector<std::byte>& bytes) const;
+		[[nodiscard]] Image loadImage(const std::filesystem::path& path) const;
+		[[nodiscard]] Image loadImage(const std::vector<std::byte>& bytes) const;
+		[[nodiscard]] std::string loadText(const std::filesystem::path& path) const;
+		[[nodiscard]] std::string loadText(const std::vector<std::byte>& bytes) const;
 	};
 }

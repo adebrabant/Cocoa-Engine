@@ -20,11 +20,11 @@ namespace cocoa::graphics
 		OpenGLVertexBuffer(OpenGLVertexBuffer&& other) noexcept;
 		OpenGLVertexBuffer& operator=(OpenGLVertexBuffer&& other) noexcept;
 
-		void Bind() const override;
-		void Unbind() const override;
-		void SetData(const void* data, uint32_t size) const override;
+		void bind() const override;
+		void unbind() const override;
+		void setData(const void* data, uint32_t size) const override;
 
-		[[nodiscard]] const BufferLayout& GetLayout() const override { return m_bufferLayout; }
+		[[nodiscard]] const BufferLayout& getLayout() const override { return m_bufferLayout; }
 
 	private:
 		void Destroy();

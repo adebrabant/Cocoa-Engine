@@ -23,16 +23,16 @@ namespace cocoa::scenes
 	public:
 		explicit SceneManager(assets::ResourceLoader& loader);
 		~SceneManager() = default;
-		[[nodiscard]] Scene* GetCurrentScene() const;
-		void FixedUpdate(float fixedDeltaTime) const;
-		void Update(float deltaTime) const;
-		void Render(graphics::Renderer2D& renderer, float alpha) const;
-		template<typename TScene> void SetScene();
-		template<typename TScene> void AddScene();
-		template<typename TScene> TScene* GetScene();
+		[[nodiscard]] Scene* getCurrentScene() const;
+		void fixedUpdate(float fixedDeltaTime) const;
+		void update(float deltaTime) const;
+		void render(graphics::Renderer2D& renderer, float alpha) const;
+		template<typename TScene> void setScene();
+		template<typename TScene> void addScene();
+		template<typename TScene> TScene* getScene();
 
 	protected:
-		template<typename TScene> constexpr void ValidateScene() const;
+		template<typename TScene> constexpr void validateScene() const;
 
 	private:
 		std::vector<Unique<Scene>> m_scenes;
@@ -41,44 +41,44 @@ namespace cocoa::scenes
 	};
 
 	template<typename TScene>
-	inline void SceneManager::SetScene()
+	inline void SceneManager::setScene()
 	{
-		auto newScene = GetScene<TScene>();
+		auto newScene = getScene<TScene>();
 		if (!newScene)
 		{
-			AddScene<TScene>();
-			newScene = GetScene<TScene>();
+			addScene<TScene>();
+			newScene = getScene<TScene>();
 		}
 
 		if (m_currentScene == newScene)
 			return;
 
 		if (m_currentScene)
-			m_currentScene->Unload(m_resourceLoader);
+			m_currentScene->unload(m_resourceLoader);
 
 		m_currentScene = newScene;
 
 		if (m_currentScene)
-			m_currentScene->Load(m_resourceLoader);
+			m_currentScene->load(m_resourceLoader);
 	}
 
 	template<typename TScene>
-	inline void SceneManager::AddScene()
+	inline void SceneManager::addScene()
 	{
-		ValidateScene<TScene>();
+		validateScene<TScene>();
 
-		if (GetScene<TScene>())
+		if (getScene<TScene>())
 		{
 			return;
 		}
 
-		m_scenes.emplace_back(CreateUnique<TScene>());
+		m_scenes.emplace_back(createUnique<TScene>());
 	}
 
 	template<typename TScene>
-	inline TScene* SceneManager::GetScene()
+	inline TScene* SceneManager::getScene()
 	{
-		ValidateScene<TScene>();
+		validateScene<TScene>();
 		for (const auto& scene : m_scenes)
 		{
 			if (auto casted = dynamic_cast<TScene*>(scene.get()))
@@ -91,7 +91,7 @@ namespace cocoa::scenes
 	}
 
 	template<typename TScene>
-	constexpr void SceneManager::ValidateScene() const
+	constexpr void SceneManager::validateScene() const
 	{
 		static_assert(std::is_base_of_v<Scene, TScene>,
 			"TScene must derive from Scene");

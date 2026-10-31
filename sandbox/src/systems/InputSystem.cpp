@@ -12,36 +12,36 @@ namespace sandbox
 
 	}
 
-	void InputSystem::Update(cocoa::scenes::World& world, float deltaTime)
+	void InputSystem::update(cocoa::scenes::World& world, float deltaTime)
 	{
 		cocoa::scenes::View<cocoa::scenes::VelocityComponent> view(world);
 		for (auto [velocity] : view)
 		{
-			if (m_inputHandler.IsUpPressed())
+			if (m_inputHandler.isUpPressed())
 			{
-				velocity.DeltaY -= 0.5f * deltaTime;
+				velocity.deltaY -= 0.5f * deltaTime;
 			}
-			if (m_inputHandler.IsDownPressed())
+			if (m_inputHandler.isDownPressed())
 			{
-				velocity.DeltaY += 0.5f * deltaTime;
-			}
-
-			if (m_inputHandler.IsRightPressed())
-			{
-				velocity.DeltaX += 0.5f * deltaTime;
+				velocity.deltaY += 0.5f * deltaTime;
 			}
 
-			if (m_inputHandler.IsLeftPressed())
+			if (m_inputHandler.isRightPressed())
 			{
-				velocity.DeltaX -= 0.5f * deltaTime;
+				velocity.deltaX += 0.5f * deltaTime;
 			}
 
-			velocity.DeltaX = 0.0f;
-			velocity.DeltaY = 0.0f;
+			if (m_inputHandler.isLeftPressed())
+			{
+				velocity.deltaX -= 0.5f * deltaTime;
+			}
+
+			velocity.deltaX = 0.0f;
+			velocity.deltaY = 0.0f;
 		}
 	}
 
-	void InputSystem::Render(cocoa::scenes::World& world, cocoa::graphics::Renderer2D& renderer, float alpha)
+	void InputSystem::render(cocoa::scenes::World& world, cocoa::graphics::Renderer2D& renderer, float alpha)
 	{
 
 	}

@@ -16,7 +16,7 @@ namespace cocoa_tests::assets
 		const std::filesystem::path path = "test_data/resources/images/test.png";
 		const std::vector<std::byte> bytes = Helpers::ReadFileBytes(path);
 
-		const cocoa::assets::Image& result = sut.LoadImage(path.string(), bytes);
+		const cocoa::assets::Image& result = sut.loadImage(path.string(), bytes);
 
 		EXPECT_NE(&result, nullptr);
 	}
@@ -28,8 +28,8 @@ namespace cocoa_tests::assets
 		const std::filesystem::path rootPath = "test_data/resources/";
 		const std::vector<std::byte> bytes = Helpers::ReadFileBytes(rootPath / imagePath);
 
-		const cocoa::assets::Image& result1 = sut.LoadImage(imagePath, bytes);
-		const cocoa::assets::Image& result2 = sut.LoadImage(imagePath, bytes);
+		const cocoa::assets::Image& result1 = sut.loadImage(imagePath, bytes);
+		const cocoa::assets::Image& result2 = sut.loadImage(imagePath, bytes);
 
 		EXPECT_EQ(&result1, &result2);
 	}
@@ -43,8 +43,8 @@ namespace cocoa_tests::assets
 		const std::vector<std::byte> testImageBytes = Helpers::ReadFileBytes(rootPath / testImagePath);
 		const std::vector<std::byte> testImage2Bytes = Helpers::ReadFileBytes(rootPath / testImage2Path);
 
-		const cocoa::assets::Image& result1 = sut.LoadImage(testImagePath, testImageBytes);
-		const cocoa::assets::Image& result2 = sut.LoadImage(testImage2Path, testImage2Bytes);
+		const cocoa::assets::Image& result1 = sut.loadImage(testImagePath, testImageBytes);
+		const cocoa::assets::Image& result2 = sut.loadImage(testImage2Path, testImage2Bytes);
 
 		EXPECT_NE(&result1, &result2);
 	}
@@ -59,7 +59,7 @@ namespace cocoa_tests::assets
 		const std::vector<std::byte> vertexBytes = Helpers::ReadFileBytes(rootPath / vertexPath);
 		const std::vector<std::byte> fragmentBytes = Helpers::ReadFileBytes(rootPath / fragmentPath);
 
-		const cocoa::assets::ShaderSource& result = sut.LoadShader(shaderId, vertexBytes, fragmentBytes);
+		const cocoa::assets::ShaderSource& result = sut.loadShader(shaderId, vertexBytes, fragmentBytes);
 
 		EXPECT_NE(&result, nullptr);
 	}
@@ -74,8 +74,8 @@ namespace cocoa_tests::assets
 		const std::vector<std::byte> vertexBytes = Helpers::ReadFileBytes(rootPath / vertexPath);
 		const std::vector<std::byte> fragmentBytes = Helpers::ReadFileBytes(rootPath / fragmentPath);
 
-		const cocoa::assets::ShaderSource& result1 = sut.LoadShader(shaderId, vertexBytes, fragmentBytes);
-		const cocoa::assets::ShaderSource& result2 = sut.LoadShader(shaderId, vertexBytes, fragmentBytes);
+		const cocoa::assets::ShaderSource& result1 = sut.loadShader(shaderId, vertexBytes, fragmentBytes);
+		const cocoa::assets::ShaderSource& result2 = sut.loadShader(shaderId, vertexBytes, fragmentBytes);
 
 		EXPECT_EQ(&result1, &result2);
 	}
@@ -89,8 +89,8 @@ namespace cocoa_tests::assets
 		const std::vector<std::byte> vertexBytes = Helpers::ReadFileBytes(rootPath / vertexPath);
 		const std::vector<std::byte> fragmentBytes = Helpers::ReadFileBytes(rootPath / fragmentPath);
 
-		const cocoa::assets::ShaderSource& result1 = sut.LoadShader("test-id", vertexBytes, fragmentBytes);
-		const cocoa::assets::ShaderSource& result2 = sut.LoadShader("some-id", vertexBytes, fragmentBytes);
+		const cocoa::assets::ShaderSource& result1 = sut.loadShader("test-id", vertexBytes, fragmentBytes);
+		const cocoa::assets::ShaderSource& result2 = sut.loadShader("some-id", vertexBytes, fragmentBytes);
 
 		EXPECT_NE(&result1, &result2);
 	}

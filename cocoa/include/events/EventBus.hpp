@@ -19,9 +19,9 @@ namespace cocoa::events
         using SubscriptionToken = size_t;
 
         template<typename Event>
-        SubscriptionToken Subscribe(HandlerFunc<Event> handler)
+        SubscriptionToken subscribe(HandlerFunc<Event> handler)
         {
-            auto& handlers = GetHandlers<Event>();
+            auto& handlers = getHandlers<Event>();
             SubscriptionToken token = ++m_lastToken;
             handlers.emplace_back(token, std::move(handler));
 
@@ -29,9 +29,9 @@ namespace cocoa::events
         }
 
         template<typename Event>
-        void Unsubscribe(SubscriptionToken token)
+        void unsubscribe(SubscriptionToken token)
         {
-            auto& handlers = GetHandlers<Event>();
+            auto& handlers = getHandlers<Event>();
             handlers.erase(
                 std::remove_if(handlers.begin(), handlers.end(),
                     [token](const auto& handlerPair)
@@ -42,9 +42,9 @@ namespace cocoa::events
         }
 
         template<typename Event>
-        bool HasSubscriber(SubscriptionToken token) const
+        bool hasSubscriber(SubscriptionToken token) const
         {
-            const auto& handlers = GetHandlers<Event>();
+            const auto& handlers = getHandlers<Event>();
             return std::any_of(handlers.begin(), handlers.end(),
                 [token](const auto& handlerPair)
                 {
@@ -53,9 +53,9 @@ namespace cocoa::events
         }
 
         template<typename Event>
-        void Publish(const Event& event) const
+        void publish(const Event& event) const
         {
-            const auto& handlers = GetHandlers<Event>();
+            const auto& handlers = getHandlers<Event>();
             for (const auto& [token, handler] : handlers)
             {
                 handler(event);
@@ -67,7 +67,7 @@ namespace cocoa::events
         using HandlerList = std::vector<std::pair<SubscriptionToken, HandlerFunc<Event>>>;
 
         template<typename Event>
-        HandlerList<Event>& GetHandlers() const
+        HandlerList<Event>& getHandlers() const
         {
             auto& anyRef = m_handlerMap[typeid(Event)];
             if (!anyRef.has_value())

@@ -39,10 +39,10 @@ namespace cocoa::assets
 		ResourceLoader(ResourceLoader&&) = delete;
 		ResourceLoader& operator=(ResourceLoader&&) = delete;
 
-		[[nodiscard]] graphics::TextureHandle LoadTexture(const std::string& textureId) const;
-		[[nodiscard]] graphics::ShaderHandle LoadShader(const std::string& shaderId) const;
-		[[nodiscard]] graphics::MaterialHandle LoadMaterial(const std::string& materialId) const;
-		[[nodiscard]] graphics::SpriteHandle LoadSprite(const std::string& spriteId) const;
+		[[nodiscard]] graphics::TextureHandle loadTexture(const std::string& textureId) const;
+		[[nodiscard]] graphics::ShaderHandle loadShader(const std::string& shaderId) const;
+		[[nodiscard]] graphics::MaterialHandle loadMaterial(const std::string& materialId) const;
+		[[nodiscard]] graphics::SpriteHandle loadSprite(const std::string& spriteId) const;
 
 	private:
 		AssetDatabase& m_assetDatabase;

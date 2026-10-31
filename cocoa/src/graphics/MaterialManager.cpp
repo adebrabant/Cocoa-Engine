@@ -50,7 +50,7 @@ namespace cocoa::graphics
 
 	MaterialManager::~MaterialManager() = default;
 
-	MaterialHandle MaterialManager::Load(
+	MaterialHandle MaterialManager::load(
 		const std::string& materialId,
 		const ShaderHandle shaderHandle,
 		const std::string& blendMode,
@@ -61,30 +61,30 @@ namespace cocoa::graphics
 			return it->second;
 		}
 
-		MaterialHandle handle{ .Id = m_nextId++ };
+		MaterialHandle handle{ .id = m_nextId++ };
 		Material material
 		{
-			.Id = materialId,
-			.Shader = shaderHandle,
-			.Tint = tint,
-			.Blend =  ToBlendMode(blendMode)
+			.id = materialId,
+			.shaderHandle = shaderHandle,
+			.tint = tint,
+			.blendMode =  ToBlendMode(blendMode)
 		};
 
 		m_handles.emplace(materialId, handle);
-		m_materials.emplace(handle.Id, std::move(material));
+		m_materials.emplace(handle.id, std::move(material));
 
 		return handle;
 	}
 
-	const Material& MaterialManager::Get(const MaterialHandle handle) const
+	const Material& MaterialManager::get(const MaterialHandle handle) const
 	{
-		const auto it = m_materials.find(handle.Id);
+		const auto it = m_materials.find(handle.id);
 
 		if (it == m_materials.end())
 		{
 			throw std::runtime_error(
 				"No Material found with the material id: " +
-				std::to_string(handle.Id)
+				std::to_string(handle.id)
 			);
 		}
 

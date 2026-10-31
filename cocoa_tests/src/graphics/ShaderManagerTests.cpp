@@ -13,9 +13,9 @@ namespace cocoa_tests::graphics
         stubs::StubGraphicsDevice stubGraphicsDevice;
         cocoa::graphics::ShaderManager sut(stubGraphicsDevice);
 
-        cocoa::graphics::ShaderHandle result = sut.Load("1", "default", "default");
+        cocoa::graphics::ShaderHandle result = sut.load("1", "default", "default");
 
-        EXPECT_EQ(result.Id, 1);
+        EXPECT_EQ(result.id, 1);
     }
 
     TEST(ShaderManagerTests, Load_ShouldReturnSameShaderHandleId_WhenProvidingSameShaderIds)
@@ -23,10 +23,10 @@ namespace cocoa_tests::graphics
         stubs::StubGraphicsDevice stubGraphicsDevice;
         cocoa::graphics::ShaderManager sut(stubGraphicsDevice);
 
-        cocoa::graphics::ShaderHandle result1 = sut.Load("1", "default", "default");
-        cocoa::graphics::ShaderHandle result2 = sut.Load("1", "default", "default");
+        cocoa::graphics::ShaderHandle result1 = sut.load("1", "default", "default");
+        cocoa::graphics::ShaderHandle result2 = sut.load("1", "default", "default");
 
-        EXPECT_EQ(result1.Id, result2.Id);
+        EXPECT_EQ(result1.id, result2.id);
     }
 
     TEST(ShaderManagerTests, Load_ShouldNotReturnSameShaderHandleId_WhenProvidingUniqueShaderId)
@@ -34,10 +34,10 @@ namespace cocoa_tests::graphics
         stubs::StubGraphicsDevice stubGraphicsDevice;
         cocoa::graphics::ShaderManager sut(stubGraphicsDevice);
 
-        cocoa::graphics::ShaderHandle result1 = sut.Load("1", "default", "default");
-        cocoa::graphics::ShaderHandle result2 = sut.Load("2", "default", "default");
+        cocoa::graphics::ShaderHandle result1 = sut.load("1", "default", "default");
+        cocoa::graphics::ShaderHandle result2 = sut.load("2", "default", "default");
 
-        EXPECT_NE(result1.Id, result2.Id);
+        EXPECT_NE(result1.id, result2.id);
     }
 
     TEST(ShaderManagerTests, Get_ShouldReturnShader_WhenProvidingValidHandle)
@@ -45,8 +45,8 @@ namespace cocoa_tests::graphics
         stubs::StubGraphicsDevice stubGraphicsDevice;
         cocoa::graphics::ShaderManager sut(stubGraphicsDevice);
 
-        cocoa::graphics::ShaderHandle handle = sut.Load("1", "default", "default");
-        const cocoa::graphics::Shader& shader = sut.Get(handle);
+        cocoa::graphics::ShaderHandle handle = sut.load("1", "default", "default");
+        const cocoa::graphics::Shader& shader = sut.get(handle);
 
         EXPECT_NE(&shader, nullptr);
     }
@@ -56,10 +56,10 @@ namespace cocoa_tests::graphics
         stubs::StubGraphicsDevice stubGraphicsDevice;
         cocoa::graphics::ShaderManager sut(stubGraphicsDevice);
 
-        cocoa::graphics::ShaderHandle handle1 = sut.Load("1", "default", "default");
-        cocoa::graphics::ShaderHandle handle2 = sut.Load("2", "value", "value");
-        const cocoa::graphics::Shader& shader1 = sut.Get(handle1);
-        const cocoa::graphics::Shader& shader2 = sut.Get(handle2);
+        cocoa::graphics::ShaderHandle handle1 = sut.load("1", "default", "default");
+        cocoa::graphics::ShaderHandle handle2 = sut.load("2", "value", "value");
+        const cocoa::graphics::Shader& shader1 = sut.get(handle1);
+        const cocoa::graphics::Shader& shader2 = sut.get(handle2);
 
         EXPECT_NE(&shader1, &shader2);
     }
@@ -69,9 +69,9 @@ namespace cocoa_tests::graphics
         stubs::StubGraphicsDevice stubGraphicsDevice;
         cocoa::graphics::ShaderManager sut(stubGraphicsDevice);
 
-        cocoa::graphics::ShaderHandle handle = sut.Load("1", "default", "default");
-        const cocoa::graphics::Shader& shader1 = sut.Get(handle);
-        const cocoa::graphics::Shader& shader2 = sut.Get(handle);
+        cocoa::graphics::ShaderHandle handle = sut.load("1", "default", "default");
+        const cocoa::graphics::Shader& shader1 = sut.get(handle);
+        const cocoa::graphics::Shader& shader2 = sut.get(handle);
 
         EXPECT_EQ(&shader1, &shader2);
     }
@@ -81,11 +81,11 @@ namespace cocoa_tests::graphics
         stubs::StubGraphicsDevice stubGraphicsDevice;
         cocoa::graphics::ShaderManager sut(stubGraphicsDevice);
 
-        cocoa::graphics::ShaderHandle handle{ .Id = 9999 };
+        cocoa::graphics::ShaderHandle handle{ .id = 9999 };
 
         EXPECT_THROW(
             {
-                sut.Get(handle);
+                sut.get(handle);
             },
             std::runtime_error
         );
@@ -96,25 +96,25 @@ namespace cocoa_tests::graphics
         stubs::StubGraphicsDevice stubGraphicsDevice;
         cocoa::graphics::ShaderManager sut(stubGraphicsDevice);
         const std::string shaderId = "1";
-        cocoa::graphics::ShaderHandle expectedHandle = sut.Load(shaderId, "default", "default");
+        cocoa::graphics::ShaderHandle expectedHandle = sut.load(shaderId, "default", "default");
 
         cocoa::graphics::ShaderHandle outHandle;
-        bool result = sut.TryGetHandle(shaderId, outHandle);
+        bool result = sut.tryGetHandle(shaderId, outHandle);
 
         EXPECT_TRUE(result);
-        EXPECT_EQ(outHandle.Id, expectedHandle.Id);
+        EXPECT_EQ(outHandle.id, expectedHandle.id);
     }
 
     TEST(ShaderManagerTests, TryGetHandle_ShouldReturnFalseAndOutHandle_WhenIdDoesNotExist)
     {
         stubs::StubGraphicsDevice stubGraphicsDevice;
         cocoa::graphics::ShaderManager sut(stubGraphicsDevice);
-        sut.Load("1", "default", "default");
+        sut.load("1", "default", "default");
 
         cocoa::graphics::ShaderHandle outHandle;
-        bool result = sut.TryGetHandle("badId", outHandle);
+        bool result = sut.tryGetHandle("badId", outHandle);
 
         EXPECT_FALSE(result);
-        EXPECT_EQ(outHandle.Id, 0);
+        EXPECT_EQ(outHandle.id, 0);
     }
 }

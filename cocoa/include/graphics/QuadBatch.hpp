@@ -36,13 +36,13 @@ namespace cocoa::graphics
         );
         ~QuadBatch();
 
-        void Draw(
+        void draw(
             const math::Matrix4f& modelMatrix,
             MaterialHandle materialHandle,
             TextureHandle textureHandle,
             const math::Vector2f& tilingFactor
         );
-        void Draw(
+        void draw(
             const math::Matrix4f& modelMatrix,
             MaterialHandle materialHandle,
             SpriteHandle spriteHandle,
@@ -50,46 +50,46 @@ namespace cocoa::graphics
             bool flipVertical,
             bool flipHorizontal
         );
-        void Flush(const math::Matrix4f& viewProjectionMatrix);
+        void flush(const math::Matrix4f& viewProjectionMatrix);
 
     private:
         struct QuadVertex
         {
-            math::Vector3f Position{};
-            math::Vector2f LocalUV{};
-            math::Vector2f MinUV{};
+            math::Vector3f position{};
+            math::Vector2f localUV{};
+            math::Vector2f minUV{};
             math::Vector2f MaxUV{};
-            math::Vector2f TilingFactor{};
-            math::Vector4f Color{};
-            uint32_t TexIndex{0};
+            math::Vector2f tilingFactor{};
+            math::Vector4f color{};
+            uint32_t texIndex{0};
         };
         struct QuadDrawCommand
         {
-            ShaderHandle Shader{};
-            TextureHandle Texture {};
-            BlendMode Blend{};
-            std::array<QuadVertex, 4> Vertices{};
+            ShaderHandle shaderHandle{};
+            TextureHandle textureHandle {};
+            BlendMode blendMode{};
+            std::array<QuadVertex, 4> vertices{};
         };
         struct TextureSlots
         {
-            static constexpr uint32_t MaxCount{32};
-            std::array<TextureHandle, MaxCount> Data{};
-            uint32_t Count{0};
+            static constexpr uint32_t maxCount{32};
+            std::array<TextureHandle, maxCount> data{};
+            uint32_t count{0};
         };
         struct BatchData
         {
-            ShaderHandle Shader;
-            TextureSlots Textures;
-            BlendMode Blend;
-            std::vector<QuadVertex> Vertices;
+            ShaderHandle shaderHandle;
+            TextureSlots textureSlots;
+            BlendMode blendMode;
+            std::vector<QuadVertex> vertices;
         };
-        void BuildBatch(const math::Matrix4f& viewProjectionMatrix);
-        void ExecuteBatch(
+        void buildBatch(const math::Matrix4f& viewProjectionMatrix);
+        void executeBatch(
             const BatchData& batchData,
             const math::Matrix4f& viewProjectionMatrix
         ) const;
-        static std::array<int, TextureSlots::MaxCount> CreateSamplerUnits();
-        static std::array<QuadVertex, 4> BuildVertices(
+        static std::array<int, TextureSlots::maxCount> createSamplerUnits();
+        static std::array<QuadVertex, 4> buildVertices(
             const math::Matrix4f& modelMatrix,
             const math::Vector4f& color,
             const math::Vector2f& minUV,

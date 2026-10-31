@@ -4,17 +4,17 @@
 
 namespace cocoa::scenes
 {
-	void MovementSystem::Update(World& world, float deltaTime)
+	void MovementSystem::update(World& world, float deltaTime)
 	{
 
 	}
 
-	void MovementSystem::BeginRender(World& world, graphics::Renderer2D& renderer, float alpha)
+	void MovementSystem::beginRender(World& world, graphics::Renderer2D& renderer, float alpha)
 	{
 
 	}
 
-	void MovementSystem::Render(World& world, graphics::Renderer2D& renderer, float alpha)
+	void MovementSystem::render(World& world, graphics::Renderer2D& renderer, float alpha)
 	{
 
 	}

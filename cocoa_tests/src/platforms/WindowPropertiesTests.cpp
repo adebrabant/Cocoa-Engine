@@ -13,7 +13,7 @@ namespace cocoa_tests::platforms
 
         const cocoa::platforms::WindowProperties sut(expectedWidth, height, title);
 
-        EXPECT_EQ(expectedWidth, sut.GetWidth());
+        EXPECT_EQ(expectedWidth, sut.getWidth());
     }
 
     TEST(WindowPropertiesTests, GetHeight_ShouldReturnConstructorHeight_WhenCreated)
@@ -24,7 +24,7 @@ namespace cocoa_tests::platforms
 
         const cocoa::platforms::WindowProperties sut(width, expectedHeight, title);
 
-        EXPECT_EQ(expectedHeight, sut.GetHeight());
+        EXPECT_EQ(expectedHeight, sut.getHeight());
     }
 
     TEST(WindowPropertiesTests, GetTitle_ShouldReturnConstructorTitle_WhenCreated)
@@ -35,7 +35,7 @@ namespace cocoa_tests::platforms
 
         const cocoa::platforms::WindowProperties sut(width, height, expectedTitle);
 
-        EXPECT_EQ(expectedTitle, sut.GetTitle());
+        EXPECT_EQ(expectedTitle, sut.getTitle());
     }
 
     TEST(WindowPropertiesTests, GetTitle_ShouldStoreOwnTitleCopy_WhenSourceStringIsModified)
@@ -47,7 +47,7 @@ namespace cocoa_tests::platforms
         const cocoa::platforms::WindowProperties sut(width, height, title);
         title = "Changed Title";
 
-        EXPECT_EQ("Vexxus", sut.GetTitle());
+        EXPECT_EQ("Vexxus", sut.getTitle());
     }
 
     TEST(WindowPropertiesTests, Constructor_ShouldMoveTitle_WhenRvalueStringIsProvided)
@@ -57,6 +57,6 @@ namespace cocoa_tests::platforms
 
         const cocoa::platforms::WindowProperties sut(width, height, std::string("Vexxus"));
 
-        EXPECT_EQ("Vexxus", sut.GetTitle());
+        EXPECT_EQ("Vexxus", sut.getTitle());
     }
 }

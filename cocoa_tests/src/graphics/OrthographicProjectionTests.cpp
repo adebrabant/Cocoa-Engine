@@ -11,7 +11,7 @@ namespace cocoa_tests::graphics
         const cocoa::graphics::OrthographicProjection sut(
             -aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
 
-        const cocoa::math::Matrix4f result = sut.GetProjectionMatrix();
+        const cocoa::math::Matrix4f result = sut.getProjectionMatrix();
 
         EXPECT_FLOAT_EQ(result[0], 0.75f);
         EXPECT_FLOAT_EQ(result[1], 0.0f);
@@ -37,12 +37,12 @@ namespace cocoa_tests::graphics
         constexpr float aspectRatio = 800.0f / 600.0f;
         cocoa::graphics::OrthographicProjection sut(-aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
 
-        sut.SetPosition(expectedPosition);
-        const cocoa::math::Vector3f result = sut.GetPosition();
+        sut.setPosition(expectedPosition);
+        const cocoa::math::Vector3f result = sut.getPosition();
 
-        ASSERT_FLOAT_EQ(result.X, expectedPosition.X);
-        ASSERT_FLOAT_EQ(result.Y, expectedPosition.Y);
-        ASSERT_FLOAT_EQ(result.Z, expectedPosition.Z);
+        ASSERT_FLOAT_EQ(result.x, expectedPosition.x);
+        ASSERT_FLOAT_EQ(result.y, expectedPosition.y);
+        ASSERT_FLOAT_EQ(result.z, expectedPosition.z);
     }
 
     TEST(OrthographicProjectionTests, GetPosition_ShouldReturnVector3_WhenCalled)
@@ -50,21 +50,21 @@ namespace cocoa_tests::graphics
         constexpr float aspectRatio = 800.0f / 600.0f;
         const cocoa::graphics::OrthographicProjection sut(-aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
 
-        const cocoa::math::Vector3f result = sut.GetPosition();
+        const cocoa::math::Vector3f result = sut.getPosition();
 
-        ASSERT_FLOAT_EQ(result.X, 0.0f);
-        ASSERT_FLOAT_EQ(result.Y, 0.0f);
-        ASSERT_FLOAT_EQ(result.Z, 0.0f);
+        ASSERT_FLOAT_EQ(result.x, 0.0f);
+        ASSERT_FLOAT_EQ(result.y, 0.0f);
+        ASSERT_FLOAT_EQ(result.z, 0.0f);
     }
 
     TEST(OrthographicProjectionTests, GetViewProjectionMatrix_ShouldReturnProjectionMatrixTimesViewMatrix_WhenCalled)
     {
         constexpr float aspectRatio = 800.0f / 600.0f;
         cocoa::graphics::OrthographicProjection sut(-aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
-        sut.SetPosition({ 5.0f, 2.0f, 3.0f});
-        sut.SetRotation(1.5f);
+        sut.setPosition({ 5.0f, 2.0f, 3.0f});
+        sut.setRotation(1.5f);
 
-        const cocoa::math::Matrix4f result = sut.GetViewProjectionMatrix();
+        const cocoa::math::Matrix4f result = sut.getViewProjectionMatrix();
 
         EXPECT_FLOAT_EQ(result[0], 0.053052898f);
         EXPECT_FLOAT_EQ(result[1], -0.997495f);
@@ -89,13 +89,13 @@ namespace cocoa_tests::graphics
         constexpr float aspectRatio = 800.0f / 600.0f;
         cocoa::graphics::OrthographicProjection sut(-aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
 
-        sut.SetProjection(
+        sut.setProjection(
             -3.0f, 5.0f,
             -2.0f, 6.0f,
             1.0f, 9.0f
         );
 
-        const cocoa::math::Matrix4f result = sut.GetProjectionMatrix();
+        const cocoa::math::Matrix4f result = sut.getProjectionMatrix();
 
         EXPECT_FLOAT_EQ(result[0], 0.25f);
         EXPECT_FLOAT_EQ(result[1], 0.0f);
@@ -124,8 +124,8 @@ namespace cocoa_tests::graphics
         constexpr float aspectRatio = 800.0f / 600.0f;
         cocoa::graphics::OrthographicProjection sut(-aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
 
-        sut.SetRotation(expectedRotation);
-        const float result = sut.GetRotation();
+        sut.setRotation(expectedRotation);
+        const float result = sut.getRotation();
 
         ASSERT_FLOAT_EQ(result, expectedRotation);
     }

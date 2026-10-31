@@ -11,162 +11,162 @@ namespace sandbox
 {
 	TestScene::~TestScene() = default;
 
-	void TestScene::Load(cocoa::assets::ResourceLoader& loader)
+	void TestScene::load(cocoa::assets::ResourceLoader& loader)
     {
-        auto cameraEntity = m_world.CreateEntity();
-        m_world.AddComponent(cameraEntity, cocoa::scenes::CameraComponent{ true });
-		m_world.AddComponent(cameraEntity, cocoa::scenes::ProjectionComponent{});
-		m_world.AddComponent(cameraEntity, cocoa::scenes::TransformComponent{});
-        m_world.AddSystem<cocoa::scenes::CameraSystem>();
+        auto cameraEntity = m_world.createEntity();
+        m_world.addComponent(cameraEntity, cocoa::scenes::CameraComponent{ true });
+		m_world.addComponent(cameraEntity, cocoa::scenes::ProjectionComponent{});
+		m_world.addComponent(cameraEntity, cocoa::scenes::TransformComponent{});
+        m_world.addSystem<cocoa::scenes::CameraSystem>();
 
-		const auto defaultMaterial = loader.LoadMaterial("default_material");
+		const auto defaultMaterial = loader.loadMaterial("default_material");
 
-		const auto sunEntity = m_world.CreateEntity();
+		const auto sunEntity = m_world.createEntity();
 		cocoa::scenes::TransformComponent sunsetTransform
 		{
-			.Position = { 0.0f, 0.0f, 0.0f },
-			.Rotation =  { 0.0f, 0.0f, 0.0f },
-			.Scale = { 3.56f, 2.0f, 1.0f }
+			.position = { 0.0f, 0.0f, 0.0f },
+			.rotation =  { 0.0f, 0.0f, 0.0f },
+			.scale = { 3.56f, 2.0f, 1.0f }
 		};
 
-		auto mountainBackgroundEntity = m_world.CreateEntity();
+		auto mountainBackgroundEntity = m_world.createEntity();
 		cocoa::scenes::TransformComponent mountainBackgroundTransform
 		{
-			.Position = { 0.0f, -0.05f, 0.0f },
-			.Rotation =  { 0.0f, 0.0f, 0.0f },
-			.Scale = { 3.56f, 2.0f, 1.0f }
+			.position = { 0.0f, -0.05f, 0.0f },
+			.rotation =  { 0.0f, 0.0f, 0.0f },
+			.scale = { 3.56f, 2.0f, 1.0f }
 		};
 
-		auto forestFogBackground01Entity = m_world.CreateEntity();
+		auto forestFogBackground01Entity = m_world.createEntity();
 		cocoa::scenes::TransformComponent forestFogBackground01Transform
 		{
-			.Position = { 0.0f, -0.15f, 0.0f },
-			.Rotation =  { 0.0f, 0.0f, 0.0f },
-			.Scale = { 3.56f, 2.0f, 1.0f }
+			.position = { 0.0f, -0.15f, 0.0f },
+			.rotation =  { 0.0f, 0.0f, 0.0f },
+			.scale = { 3.56f, 2.0f, 1.0f }
 		};
 
-		auto forestFogBackground02Entity = m_world.CreateEntity();
+		auto forestFogBackground02Entity = m_world.createEntity();
 		cocoa::scenes::TransformComponent forestFogBackground02Transform
 		{
-			.Position = { 0.0f, -0.25f, 0.0f },
-			.Rotation =  { 0.0f, 0.0f, 0.0f },
-			.Scale = { 3.56f, 2.0f, 1.0f }
+			.position = { 0.0f, -0.25f, 0.0f },
+			.rotation =  { 0.0f, 0.0f, 0.0f },
+			.scale = { 3.56f, 2.0f, 1.0f }
 		};
 
-		auto cherryBlossomTree02Entity = m_world.CreateEntity();
+		auto cherryBlossomTree02Entity = m_world.createEntity();
 		cocoa::scenes::TransformComponent cherryBlossomTree02Transform
 		{
-			.Position = { 1.20f, -0.35f, 0.0f },
-			.Rotation =  { 0.0f, 0.0f, 0.0f },
-			.Scale = { 0.75f, 0.75f, 1.0f }
+			.position = { 1.20f, -0.35f, 0.0f },
+			.rotation =  { 0.0f, 0.0f, 0.0f },
+			.scale = { 0.75f, 0.75f, 1.0f }
 		};
 
-		m_world.AddComponent(sunEntity, sunsetTransform);
-		m_world.AddComponent(
+		m_world.addComponent(sunEntity, sunsetTransform);
+		m_world.addComponent(
 			sunEntity,
 			cocoa::scenes::SpriteComponent
 			{
-				.Material = defaultMaterial,
-				.Sprite = loader.LoadSprite("sunset_background_01_sprite"),
-				.SortingLayer = cocoa::graphics::SortLayer::Background,
-				.SortingOrder = 0
+				.materialHandle = defaultMaterial,
+				.spriteHandle = loader.loadSprite("sunset_background_01_sprite"),
+				.sortingLayer = cocoa::graphics::SortLayer::Background,
+				.sortingOrder = 0
 			}
 		);
 
-		m_world.AddComponent(mountainBackgroundEntity, mountainBackgroundTransform);
-		m_world.AddComponent(
+		m_world.addComponent(mountainBackgroundEntity, mountainBackgroundTransform);
+		m_world.addComponent(
 			mountainBackgroundEntity,
 			cocoa::scenes::SpriteComponent
 			{
-				.Material = defaultMaterial,
-				.Sprite = loader.LoadSprite("mountains_background_01_sprite"),
-				.SortingLayer = cocoa::graphics::SortLayer::Background,
-				.SortingOrder = 1
+				.materialHandle = defaultMaterial,
+				.spriteHandle = loader.loadSprite("mountains_background_01_sprite"),
+				.sortingLayer = cocoa::graphics::SortLayer::Background,
+				.sortingOrder = 1
 			}
 		);
 
-		m_world.AddComponent(forestFogBackground01Entity, forestFogBackground01Transform);
-		m_world.AddComponent(
+		m_world.addComponent(forestFogBackground01Entity, forestFogBackground01Transform);
+		m_world.addComponent(
 			forestFogBackground01Entity,
 			cocoa::scenes::SpriteComponent
 			{
-				.Material = defaultMaterial,
-				.Sprite = loader.LoadSprite("forest_fog_background_01_sprite"),
-				.SortingLayer = cocoa::graphics::SortLayer::Background,
-				.SortingOrder = 2
+				.materialHandle = defaultMaterial,
+				.spriteHandle = loader.loadSprite("forest_fog_background_01_sprite"),
+				.sortingLayer = cocoa::graphics::SortLayer::Background,
+				.sortingOrder = 2
 			}
 		);
 
-		m_world.AddComponent(forestFogBackground02Entity, forestFogBackground02Transform);
-		m_world.AddComponent(
+		m_world.addComponent(forestFogBackground02Entity, forestFogBackground02Transform);
+		m_world.addComponent(
 			forestFogBackground02Entity,
 			cocoa::scenes::SpriteComponent
 			{
-				.Material = defaultMaterial,
-				.Sprite = loader.LoadSprite("forest_fog_background_02_sprite"),
-				.SortingLayer = cocoa::graphics::SortLayer::Background,
-				.SortingOrder = 3
+				.materialHandle = defaultMaterial,
+				.spriteHandle = loader.loadSprite("forest_fog_background_02_sprite"),
+				.sortingLayer = cocoa::graphics::SortLayer::Background,
+				.sortingOrder = 3
 			}
 		);
 
-		m_world.AddComponent(cherryBlossomTree02Entity, cherryBlossomTree02Transform);
-		m_world.AddComponent(
+		m_world.addComponent(cherryBlossomTree02Entity, cherryBlossomTree02Transform);
+		m_world.addComponent(
 			cherryBlossomTree02Entity,
 			cocoa::scenes::SpriteComponent
 			{
-				.Material = defaultMaterial,
-				.Sprite = loader.LoadSprite("cherry_blossom_tree_02_sprite"),
-				.FlipVertical = false,
-				.FlipHorizontal = true,
-				.SortingLayer = cocoa::graphics::SortLayer::World,
-				.SortingOrder = 0
+				.materialHandle = defaultMaterial,
+				.spriteHandle = loader.loadSprite("cherry_blossom_tree_02_sprite"),
+				.flipVertical = false,
+				.flipHorizontal = true,
+				.sortingLayer = cocoa::graphics::SortLayer::World,
+				.sortingOrder = 0
 			}
 		);
 
-		auto darkFloorTile01Entity = m_world.CreateEntity();
+		auto darkFloorTile01Entity = m_world.createEntity();
 		cocoa::scenes::TransformComponent darkFloorTile01Transform
 		{
-			.Position = { -0.05f, -0.72f, 0.0f },
-			.Rotation =  { 0.0f, 0.0f, 0.0f },
-			.Scale = { 3.2f, 0.4f, 1.0f }
+			.position = { -0.05f, -0.72f, 0.0f },
+			.rotation =  { 0.0f, 0.0f, 0.0f },
+			.scale = { 3.2f, 0.4f, 1.0f }
 		};
 
-		m_world.AddComponent(darkFloorTile01Entity, darkFloorTile01Transform);
-		m_world.AddComponent(
+		m_world.addComponent(darkFloorTile01Entity, darkFloorTile01Transform);
+		m_world.addComponent(
 			darkFloorTile01Entity,
 			cocoa::scenes::SpriteComponent
 			{
-				.Material = defaultMaterial,
-				.Sprite = loader.LoadSprite("dark_floor_tile_01_sprite"),
-				.TilingFactor = cocoa::math::Vector2f(4.0f, 1.0f),
-				.SortingLayer = cocoa::graphics::SortLayer::World,
-				.SortingOrder = 1
+				.materialHandle = defaultMaterial,
+				.spriteHandle = loader.loadSprite("dark_floor_tile_01_sprite"),
+				.tilingFactor = cocoa::math::Vector2f(4.0f, 1.0f),
+				.sortingLayer = cocoa::graphics::SortLayer::World,
+				.sortingOrder = 1
 			}
 		);
 
-		auto cherryBlossomTree01Entity = m_world.CreateEntity();
+		auto cherryBlossomTree01Entity = m_world.createEntity();
 		cocoa::scenes::TransformComponent cherryBlossomTree01Transform
 		{
-			.Position = { -1.20f, -0.35f, 0.0f },
-			.Rotation =  { 0.0f, 0.0f, 0.0f },
-			.Scale = { 0.75f, 0.75f, 1.0f }
+			.position = { -1.20f, -0.35f, 0.0f },
+			.rotation =  { 0.0f, 0.0f, 0.0f },
+			.scale = { 0.75f, 0.75f, 1.0f }
 		};
-		m_world.AddComponent(cherryBlossomTree01Entity, cherryBlossomTree01Transform);
-		m_world.AddComponent(
+		m_world.addComponent(cherryBlossomTree01Entity, cherryBlossomTree01Transform);
+		m_world.addComponent(
 			cherryBlossomTree01Entity,
 			cocoa::scenes::SpriteComponent
 			{
-				.Material = defaultMaterial,
-				.Sprite = loader.LoadSprite("cherry_blossom_tree_01_sprite"),
-				.SortingLayer = cocoa::graphics::SortLayer::World,
-				.SortingOrder = 0
+				.materialHandle = defaultMaterial,
+				.spriteHandle = loader.loadSprite("cherry_blossom_tree_01_sprite"),
+				.sortingLayer = cocoa::graphics::SortLayer::World,
+				.sortingOrder = 0
 			}
 		);
 
-		m_world.AddSystem<cocoa::scenes::Render2DSystem>();
+		m_world.addSystem<cocoa::scenes::Render2DSystem>();
     }
 
-	void TestScene::Unload(cocoa::assets::ResourceLoader& loader)
+	void TestScene::unload(cocoa::assets::ResourceLoader& loader)
 	{
 
 	}

@@ -7,7 +7,7 @@
 namespace cocoa
 {
     template<typename TWork>
-    std::thread StartThread(TWork&& work, std::exception_ptr& error)
+    std::thread startThread(TWork&& work, std::exception_ptr& error)
     {
         return std::thread{
             [work = std::forward<TWork>(work), &error]()
@@ -24,5 +24,5 @@ namespace cocoa
         };
     }
 
-    void SafeJoin(std::thread& thread);
+    void safeJoin(std::thread& thread);
 }

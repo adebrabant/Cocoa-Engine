@@ -8,9 +8,9 @@ namespace cocoa_tests::stubs
     {
     public:
         ~StubVertexArray() override = default;
-        void Bind() const override;
-        void Unbind() const override;
-        void AddVertexBuffer(const cocoa::graphics::VertexBuffer &vertexBuffer) override;
-        void SetIndexBuffer(const cocoa::graphics::IndexBuffer &indexBuffer) override;
+        void bind() const override;
+        void unbind() const override;
+        void addVertexBuffer(const cocoa::graphics::VertexBuffer &vertexBuffer) override;
+        void setIndexBuffer(const cocoa::graphics::IndexBuffer &indexBuffer) override;
     };
 }

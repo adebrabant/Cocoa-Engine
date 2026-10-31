@@ -9,9 +9,9 @@ namespace cocoa::graphics
 {
     struct Sprite
     {
-        std::string Id;
-        TextureHandle Texture;
-        math::Vector2f MinUV;
-        math::Vector2f MaxUV;
+        std::string id;
+        TextureHandle textureHandle;
+        math::Vector2f minUV;
+        math::Vector2f maxUV;
     };
 }

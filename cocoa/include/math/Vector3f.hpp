@@ -10,14 +10,14 @@ namespace cocoa::math
 	/// </summary>
 	struct Vector3f
 	{
-		float X{ 0.0f };
-		float Y{ 0.0f };
-		float Z{ 0.0f };
+		float x{ 0.0f };
+		float y{ 0.0f };
+		float z{ 0.0f };
 
 		constexpr Vector3f() = default;
 
 		constexpr Vector3f(const float x, const float y, const float z) :
-			X(x), Y(y), Z(z)
+			x(x), y(y), z(z)
 		{
 
 		}
@@ -29,9 +29,9 @@ namespace cocoa::math
 		/// <returns>A new vector containing the component-wise sum.</returns>
 		[[nodiscard]] constexpr Vector3f operator+(const Vector3f& other) const
 		{
-			const auto xSum = X + other.X;
-			const auto ySum = Y + other.Y;
-			const auto zSum = Z + other.Z;
+			const auto xSum = x + other.x;
+			const auto ySum = y + other.y;
+			const auto zSum = z + other.z;
 
 			return Vector3f(xSum, ySum, zSum);
 		}
@@ -43,9 +43,9 @@ namespace cocoa::math
 		/// <returns>A reference to this vector after the addition.</returns>
 		constexpr Vector3f& operator+=(const Vector3f& other)
 		{
-			X += other.X;
-			Y += other.Y;
-			Z += other.Z;
+			x += other.x;
+			y += other.y;
+			z += other.z;
 
 			return *this;
 		}
@@ -57,9 +57,9 @@ namespace cocoa::math
 		/// <returns>A new vector containing the component-wise difference.</returns>
 		[[nodiscard]] constexpr Vector3f operator-(const Vector3f& other) const
 		{
-			const auto xDifference = X - other.X;
-			const auto yDifference = Y - other.Y;
-			const auto zDifference = Z - other.Z;
+			const auto xDifference = x - other.x;
+			const auto yDifference = y - other.y;
+			const auto zDifference = z - other.z;
 
 			return Vector3f(xDifference, yDifference, zDifference);
 		}
@@ -71,9 +71,9 @@ namespace cocoa::math
 		/// <returns>A reference to this vector after the subtraction.</returns>
 		constexpr Vector3f& operator-=(const Vector3f& other)
 		{
-			X -= other.X;
-			Y -= other.Y;
-			Z -= other.Z;
+			x -= other.x;
+			y -= other.y;
+			z -= other.z;
 
 			return *this;
 		}
@@ -85,9 +85,9 @@ namespace cocoa::math
 		/// <returns>A new vector scaled by the provided scalar.</returns>
 		[[nodiscard]] constexpr Vector3f operator*(const float scalar) const
 		{
-			const auto xProduct = X * scalar;
-			const auto yProduct = Y * scalar;
-			const auto zProduct = Z * scalar;
+			const auto xProduct = x * scalar;
+			const auto yProduct = y * scalar;
+			const auto zProduct = z * scalar;
 
 			return Vector3f(xProduct, yProduct, zProduct);
 		}
@@ -99,9 +99,9 @@ namespace cocoa::math
 		/// <returns>A reference to this vector after scaling.</returns>
 		constexpr Vector3f& operator*=(const float scalar)
 		{
-			X *= scalar;
-			Y *= scalar;
-			Z *= scalar;
+			x *= scalar;
+			y *= scalar;
+			z *= scalar;
 
 			return *this;
 		}
@@ -117,9 +117,9 @@ namespace cocoa::math
 		[[nodiscard]] constexpr Vector3f operator/(const float scalar) const
 		{
 			assert(scalar != 0.0f && "Vector3f::operator/ cannot divide by zero scalar");
-			const auto xQuotient = X / scalar;
-			const auto yQuotient = Y / scalar;
-			const auto zQuotient = Z / scalar;
+			const auto xQuotient = x / scalar;
+			const auto yQuotient = y / scalar;
+			const auto zQuotient = z / scalar;
 
 			return Vector3f(xQuotient, yQuotient, zQuotient);
 		}
@@ -135,9 +135,9 @@ namespace cocoa::math
 		constexpr Vector3f& operator/=(const float scalar)
 		{
 			assert(scalar != 0.0f && "Vector3f::operator/= cannot divide by zero scalar");
-			X /= scalar;
-			Y /= scalar;
-			Z /= scalar;
+			x /= scalar;
+			y /= scalar;
+			z /= scalar;
 
 			return *this;
 		}
@@ -149,7 +149,7 @@ namespace cocoa::math
 		/// <returns>True if all components are equal; otherwise, false.</returns>
 		bool operator==(const Vector3f& other) const
 		{
-			return X == other.X && Y == other.Y && Z == other.Z;
+			return x == other.x && y == other.y && z == other.z;
 		}
 
 		/// <summary>
@@ -158,13 +158,13 @@ namespace cocoa::math
 		/// <param name="other">The vector containing the component values to multiply by.</param>
 		/// <returns>A new vector containing the component-wise product.</returns>
 		/// <remarks>
-		/// This is not a dot product. Use <c>Dot</c> for dot product operations.
+		/// This is not a dot product. Use <c>dot</c> for dot product operations.
 		/// </remarks>
-		[[nodiscard]] constexpr Vector3f ComponentWiseMultiply(const Vector3f& other) const
+		[[nodiscard]] constexpr Vector3f componentWiseMultiply(const Vector3f& other) const
 		{
-			const auto xProduct = X * other.X;
-			const auto yProduct = Y * other.Y;
-			const auto zProduct = Z * other.Z;
+			const auto xProduct = x * other.x;
+			const auto yProduct = y * other.y;
+			const auto zProduct = z * other.z;
 
 			return Vector3f(xProduct, yProduct, zProduct);
 		}
@@ -177,14 +177,14 @@ namespace cocoa::math
 		/// <remarks>
 		/// Asserts in debug builds when either component of <paramref name="other"/> is zero.
 		/// </remarks>
-		[[nodiscard]] constexpr Vector3f ComponentWiseDivide(const Vector3f& other) const
+		[[nodiscard]] constexpr Vector3f componentWiseDivide(const Vector3f& other) const
 		{
-			assert(other.X != 0.0f && "Vector3f::ComponentWiseDivide() cannot divide by zero X component");
-			assert(other.Y != 0.0f && "Vector3f::ComponentWiseDivide() cannot divide by zero Y component");
-			assert(other.Z != 0.0f && "Vector3f::ComponentWiseDivide() cannot divide by zero Z component");
-			const auto xQuotient = (X / other.X);
-			const auto yQuotient = (Y / other.Y);
-			const auto zQuotient = (Z / other.Z);
+			assert(other.x != 0.0f && "Vector3f::componentWiseDivide() cannot divide by zero x component");
+			assert(other.y != 0.0f && "Vector3f::componentWiseDivide() cannot divide by zero y component");
+			assert(other.z != 0.0f && "Vector3f::componentWiseDivide() cannot divide by zero z component");
+			const auto xQuotient = (x / other.x);
+			const auto yQuotient = (y / other.y);
+			const auto zQuotient = (z / other.z);
 
 			return Vector3f(xQuotient, yQuotient, zQuotient);
 		}
@@ -193,9 +193,9 @@ namespace cocoa::math
 		/// Calculates the length, or magnitude, of this vector.
 		/// </summary>
 		/// <returns>The length of this vector.</returns>
-		[[nodiscard]] float Length() const
+		[[nodiscard]] float length() const
 		{
-			return std::sqrt((X * X) + (Y * Y) + (Z * Z));
+			return std::sqrt((x * x) + (y * y) + (z * z));
 		}
 
 		/// <summary>
@@ -203,11 +203,11 @@ namespace cocoa::math
 		/// </summary>
 		/// <returns>The squared length of this vector.</returns>
 		/// <remarks>
-		/// This avoids the square root used by <c>Length</c> and is useful for distance comparisons.
+		/// This avoids the square root used by <c>length</c> and is useful for distance comparisons.
 		/// </remarks>
-		[[nodiscard]] constexpr float LengthSquared() const
+		[[nodiscard]] constexpr float lengthSquared() const
 		{
-			return (X * X) + (Y * Y) + (Z * Z);
+			return (x * x) + (y * y) + (z * z);
 		}
 
 		/// <summary>
@@ -215,9 +215,9 @@ namespace cocoa::math
 		/// </summary>
 		/// <param name="other">The other vector used in the dot product calculation.</param>
 		/// <returns>The dot product of the two vectors.</returns>
-		[[nodiscard]] constexpr float Dot(const Vector3f& other) const
+		[[nodiscard]] constexpr float dot(const Vector3f& other) const
 		{
-			return (X * other.X) + (Y * other.Y) + (Z * other.Z);
+			return (x * other.x) + (y * other.y) + (z * other.z);
 		}
 
 		/// <summary>
@@ -225,13 +225,13 @@ namespace cocoa::math
 		/// </summary>
 		/// <param name="other">The other vector used in the cross product calculation.</param>
 		/// <returns>A vector perpendicular to both vectors.</returns>
-		[[nodiscard]] constexpr Vector3f Cross(const Vector3f& other) const
+		[[nodiscard]] constexpr Vector3f cross(const Vector3f& other) const
 		{
-			const auto x = (Y * other.Z) - (Z * other.Y);
-			const auto y = (Z * other.X) - (X * other.Z);
-			const auto z = (X * other.Y) - (Y * other.X);
+			const auto newX = (y * other.z) - (z * other.y);
+			const auto newY = (z * other.x) - (x * other.z);
+			const auto newZ = (x * other.y) - (y * other.x);
 
-			return Vector3f(x, y, z);
+			return Vector3f(newX, newY, newZ);
 		}
 
 		/// <summary>
@@ -241,11 +241,11 @@ namespace cocoa::math
 		/// <remarks>
 		/// Asserts in debug builds when attempting to normalize a zero-length vector.
 		/// </remarks>
-		[[nodiscard]] Vector3f Normalized() const
+		[[nodiscard]] Vector3f normalized() const
 		{
-			const float magnitude = Length();
-			assert(magnitude != 0.0f && "Vector3f::Normalized() cannot normalize a zero vector");
-			return Vector3f(X / magnitude, Y / magnitude, Z / magnitude);
+			const float magnitude = length();
+			assert(magnitude != 0.0f && "Vector3f::normalized() cannot normalize a zero vector");
+			return Vector3f(x / magnitude, y / magnitude, z / magnitude);
 		}
 	};
 }

@@ -10,8 +10,8 @@ namespace sandbox
 	public:
 		InputSystem();
 		~InputSystem() override = default;
-		void Update(cocoa::scenes::World& world, float deltaTime) override;
-		void Render(cocoa::scenes::World& world, cocoa::graphics::Renderer2D& renderer, float alpha) override;
+		void update(cocoa::scenes::World& world, float deltaTime) override;
+		void render(cocoa::scenes::World& world, cocoa::graphics::Renderer2D& renderer, float alpha) override;
 
 	private:
 		cocoa::inputs::InputHandler m_inputHandler;

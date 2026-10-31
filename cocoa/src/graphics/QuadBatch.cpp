@@ -62,26 +62,26 @@ namespace cocoa::graphics
             { 6, ShaderDataType::UInt, "a_TexIndex" }
         };
 
-        m_vao = m_graphicsDevice.CreateVertexArray();
-        m_vbo = m_graphicsDevice.CreateVertexBuffer(maxVertices * sizeof(QuadVertex), layout);
-        m_ibo = m_graphicsDevice.CreateIndexBuffer(quadIndices, maxIndices);
-        m_vao->AddVertexBuffer(*m_vbo);
-        m_vao->SetIndexBuffer(*m_ibo);
+        m_vao = m_graphicsDevice.createVertexArray();
+        m_vbo = m_graphicsDevice.createVertexBuffer(maxVertices * sizeof(QuadVertex), layout);
+        m_ibo = m_graphicsDevice.createIndexBuffer(quadIndices, maxIndices);
+        m_vao->addVertexBuffer(*m_vbo);
+        m_vao->setIndexBuffer(*m_ibo);
 
         delete[] quadIndices;
     }
 
     QuadBatch::~QuadBatch() = default;
 
-    void QuadBatch::Draw(
+    void QuadBatch::draw(
         const math::Matrix4f& modelMatrix,
         const MaterialHandle materialHandle,
         const TextureHandle textureHandle,
         const math::Vector2f& tilingFactor)
     {
-        const Material& material = m_materialManager.Get(materialHandle);
-        const math::Vector4f color{ material.Tint.R, material.Tint.G, material.Tint.B, material.Tint.A };
-        const std::array<QuadVertex, 4> vertices = BuildVertices(
+        const Material& material = m_materialManager.get(materialHandle);
+        const math::Vector4f color{ material.tint.r, material.tint.g, material.tint.b, material.tint.a };
+        const std::array<QuadVertex, 4> vertices = buildVertices(
             modelMatrix,
             color,
             {0.0f, 0.0f},
@@ -92,14 +92,14 @@ namespace cocoa::graphics
         );
 
         m_drawCommands.emplace_back(
-            material.Shader,
+            material.shaderHandle,
             textureHandle,
-            material.Blend,
+            material.blendMode,
             vertices
         );
     }
 
-    void QuadBatch::Draw(
+    void QuadBatch::draw(
         const math::Matrix4f& modelMatrix,
         const MaterialHandle materialHandle,
         const SpriteHandle spriteHandle,
@@ -107,159 +107,159 @@ namespace cocoa::graphics
         const bool flipVertical,
         const bool flipHorizontal)
     {
-        const Material& material = m_materialManager.Get(materialHandle);
-        const Sprite& sprite = m_spriteManager.Get(spriteHandle);
-        const math::Vector4f color{ material.Tint.R, material.Tint.G, material.Tint.B, material.Tint.A };
-        const std::array<QuadVertex, 4> vertices = BuildVertices(
+        const Material& material = m_materialManager.get(materialHandle);
+        const Sprite& sprite = m_spriteManager.get(spriteHandle);
+        const math::Vector4f color{ material.tint.r, material.tint.g, material.tint.b, material.tint.a };
+        const std::array<QuadVertex, 4> vertices = buildVertices(
             modelMatrix,
             color,
-            sprite.MinUV,
-            sprite.MaxUV,
+            sprite.minUV,
+            sprite.maxUV,
             tilingFactor,
             flipVertical,
             flipHorizontal
         );
 
         m_drawCommands.emplace_back(
-            material.Shader,
-            sprite.Texture,
-            material.Blend,
+            material.shaderHandle,
+            sprite.textureHandle,
+            material.blendMode,
             vertices
         );
     }
 
-    void QuadBatch::Flush(const math::Matrix4f& viewProjectionMatrix)
+    void QuadBatch::flush(const math::Matrix4f& viewProjectionMatrix)
     {
         if (m_drawCommands.empty())
             return;
 
-        BuildBatch(viewProjectionMatrix);
+        buildBatch(viewProjectionMatrix);
 
         m_drawCommands.clear();
-        m_renderStatistics.BatchFlushCount++;
+        m_renderStatistics.batchFlushCount++;
     }
 
-    void QuadBatch::BuildBatch(const math::Matrix4f& viewProjectionMatrix)
+    void QuadBatch::buildBatch(const math::Matrix4f& viewProjectionMatrix)
     {
         uint32_t batchCounter{ 0 };
         BatchData batchData
         {
-            .Shader =  m_drawCommands[0].Shader,
-            .Blend = m_drawCommands[0].Blend,
+            .shaderHandle =  m_drawCommands[0].shaderHandle,
+            .blendMode = m_drawCommands[0].blendMode,
         };
 
         for (QuadDrawCommand& command : m_drawCommands)
         {
-            auto texSlotActiveEnd = batchData.Textures.Data.begin() + batchData.Textures.Count;
+            auto texSlotActiveEnd = batchData.textureSlots.data.begin() + batchData.textureSlots.count;
             auto texSlotIterator = std::find_if(
-                batchData.Textures.Data.begin(),
+                batchData.textureSlots.data.begin(),
                 texSlotActiveEnd,
                 [&](const TextureHandle& textureHandle)
                 {
-                    return textureHandle.Id == command.Texture.Id;
+                    return textureHandle.id == command.textureHandle.id;
                 }
             );
 
-            if (command.Shader.Id != batchData.Shader.Id ||
-                command.Blend != batchData.Blend ||
-                (texSlotIterator == texSlotActiveEnd && batchData.Textures.Count == TextureSlots::MaxCount) ||
+            if (command.shaderHandle.id != batchData.shaderHandle.id ||
+                command.blendMode != batchData.blendMode ||
+                (texSlotIterator == texSlotActiveEnd && batchData.textureSlots.count == TextureSlots::maxCount) ||
                 batchCounter == m_maxQuadCount)
             {
-                ExecuteBatch(batchData, viewProjectionMatrix);
+                executeBatch(batchData, viewProjectionMatrix);
                 batchCounter = 0;
-                batchData.Textures.Count = 0;
-                batchData.Vertices.clear();
-                texSlotActiveEnd = batchData.Textures.Data.begin();
+                batchData.textureSlots.count = 0;
+                batchData.vertices.clear();
+                texSlotActiveEnd = batchData.textureSlots.data.begin();
                 texSlotIterator = texSlotActiveEnd;
-                batchData.Blend = command.Blend;
-                batchData.Shader = command.Shader;
+                batchData.blendMode = command.blendMode;
+                batchData.shaderHandle = command.shaderHandle;
             }
 
             uint32_t currentTexSlotIndex;
             if (texSlotIterator == texSlotActiveEnd)
             {
-                currentTexSlotIndex = batchData.Textures.Count;
-                batchData.Textures.Data[batchData.Textures.Count] = command.Texture;
-                batchData.Textures.Count++;
+                currentTexSlotIndex = batchData.textureSlots.count;
+                batchData.textureSlots.data[batchData.textureSlots.count] = command.textureHandle;
+                batchData.textureSlots.count++;
             }
             else
             {
                 currentTexSlotIndex = static_cast<uint32_t>(
-                    texSlotIterator - batchData.Textures.Data.begin()
+                    texSlotIterator - batchData.textureSlots.data.begin()
                 );
             }
 
-            for (auto& quadVertex : command.Vertices)
+            for (auto& quadVertex : command.vertices)
             {
-                quadVertex.TexIndex = currentTexSlotIndex;
+                quadVertex.texIndex = currentTexSlotIndex;
             }
 
-            batchData.Vertices.insert(batchData.Vertices.end(),
-                                 command.Vertices.begin(),
-                                 command.Vertices.end()
+            batchData.vertices.insert(batchData.vertices.end(),
+                                 command.vertices.begin(),
+                                 command.vertices.end()
             );
             batchCounter++;
         }
 
-        if (!batchData.Vertices.empty())
+        if (!batchData.vertices.empty())
         {
-            ExecuteBatch(batchData, viewProjectionMatrix);
-            batchData.Vertices.clear();
+            executeBatch(batchData, viewProjectionMatrix);
+            batchData.vertices.clear();
         }
     }
 
-    void QuadBatch::ExecuteBatch(
+    void QuadBatch::executeBatch(
         const BatchData& batchData,
         const math::Matrix4f& viewProjectionMatrix) const
     {
-        const Shader& shader = m_shaderManager.Get(batchData.Shader);
-        const std::array samplerUnits = CreateSamplerUnits();
+        const Shader& shader = m_shaderManager.get(batchData.shaderHandle);
+        const std::array samplerUnits = createSamplerUnits();
 
-        m_graphicsDevice.SetBlendMode(batchData.Blend);
-        m_vbo->SetData(
-            batchData.Vertices.data(),
-            static_cast<uint32_t>(batchData.Vertices.size() * sizeof(QuadVertex))
+        m_graphicsDevice.setBlendMode(batchData.blendMode);
+        m_vbo->setData(
+            batchData.vertices.data(),
+            static_cast<uint32_t>(batchData.vertices.size() * sizeof(QuadVertex))
         );
-        shader.Bind();
-        shader.SetMatrix4("u_ViewProjection", viewProjectionMatrix);
-        shader.SetIntArray(
+        shader.bind();
+        shader.setMatrix4("u_ViewProjection", viewProjectionMatrix);
+        shader.setIntArray(
             "u_Textures",
             samplerUnits.data(),
             samplerUnits.size()
         );
 
-        std::array<math::Vector2f, TextureSlots::MaxCount> textureHalfTexels{};
-        for (uint32_t i = 0; i < batchData.Textures.Count; ++i)
+        std::array<math::Vector2f, TextureSlots::maxCount> textureHalfTexels{};
+        for (uint32_t i = 0; i < batchData.textureSlots.count; ++i)
         {
-            const Texture2D& texture = m_textureManager.Get(batchData.Textures.Data[i]);
+            const Texture2D& texture = m_textureManager.get(batchData.textureSlots.data[i]);
             textureHalfTexels[i] =
             {
-                0.5f / static_cast<float>(texture.GetWidth()),
-                0.5f / static_cast<float>(texture.GetHeight())
+                0.5f / static_cast<float>(texture.getWidth()),
+                0.5f / static_cast<float>(texture.getHeight())
             };
-            texture.Bind(i);
+            texture.bind(i);
         }
 
-        shader.SetVector2fArray(
+        shader.setVector2fArray(
             "u_HalfTexels",
             textureHalfTexels.data(),
-            static_cast<int>(batchData.Textures.Count)
+            static_cast<int>(batchData.textureSlots.count)
         );
 
-        const auto quadCount = static_cast<uint32_t>(batchData.Vertices.size() / 4);
+        const auto quadCount = static_cast<uint32_t>(batchData.vertices.size() / 4);
         const uint32_t indexCount = quadCount * 6;
-        m_graphicsDevice.DrawIndexed(*m_vao, indexCount);
-        shader.Unbind();
+        m_graphicsDevice.drawIndexed(*m_vao, indexCount);
+        shader.unbind();
 
-        m_renderStatistics.VertexCount += quadCount * 4;
-        m_renderStatistics.IndexCount += indexCount;
-        m_renderStatistics.DrawCount++;
+        m_renderStatistics.vertexCount += quadCount * 4;
+        m_renderStatistics.indexCount += indexCount;
+        m_renderStatistics.drawCount++;
     }
 
-    std::array<int, QuadBatch::TextureSlots::MaxCount> QuadBatch::CreateSamplerUnits()
+    std::array<int, QuadBatch::TextureSlots::maxCount> QuadBatch::createSamplerUnits()
     {
-        std::array<int, TextureSlots::MaxCount> units{};
-        for (uint32_t i = 0; i < TextureSlots::MaxCount; ++i)
+        std::array<int, TextureSlots::maxCount> units{};
+        for (uint32_t i = 0; i < TextureSlots::maxCount; ++i)
         {
             units[i] = static_cast<int>(i);
         }
@@ -267,7 +267,7 @@ namespace cocoa::graphics
         return units;
     }
 
-    std::array<QuadBatch::QuadVertex, 4> QuadBatch::BuildVertices(
+    std::array<QuadBatch::QuadVertex, 4> QuadBatch::buildVertices(
         const math::Matrix4f& modelMatrix,
         const math::Vector4f& color,
         const math::Vector2f& minUV,
@@ -296,24 +296,24 @@ namespace cocoa::graphics
 
         if (flipHorizontal)
         {
-            bottomLeftUV.X = 1.0f - bottomLeftUV.X;
-            bottomRightUV.X = 1.0f - bottomRightUV.X;
-            topLeftUV.X = 1.0f - topLeftUV.X;
-            topRightUV.X = 1.0f - topRightUV.X;
+            bottomLeftUV.x = 1.0f - bottomLeftUV.x;
+            bottomRightUV.x = 1.0f - bottomRightUV.x;
+            topLeftUV.x = 1.0f - topLeftUV.x;
+            topRightUV.x = 1.0f - topRightUV.x;
         }
         if (flipVertical)
         {
-            bottomLeftUV.Y  = 1.0f - bottomLeftUV.Y;
-            bottomRightUV.Y = 1.0f - bottomRightUV.Y;
-            topLeftUV.Y = 1.0f - topLeftUV.Y;
-            topRightUV.Y = 1.0f - topRightUV.Y;
+            bottomLeftUV.y  = 1.0f - bottomLeftUV.y;
+            bottomRightUV.y = 1.0f - bottomRightUV.y;
+            topLeftUV.y = 1.0f - topLeftUV.y;
+            topRightUV.y = 1.0f - topRightUV.y;
         }
 
         return{
             // Bottom-Left
             QuadVertex
             {
-                { worldBottomLeft.X, worldBottomLeft.Y, worldBottomLeft.Z},
+                { worldBottomLeft.x, worldBottomLeft.y, worldBottomLeft.z},
                 bottomLeftUV,
                 minUV,
                 maxUV,
@@ -324,7 +324,7 @@ namespace cocoa::graphics
             // Bottom-Right
             QuadVertex
             {
-                { worldBottomRight.X, worldBottomRight.Y, worldBottomRight.Z },
+                { worldBottomRight.x, worldBottomRight.y, worldBottomRight.z },
                 bottomRightUV,
                 minUV,
                 maxUV,
@@ -335,7 +335,7 @@ namespace cocoa::graphics
             // Top-Right
             QuadVertex
             {
-                {worldTopRight.X, worldTopRight.Y, worldTopRight.Z},
+                {worldTopRight.x, worldTopRight.y, worldTopRight.z},
                 topRightUV,
                 minUV,
                 maxUV,
@@ -346,7 +346,7 @@ namespace cocoa::graphics
             // Top-Left
             QuadVertex
             {
-                {worldTopLeft.X, worldTopLeft.Y, worldTopLeft.Z},
+                {worldTopLeft.x, worldTopLeft.y, worldTopLeft.z},
                 topLeftUV,
                 minUV,
                 maxUV,

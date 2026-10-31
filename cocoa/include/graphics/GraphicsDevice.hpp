@@ -23,24 +23,24 @@ namespace cocoa::graphics
     {
     public:
         virtual ~GraphicsDevice() = default;
-        virtual void BeginFrame() = 0;
-        virtual void EndFrame() = 0;
-        virtual void SetBlendMode(BlendMode mode) = 0;
-        virtual void SetViewport(int32_t x, int32_t y, uint32_t width, uint32_t height) = 0;
-        [[nodiscard]] virtual const Viewport& GetViewport() const = 0;
-        virtual void SetClearColor(float red, float green, float blue, float alpha) = 0;
-        virtual void Clear() = 0;
+        virtual void beginFrame() = 0;
+        virtual void endFrame() = 0;
+        virtual void setBlendMode(BlendMode mode) = 0;
+        virtual void setViewport(int32_t x, int32_t y, uint32_t width, uint32_t height) = 0;
+        [[nodiscard]] virtual const Viewport& getViewport() const = 0;
+        virtual void setClearColor(float red, float green, float blue, float alpha) = 0;
+        virtual void clear() = 0;
 
-        virtual Unique<Shader> CreateShader(const std::string& vertexSource, const std::string& fragmentSource) = 0;
-        virtual Unique<VertexArray> CreateVertexArray() = 0;
-        virtual Unique<VertexBuffer> CreateVertexBuffer(uint32_t size, const BufferLayout& bufferLayout) = 0;
-        virtual Unique<VertexBuffer> CreateVertexBuffer(const void* vertices, uint32_t size, const BufferLayout& bufferLayout) = 0;
-        virtual Unique<IndexBuffer> CreateIndexBuffer(const uint32_t* indices, uint32_t count) = 0;
-        virtual Unique<Texture2D> CreateTexture2D(TextureSpec textureSpec, const unsigned char* pixels) = 0;
-        virtual Unique<Framebuffer> CreateFramebuffer(const FramebufferSpec& framebufferSpec) = 0;
+        virtual Unique<Shader> createShader(const std::string& vertexSource, const std::string& fragmentSource) = 0;
+        virtual Unique<VertexArray> createVertexArray() = 0;
+        virtual Unique<VertexBuffer> createVertexBuffer(uint32_t size, const BufferLayout& bufferLayout) = 0;
+        virtual Unique<VertexBuffer> createVertexBuffer(const void* vertices, uint32_t size, const BufferLayout& bufferLayout) = 0;
+        virtual Unique<IndexBuffer> createIndexBuffer(const uint32_t* indices, uint32_t count) = 0;
+        virtual Unique<Texture2D> createTexture2D(TextureSpec textureSpec, const unsigned char* pixels) = 0;
+        virtual Unique<Framebuffer> createFramebuffer(const FramebufferSpec& framebufferSpec) = 0;
 
-        virtual void DrawIndexed(const VertexArray& vertexArray, uint32_t indexCount) = 0;
+        virtual void drawIndexed(const VertexArray& vertexArray, uint32_t indexCount) = 0;
         // ToDo:
-        // virtual void DrawLines(const VertexArray& vertexArray, uint32_t vertexCount) = 0;
+        // virtual void drawLines(const VertexArray& vertexArray, uint32_t vertexCount) = 0;
     };
 }

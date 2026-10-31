@@ -22,9 +22,9 @@ namespace cocoa::graphics
 		TextureManager(const TextureManager&) = delete;
 		TextureManager& operator=(const TextureManager&) = delete;
 
-		TextureHandle Load(const TextureSpec& spec, const void* pixels);
-		const Texture2D& Get(TextureHandle handle) const;
-		bool TryGetHandle(const std::string& id, TextureHandle& outHandle) const;
+		TextureHandle load(const TextureSpec& spec, const void* pixels);
+		const Texture2D& get(TextureHandle handle) const;
+		bool tryGetHandle(const std::string& id, TextureHandle& outHandle) const;
 
 	private:
 		GraphicsDevice& m_graphicsDevice;

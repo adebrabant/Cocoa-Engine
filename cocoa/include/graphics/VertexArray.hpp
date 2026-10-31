@@ -9,9 +9,9 @@ namespace cocoa::graphics
 	{
 	public:
 		virtual ~VertexArray() = default;
-		virtual void Bind() const = 0;
-		virtual void Unbind() const = 0;
-		virtual void AddVertexBuffer(const VertexBuffer& vertexBuffer) = 0;
-		virtual void SetIndexBuffer(const IndexBuffer& indexBuffer) = 0;
+		virtual void bind() const = 0;
+		virtual void unbind() const = 0;
+		virtual void addVertexBuffer(const VertexBuffer& vertexBuffer) = 0;
+		virtual void setIndexBuffer(const IndexBuffer& indexBuffer) = 0;
 	};
 }

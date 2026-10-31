@@ -21,17 +21,17 @@ namespace cocoa::graphics
 
 	OpenGLGraphicsDevice::~OpenGLGraphicsDevice() = default;
 
-	void OpenGLGraphicsDevice::BeginFrame()
+	void OpenGLGraphicsDevice::beginFrame()
 	{
 		// ToDo: Reserved for per-frame graphics device setup
 	}
 
-	void OpenGLGraphicsDevice::EndFrame()
+	void OpenGLGraphicsDevice::endFrame()
 	{
 		// ToDo: Reserved for per-frame graphics device cleanup/submission
 	}
 
-	void OpenGLGraphicsDevice::SetBlendMode(const BlendMode mode)
+	void OpenGLGraphicsDevice::setBlendMode(const BlendMode mode)
 	{
 		switch (mode)
 		{
@@ -61,7 +61,7 @@ namespace cocoa::graphics
 		}
 	}
 
-	void OpenGLGraphicsDevice::SetViewport(
+	void OpenGLGraphicsDevice::setViewport(
 		const int32_t x,
 		const int32_t y,
 		const uint32_t width,
@@ -74,10 +74,10 @@ namespace cocoa::graphics
 			static_cast<GLsizei>(height)
 		);
 
-		m_viewport.Resize(x, y, width, height);
+		m_viewport.resize(x, y, width, height);
 	}
 
-	void OpenGLGraphicsDevice::SetClearColor(const float red, const float green, const float blue, const float alpha)
+	void OpenGLGraphicsDevice::setClearColor(const float red, const float green, const float blue, const float alpha)
 	{
 		glClearColor(
 			red,
@@ -87,49 +87,49 @@ namespace cocoa::graphics
 		);
 	}
 
-	void OpenGLGraphicsDevice::Clear()
+	void OpenGLGraphicsDevice::clear()
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
-	Unique<Shader> OpenGLGraphicsDevice::CreateShader(const std::string& vertexSource, const std::string& fragmentSource)
+	Unique<Shader> OpenGLGraphicsDevice::createShader(const std::string& vertexSource, const std::string& fragmentSource)
 	{
-		return CreateUnique<OpenGLShader>(vertexSource, fragmentSource);
+		return createUnique<OpenGLShader>(vertexSource, fragmentSource);
 	}
 
-	Unique<VertexArray> OpenGLGraphicsDevice::CreateVertexArray()
+	Unique<VertexArray> OpenGLGraphicsDevice::createVertexArray()
 	{
-		return CreateUnique<OpenGLVertexArray>();
+		return createUnique<OpenGLVertexArray>();
 	}
 
-	Unique<VertexBuffer> OpenGLGraphicsDevice::CreateVertexBuffer(uint32_t size, const BufferLayout& bufferLayout)
+	Unique<VertexBuffer> OpenGLGraphicsDevice::createVertexBuffer(uint32_t size, const BufferLayout& bufferLayout)
 	{
-		return CreateUnique<OpenGLVertexBuffer>(size, bufferLayout);
+		return createUnique<OpenGLVertexBuffer>(size, bufferLayout);
 	}
 
-	Unique<VertexBuffer> OpenGLGraphicsDevice::CreateVertexBuffer(const void* vertices, uint32_t size, const BufferLayout& bufferLayout)
+	Unique<VertexBuffer> OpenGLGraphicsDevice::createVertexBuffer(const void* vertices, uint32_t size, const BufferLayout& bufferLayout)
 	{
-		return CreateUnique<OpenGLVertexBuffer>(vertices, size, bufferLayout);
+		return createUnique<OpenGLVertexBuffer>(vertices, size, bufferLayout);
 	}
 
-	Unique<IndexBuffer> OpenGLGraphicsDevice::CreateIndexBuffer(const uint32_t* indices, uint32_t count)
+	Unique<IndexBuffer> OpenGLGraphicsDevice::createIndexBuffer(const uint32_t* indices, uint32_t count)
 	{
-		return CreateUnique<OpenGLIndexBuffer>(indices, count);
+		return createUnique<OpenGLIndexBuffer>(indices, count);
 	}
 
-	Unique<Texture2D> OpenGLGraphicsDevice::CreateTexture2D(TextureSpec textureSpec, const unsigned char* pixels)
+	Unique<Texture2D> OpenGLGraphicsDevice::createTexture2D(TextureSpec textureSpec, const unsigned char* pixels)
 	{
-		return CreateUnique<OpenGLTexture2D>(textureSpec, pixels);
+		return createUnique<OpenGLTexture2D>(textureSpec, pixels);
 	}
 
-	Unique<Framebuffer> OpenGLGraphicsDevice::CreateFramebuffer(const FramebufferSpec& framebufferSpec)
+	Unique<Framebuffer> OpenGLGraphicsDevice::createFramebuffer(const FramebufferSpec& framebufferSpec)
 	{
-		return CreateUnique<OpenGLFramebuffer>(framebufferSpec);
+		return createUnique<OpenGLFramebuffer>(framebufferSpec);
 	}
 
-	void OpenGLGraphicsDevice::DrawIndexed(const VertexArray& vertexArray, uint32_t indexCount)
+	void OpenGLGraphicsDevice::drawIndexed(const VertexArray& vertexArray, uint32_t indexCount)
 	{
-		vertexArray.Bind();
+		vertexArray.bind();
 
 		glDrawElements(
 			GL_TRIANGLES,
@@ -138,6 +138,6 @@ namespace cocoa::graphics
 			nullptr
 		);
 
-		vertexArray.Unbind();
+		vertexArray.unbind();
 	}
 }

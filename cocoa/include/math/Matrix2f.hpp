@@ -136,8 +136,8 @@ namespace cocoa::math
         /// <returns>The transformed vector.</returns>
         [[nodiscard]] constexpr Vector2f operator*(const Vector2f& vector) const
         {
-            const float x = (m_elements[0] * vector.X) + (m_elements[2] * vector.Y);
-            const float y = (m_elements[1] * vector.X) + (m_elements[3] * vector.Y);
+            const float x = (m_elements[0] * vector.x) + (m_elements[2] * vector.y);
+            const float y = (m_elements[1] * vector.x) + (m_elements[3] * vector.y);
 
             return Vector2f(x, y);
         }
@@ -146,7 +146,7 @@ namespace cocoa::math
         /// Creates an identity matrix.
         /// </summary>
         /// <returns>A matrix that leaves values unchanged when multiplied.</returns>
-        [[nodiscard]] static constexpr Matrix2f Identity()
+        [[nodiscard]] static constexpr Matrix2f identity()
         {
             return Matrix2f(
                 1.0f, 0.0f,
@@ -157,13 +157,13 @@ namespace cocoa::math
         /// <summary>
         /// Creates a two-dimensional scaling matrix.
         /// </summary>
-        /// <param name="scale">The scale applied along the X and Y axes.</param>
+        /// <param name="scale">The scale applied along the x and y axes.</param>
         /// <returns>A matrix representing the requested scale.</returns>
-        [[nodiscard]] static constexpr Matrix2f Scale(const Vector2f& scale)
+        [[nodiscard]] static constexpr Matrix2f scale(const Vector2f& scale)
         {
             return Matrix2f(
-                scale.X, 0.0f,
-                0.0f, scale.Y
+                scale.x, 0.0f,
+                0.0f, scale.y
             );
         }
 
@@ -172,7 +172,7 @@ namespace cocoa::math
         /// </summary>
         /// <param name="angle">The rotation angle in radians.</param>
         /// <returns>A matrix representing the requested rotation.</returns>
-        [[nodiscard]] static Matrix2f Rotation(const float angle)
+        [[nodiscard]] static Matrix2f rotation(const float angle)
         {
             const float cos = std::cos(angle);
             const float sin = std::sin(angle);

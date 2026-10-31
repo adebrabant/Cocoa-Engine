@@ -27,39 +27,39 @@ namespace cocoa::assets
 
 		try
 		{
-			textureWorker = StartThread(
-				[this]{LoadTextureRecords();},
+			textureWorker = startThread(
+				[this]{loadTextureRecords();},
 				errors[0]
 			);
 
-			shaderWorker = StartThread(
-				[this]{LoadShaderRecords();},
+			shaderWorker = startThread(
+				[this]{loadShaderRecords();},
 				errors[1]
 			);
 
-			materialWorker = StartThread(
-				[this]{LoadMaterialRecords();},
+			materialWorker = startThread(
+				[this]{loadMaterialRecords();},
 				errors[2]
 			);
 
-			spriteWorker = StartThread(
-				[this]{LoadSpriteRecords();},
+			spriteWorker = startThread(
+				[this]{loadSpriteRecords();},
 				errors[3]
 			);
 		}
 		catch (...)
 		{
-			SafeJoin(textureWorker);
-			SafeJoin(shaderWorker);
-			SafeJoin(materialWorker);
-			SafeJoin(spriteWorker);
+			safeJoin(textureWorker);
+			safeJoin(shaderWorker);
+			safeJoin(materialWorker);
+			safeJoin(spriteWorker);
 			throw;
 		}
 
-		SafeJoin(textureWorker);
-		SafeJoin(shaderWorker);
-		SafeJoin(materialWorker);
-		SafeJoin(spriteWorker);
+		safeJoin(textureWorker);
+		safeJoin(shaderWorker);
+		safeJoin(materialWorker);
+		safeJoin(spriteWorker);
 
 		for (const std::exception_ptr& error : errors)
 		{
@@ -70,7 +70,7 @@ namespace cocoa::assets
 		}
 	}
 
-	const TextureRecord& JsonAssetDatabase::GetTextureInfo(const std::string& id) const
+	const TextureRecord& JsonAssetDatabase::getTextureInfo(const std::string& id) const
 	{
 		const auto it = m_textureRecords.find(id);
 
@@ -85,7 +85,7 @@ namespace cocoa::assets
 		return it->second;
 	}
 
-	const ShaderRecord& JsonAssetDatabase::GetShaderInfo(const std::string& id) const
+	const ShaderRecord& JsonAssetDatabase::getShaderInfo(const std::string& id) const
 	{
 		const auto it = m_shaderRecords.find(id);
 
@@ -100,7 +100,7 @@ namespace cocoa::assets
 		return it->second;
 	}
 
-	const MaterialRecord& JsonAssetDatabase::GetMaterialInfo(const std::string& id) const
+	const MaterialRecord& JsonAssetDatabase::getMaterialInfo(const std::string& id) const
 	{
 		const auto it = m_materialRecords.find(id);
 
@@ -115,7 +115,7 @@ namespace cocoa::assets
 		return it->second;
 	}
 
-	const SpriteRecord& JsonAssetDatabase::GetSpriteInfo(const std::string& id) const
+	const SpriteRecord& JsonAssetDatabase::getSpriteInfo(const std::string& id) const
 	{
 		const auto it = m_spriteRecords.find(id);
 
@@ -130,7 +130,7 @@ namespace cocoa::assets
 		return it->second;
 	}
 
-	void JsonAssetDatabase::LoadTextureRecords()
+	void JsonAssetDatabase::loadTextureRecords()
 	{
 		auto texturesPath = m_metadataPath / "textures.json";
 		std::ifstream file(texturesPath);
@@ -149,19 +149,19 @@ namespace cocoa::assets
 			{
 				.id = id,
 				.path = textureJson.at("path").get<std::string>(),
-				.Format = textureJson.at("format").get<std::string>(),
-				.MinFilter = textureJson.at("minFilter").get<std::string>(),
-				.MagFilter = textureJson.at("magFilter").get<std::string>(),
-				.WrapS = textureJson.at("wrapS").get<std::string>(),
-				.WrapT = textureJson.at("wrapT").get<std::string>(),
-				.GenerateMipmaps = textureJson.at("generateMipmaps").get<bool>()
+				.format = textureJson.at("format").get<std::string>(),
+				.minFilter = textureJson.at("minFilter").get<std::string>(),
+				.magFilter = textureJson.at("magFilter").get<std::string>(),
+				.wrapS = textureJson.at("wrapS").get<std::string>(),
+				.wrapT = textureJson.at("wrapT").get<std::string>(),
+				.generateMipmaps = textureJson.at("generateMipmaps").get<bool>()
 			};
 
 			m_textureRecords[id] = record;
 		}
 	}
 
-	void JsonAssetDatabase::LoadShaderRecords()
+	void JsonAssetDatabase::loadShaderRecords()
 	{
 		auto shadersPath = m_metadataPath / "shaders.json";
 		std::ifstream file(shadersPath);
@@ -178,16 +178,16 @@ namespace cocoa::assets
 		{
 			ShaderRecord record
 			{
-				.Id = id,
-				.VertexPath = shaderJson.at("vertexPath").get<std::string>(),
-				.FragmentPath = shaderJson.at("fragmentPath").get<std::string>(),
+				.id = id,
+				.vertexPath = shaderJson.at("vertexPath").get<std::string>(),
+				.fragmentPath = shaderJson.at("fragmentPath").get<std::string>(),
 			};
 
 			m_shaderRecords[id] = record;
 		}
 	}
 
-	void JsonAssetDatabase::LoadMaterialRecords()
+	void JsonAssetDatabase::loadMaterialRecords()
 	{
 		auto materialsPath = m_metadataPath / "materials.json";
 		std::ifstream file(materialsPath);
@@ -204,10 +204,10 @@ namespace cocoa::assets
 		{
 			MaterialRecord record
 			{
-				.Id = id,
-				.ShaderId = materialJson.at("shader").get<std::string>(),
-				.BlendMode = materialJson.at("blendMode").get<std::string>(),
-				.Tint = core::Color
+				.id = id,
+				.shaderId = materialJson.at("shader").get<std::string>(),
+				.blendMode = materialJson.at("blendMode").get<std::string>(),
+				.tint = core::Color
 				{
 					materialJson.at("tint").at(0).get<float>(),
 					materialJson.at("tint").at(1).get<float>(),
@@ -220,7 +220,7 @@ namespace cocoa::assets
 		}
 	}
 
-	void JsonAssetDatabase::LoadSpriteRecords()
+	void JsonAssetDatabase::loadSpriteRecords()
 	{
 		auto spritesPath = m_metadataPath / "sprites.json";
 		std::ifstream file(spritesPath);
@@ -237,14 +237,14 @@ namespace cocoa::assets
 		{
 			SpriteRecord record
 			{
-				.Id = id,
-				.TextureId = spriteJson.at("texture").get<std::string>(),
-				.MinPixel = math::Vector2f
+				.id = id,
+				.textureId = spriteJson.at("texture").get<std::string>(),
+				.minPixel = math::Vector2f
 				{
 					spriteJson.at("minPixel").at(0).get<float>(),
 					spriteJson.at("minPixel").at(1).get<float>()
 				},
-				.MaxPixel = math::Vector2f
+				.maxPixel = math::Vector2f
 				{
 					spriteJson.at("maxPixel").at(0).get<float>(),
 					spriteJson.at("maxPixel").at(1).get<float>()

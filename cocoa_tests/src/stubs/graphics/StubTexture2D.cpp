@@ -2,17 +2,17 @@
 
 namespace cocoa_tests::stubs
 {
-	void StubTexture2D::Bind(uint32_t slot) const
+	void StubTexture2D::bind(uint32_t slot) const
 	{
 
 	}
 
-	uint32_t StubTexture2D::GetWidth() const
+	uint32_t StubTexture2D::getWidth() const
 	{
 		return 200;
 	}
 
-	uint32_t StubTexture2D::GetHeight() const
+	uint32_t StubTexture2D::getHeight() const
 	{
 		return 200;
 	}

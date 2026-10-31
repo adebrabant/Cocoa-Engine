@@ -7,10 +7,10 @@ namespace cocoa::scenes
 {
     struct QuadComponent
     {
-        graphics::MaterialHandle Material{};
-        graphics::TextureHandle Texture{};
-        math::Vector2f TilingFactor{1.0f, 1.0f};
-        graphics::SortLayer SortingLayer{graphics::SortLayer::World};
-        int SortingOrder{0};
+        graphics::MaterialHandle materialHandle{};
+        graphics::TextureHandle textureHandle{};
+        math::Vector2f tilingFactor{1.0f, 1.0f};
+        graphics::SortLayer sortingLayer{graphics::SortLayer::World};
+        int sortingOrder{0};
     };
 }

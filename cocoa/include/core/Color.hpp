@@ -4,14 +4,14 @@ namespace cocoa::core
 {
 	struct Color
 	{
-		float R = 1.0f;
-		float G = 1.0f;
-		float B = 1.0f;
-		float A = 1.0f;
+		float r = 1.0f;
+		float g = 1.0f;
+		float b = 1.0f;
+		float a = 1.0f;
 
 		[[nodiscard]] constexpr bool operator==(const Color& other) const
 		{
-			if (R == other.R && G == other.G && B == other.B && A == other.A)
+			if (r == other.r && g == other.g && b == other.b && a == other.a)
 				return true;
 
 			return false;

@@ -2,42 +2,42 @@
 
 namespace cocoa_tests::stubs
 {
-	void StubShader::Bind() const
+	void StubShader::bind() const
 	{
 
 	}
 
-	void StubShader::Unbind() const
+	void StubShader::unbind() const
 	{
 
 	}
 
-	void StubShader::SetInt(const std::string& name, int value) const
+	void StubShader::setInt(const std::string& name, int value) const
 	{
 
 	}
 
-	void StubShader::SetFloat(const std::string& name, float value) const
+	void StubShader::setFloat(const std::string& name, float value) const
 	{
 
 	}
 
-	void StubShader::SetVector4(const std::string& name, const cocoa::math::Vector4f& value) const
+	void StubShader::setVector4(const std::string& name, const cocoa::math::Vector4f& value) const
 	{
 
 	}
 
-	void StubShader::SetMatrix4(const std::string& name, const cocoa::math::Matrix4f& value) const
+	void StubShader::setMatrix4(const std::string& name, const cocoa::math::Matrix4f& value) const
 	{
 
 	}
 
-	void StubShader::SetIntArray(const std::string& name, const int* values, int count) const
+	void StubShader::setIntArray(const std::string& name, const int* values, int count) const
 	{
 
 	}
 
-	void StubShader::SetVector2fArray(const std::string &name, const cocoa::math::Vector2f *values, int count) const
+	void StubShader::setVector2fArray(const std::string &name, const cocoa::math::Vector2f *values, int count) const
 	{
 
 	}

@@ -16,14 +16,14 @@ namespace cocoa::core
 		m_start = m_last;
 	}
 
-    void FrameClock::Reset()
+    void FrameClock::reset()
     {
         m_last = m_start = std::chrono::high_resolution_clock::now();
         m_accumulator = 0.0f;
         m_deltaTime = 0.0f;
     }
 
-    void FrameClock::Tick()
+    void FrameClock::tick()
     {
         auto now = std::chrono::high_resolution_clock::now();
         std::chrono::duration<float> delta = now - m_last;
@@ -32,33 +32,33 @@ namespace cocoa::core
         m_accumulator += m_deltaTime;
     }
 
-    bool FrameClock::CanUpdate() const
+    bool FrameClock::canUpdate() const
     {
         return m_fixedDelta > 0.0f && m_accumulator >= m_fixedDelta;
     }
 
-    void FrameClock::ConsumeUpdate()
+    void FrameClock::consumeUpdate()
     {
         if (m_fixedDelta > 0.0f)
             m_accumulator -= m_fixedDelta;
     }
 
-    float FrameClock::GetDelta() const
+    float FrameClock::getDelta() const
     {
         return m_deltaTime;
     }
 
-    float FrameClock::GetFixedDelta() const
+    float FrameClock::getFixedDelta() const
     {
         return (m_fixedDelta > 0.0f) ? m_fixedDelta : m_deltaTime;
     }
 
-    float FrameClock::GetAlpha() const
+    float FrameClock::getAlpha() const
     {
         return (m_fixedDelta > 0.0f) ? std::clamp(m_accumulator / m_fixedDelta, 0.0f, 1.0f) : 1.0f;
     }
 
-    void FrameClock::SleepNextFrame() const
+    void FrameClock::sleepNextFrame() const
 	{
 	    if (m_targetFrameTime <= 0.0f)
 	        return;
@@ -71,7 +71,7 @@ namespace cocoa::core
 	    std::this_thread::sleep_until(targetFrameEnd);
 	}
 
-    float FrameClock::GetElapsed() const
+    float FrameClock::getElapsed() const
     {
         auto now = std::chrono::high_resolution_clock::now();
         std::chrono::duration<float> elapsedTime = now - m_start;
@@ -79,7 +79,7 @@ namespace cocoa::core
         return elapsedTime.count();
     }
 
-    float FrameClock::GetRemainingFrameTime() const
+    float FrameClock::getRemainingFrameTime() const
     {
 	    if (m_targetFrameTime <= 0.0f)
 	        return 0.0f;

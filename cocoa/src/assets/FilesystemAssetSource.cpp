@@ -12,9 +12,9 @@ namespace cocoa::assets
 
 	}
 
-	std::vector<std::byte> FilesystemAssetSource::ReadBytes(const std::filesystem::path& path) const
+	std::vector<std::byte> FilesystemAssetSource::readBytes(const std::filesystem::path& path) const
 	{
-		const std::filesystem::path fullpath = Resolve(path);
+		const std::filesystem::path fullpath = resolve(path);
 		std::ifstream file(fullpath, std::ios::binary | std::ios::ate);
 		if (!file)
 		{
@@ -44,12 +44,12 @@ namespace cocoa::assets
 		return bytes;
 	}
 
-	bool FilesystemAssetSource::Exists(const std::filesystem::path& path) const
+	bool FilesystemAssetSource::exists(const std::filesystem::path& path) const
 	{
-		return std::filesystem::exists(Resolve(path));
+		return std::filesystem::exists(resolve(path));
 	}
 
-	std::filesystem::path FilesystemAssetSource::Resolve(const std::filesystem::path& path) const
+	std::filesystem::path FilesystemAssetSource::resolve(const std::filesystem::path& path) const
 	{
 		if (path.is_absolute())
 			return path;

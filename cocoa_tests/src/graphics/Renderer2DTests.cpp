@@ -27,7 +27,7 @@ namespace cocoa_tests::graphics
             Submission{40.0f, 2}
         };
 
-        // Expected first-vertex X coordinates after sorting.
+        // Expected first-vertex x coordinates after sorting.
         constexpr std::array expectedX{
             9.5f, 19.5f, 39.5f, 29.5f
         };
@@ -47,12 +47,12 @@ namespace cocoa_tests::graphics
             spriteManager
         );
 
-        const auto shaderHandle = shaderManager.Load("test_shader", "", "");
+        const auto shaderHandle = shaderManager.load("test_shader", "", "");
 
         const cocoa::graphics::TextureSpec spec{
-            .Id = "test_texture",
-            .Width = 2,
-            .Height = 2
+            .id = "test_texture",
+            .width = 2,
+            .height = 2
         };
 
         constexpr std::array<unsigned char, 16> pixels{
@@ -62,9 +62,9 @@ namespace cocoa_tests::graphics
             255, 255, 255, 255
         };
 
-        const auto textureHandle = textureManager.Load(spec, pixels.data());
+        const auto textureHandle = textureManager.load(spec, pixels.data());
 
-        const auto materialHandle = materialManager.Load(
+        const auto materialHandle = materialManager.load(
             "test_material",
             shaderHandle,
             "alpha",
@@ -73,15 +73,15 @@ namespace cocoa_tests::graphics
 
         constexpr cocoa::math::Vector2f tilingFactor{};
 
-        sut.BeginDraw(cocoa::math::Matrix4f{});
+        sut.beginDraw(cocoa::math::Matrix4f{});
 
         for (const auto& submission : submissions)
         {
-            const auto modelMatrix = cocoa::math::Matrix4f::Translation(
+            const auto modelMatrix = cocoa::math::Matrix4f::translation(
                 cocoa::math::Vector2f{submission.X, 0.0f}
             );
 
-            sut.DrawQuad(
+            sut.drawQuad(
                 modelMatrix,
                 materialHandle,
                 textureHandle,
@@ -91,7 +91,7 @@ namespace cocoa_tests::graphics
             );
         }
 
-        sut.EndDraw();
+        sut.endDraw();
 
         const auto& capture = stubGraphicsDevice.GetVertexBufferCapture();
 
@@ -159,12 +159,12 @@ namespace cocoa_tests::graphics
             spriteManager
         );
 
-        const auto shaderHandle = shaderManager.Load("test_shader", "", "");
+        const auto shaderHandle = shaderManager.load("test_shader", "", "");
 
         const cocoa::graphics::TextureSpec spec{
-            .Id = "test_texture",
-            .Width = 2,
-            .Height = 2
+            .id = "test_texture",
+            .width = 2,
+            .height = 2
         };
 
         constexpr std::array<unsigned char, 16> pixels{
@@ -174,16 +174,16 @@ namespace cocoa_tests::graphics
             255, 255, 255, 255
         };
 
-        const auto textureHandle = textureManager.Load(spec, pixels.data());
+        const auto textureHandle = textureManager.load(spec, pixels.data());
 
-        const auto materialHandle = materialManager.Load(
+        const auto materialHandle = materialManager.load(
             "test_material",
             shaderHandle,
             "alpha",
             cocoa::core::Color{}
         );
 
-        const auto spriteHandle = spriteManager.Load(
+        const auto spriteHandle = spriteManager.load(
             "test_sprite",
             textureHandle,
             cocoa::math::Vector2f{0.0f, 0.0f},
@@ -193,18 +193,18 @@ namespace cocoa_tests::graphics
 
         constexpr cocoa::math::Vector2f tilingFactor{};
 
-        sut.BeginDraw(cocoa::math::Matrix4f{});
+        sut.beginDraw(cocoa::math::Matrix4f{});
 
         for (const auto& testSubmission : testSubmissions)
         {
-            const auto modelMatrix = cocoa::math::Matrix4f::Translation(
+            const auto modelMatrix = cocoa::math::Matrix4f::translation(
                 cocoa::math::Vector2f{testSubmission.X, 0.0f}
             );
 
             switch (testSubmission.DrawType)
             {
             case TestDrawType::RawQuad:
-                sut.DrawQuad(
+                sut.drawQuad(
                     modelMatrix,
                     materialHandle,
                     textureHandle,
@@ -214,7 +214,7 @@ namespace cocoa_tests::graphics
                 );
                 break;
             case TestDrawType::Sprite:
-                sut.DrawQuad(
+                sut.drawQuad(
                     modelMatrix,
                     materialHandle,
                     spriteHandle,
@@ -228,7 +228,7 @@ namespace cocoa_tests::graphics
             }
         }
 
-        sut.EndDraw();
+        sut.endDraw();
 
         const auto& capture = stubGraphicsDevice.GetVertexBufferCapture();
 

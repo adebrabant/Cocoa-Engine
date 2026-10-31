@@ -47,17 +47,17 @@ namespace cocoa::graphics
 		return *this;
 	}
 
-	void OpenGLIndexBuffer::Bind() const
+	void OpenGLIndexBuffer::bind() const
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, static_cast<GLuint>(m_ibo));
 	}
 
-	void OpenGLIndexBuffer::Unbind() const
+	void OpenGLIndexBuffer::unbind() const
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-	uint32_t OpenGLIndexBuffer::GetCount() const
+	uint32_t OpenGLIndexBuffer::getCount() const
 	{
 		return m_count;
 	}
