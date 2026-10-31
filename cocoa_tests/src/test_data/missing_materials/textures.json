@@ -1,6 +1,6 @@
 {
   "dummy_idle1": {
-    "path": "Textures/dummy-idle1.png",
+    "path": "textures/dummy-idle1.png",
     "format": "RGBA8",
     "minFilter": "Linear",
     "magFilter": "Linear",

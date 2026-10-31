@@ -4,7 +4,7 @@
 #include <cctype>
 #include <stdexcept>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
     namespace
     {

@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <iostream>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
     static GLenum ToOpenGLColorFormat(const ColorFormat& format)
     {
@@ -266,4 +266,4 @@ namespace cocoa::Graphics
             m_rbo = 0;
         }
     }
-    } // namespace Cocoa::Graphics
+    } // namespace Cocoa::graphics

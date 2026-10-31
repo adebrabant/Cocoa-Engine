@@ -1,7 +1,7 @@
 #include "scenes/ecs/Entity.hpp"
 #include <cstdint>
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
 	Entity::Entity(uint32_t id)
 		: m_id(id)

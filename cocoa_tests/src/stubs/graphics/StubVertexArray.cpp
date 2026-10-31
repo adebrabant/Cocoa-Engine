@@ -1,6 +1,6 @@
-#include "stubs/Graphics/StubVertexArray.hpp"
+#include "stubs/graphics/StubVertexArray.hpp"
 
-namespace CocoaTests::Stubs
+namespace cocoa_tests::stubs
 {
     void StubVertexArray::Bind() const
     {
@@ -12,12 +12,12 @@ namespace CocoaTests::Stubs
 
     }
 
-    void StubVertexArray::AddVertexBuffer(const cocoa::Graphics::VertexBuffer &vertexBuffer)
+    void StubVertexArray::AddVertexBuffer(const cocoa::graphics::VertexBuffer &vertexBuffer)
     {
 
     }
 
-    void StubVertexArray::SetIndexBuffer(const cocoa::Graphics::IndexBuffer &indexBuffer)
+    void StubVertexArray::SetIndexBuffer(const cocoa::graphics::IndexBuffer &indexBuffer)
     {
 
     }

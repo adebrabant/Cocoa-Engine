@@ -1,15 +1,15 @@
-#include "stubs/Graphics/StubVertexBuffer.hpp"
+#include "stubs/graphics/StubVertexBuffer.hpp"
 
-namespace CocoaTests::Stubs
+namespace cocoa_tests::stubs
 {
-    StubVertexBuffer::StubVertexBuffer(uint32_t size, const cocoa::Graphics::BufferLayout &bufferLayout, VertexBufferCapture& vertexBufferCapture) :
+    StubVertexBuffer::StubVertexBuffer(uint32_t size, const cocoa::graphics::BufferLayout &bufferLayout, VertexBufferCapture& vertexBufferCapture) :
         m_bufferLayout(bufferLayout),
         m_vertexBufferCapture(vertexBufferCapture)
     {
 
     }
 
-    StubVertexBuffer::StubVertexBuffer(const void *vertices, uint32_t size, const cocoa::Graphics::BufferLayout &bufferLayout, VertexBufferCapture& vertexBufferCapture) :
+    StubVertexBuffer::StubVertexBuffer(const void *vertices, uint32_t size, const cocoa::graphics::BufferLayout &bufferLayout, VertexBufferCapture& vertexBufferCapture) :
         m_bufferLayout(bufferLayout),
         m_vertexBufferCapture(vertexBufferCapture)
     {
@@ -35,7 +35,7 @@ namespace CocoaTests::Stubs
         m_vertexBufferCapture.Stride = m_bufferLayout.GetStride();
     }
 
-    const cocoa::Graphics::BufferLayout& StubVertexBuffer::GetLayout() const
+    const cocoa::graphics::BufferLayout& StubVertexBuffer::GetLayout() const
     {
         return m_bufferLayout;
     }

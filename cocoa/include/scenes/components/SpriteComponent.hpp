@@ -4,16 +4,16 @@
 #include "graphics/SortLayer.hpp"
 #include "math/Vector2f.hpp"
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
 	struct SpriteComponent
 	{
-		Graphics::MaterialHandle Material{};
-		Graphics::SpriteHandle Sprite{};
-		Math::Vector2f TilingFactor{1.0f, 1.0f};
+		graphics::MaterialHandle Material{};
+		graphics::SpriteHandle Sprite{};
+		math::Vector2f TilingFactor{1.0f, 1.0f};
 		bool FlipVertical{false};
 		bool FlipHorizontal{false};
-		Graphics::SortLayer SortingLayer{Graphics::SortLayer::World};
+		graphics::SortLayer SortingLayer{graphics::SortLayer::World};
 		int SortingOrder{0};
 	};
 }

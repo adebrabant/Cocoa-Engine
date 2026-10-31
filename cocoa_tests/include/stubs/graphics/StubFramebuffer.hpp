@@ -2,12 +2,12 @@
 
 #include <graphics/Framebuffer.hpp>
 
-namespace CocoaTests::Stubs
+namespace cocoa_tests::stubs
 {
-    class StubFramebuffer : public cocoa::Graphics::Framebuffer
+    class StubFramebuffer : public cocoa::graphics::Framebuffer
     {
     public:
-        explicit StubFramebuffer(const cocoa::Graphics::FramebufferSpec& spec) { }
+        explicit StubFramebuffer(const cocoa::graphics::FramebufferSpec& spec) { }
         ~StubFramebuffer() override = default;
 
         void UnBind() const override { }

@@ -6,22 +6,22 @@
 #include <stdexcept>
 #include <string>
 
-namespace CocoaTests::Graphics
+namespace cocoa_tests::graphics
 {
 	struct MaterialManagerBlendModeTestCase
 	{
 		std::string Input;
-		cocoa::Graphics::BlendMode Expected;
+		cocoa::graphics::BlendMode Expected;
 	};
 
 	TEST(MaterialManagerTests, LoadMaterial_ShouldReturnMaterialHandle_WhenProvidingValidId)
 	{
 		std::string materialId{ "test-material" };
-		cocoa::Graphics::ShaderHandle shaderHandle{ .Id = 1 };
-		cocoa::Core::Color tint;
-		cocoa::Graphics::MaterialManager sut;
+		cocoa::graphics::ShaderHandle shaderHandle{ .Id = 1 };
+		cocoa::core::Color tint;
+		cocoa::graphics::MaterialManager sut;
 
-		cocoa::Graphics::MaterialHandle result = sut.Load(
+		cocoa::graphics::MaterialHandle result = sut.Load(
 			materialId,
 			shaderHandle,
 			"opaque",
@@ -34,18 +34,18 @@ namespace CocoaTests::Graphics
 	TEST(MaterialManagerTests, Load_ShouldReturnSameMaterialHandle_WhenProvidingSameMaterialId)
 	{
 		std::string materialId{ "test-material" };
-		cocoa::Graphics::ShaderHandle shaderHandle{ .Id = 1 };
-		cocoa::Core::Color tint;
-		cocoa::Graphics::MaterialManager sut;
+		cocoa::graphics::ShaderHandle shaderHandle{ .Id = 1 };
+		cocoa::core::Color tint;
+		cocoa::graphics::MaterialManager sut;
 
-		cocoa::Graphics::MaterialHandle result1 = sut.Load(
+		cocoa::graphics::MaterialHandle result1 = sut.Load(
 			materialId,
 			shaderHandle,
 			"opaque",
 			tint
 		);
 
-		cocoa::Graphics::MaterialHandle result2 = sut.Load(
+		cocoa::graphics::MaterialHandle result2 = sut.Load(
 			materialId,
 			shaderHandle,
 			"opaque",
@@ -57,18 +57,18 @@ namespace CocoaTests::Graphics
 
 	TEST(MaterialManagerTests, Load_ShouldReturnDifferentMaterialHandle_WhenProvidingDifferentMaterialId)
 	{
-		cocoa::Graphics::ShaderHandle shaderHandle{ .Id = 1 };
-		cocoa::Core::Color tint;
-		cocoa::Graphics::MaterialManager sut;
+		cocoa::graphics::ShaderHandle shaderHandle{ .Id = 1 };
+		cocoa::core::Color tint;
+		cocoa::graphics::MaterialManager sut;
 
-		cocoa::Graphics::MaterialHandle result1 = sut.Load(
+		cocoa::graphics::MaterialHandle result1 = sut.Load(
 			"test-material",
 			shaderHandle,
 			"opaque",
 			tint
 		);
 
-		cocoa::Graphics::MaterialHandle result2 = sut.Load(
+		cocoa::graphics::MaterialHandle result2 = sut.Load(
 			"some-material",
 			shaderHandle,
 			"opaque",
@@ -87,69 +87,69 @@ namespace CocoaTests::Graphics
 			MaterialManagerBlendModeTestCase
 			{
 				.Input = " opaque ",
-				.Expected = cocoa::Graphics::BlendMode::Opaque
+				.Expected = cocoa::graphics::BlendMode::Opaque
 			},
 			MaterialManagerBlendModeTestCase
 			{
 				.Input = "alpha",
-				.Expected = cocoa::Graphics::BlendMode::Alpha
+				.Expected = cocoa::graphics::BlendMode::Alpha
 			},
 			MaterialManagerBlendModeTestCase
 			{
 				.Input = "additive",
-				.Expected = cocoa::Graphics::BlendMode::Additive
+				.Expected = cocoa::graphics::BlendMode::Additive
 			},
 			MaterialManagerBlendModeTestCase
 			{
 				.Input = "Subtractive",
-				.Expected = cocoa::Graphics::BlendMode::Subtractive
+				.Expected = cocoa::graphics::BlendMode::Subtractive
 			},
 			MaterialManagerBlendModeTestCase
 			{
 				.Input = "reverse subtract",
-				.Expected = cocoa::Graphics::BlendMode::ReverseSubtract
+				.Expected = cocoa::graphics::BlendMode::ReverseSubtract
 			},
 			MaterialManagerBlendModeTestCase
 			{
 				.Input = "a",
-				.Expected = cocoa::Graphics::BlendMode::Opaque
+				.Expected = cocoa::graphics::BlendMode::Opaque
 			}
 		)
 	);
 	TEST_P(MaterialManagerBlendModeTests, Get_ShouldReturnMaterialExpectedBlendMode_WhenGivenInput)
 	{
 		const MaterialManagerBlendModeTestCase& testCase = GetParam();
-		cocoa::Graphics::MaterialManager sut;
+		cocoa::graphics::MaterialManager sut;
 
-		cocoa::Graphics::MaterialHandle handle = sut.Load(
+		cocoa::graphics::MaterialHandle handle = sut.Load(
 			"test-material",
 			{ .Id = 1 },
 			testCase.Input,
 			{ 0.25f, 0.5f, 0.75f, 1.0f }
 		);
 
-		const cocoa::Graphics::Material& result = sut.Get(handle);
+		const cocoa::graphics::Material& result = sut.Get(handle);
 
 		EXPECT_EQ(testCase.Expected, result.Blend);
 	}
 
 	TEST(MaterialManagerTests, Get_ShouldReturnMaterial_WhenProvidingValidHandle)
 	{
-		cocoa::Graphics::ShaderHandle shaderHandle{ .Id = 1 };
-		cocoa::Core::Color tint{ 0.25f, 0.5f, 0.75f, 1.0f };
-		cocoa::Graphics::MaterialManager sut;
+		cocoa::graphics::ShaderHandle shaderHandle{ .Id = 1 };
+		cocoa::core::Color tint{ 0.25f, 0.5f, 0.75f, 1.0f };
+		cocoa::graphics::MaterialManager sut;
 
-		cocoa::Graphics::MaterialHandle handle = sut.Load(
+		cocoa::graphics::MaterialHandle handle = sut.Load(
 			"test-material",
 			shaderHandle,
 			"alpha",
 			tint
 		);
 
-		const cocoa::Graphics::Material& result = sut.Get(handle);
+		const cocoa::graphics::Material& result = sut.Get(handle);
 
 		EXPECT_EQ(shaderHandle.Id, result.Shader.Id);
-		EXPECT_EQ(cocoa::Graphics::BlendMode::Alpha, result.Blend);
+		EXPECT_EQ(cocoa::graphics::BlendMode::Alpha, result.Blend);
 		EXPECT_FLOAT_EQ(tint.R, result.Tint.R);
 		EXPECT_FLOAT_EQ(tint.G, result.Tint.G);
 		EXPECT_FLOAT_EQ(tint.B, result.Tint.B);
@@ -159,51 +159,51 @@ namespace CocoaTests::Graphics
 	TEST(MaterialManagerTests, Get_ShouldReturnSameMaterial_WhenProvidingSameHandle)
 	{
 		const std::string materialId{ "test-material" };
-		cocoa::Graphics::ShaderHandle shaderHandle{ .Id = 1 };
-		cocoa::Core::Color tint;
-		cocoa::Graphics::MaterialManager sut;
+		cocoa::graphics::ShaderHandle shaderHandle{ .Id = 1 };
+		cocoa::core::Color tint;
+		cocoa::graphics::MaterialManager sut;
 
-		cocoa::Graphics::MaterialHandle handle = sut.Load(
+		cocoa::graphics::MaterialHandle handle = sut.Load(
 			materialId,
 			shaderHandle,
 			"opaque",
 			tint
 		);
 
-		const cocoa::Graphics::Material& result1 = sut.Get(handle);
-		const cocoa::Graphics::Material& result2 = sut.Get(handle);
+		const cocoa::graphics::Material& result1 = sut.Get(handle);
+		const cocoa::graphics::Material& result2 = sut.Get(handle);
 
 		EXPECT_EQ(&result1, &result2);
 	}
 
 	TEST(MaterialManagerTests, Get_ShouldReturnDifferentMaterial_WhenProvidingDifferentHandle)
 	{
-		cocoa::Graphics::ShaderHandle shaderHandle{ .Id = 1 };
-		cocoa::Core::Color tint;
-		cocoa::Graphics::MaterialManager sut;
-		cocoa::Graphics::MaterialHandle handle1 = sut.Load(
+		cocoa::graphics::ShaderHandle shaderHandle{ .Id = 1 };
+		cocoa::core::Color tint;
+		cocoa::graphics::MaterialManager sut;
+		cocoa::graphics::MaterialHandle handle1 = sut.Load(
 			"test-material",
 			shaderHandle,
 			"opaque",
 			tint
 		);
-		cocoa::Graphics::MaterialHandle handle2 = sut.Load(
+		cocoa::graphics::MaterialHandle handle2 = sut.Load(
 			"mock-material",
 			shaderHandle,
 			"opaque",
 			tint
 		);
 
-		const cocoa::Graphics::Material& result1 = sut.Get(handle1);
-		const cocoa::Graphics::Material& result2 = sut.Get(handle2);
+		const cocoa::graphics::Material& result1 = sut.Get(handle1);
+		const cocoa::graphics::Material& result2 = sut.Get(handle2);
 
 		EXPECT_NE(&result1, &result2);
 	}
 
 	TEST(MaterialManagerTests, Get_ShouldThrowError_WhenProvidingMissingHandle)
 	{
-		const cocoa::Graphics::MaterialManager sut;
-		constexpr cocoa::Graphics::MaterialHandle handle{ .Id = 9999 };
+		const cocoa::graphics::MaterialManager sut;
+		constexpr cocoa::graphics::MaterialHandle handle{ .Id = 9999 };
 
 		EXPECT_THROW(
 			{

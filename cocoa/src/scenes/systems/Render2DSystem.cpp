@@ -7,28 +7,28 @@
 #include "scenes/ecs/View.hpp"
 #include "scenes/ecs/World.hpp"
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
 	void Render2DSystem::Update(World& world, float deltaTime)
 	{
 
 	}
 
-	void Render2DSystem::BeginRender(World& world, Graphics::Renderer2D& renderer, float alpha)
+	void Render2DSystem::BeginRender(World& world, graphics::Renderer2D& renderer, float alpha)
 	{
-		
+
 	}
 
-	void Render2DSystem::Render(World& world, Graphics::Renderer2D& renderer, float alpha)
+	void Render2DSystem::Render(World& world, graphics::Renderer2D& renderer, float alpha)
 	{
 		View<TransformComponent, QuadComponent> quadView(world);
 		for (auto [transform, quadComponent] : quadView)
 		{
-			Math::Matrix4f translation = Math::Matrix4f::Translation(transform.Position);
-			Math::Matrix4f zRotation = Math::Matrix4f::RotationZ(transform.Rotation.Z);
-			Math::Matrix4f scale = Math::Matrix4f::Scale(transform.Scale);
+			math::Matrix4f translation = math::Matrix4f::Translation(transform.Position);
+			math::Matrix4f zRotation = math::Matrix4f::RotationZ(transform.Rotation.Z);
+			math::Matrix4f scale = math::Matrix4f::Scale(transform.Scale);
 
-			Math::Matrix4f modelMatrix = translation * zRotation * scale;
+			math::Matrix4f modelMatrix = translation * zRotation * scale;
 			renderer.DrawQuad(
 				modelMatrix,
 				quadComponent.Material,
@@ -42,11 +42,11 @@ namespace cocoa::Scenes
 		View<TransformComponent, SpriteComponent> spriteView(world);
 		for (auto [transform, spriteComponent] : spriteView)
 		{
-			Math::Matrix4f translation = Math::Matrix4f::Translation(transform.Position);
-			Math::Matrix4f zRotation = Math::Matrix4f::RotationZ(transform.Rotation.Z);
-			Math::Matrix4f scale = Math::Matrix4f::Scale(transform.Scale);
+			math::Matrix4f translation = math::Matrix4f::Translation(transform.Position);
+			math::Matrix4f zRotation = math::Matrix4f::RotationZ(transform.Rotation.Z);
+			math::Matrix4f scale = math::Matrix4f::Scale(transform.Scale);
 
-			Math::Matrix4f modelMatrix = translation * zRotation * scale;
+			math::Matrix4f modelMatrix = translation * zRotation * scale;
 			renderer.DrawQuad(
 				modelMatrix,
 				spriteComponent.Material,

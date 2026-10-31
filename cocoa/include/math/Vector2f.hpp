@@ -3,7 +3,7 @@
 #include <cmath>
 #include <cassert>
 
-namespace cocoa::Math
+namespace cocoa::math
 {
 	/// <summary>
 	/// Represents a two-dimensional vector using single-precision floating-point components.

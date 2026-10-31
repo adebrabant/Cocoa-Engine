@@ -5,7 +5,7 @@
 #include <utility>
 #include <unordered_map>
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
 	// ToDo: Remove I Prefix
 	class IComponentStorage

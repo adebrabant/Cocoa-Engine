@@ -7,7 +7,7 @@
 
 #include <algorithm>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	Renderer2D::Renderer2D(
 		GraphicsDevice& graphicsDevice,
@@ -33,7 +33,7 @@ namespace cocoa::Graphics
 
 	Renderer2D::~Renderer2D() = default;
 
-	void Renderer2D::BeginDraw(const Math::Matrix4f& viewProjectionMatrix)
+	void Renderer2D::BeginDraw(const math::Matrix4f& viewProjectionMatrix)
 	{
 		m_renderStatistics.Reset();
 		m_drawSubmissions.clear();
@@ -41,10 +41,10 @@ namespace cocoa::Graphics
 	}
 
 	void Renderer2D::DrawQuad(
-		const Math::Matrix4f& modelMatrix,
+		const math::Matrix4f& modelMatrix,
 		const MaterialHandle materialHandle,
 		const TextureHandle textureHandle,
-		const Math::Vector2f& tilingFactor,
+		const math::Vector2f& tilingFactor,
 		const SortLayer sortingLayer,
 		const int sortingOrder)
 	{
@@ -61,10 +61,10 @@ namespace cocoa::Graphics
 	}
 
 	void Renderer2D::DrawQuad(
-		const Math::Matrix4f& modelMatrix,
+		const math::Matrix4f& modelMatrix,
 		const MaterialHandle materialHandle,
 		const SpriteHandle spriteHandle,
-		const Math::Vector2f& tilingFactor,
+		const math::Vector2f& tilingFactor,
 		const bool flipVertical,
 		const bool flipHorizontal,
 		const SortLayer sortingLayer,

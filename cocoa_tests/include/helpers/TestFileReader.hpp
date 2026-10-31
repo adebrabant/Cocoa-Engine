@@ -7,7 +7,7 @@
 #include <cstddef>
 #include <stdexcept>
 
-namespace CocoaTests::Helpers
+namespace cocoa_tests::Helpers
 {
 	inline static std::vector<std::byte> ReadFileBytes(const std::filesystem::path& path)
 	{

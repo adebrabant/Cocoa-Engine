@@ -3,7 +3,7 @@
 #include <string>
 #include <filesystem>
 
-namespace cocoa::Assets
+namespace cocoa::assets
 {
 	class AssetPathProvider
 	{

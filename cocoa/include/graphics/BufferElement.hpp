@@ -3,7 +3,7 @@
 #include <string>
 #include <stdexcept>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	enum class ShaderDataType
 	{
@@ -33,9 +33,9 @@ namespace cocoa::Graphics
 
 		BufferElement(
 			uint32_t shaderLocation,
-			ShaderDataType shaderType, 
-			const std::string& name, 
-			uint32_t offset = 0, 
+			ShaderDataType shaderType,
+			const std::string& name,
+			uint32_t offset = 0,
 			bool normalized = false
 		) :
 			Location(shaderLocation),

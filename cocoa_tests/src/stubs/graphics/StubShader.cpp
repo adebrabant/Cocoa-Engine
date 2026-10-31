@@ -1,10 +1,10 @@
-#include "stubs/Graphics/StubShader.hpp"
+#include "stubs/graphics/StubShader.hpp"
 
-namespace CocoaTests::Stubs
+namespace cocoa_tests::stubs
 {
 	void StubShader::Bind() const
 	{
-	
+
 	}
 
 	void StubShader::Unbind() const
@@ -22,12 +22,12 @@ namespace CocoaTests::Stubs
 
 	}
 
-	void StubShader::SetVector4(const std::string& name, const cocoa::Math::Vector4f& value) const
+	void StubShader::SetVector4(const std::string& name, const cocoa::math::Vector4f& value) const
 	{
 
 	}
 
-	void StubShader::SetMatrix4(const std::string& name, const cocoa::Math::Matrix4f& value) const
+	void StubShader::SetMatrix4(const std::string& name, const cocoa::math::Matrix4f& value) const
 	{
 
 	}
@@ -37,7 +37,7 @@ namespace CocoaTests::Stubs
 
 	}
 
-	void StubShader::SetVector2fArray(const std::string &name, const cocoa::Math::Vector2f *values, int count) const
+	void StubShader::SetVector2fArray(const std::string &name, const cocoa::math::Vector2f *values, int count) const
 	{
 
 	}

@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace cocoa::Assets
+namespace cocoa::assets
 {
 	struct ShaderSource
 	{

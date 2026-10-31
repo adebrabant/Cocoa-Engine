@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <cstring>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
     struct RenderStatistics
     {

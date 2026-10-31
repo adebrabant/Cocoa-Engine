@@ -4,7 +4,7 @@
 #include <iostream>
 #include <stdexcept>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	OpenGLContext::OpenGLContext()
 	{

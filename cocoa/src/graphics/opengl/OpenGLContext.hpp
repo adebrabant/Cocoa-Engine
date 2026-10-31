@@ -1,6 +1,6 @@
 #pragma once
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	class OpenGLContext
 	{

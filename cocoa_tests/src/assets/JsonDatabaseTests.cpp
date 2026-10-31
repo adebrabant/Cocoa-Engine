@@ -6,17 +6,17 @@
 #include <stdexcept>
 #include <filesystem>
 
-namespace CocoaTests::Assets
+namespace cocoa_tests::assets
 {
-	const std::filesystem::path testMetadataPath = "TestData/Metadata";
+	const std::filesystem::path testMetadataPath = "test_data/metadata";
 
 	TEST(JsonAssetDatabaseTests, Constructor_ShouldThrowError_WhenTexturesJsonDoesNotExist)
 	{
-		const std::filesystem::path metadataPath = "TestData/MissingTextures";
+		const std::filesystem::path metadataPath = "test_data/missing_textures";
 
 		EXPECT_THROW(
 			{
-				cocoa::Assets::JsonAssetDatabase sut(metadataPath);
+				cocoa::assets::JsonAssetDatabase sut(metadataPath);
 			},
 			std::runtime_error
 		);
@@ -24,11 +24,11 @@ namespace CocoaTests::Assets
 
 	TEST(JsonAssetDatabaseTests, Constructor_ShouldThrowError_WhenShadersJsonDoesNotExist)
 	{
-		const std::filesystem::path metadataPath = "TestData/MissingShaders";
+		const std::filesystem::path metadataPath = "test_data/missing_shaders";
 
 		EXPECT_THROW(
 			{
-				cocoa::Assets::JsonAssetDatabase sut(metadataPath);
+				cocoa::assets::JsonAssetDatabase sut(metadataPath);
 			},
 			std::runtime_error
 		);
@@ -36,11 +36,11 @@ namespace CocoaTests::Assets
 
 	TEST(JsonAssetDatabaseTests, Constructor_ShouldThrowError_WhenMaterialsJsonDoesNotExist)
 	{
-		const std::filesystem::path metadataPath = "TestData/MissingMaterials";
+		const std::filesystem::path metadataPath = "test_data/missing_materials";
 
 		EXPECT_THROW(
 			{
-				cocoa::Assets::JsonAssetDatabase sut(metadataPath);
+				cocoa::assets::JsonAssetDatabase sut(metadataPath);
 			},
 			std::runtime_error
 		);
@@ -48,11 +48,11 @@ namespace CocoaTests::Assets
 
 	TEST(JsonAssetDatabaseTests, Constructor_ShouldThrowError_WhenSpritesJsonDoesNotExist)
 	{
-		const std::filesystem::path metadataPath = "TestData/MissingSprites";
+		const std::filesystem::path metadataPath = "test_data/missing_sprites";
 
 		EXPECT_THROW(
 			{
-				cocoa::Assets::JsonAssetDatabase sut(metadataPath);
+				cocoa::assets::JsonAssetDatabase sut(metadataPath);
 			},
 			std::runtime_error
 		);
@@ -60,12 +60,12 @@ namespace CocoaTests::Assets
 
 	TEST(JsonAssetDatabaseTests, GetTextureInfo_ShouldReturnTextureRecord_WhenGivenValidId)
 	{
-		const auto sut = cocoa::Assets::JsonAssetDatabase(testMetadataPath);
+		const auto sut = cocoa::assets::JsonAssetDatabase(testMetadataPath);
 
 		const auto& result = sut.GetTextureInfo("dummy_idle1");
 
 		EXPECT_EQ("dummy_idle1", result.id);
-		EXPECT_EQ("Textures/dummy-idle1.png", result.path);
+		EXPECT_EQ("textures/dummy-idle1.png", result.path);
 		EXPECT_EQ("RGBA8", result.Format);
 		EXPECT_EQ("Linear", result.MinFilter);
 		EXPECT_EQ("Linear", result.MagFilter);
@@ -76,7 +76,7 @@ namespace CocoaTests::Assets
 
 	TEST(JsonAssetDatabaseTests, GetTextureInfo_ShouldThrowError_WhenGivenInvalidId)
 	{
-		const auto sut = cocoa::Assets::JsonAssetDatabase(testMetadataPath);
+		const auto sut = cocoa::assets::JsonAssetDatabase(testMetadataPath);
 
 		EXPECT_THROW(
 			auto record = sut.GetTextureInfo("missing_texture"),
@@ -86,17 +86,17 @@ namespace CocoaTests::Assets
 
 	TEST(JsonAssetDatabaseTests, GetShaderInfo_ShouldReturnShaderRecord_WhenGivenValidId)
 	{
-		const auto sut = cocoa::Assets::JsonAssetDatabase(testMetadataPath);
+		const auto sut = cocoa::assets::JsonAssetDatabase(testMetadataPath);
 
 		const auto& result = sut.GetShaderInfo("dummy_shader");
 
-		EXPECT_EQ("Shaders/Sprite.vert", result.VertexPath);
-		EXPECT_EQ("Shaders/Sprite.frag", result.FragmentPath);
+		EXPECT_EQ("shaders/sprite.vert", result.VertexPath);
+		EXPECT_EQ("shaders/sprite.frag", result.FragmentPath);
 	}
 
 	TEST(JsonAssetDatabaseTests, GetShaderInfo_ShouldThrowError_WhenGivenInvalidId)
 	{
-		const auto sut = cocoa::Assets::JsonAssetDatabase(testMetadataPath);
+		const auto sut = cocoa::assets::JsonAssetDatabase(testMetadataPath);
 
 		EXPECT_THROW(
 			auto record = sut.GetShaderInfo("missing_shader"),
@@ -106,7 +106,7 @@ namespace CocoaTests::Assets
 
 	TEST(JsonAssetDatabaseTests, GetMaterialInfo_ShouldReturnMaterialRecord_WhenGivenValidId)
 	{
-		const auto sut = cocoa::Assets::JsonAssetDatabase(testMetadataPath);
+		const auto sut = cocoa::assets::JsonAssetDatabase(testMetadataPath);
 
 		const auto& result = sut.GetMaterialInfo("dummy_material");
 
@@ -120,7 +120,7 @@ namespace CocoaTests::Assets
 
 	TEST(JsonAssetDatabaseTests, GetMaterialInfo_ShouldThrowError_WhenGivenInvalidId)
 	{
-		const auto sut = cocoa::Assets::JsonAssetDatabase(testMetadataPath);
+		const auto sut = cocoa::assets::JsonAssetDatabase(testMetadataPath);
 
 		EXPECT_THROW(
 			auto record = sut.GetMaterialInfo("missing_material"),
@@ -131,7 +131,7 @@ namespace CocoaTests::Assets
 	TEST(JsonAssetDatabaseTests, GetSpriteInfo_ShouldReturnSpriteRecord_WhenGivenValidId)
 	{
 		const std::string name{"dummy_sprite"};
-		const auto sut = cocoa::Assets::JsonAssetDatabase(testMetadataPath);
+		const auto sut = cocoa::assets::JsonAssetDatabase(testMetadataPath);
 
 		const auto& result = sut.GetSpriteInfo(name);
 
@@ -145,7 +145,7 @@ namespace CocoaTests::Assets
 
 	TEST(JsonAssetDatabaseTests, GetSpriteInfo_ShouldThrowError_WhenGivenInvalidId)
 	{
-		const auto sut = cocoa::Assets::JsonAssetDatabase(testMetadataPath);
+		const auto sut = cocoa::assets::JsonAssetDatabase(testMetadataPath);
 
 		EXPECT_THROW(
 			auto record = sut.GetSpriteInfo("missing_sprite"),

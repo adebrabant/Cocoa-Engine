@@ -16,7 +16,7 @@
 
 #include <string>
 
-namespace cocoa::Core
+namespace cocoa::core
 {
 	Application::Application(const uint32_t windowWidth, const uint32_t windowHeight, const std::string& title) :
         m_assetPathProvider(),
@@ -36,23 +36,23 @@ namespace cocoa::Core
 
     void Application::Run()
     {
-        Platforms::GLFWWindow window(m_eventBus, m_windowProps);
-        Graphics::OpenGLContext openGLContext;
+        platforms::GLFWWindow window(m_eventBus, m_windowProps);
+        graphics::OpenGLContext openGLContext;
 
-		m_graphicsDevice = CreateUnique<Graphics::OpenGLGraphicsDevice>();
+		m_graphicsDevice = CreateUnique<graphics::OpenGLGraphicsDevice>();
         m_graphicsDevice->SetViewport(0, 0, m_windowProps.GetWidth(), m_windowProps.GetHeight());
         m_graphicsDevice->SetClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
-        Assets::AssetManager assetManager;
-        Assets::FilesystemAssetSource assetSource(m_assetPathProvider.GetAssetsPath());
-        Assets::JsonAssetDatabase jsonAssetDatabase(m_assetPathProvider.GetMetaDataPath());
+        assets::AssetManager assetManager;
+        assets::FilesystemAssetSource assetSource(m_assetPathProvider.GetAssetsPath());
+        assets::JsonAssetDatabase jsonAssetDatabase(m_assetPathProvider.GetMetaDataPath());
 
-        Graphics::ShaderManager shaderManager(*m_graphicsDevice);
-        Graphics::TextureManager textureManager(*m_graphicsDevice);
-        Graphics::MaterialManager materialManager;
-		Graphics::SpriteManager spriteManager;
+        graphics::ShaderManager shaderManager(*m_graphicsDevice);
+        graphics::TextureManager textureManager(*m_graphicsDevice);
+        graphics::MaterialManager materialManager;
+		graphics::SpriteManager spriteManager;
 
-        Assets::ResourceLoader resourceLoader(
+        assets::ResourceLoader resourceLoader(
             jsonAssetDatabase,
             assetSource,
             assetManager,
@@ -62,7 +62,7 @@ namespace cocoa::Core
             spriteManager
         );
 
-        Graphics::Renderer2D renderer2d(
+        graphics::Renderer2D renderer2d(
             *m_graphicsDevice,
             shaderManager,
             textureManager,
@@ -70,7 +70,7 @@ namespace cocoa::Core
             spriteManager
         );
 
-        Scenes::SceneManager sceneManager(resourceLoader);
+        scenes::SceneManager sceneManager(resourceLoader);
 
         ConfigureScenes(sceneManager);
 
@@ -99,15 +99,15 @@ namespace cocoa::Core
         }
     }
 
-    void Application::ConfigureScenes(Scenes::SceneManager& sceneManager)
+    void Application::ConfigureScenes(scenes::SceneManager& sceneManager)
     {
 
     }
 
 	void Application::RegisterEventHandlers()
 	{
-		m_FramebufferResizeEventToken = m_eventBus.Subscribe<Platforms::FramebufferResizeEvent>(
-			[this](const Platforms::FramebufferResizeEvent& evt)
+		m_FramebufferResizeEventToken = m_eventBus.Subscribe<platforms::FramebufferResizeEvent>(
+			[this](const platforms::FramebufferResizeEvent& evt)
 			{
 				if (evt.Width == 0 || evt.Height == 0)
 					return;
@@ -118,6 +118,6 @@ namespace cocoa::Core
 
     void Application::UnregisterEventHandlers()
     {
-		m_eventBus.Unsubscribe<Platforms::FramebufferResizeEvent>(m_FramebufferResizeEventToken);
+		m_eventBus.Unsubscribe<platforms::FramebufferResizeEvent>(m_FramebufferResizeEventToken);
     }
 }

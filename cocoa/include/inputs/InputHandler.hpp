@@ -1,6 +1,6 @@
 #pragma once
 
-namespace cocoa::Inputs
+namespace cocoa::inputs
 {
 	class InputHandler
 	{

@@ -10,7 +10,7 @@
 #include <thread>
 #include <utility>
 
-namespace cocoa::Assets
+namespace cocoa::assets
 {
 	JsonAssetDatabase::JsonAssetDatabase(std::filesystem::path  metadataPath) :
 		m_metadataPath(std::move(metadataPath)),
@@ -207,7 +207,7 @@ namespace cocoa::Assets
 				.Id = id,
 				.ShaderId = materialJson.at("shader").get<std::string>(),
 				.BlendMode = materialJson.at("blendMode").get<std::string>(),
-				.Tint = Core::Color
+				.Tint = core::Color
 				{
 					materialJson.at("tint").at(0).get<float>(),
 					materialJson.at("tint").at(1).get<float>(),
@@ -239,12 +239,12 @@ namespace cocoa::Assets
 			{
 				.Id = id,
 				.TextureId = spriteJson.at("texture").get<std::string>(),
-				.MinPixel = Math::Vector2f
+				.MinPixel = math::Vector2f
 				{
 					spriteJson.at("minPixel").at(0).get<float>(),
 					spriteJson.at("minPixel").at(1).get<float>()
 				},
-				.MaxPixel = Math::Vector2f
+				.MaxPixel = math::Vector2f
 				{
 					spriteJson.at("maxPixel").at(0).get<float>(),
 					spriteJson.at("maxPixel").at(1).get<float>()

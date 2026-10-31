@@ -3,7 +3,7 @@
 #include <cassert>
 #include <cstdint>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
     struct Viewport
     {

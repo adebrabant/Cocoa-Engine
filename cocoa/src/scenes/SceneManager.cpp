@@ -3,9 +3,9 @@
 #include "graphics/Renderer2D.hpp"
 #include "scenes/Scene.hpp"
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
-	SceneManager::SceneManager(Assets::ResourceLoader& loader) :
+	SceneManager::SceneManager(assets::ResourceLoader& loader) :
 		m_resourceLoader(loader)
 	{
 
@@ -29,7 +29,7 @@ namespace cocoa::Scenes
 		}
 	}
 
-	void SceneManager::Render(Graphics::Renderer2D& renderer, const float alpha) const
+	void SceneManager::Render(graphics::Renderer2D& renderer, const float alpha) const
 	{
 		if (m_currentScene)
 		{

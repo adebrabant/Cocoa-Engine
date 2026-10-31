@@ -2,9 +2,9 @@
 
 #include <graphics/Texture2D.hpp>
 
-namespace CocoaTests::Stubs
+namespace cocoa_tests::stubs
 {
-	class StubTexture2D : public cocoa::Graphics::Texture2D
+	class StubTexture2D : public cocoa::graphics::Texture2D
 	{
 	public:
 		StubTexture2D() = default;

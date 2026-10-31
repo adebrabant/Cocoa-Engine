@@ -1,10 +1,10 @@
-#include "stubs/Graphics/StubGraphicsDevice.hpp"
-#include "stubs/Graphics/StubFramebuffer.hpp"
-#include "stubs/Graphics/StubIndexBuffer.hpp"
-#include "stubs/Graphics/StubShader.hpp"
-#include "stubs/Graphics/StubTexture2D.hpp"
-#include "stubs/Graphics/StubVertexArray.hpp"
-#include "stubs/Graphics/StubVertexBuffer.hpp"
+#include "stubs/graphics/StubGraphicsDevice.hpp"
+#include "stubs/graphics/StubFramebuffer.hpp"
+#include "stubs/graphics/StubIndexBuffer.hpp"
+#include "stubs/graphics/StubShader.hpp"
+#include "stubs/graphics/StubTexture2D.hpp"
+#include "stubs/graphics/StubVertexArray.hpp"
+#include "stubs/graphics/StubVertexBuffer.hpp"
 
 #include <graphics/BufferElement.hpp>
 #include <graphics/BufferLayout.hpp>
@@ -14,7 +14,7 @@
 #include <graphics/VertexBuffer.hpp>
 #include <utilities/Memory.hpp>
 
-namespace CocoaTests::Stubs
+namespace cocoa_tests::stubs
 {
 	StubGraphicsDevice::StubGraphicsDevice() :
 		m_vertexBufferCapture(),
@@ -32,7 +32,7 @@ namespace CocoaTests::Stubs
 	{
 	}
 
-	void StubGraphicsDevice::SetBlendMode(cocoa::Graphics::BlendMode mode)
+	void StubGraphicsDevice::SetBlendMode(cocoa::graphics::BlendMode mode)
 	{
 
 	}
@@ -51,44 +51,44 @@ namespace CocoaTests::Stubs
 
 	}
 
-	cocoa::Unique<cocoa::Graphics::Shader> StubGraphicsDevice::CreateShader(const std::string& vertexSource, const std::string& fragmentSource)
+	cocoa::Unique<cocoa::graphics::Shader> StubGraphicsDevice::CreateShader(const std::string& vertexSource, const std::string& fragmentSource)
 	{
 		return cocoa::CreateUnique<StubShader>();
 	}
 
-	cocoa::Unique<cocoa::Graphics::VertexArray> StubGraphicsDevice::CreateVertexArray()
+	cocoa::Unique<cocoa::graphics::VertexArray> StubGraphicsDevice::CreateVertexArray()
 	{
 		return cocoa::CreateUnique<StubVertexArray>();
 	}
 
-	cocoa::Unique<cocoa::Graphics::VertexBuffer> StubGraphicsDevice::CreateVertexBuffer(
-		uint32_t size, const cocoa::Graphics::BufferLayout& bufferLayout)
+	cocoa::Unique<cocoa::graphics::VertexBuffer> StubGraphicsDevice::CreateVertexBuffer(
+		uint32_t size, const cocoa::graphics::BufferLayout& bufferLayout)
 	{
 		return cocoa::CreateUnique<StubVertexBuffer>(size, bufferLayout, m_vertexBufferCapture);
 	}
 
-	cocoa::Unique<cocoa::Graphics::VertexBuffer> StubGraphicsDevice::CreateVertexBuffer(
-		const void* vertices, uint32_t size, const cocoa::Graphics::BufferLayout& bufferLayout)
+	cocoa::Unique<cocoa::graphics::VertexBuffer> StubGraphicsDevice::CreateVertexBuffer(
+		const void* vertices, uint32_t size, const cocoa::graphics::BufferLayout& bufferLayout)
 	{
 		return cocoa::CreateUnique<StubVertexBuffer>(vertices, size, bufferLayout, m_vertexBufferCapture);
 	}
 
-	cocoa::Unique<cocoa::Graphics::IndexBuffer> StubGraphicsDevice::CreateIndexBuffer(const uint32_t* indices, uint32_t count)
+	cocoa::Unique<cocoa::graphics::IndexBuffer> StubGraphicsDevice::CreateIndexBuffer(const uint32_t* indices, uint32_t count)
 	{
 		return cocoa::CreateUnique<StubIndexBuffer>(indices, count);
 	}
 
-	cocoa::Unique<cocoa::Graphics::Texture2D> StubGraphicsDevice::CreateTexture2D(cocoa::Graphics::TextureSpec textureSpec, const unsigned char* pixels)
+	cocoa::Unique<cocoa::graphics::Texture2D> StubGraphicsDevice::CreateTexture2D(cocoa::graphics::TextureSpec textureSpec, const unsigned char* pixels)
 	{
 		return cocoa::CreateUnique<StubTexture2D>();
 	}
 
-	cocoa::Unique<cocoa::Graphics::Framebuffer> StubGraphicsDevice::CreateFramebuffer(const cocoa::Graphics::FramebufferSpec& framebufferSpec)
+	cocoa::Unique<cocoa::graphics::Framebuffer> StubGraphicsDevice::CreateFramebuffer(const cocoa::graphics::FramebufferSpec& framebufferSpec)
 	{
 		return cocoa::CreateUnique<StubFramebuffer>(framebufferSpec);
 	}
 
-	void StubGraphicsDevice::DrawIndexed(const cocoa::Graphics::VertexArray& vertexArray, uint32_t indexCount)
+	void StubGraphicsDevice::DrawIndexed(const cocoa::graphics::VertexArray& vertexArray, uint32_t indexCount)
 	{
 
 	}

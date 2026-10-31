@@ -6,7 +6,7 @@
 
 #include <cstdint>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	class OpenGLGraphicsDevice : public GraphicsDevice
 	{

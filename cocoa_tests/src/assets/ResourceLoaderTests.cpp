@@ -1,4 +1,4 @@
-#include "stubs/Graphics/StubGraphicsDevice.hpp"
+#include "stubs/graphics/StubGraphicsDevice.hpp"
 #include <assets/AssetManager.hpp>
 #include <assets/FilesystemAssetSource.hpp>
 #include <assets/JsonAssetDatabase.hpp>
@@ -13,22 +13,22 @@
 #include <string>
 #include <filesystem>
 
-namespace CocoaTests::Assets
+namespace cocoa_tests::assets
 {
-	const std::filesystem::path testMetadataPath = "TestData/Metadata";
-	const std::filesystem::path testResourcePath = "TestData/Resources";
+	const std::filesystem::path testMetadataPath = "test_data/metadata";
+	const std::filesystem::path testResourcePath = "test_data/resources";
 
 	TEST(ResourceLoaderTests, LoadTexture_ShouldReturnTextureHandle_WhenProvidingAssetTextureId)
 	{
-		cocoa::Assets::JsonAssetDatabase jsonDatabase(testMetadataPath);
-		cocoa::Assets::FilesystemAssetSource assetSource(testResourcePath);
-		cocoa::Assets::AssetManager assetManager;
-		Stubs::StubGraphicsDevice stubGraphicsDevice;
-		cocoa::Graphics::TextureManager textureManager(stubGraphicsDevice);
-		cocoa::Graphics::ShaderManager shaderManager(stubGraphicsDevice);
-		cocoa::Graphics::MaterialManager materialManager;
-		cocoa::Graphics::SpriteManager spriteManager;
-		cocoa::Assets::ResourceLoader sut(
+		cocoa::assets::JsonAssetDatabase jsonDatabase(testMetadataPath);
+		cocoa::assets::FilesystemAssetSource assetSource(testResourcePath);
+		cocoa::assets::AssetManager assetManager;
+		stubs::StubGraphicsDevice stubGraphicsDevice;
+		cocoa::graphics::TextureManager textureManager(stubGraphicsDevice);
+		cocoa::graphics::ShaderManager shaderManager(stubGraphicsDevice);
+		cocoa::graphics::MaterialManager materialManager;
+		cocoa::graphics::SpriteManager spriteManager;
+		cocoa::assets::ResourceLoader sut(
 			jsonDatabase,
 			assetSource,
 			assetManager,
@@ -38,22 +38,22 @@ namespace CocoaTests::Assets
 			spriteManager
 		);
 
-		cocoa::Graphics::TextureHandle result = sut.LoadTexture("dummy_idle1");
+		cocoa::graphics::TextureHandle result = sut.LoadTexture("dummy_idle1");
 
 		EXPECT_EQ(result.Id, 1);
 	}
 
 	TEST(ResourceLoaderTests, LoadShader_ShouldReturnShaderHandle_WhenProvidingShaderId)
 	{
-		cocoa::Assets::JsonAssetDatabase jsonDatabase(testMetadataPath);
-		cocoa::Assets::FilesystemAssetSource assetSource(testResourcePath);
-		cocoa::Assets::AssetManager assetManager;
-		Stubs::StubGraphicsDevice stubGraphicsDevice;
-		cocoa::Graphics::TextureManager textureManager(stubGraphicsDevice);
-		cocoa::Graphics::ShaderManager shaderManager(stubGraphicsDevice);
-		cocoa::Graphics::MaterialManager materialManager;
-		cocoa::Graphics::SpriteManager spriteManager;
-		cocoa::Assets::ResourceLoader sut(
+		cocoa::assets::JsonAssetDatabase jsonDatabase(testMetadataPath);
+		cocoa::assets::FilesystemAssetSource assetSource(testResourcePath);
+		cocoa::assets::AssetManager assetManager;
+		stubs::StubGraphicsDevice stubGraphicsDevice;
+		cocoa::graphics::TextureManager textureManager(stubGraphicsDevice);
+		cocoa::graphics::ShaderManager shaderManager(stubGraphicsDevice);
+		cocoa::graphics::MaterialManager materialManager;
+		cocoa::graphics::SpriteManager spriteManager;
+		cocoa::assets::ResourceLoader sut(
 			jsonDatabase,
 			assetSource,
 			assetManager,
@@ -63,22 +63,22 @@ namespace CocoaTests::Assets
 			spriteManager
 		);
 
-		cocoa::Graphics::ShaderHandle result = sut.LoadShader("dummy_shader");
+		cocoa::graphics::ShaderHandle result = sut.LoadShader("dummy_shader");
 
 		EXPECT_EQ(result.Id, 1);
 	}
 
 	TEST(ResourceLoaderTests, LoadMaterial_ShouldReturnMaterialHandle_WhenProvidingMaterialId)
 	{
-		cocoa::Assets::JsonAssetDatabase jsonDatabase(testMetadataPath);
-		cocoa::Assets::FilesystemAssetSource assetSource(testResourcePath);
-		cocoa::Assets::AssetManager assetManager;
-		Stubs::StubGraphicsDevice stubGraphicsDevice;
-		cocoa::Graphics::TextureManager textureManager(stubGraphicsDevice);
-		cocoa::Graphics::ShaderManager shaderManager(stubGraphicsDevice);
-		cocoa::Graphics::MaterialManager materialManager;
-		cocoa::Graphics::SpriteManager spriteManager;
-		cocoa::Assets::ResourceLoader sut(
+		cocoa::assets::JsonAssetDatabase jsonDatabase(testMetadataPath);
+		cocoa::assets::FilesystemAssetSource assetSource(testResourcePath);
+		cocoa::assets::AssetManager assetManager;
+		stubs::StubGraphicsDevice stubGraphicsDevice;
+		cocoa::graphics::TextureManager textureManager(stubGraphicsDevice);
+		cocoa::graphics::ShaderManager shaderManager(stubGraphicsDevice);
+		cocoa::graphics::MaterialManager materialManager;
+		cocoa::graphics::SpriteManager spriteManager;
+		cocoa::assets::ResourceLoader sut(
 			jsonDatabase,
 			assetSource,
 			assetManager,
@@ -88,22 +88,22 @@ namespace CocoaTests::Assets
 			spriteManager
 		);
 
-		cocoa::Graphics::MaterialHandle result = sut.LoadMaterial("dummy_material");
+		cocoa::graphics::MaterialHandle result = sut.LoadMaterial("dummy_material");
 
 		EXPECT_EQ(result.Id, 1);
 	}
 
 	TEST(ResourceLoaderTests, LoadSprite_ShouldReturnSpriteHandle_WhenProvidingSpriteId)
 	{
-		cocoa::Assets::JsonAssetDatabase jsonDatabase(testMetadataPath);
-		cocoa::Assets::FilesystemAssetSource assetSource(testResourcePath);
-		cocoa::Assets::AssetManager assetManager;
-		Stubs::StubGraphicsDevice stubGraphicsDevice;
-		cocoa::Graphics::TextureManager textureManager(stubGraphicsDevice);
-		cocoa::Graphics::ShaderManager shaderManager(stubGraphicsDevice);
-		cocoa::Graphics::MaterialManager materialManager;
-		cocoa::Graphics::SpriteManager spriteManager;
-		cocoa::Assets::ResourceLoader sut(
+		cocoa::assets::JsonAssetDatabase jsonDatabase(testMetadataPath);
+		cocoa::assets::FilesystemAssetSource assetSource(testResourcePath);
+		cocoa::assets::AssetManager assetManager;
+		stubs::StubGraphicsDevice stubGraphicsDevice;
+		cocoa::graphics::TextureManager textureManager(stubGraphicsDevice);
+		cocoa::graphics::ShaderManager shaderManager(stubGraphicsDevice);
+		cocoa::graphics::MaterialManager materialManager;
+		cocoa::graphics::SpriteManager spriteManager;
+		cocoa::assets::ResourceLoader sut(
 			jsonDatabase,
 			assetSource,
 			assetManager,
@@ -113,7 +113,7 @@ namespace CocoaTests::Assets
 			spriteManager
 		);
 
-		const cocoa::Graphics::SpriteHandle result = sut.LoadSprite("dummy_sprite");
+		const cocoa::graphics::SpriteHandle result = sut.LoadSprite("dummy_sprite");
 
 		EXPECT_EQ(result.Id, 1);
 	}

@@ -5,7 +5,7 @@
 
 #include <cstdint>
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
 	World::World() :
 		m_nextEntityId(0),
@@ -25,7 +25,7 @@ namespace cocoa::Scenes
 		}
 	}
 
-	void World::BeforeRender(Graphics::Renderer2D& renderer, float alpha)
+	void World::BeforeRender(graphics::Renderer2D& renderer, float alpha)
 	{
 		for (auto& system : m_systems)
 		{
@@ -33,8 +33,8 @@ namespace cocoa::Scenes
 		}
 	}
 
-	void World::Render(Graphics::Renderer2D& renderer, float alpha)
-	{ 
+	void World::Render(graphics::Renderer2D& renderer, float alpha)
+	{
 		for (auto& system : m_systems)
 		{
 			system->Render(*this, renderer, alpha);

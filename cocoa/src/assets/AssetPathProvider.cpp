@@ -3,7 +3,7 @@
 #include <array>
 #include <iostream>
 
-namespace cocoa::Assets
+namespace cocoa::assets
 {
     AssetPathProvider::AssetPathProvider()
     {

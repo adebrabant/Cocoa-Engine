@@ -8,7 +8,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace cocoa::Assets
+namespace cocoa::assets
 {
 	class AssetManager
 	{
@@ -19,7 +19,7 @@ namespace cocoa::Assets
 		AssetManager& operator=(const AssetManager&) = delete;
 
 		const Image& LoadImage(
-			const std::string& assetId, 
+			const std::string& assetId,
 			const std::vector<std::byte>& assetBytes
 		);
 

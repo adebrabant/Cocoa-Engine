@@ -3,7 +3,7 @@
 #include "graphics/IndexBuffer.hpp"
 #include <cstdint>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	class OpenGLIndexBuffer : public IndexBuffer
 	{

@@ -8,7 +8,7 @@
 #include <cstring>
 #include <stb_image.h>
 
-namespace cocoa::Assets
+namespace cocoa::assets
 {
 	AssetLoader::AssetLoader()
 	{

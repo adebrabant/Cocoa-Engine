@@ -4,7 +4,7 @@
 #include <vector>
 #include <filesystem>
 
-namespace cocoa::Assets
+namespace cocoa::assets
 {
 	struct Image;
 

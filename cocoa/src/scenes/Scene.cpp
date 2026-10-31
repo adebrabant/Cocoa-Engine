@@ -1,7 +1,7 @@
 #include "scenes/Scene.hpp"
 #include "graphics/Renderer2D.hpp"
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
 	Scene::Scene() :
 		m_world()
@@ -14,7 +14,7 @@ namespace cocoa::Scenes
 		m_world.Update(deltaTime);
 	}
 
-	void Scene::Render(Graphics::Renderer2D& renderer, const float alpha)
+	void Scene::Render(graphics::Renderer2D& renderer, const float alpha)
 	{
 		m_world.BeforeRender(renderer, alpha);
 		m_world.Render(renderer, alpha);

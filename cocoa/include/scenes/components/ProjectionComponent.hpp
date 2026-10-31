@@ -2,10 +2,10 @@
 
 #include "graphics/OrthographicProjection.hpp"
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
     struct ProjectionComponent
     {
-        Graphics::OrthographicProjection Projection;
+        graphics::OrthographicProjection Projection;
     };
 }

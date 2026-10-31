@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
     SpriteManager::SpriteManager() :
         m_sprites(),
@@ -17,9 +17,9 @@ namespace cocoa::Graphics
     SpriteHandle SpriteManager::Load(
         const std::string& spriteId,
         const TextureHandle& textureHandle,
-        const Math::Vector2f& minPixel,
-        const Math::Vector2f& maxPixel,
-        const Math::Vector2f& textureSize)
+        const math::Vector2f& minPixel,
+        const math::Vector2f& maxPixel,
+        const math::Vector2f& textureSize)
     {
         if (const auto it = m_handles.find(spriteId); it != m_handles.end())
         {

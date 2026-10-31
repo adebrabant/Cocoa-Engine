@@ -2,12 +2,12 @@
 
 #include "math/Vector3f.hpp"
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
 	struct TransformComponent
 	{
-		Math::Vector3f Position{0.0f, 0.0f, 0.0f };
-		Math::Vector3f Rotation{ 0.0f, 0.0f, 0.0f };
-		Math::Vector3f Scale{1.0f, 1.0f, 1.0f };
+		math::Vector3f Position{0.0f, 0.0f, 0.0f };
+		math::Vector3f Rotation{ 0.0f, 0.0f, 0.0f };
+		math::Vector3f Scale{1.0f, 1.0f, 1.0f };
 	};
 }

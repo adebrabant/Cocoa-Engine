@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	class BufferLayout;
 

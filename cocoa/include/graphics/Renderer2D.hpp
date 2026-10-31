@@ -9,7 +9,7 @@
 
 #include <variant>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	class GraphicsDevice;
 	class ShaderManager;
@@ -29,20 +29,20 @@ namespace cocoa::Graphics
 		);
 		~Renderer2D();
 
-		void BeginDraw(const Math::Matrix4f& viewProjectionMatrix);
+		void BeginDraw(const math::Matrix4f& viewProjectionMatrix);
 		void DrawQuad(
-			const Math::Matrix4f& modelMatrix,
+			const math::Matrix4f& modelMatrix,
 			MaterialHandle materialHandle,
 			TextureHandle textureHandle,
-			const Math::Vector2f& tilingFactor,
+			const math::Vector2f& tilingFactor,
 			SortLayer sortingLayer,
 			int sortingOrder);
 
 		void DrawQuad(
-			const Math::Matrix4f& modelMatrix,
+			const math::Matrix4f& modelMatrix,
 			MaterialHandle materialHandle,
 			SpriteHandle spriteHandle,
-			const Math::Vector2f& tilingFactor,
+			const math::Vector2f& tilingFactor,
 			bool flipVertical,
 			bool flipHorizontal,
 			SortLayer sortingLayer,
@@ -60,17 +60,17 @@ namespace cocoa::Graphics
 		};
 		struct QuadDrawSubmission
 		{
-			Math::Matrix4f ModelMatrix{};
+			math::Matrix4f ModelMatrix{};
 			MaterialHandle Material{};
 			TextureHandle Texture{};
-			Math::Vector2f TilingFactor{};
+			math::Vector2f TilingFactor{};
 		};
 		struct SpriteDrawSubmission
 		{
-			Math::Matrix4f ModelMatrix{};
+			math::Matrix4f ModelMatrix{};
 			MaterialHandle Material{};
 			SpriteHandle Sprite{};
-			Math::Vector2f TilingFactor{};
+			math::Vector2f TilingFactor{};
 			bool FlipVertical{};
 			bool FlipHorizontal{};
 		};
@@ -89,6 +89,6 @@ namespace cocoa::Graphics
 		RenderStatistics m_renderStatistics;
 		GraphicsDevice& m_graphicsDevice;
 		QuadBatch m_quadBatch;
-		Math::Matrix4f m_viewProjectionMatrix;
+		math::Matrix4f m_viewProjectionMatrix;
 	};
 }

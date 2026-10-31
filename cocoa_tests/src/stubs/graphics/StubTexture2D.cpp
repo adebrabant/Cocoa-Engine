@@ -1,6 +1,6 @@
-#include "stubs/Graphics/StubTexture2D.hpp"
+#include "stubs/graphics/StubTexture2D.hpp"
 
-namespace CocoaTests::Stubs
+namespace cocoa_tests::stubs
 {
 	void StubTexture2D::Bind(uint32_t slot) const
 	{

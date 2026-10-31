@@ -1,9 +1,9 @@
-#include "../../include/core/FrameClock.hpp"
+#include "core/FrameClock.hpp"
 #include <algorithm>
 #include <chrono>
 #include <thread>
 
-namespace cocoa::Chronos
+namespace cocoa::core
 {
 	FrameClock::FrameClock(float maxDelta, float fixedDelta, float targetFrameRate) :
 		m_maxDelta(maxDelta),

@@ -4,9 +4,9 @@
 #include <stdexcept>
 #include <utility>
 
-namespace cocoa::Assets
+namespace cocoa::assets
 {
-	FilesystemAssetSource::FilesystemAssetSource(std::filesystem::path rootpath) 
+	FilesystemAssetSource::FilesystemAssetSource(std::filesystem::path rootpath)
 		: m_rootPath(std::move(rootpath))
 	{
 
@@ -34,7 +34,7 @@ namespace cocoa::Assets
 		file.seekg(0, std::ios::beg);
 		std::vector<std::byte> bytes(static_cast<size_t>(size));
 
-		if (!file.read(reinterpret_cast<char*>(bytes.data()), size)) 
+		if (!file.read(reinterpret_cast<char*>(bytes.data()), size))
 		{
 			throw std::runtime_error(
 				"Failed to read asset file: " + fullpath.string()

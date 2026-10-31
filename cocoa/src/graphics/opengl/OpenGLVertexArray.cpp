@@ -8,35 +8,35 @@
 #include <cstdint>
 #include <stdexcept>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	static GLenum ToOpenGLScalarType(ShaderDataType shaderType)
 	{
 		switch (shaderType)
 		{
-		case cocoa::Graphics::ShaderDataType::Float:
+		case cocoa::graphics::ShaderDataType::Float:
 			return GL_FLOAT;
-		case cocoa::Graphics::ShaderDataType::Float2:
+		case cocoa::graphics::ShaderDataType::Float2:
 			return GL_FLOAT;
-		case cocoa::Graphics::ShaderDataType::Float3:
+		case cocoa::graphics::ShaderDataType::Float3:
 			return GL_FLOAT;
-		case cocoa::Graphics::ShaderDataType::Float4:
+		case cocoa::graphics::ShaderDataType::Float4:
 			return GL_FLOAT;
-		case cocoa::Graphics::ShaderDataType::Mat3:
+		case cocoa::graphics::ShaderDataType::Mat3:
 			return GL_FLOAT;
-		case cocoa::Graphics::ShaderDataType::Mat4:
+		case cocoa::graphics::ShaderDataType::Mat4:
 			return GL_FLOAT;
-		case cocoa::Graphics::ShaderDataType::Int:
+		case cocoa::graphics::ShaderDataType::Int:
 			return GL_INT;
-		case cocoa::Graphics::ShaderDataType::Int2:
+		case cocoa::graphics::ShaderDataType::Int2:
 			return GL_INT;
-		case cocoa::Graphics::ShaderDataType::Int3:
+		case cocoa::graphics::ShaderDataType::Int3:
 			return GL_INT;
-		case cocoa::Graphics::ShaderDataType::Int4:
+		case cocoa::graphics::ShaderDataType::Int4:
 			return GL_INT;
-		case cocoa::Graphics::ShaderDataType::UInt:
+		case cocoa::graphics::ShaderDataType::UInt:
 			return GL_UNSIGNED_INT;
-		case cocoa::Graphics::ShaderDataType::Bool:
+		case cocoa::graphics::ShaderDataType::Bool:
 			return GL_BOOL;
 		default:
 			throw std::runtime_error("Invalid Shader Type.");

@@ -5,7 +5,7 @@
 
 #include <cstdint>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	class OpenGLTexture2D : public Texture2D
 	{

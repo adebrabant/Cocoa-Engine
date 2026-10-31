@@ -7,7 +7,7 @@
 #include "scenes/ecs/View.hpp"
 #include "scenes/ecs/World.hpp"
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
 	void CameraSystem::Update(World& world, float deltaTime)
 	{
@@ -15,7 +15,7 @@ namespace cocoa::Scenes
 	}
 
 	// TODO: Look into fallback or required components if not found
-	void CameraSystem::BeginRender(World& world, Graphics::Renderer2D& renderer, float alpha)
+	void CameraSystem::BeginRender(World& world, graphics::Renderer2D& renderer, float alpha)
 	{
 		View<TransformComponent, CameraComponent, ProjectionComponent> view(world);
 
@@ -41,7 +41,7 @@ namespace cocoa::Scenes
 		}
 	}
 
-	void CameraSystem::Render(World& world, Graphics::Renderer2D& renderer, float alpha)
+	void CameraSystem::Render(World& world, graphics::Renderer2D& renderer, float alpha)
 	{
 
 	}

@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
 	class Entity
 	{

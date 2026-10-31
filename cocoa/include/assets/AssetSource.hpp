@@ -4,7 +4,7 @@
 #include <vector>
 #include <cstddef>
 
-namespace cocoa::Assets
+namespace cocoa::assets
 {
 	class AssetSource
 	{

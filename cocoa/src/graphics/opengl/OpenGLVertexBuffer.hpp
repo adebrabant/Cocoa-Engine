@@ -5,7 +5,7 @@
 
 #include <cstdint>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	class OpenGLVertexBuffer : public VertexBuffer
 	{

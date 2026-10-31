@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	class TextureManager;
 	class ShaderManager;
@@ -12,7 +12,7 @@ namespace cocoa::Graphics
 	class SpriteManager;
 }
 
-namespace cocoa::Assets
+namespace cocoa::assets
 {
 	class AssetDatabase;
 	class AssetSource;
@@ -25,10 +25,10 @@ namespace cocoa::Assets
 			AssetDatabase& assetDatabase,
 			AssetSource& assetSource,
 			AssetManager& assetManager,
-			Graphics::TextureManager& textureManager,
-			Graphics::ShaderManager& shaderManager,
-			Graphics::MaterialManager& materialManager,
-			Graphics::SpriteManager& spriteManager
+			graphics::TextureManager& textureManager,
+			graphics::ShaderManager& shaderManager,
+			graphics::MaterialManager& materialManager,
+			graphics::SpriteManager& spriteManager
 		);
 
 		~ResourceLoader() = default;
@@ -39,18 +39,18 @@ namespace cocoa::Assets
 		ResourceLoader(ResourceLoader&&) = delete;
 		ResourceLoader& operator=(ResourceLoader&&) = delete;
 
-		[[nodiscard]] Graphics::TextureHandle LoadTexture(const std::string& textureId) const;
-		[[nodiscard]] Graphics::ShaderHandle LoadShader(const std::string& shaderId) const;
-		[[nodiscard]] Graphics::MaterialHandle LoadMaterial(const std::string& materialId) const;
-		[[nodiscard]] Graphics::SpriteHandle LoadSprite(const std::string& spriteId) const;
+		[[nodiscard]] graphics::TextureHandle LoadTexture(const std::string& textureId) const;
+		[[nodiscard]] graphics::ShaderHandle LoadShader(const std::string& shaderId) const;
+		[[nodiscard]] graphics::MaterialHandle LoadMaterial(const std::string& materialId) const;
+		[[nodiscard]] graphics::SpriteHandle LoadSprite(const std::string& spriteId) const;
 
 	private:
 		AssetDatabase& m_assetDatabase;
 		AssetSource& m_assetSource;
 		AssetManager& m_assetManager;
-		Graphics::TextureManager& m_textureManager;
-		Graphics::ShaderManager& m_shaderManager;
-		Graphics::MaterialManager& m_materialManager;
-		Graphics::SpriteManager& m_spriteManager;
+		graphics::TextureManager& m_textureManager;
+		graphics::ShaderManager& m_shaderManager;
+		graphics::MaterialManager& m_materialManager;
+		graphics::SpriteManager& m_spriteManager;
 	};
 }

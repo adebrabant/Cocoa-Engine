@@ -1,6 +1,6 @@
-#include "stubs/Graphics/StubIndexBuffer.hpp"
+#include "stubs/graphics/StubIndexBuffer.hpp"
 
-namespace CocoaTests::Stubs
+namespace cocoa_tests::stubs
 {
     StubIndexBuffer::StubIndexBuffer(const uint32_t *indices, uint32_t count) :
         m_count(count)

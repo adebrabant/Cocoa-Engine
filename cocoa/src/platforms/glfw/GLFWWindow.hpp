@@ -5,17 +5,17 @@
 
 struct GLFWwindow;
 
-namespace cocoa::Events
+namespace cocoa::events
 {
 	class EventBus;
 }
 
-namespace cocoa::Platforms
+namespace cocoa::platforms
 {
 	class GLFWWindow : public Window
 	{
 	public:
-		GLFWWindow(const cocoa::Events::EventBus& eventBus,const WindowProperties& properties);
+		GLFWWindow(const cocoa::events::EventBus& eventBus,const WindowProperties& properties);
 		~GLFWWindow() override;
 
 		GLFWWindow(const GLFWWindow&) = delete;
@@ -38,7 +38,7 @@ namespace cocoa::Platforms
 		void Shutdown();
 
 	private:
-		const Events::EventBus& m_eventBus;
+		const events::EventBus& m_eventBus;
 		GLFWwindow* m_window = nullptr;
 		std::string m_title;
 		uint32_t m_width = 0;

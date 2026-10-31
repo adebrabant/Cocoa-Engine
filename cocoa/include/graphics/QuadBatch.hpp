@@ -11,7 +11,7 @@
 #include <array>
 #include <vector>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
     class GraphicsDevice;
     class ShaderManager;
@@ -37,30 +37,30 @@ namespace cocoa::Graphics
         ~QuadBatch();
 
         void Draw(
-            const Math::Matrix4f& modelMatrix,
+            const math::Matrix4f& modelMatrix,
             MaterialHandle materialHandle,
             TextureHandle textureHandle,
-            const Math::Vector2f& tilingFactor
+            const math::Vector2f& tilingFactor
         );
         void Draw(
-            const Math::Matrix4f& modelMatrix,
+            const math::Matrix4f& modelMatrix,
             MaterialHandle materialHandle,
             SpriteHandle spriteHandle,
-            const Math::Vector2f& tilingFactor,
+            const math::Vector2f& tilingFactor,
             bool flipVertical,
             bool flipHorizontal
         );
-        void Flush(const Math::Matrix4f& viewProjectionMatrix);
+        void Flush(const math::Matrix4f& viewProjectionMatrix);
 
     private:
         struct QuadVertex
         {
-            Math::Vector3f Position{};
-            Math::Vector2f LocalUV{};
-            Math::Vector2f MinUV{};
-            Math::Vector2f MaxUV{};
-            Math::Vector2f TilingFactor{};
-            Math::Vector4f Color{};
+            math::Vector3f Position{};
+            math::Vector2f LocalUV{};
+            math::Vector2f MinUV{};
+            math::Vector2f MaxUV{};
+            math::Vector2f TilingFactor{};
+            math::Vector4f Color{};
             uint32_t TexIndex{0};
         };
         struct QuadDrawCommand
@@ -83,18 +83,18 @@ namespace cocoa::Graphics
             BlendMode Blend;
             std::vector<QuadVertex> Vertices;
         };
-        void BuildBatch(const Math::Matrix4f& viewProjectionMatrix);
+        void BuildBatch(const math::Matrix4f& viewProjectionMatrix);
         void ExecuteBatch(
             const BatchData& batchData,
-            const Math::Matrix4f& viewProjectionMatrix
+            const math::Matrix4f& viewProjectionMatrix
         ) const;
         static std::array<int, TextureSlots::MaxCount> CreateSamplerUnits();
         static std::array<QuadVertex, 4> BuildVertices(
-            const Math::Matrix4f& modelMatrix,
-            const Math::Vector4f& color,
-            const Math::Vector2f& minUV,
-            const Math::Vector2f& maxUV,
-            const Math::Vector2f& tilingFactor,
+            const math::Matrix4f& modelMatrix,
+            const math::Vector4f& color,
+            const math::Vector2f& minUV,
+            const math::Vector2f& maxUV,
+            const math::Vector2f& tilingFactor,
             bool flipVertical,
             bool flipHorizontal
         );

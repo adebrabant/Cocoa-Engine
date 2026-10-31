@@ -3,9 +3,9 @@
 #include <cstdint>
 #include <graphics/IndexBuffer.hpp>
 
-namespace CocoaBenchmarks
+namespace cocoa_benchmarks
 {
-    class StubIndexBuffer : public cocoa::Graphics::IndexBuffer
+    class StubIndexBuffer : public cocoa::graphics::IndexBuffer
     {
     public:
         StubIndexBuffer(const uint32_t* indices, uint32_t count) : m_count(count) { }

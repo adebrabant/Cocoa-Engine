@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <utility>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	TextureManager::TextureManager(GraphicsDevice& graphicsDevice) :
 		m_graphicsDevice(graphicsDevice),

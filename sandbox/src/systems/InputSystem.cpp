@@ -4,7 +4,7 @@
 #include "scenes/ecs/View.hpp"
 #include "scenes/ecs/World.hpp"
 
-namespace Sandbox::Systems
+namespace sandbox
 {
 	InputSystem::InputSystem() :
 		m_inputHandler()
@@ -12,9 +12,9 @@ namespace Sandbox::Systems
 
 	}
 
-	void InputSystem::Update(cocoa::Scenes::World& world, float deltaTime)
+	void InputSystem::Update(cocoa::scenes::World& world, float deltaTime)
 	{
-		cocoa::Scenes::View<cocoa::Scenes::VelocityComponent> view(world);
+		cocoa::scenes::View<cocoa::scenes::VelocityComponent> view(world);
 		for (auto [velocity] : view)
 		{
 			if (m_inputHandler.IsUpPressed())
@@ -41,7 +41,7 @@ namespace Sandbox::Systems
 		}
 	}
 
-	void InputSystem::Render(cocoa::Scenes::World& world, cocoa::Graphics::Renderer2D& renderer, float alpha)
+	void InputSystem::Render(cocoa::scenes::World& world, cocoa::graphics::Renderer2D& renderer, float alpha)
 	{
 
 	}

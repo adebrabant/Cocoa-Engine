@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 #include <string>
 
-namespace CocoaTests::Platforms
+namespace cocoa_tests::platforms
 {
     TEST(WindowPropertiesTests, GetWidth_ShouldReturnConstructorWidth_WhenCreated)
     {
@@ -11,7 +11,7 @@ namespace CocoaTests::Platforms
         constexpr uint32_t height = 720;
         const std::string title = "Vexxus";
 
-        const cocoa::Platforms::WindowProperties sut(expectedWidth, height, title);
+        const cocoa::platforms::WindowProperties sut(expectedWidth, height, title);
 
         EXPECT_EQ(expectedWidth, sut.GetWidth());
     }
@@ -22,7 +22,7 @@ namespace CocoaTests::Platforms
         constexpr uint32_t expectedHeight = 720;
         const std::string title = "Vexxus";
 
-        const cocoa::Platforms::WindowProperties sut(width, expectedHeight, title);
+        const cocoa::platforms::WindowProperties sut(width, expectedHeight, title);
 
         EXPECT_EQ(expectedHeight, sut.GetHeight());
     }
@@ -33,7 +33,7 @@ namespace CocoaTests::Platforms
         constexpr uint32_t height = 720;
         const std::string expectedTitle = "Vexxus";
 
-        const cocoa::Platforms::WindowProperties sut(width, height, expectedTitle);
+        const cocoa::platforms::WindowProperties sut(width, height, expectedTitle);
 
         EXPECT_EQ(expectedTitle, sut.GetTitle());
     }
@@ -44,7 +44,7 @@ namespace CocoaTests::Platforms
         constexpr uint32_t height = 720;
         std::string title = "Vexxus";
 
-        const cocoa::Platforms::WindowProperties sut(width, height, title);
+        const cocoa::platforms::WindowProperties sut(width, height, title);
         title = "Changed Title";
 
         EXPECT_EQ("Vexxus", sut.GetTitle());
@@ -55,7 +55,7 @@ namespace CocoaTests::Platforms
         constexpr uint32_t width = 1280;
         constexpr uint32_t height = 720;
 
-        const cocoa::Platforms::WindowProperties sut(width, height, std::string("Vexxus"));
+        const cocoa::platforms::WindowProperties sut(width, height, std::string("Vexxus"));
 
         EXPECT_EQ("Vexxus", sut.GetTitle());
     }

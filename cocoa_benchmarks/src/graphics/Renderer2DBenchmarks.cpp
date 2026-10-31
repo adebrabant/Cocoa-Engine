@@ -4,7 +4,7 @@
 #include <random>
 #include <vector>
 
-namespace CocoaBenchmarks
+namespace cocoa_benchmarks
 {
     BENCHMARK_DEFINE_F(Renderer2DFixture, EndDraw_SingleSortingLayer)(benchmark::State& state)
     {
@@ -22,17 +22,17 @@ namespace CocoaBenchmarks
         for (auto _ : state)
         {
             state.PauseTiming();
-            m_renderer.BeginDraw(cocoa::Math::Matrix4f{});
+            m_renderer.BeginDraw(cocoa::math::Matrix4f{});
             state.ResumeTiming();
 
             for (auto i = 0; i < state.range(0); ++i)
             {
                 m_renderer.DrawQuad(
-                    cocoa::Math::Matrix4f {},
+                    cocoa::math::Matrix4f {},
                     m_material,
                     m_texture,
-                    cocoa::Math::Vector2f {},
-                    cocoa::Graphics::SortLayer::Background,
+                    cocoa::math::Vector2f {},
+                    cocoa::graphics::SortLayer::Background,
                     sortingOrders[i]
                 );
             }
@@ -56,17 +56,17 @@ namespace CocoaBenchmarks
         sortingOrders.reserve(state.range(0));
 
         constexpr std::array layers{
-            cocoa::Graphics::SortLayer::Background,
-            cocoa::Graphics::SortLayer::World,
-            cocoa::Graphics::SortLayer::Foreground,
-            cocoa::Graphics::SortLayer::UI
+            cocoa::graphics::SortLayer::Background,
+            cocoa::graphics::SortLayer::World,
+            cocoa::graphics::SortLayer::Foreground,
+            cocoa::graphics::SortLayer::UI
         };
 
         std::uniform_int_distribution<size_t> layerDistribution{
             0, layers.size() - 1
         };
 
-        std::vector<cocoa::Graphics::SortLayer> randomLayers;
+        std::vector<cocoa::graphics::SortLayer> randomLayers;
         randomLayers.reserve(state.range(0));
 
         for (auto i = 0; i < state.range(0); ++i)
@@ -78,16 +78,16 @@ namespace CocoaBenchmarks
         for (auto _ : state)
         {
             state.PauseTiming();
-            m_renderer.BeginDraw(cocoa::Math::Matrix4f{});
+            m_renderer.BeginDraw(cocoa::math::Matrix4f{});
             state.ResumeTiming();
 
             for (auto i = 0; i < state.range(0); ++i)
             {
                 m_renderer.DrawQuad(
-                    cocoa::Math::Matrix4f {},
+                    cocoa::math::Matrix4f {},
                     m_material,
                     m_texture,
-                    cocoa::Math::Vector2f {},
+                    cocoa::math::Vector2f {},
                     randomLayers[i],
                     sortingOrders[i]
                 );

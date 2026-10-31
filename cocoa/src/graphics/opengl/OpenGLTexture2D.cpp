@@ -7,15 +7,15 @@
 #include <cstdint>
 #include <stdexcept>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	static GLenum ToWrap(TextureWrap wrap)
 	{
 		switch (wrap)
 		{
-		case cocoa::Graphics::TextureWrap::Repeat:
+		case cocoa::graphics::TextureWrap::Repeat:
 			return GL_REPEAT;
-		case cocoa::Graphics::TextureWrap::ClampToEdge:
+		case cocoa::graphics::TextureWrap::ClampToEdge:
 			return GL_CLAMP_TO_EDGE;
 		default:
 			throw std::runtime_error("Invalid texture wrap mode.");
@@ -26,17 +26,17 @@ namespace cocoa::Graphics
 	{
 		switch (filter)
 		{
-		case cocoa::Graphics::TextureFilter::Nearest:
+		case cocoa::graphics::TextureFilter::Nearest:
 			return GL_NEAREST;
-		case cocoa::Graphics::TextureFilter::Linear:
+		case cocoa::graphics::TextureFilter::Linear:
 			return GL_LINEAR;
-		case cocoa::Graphics::TextureFilter::NearestMipmapNearest:
+		case cocoa::graphics::TextureFilter::NearestMipmapNearest:
 			return GL_NEAREST_MIPMAP_NEAREST;
-		case cocoa::Graphics::TextureFilter::LinearMipmapNearest:
+		case cocoa::graphics::TextureFilter::LinearMipmapNearest:
 			return GL_LINEAR_MIPMAP_NEAREST;
-		case cocoa::Graphics::TextureFilter::NearestMipmapLinear:
+		case cocoa::graphics::TextureFilter::NearestMipmapLinear:
 			return GL_NEAREST_MIPMAP_LINEAR;
-		case cocoa::Graphics::TextureFilter::LinearMipmapLinear:
+		case cocoa::graphics::TextureFilter::LinearMipmapLinear:
 			return GL_LINEAR_MIPMAP_LINEAR;
 		default:
 			throw std::runtime_error("Invalid texture filter.");

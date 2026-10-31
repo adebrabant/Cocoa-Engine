@@ -13,7 +13,7 @@
 // ToDo: Remove for Memory.hpp
 #include <memory>
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
 	class World
 	{
@@ -21,8 +21,8 @@ namespace cocoa::Scenes
 		World();
 		~World() = default;
 		void Update(float deltaTime);
-		void BeforeRender(Graphics::Renderer2D& renderer, float alpha);
-		void Render(Graphics::Renderer2D& renderer, float alpha);
+		void BeforeRender(graphics::Renderer2D& renderer, float alpha);
+		void Render(graphics::Renderer2D& renderer, float alpha);
 		Entity CreateEntity();
 		void DestroyEntity(const Entity& entity);
 

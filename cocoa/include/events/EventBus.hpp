@@ -9,7 +9,7 @@
 #include <unordered_map>
 #include <any>
 
-namespace cocoa::Events
+namespace cocoa::events
 {
     class EventBus
     {

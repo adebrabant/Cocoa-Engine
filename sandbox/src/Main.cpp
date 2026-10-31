@@ -2,8 +2,8 @@
 
 int main()
 {
-    Sandbox::GameApplication gameApplication;
+    sandbox::GameApplication gameApplication;
     gameApplication.Run();
 
-    return 0; 
+    return 0;
 }

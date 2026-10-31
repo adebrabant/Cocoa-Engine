@@ -5,13 +5,13 @@
 #include "graphics/GraphicsHandles.hpp"
 #include <string>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	struct Material
 	{
 		std::string Id;
 		ShaderHandle Shader;
-		Core::Color Tint;
+		core::Color Tint;
 		BlendMode Blend;
 	};
 }

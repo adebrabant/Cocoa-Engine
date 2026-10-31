@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 
-namespace cocoa::Platforms
+namespace cocoa::platforms
 {
     struct FramebufferResizeEvent
     {

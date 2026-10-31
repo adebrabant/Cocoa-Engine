@@ -1,6 +1,6 @@
 #include "inputs/InputHandler.hpp"
 
-namespace cocoa::Inputs
+namespace cocoa::inputs
 {
 	void InputHandler::Update()
 	{

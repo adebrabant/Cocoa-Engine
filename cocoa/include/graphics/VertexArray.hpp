@@ -1,11 +1,11 @@
 #pragma once
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	class IndexBuffer;
 	class VertexBuffer;
 
-	class VertexArray 
+	class VertexArray
 	{
 	public:
 		virtual ~VertexArray() = default;

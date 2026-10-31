@@ -8,7 +8,7 @@
 #include <tuple>
 #include <utility>
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
 	template<typename... TComponents>
 	class View
@@ -54,7 +54,7 @@ namespace cocoa::Scenes
 			{
 				if (!m_view->m_primaryStorage)
 				{
-					m_index = 0; 
+					m_index = 0;
 					return;
 				}
 
@@ -73,7 +73,7 @@ namespace cocoa::Scenes
 					++m_index;
 				}
 			}
-			
+
 		private:
 			View* m_view;
 			size_t m_index;

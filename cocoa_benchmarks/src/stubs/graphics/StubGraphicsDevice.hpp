@@ -8,6 +8,7 @@
 #include <graphics/TextureSpec.hpp>
 #include <graphics/VertexArray.hpp>
 #include <graphics/VertexBuffer.hpp>
+#include <graphics/Viewport.hpp>
 
 #include "StubFramebuffer.hpp"
 #include "StubIndexBuffer.hpp"
@@ -16,9 +17,9 @@
 #include "StubVertexArray.hpp"
 #include "StubVertexBuffer.hpp"
 
-namespace CocoaBenchmarks
+namespace cocoa_benchmarks
 {
-    class StubGraphicsDevice final : public cocoa::Graphics::GraphicsDevice
+    class StubGraphicsDevice final : public cocoa::graphics::GraphicsDevice
     {
     public:
         StubGraphicsDevice() : m_viewport(0, 0, 1920, 1080) { }
@@ -28,7 +29,7 @@ namespace CocoaBenchmarks
 
         void EndFrame() override { }
 
-        void SetBlendMode(cocoa::Graphics::BlendMode mode) override { }
+        void SetBlendMode(cocoa::graphics::BlendMode mode) override { }
 
         void SetViewport(
             int32_t x,
@@ -36,7 +37,7 @@ namespace CocoaBenchmarks
             uint32_t width,
             uint32_t height) override { }
 
-        [[nodiscard]] const cocoa::Graphics::Viewport& GetViewport() const override { return m_viewport; }
+        [[nodiscard]] const cocoa::graphics::Viewport& GetViewport() const override { return m_viewport; }
 
         void SetClearColor(
             float red,
@@ -46,56 +47,56 @@ namespace CocoaBenchmarks
 
         void Clear() override { }
 
-        cocoa::Unique<cocoa::Graphics::Shader> CreateShader(
+        cocoa::Unique<cocoa::graphics::Shader> CreateShader(
             const std::string& vertexSource,
             const std::string& fragmentSource) override
         {
             return cocoa::CreateUnique<StubShader>();
         }
 
-        cocoa::Unique<cocoa::Graphics::VertexArray> CreateVertexArray() override
+        cocoa::Unique<cocoa::graphics::VertexArray> CreateVertexArray() override
         {
             return cocoa::CreateUnique<StubVertexArray>();
         }
 
-        cocoa::Unique<cocoa::Graphics::VertexBuffer> CreateVertexBuffer(
+        cocoa::Unique<cocoa::graphics::VertexBuffer> CreateVertexBuffer(
             uint32_t size,
-            const cocoa::Graphics::BufferLayout& bufferLayout) override
+            const cocoa::graphics::BufferLayout& bufferLayout) override
         {
             return cocoa::CreateUnique<StubVertexBuffer>(size, bufferLayout);
         }
 
-        cocoa::Unique<cocoa::Graphics::VertexBuffer> CreateVertexBuffer(
+        cocoa::Unique<cocoa::graphics::VertexBuffer> CreateVertexBuffer(
             const void* vertices,
             uint32_t size,
-            const cocoa::Graphics::BufferLayout& bufferLayout) override
+            const cocoa::graphics::BufferLayout& bufferLayout) override
         {
             return cocoa::CreateUnique<StubVertexBuffer>(vertices, size, bufferLayout);
         }
 
-        cocoa::Unique<cocoa::Graphics::IndexBuffer> CreateIndexBuffer(
+        cocoa::Unique<cocoa::graphics::IndexBuffer> CreateIndexBuffer(
             const uint32_t* indices,
             uint32_t count) override
         {
             return cocoa::CreateUnique<StubIndexBuffer>(indices, count);
         }
 
-        cocoa::Unique<cocoa::Graphics::Texture2D> CreateTexture2D(
-            cocoa::Graphics::TextureSpec textureSpec,
+        cocoa::Unique<cocoa::graphics::Texture2D> CreateTexture2D(
+            cocoa::graphics::TextureSpec textureSpec,
             const unsigned char* pixels) override
         {
             return cocoa::CreateUnique<StubTexture2D>(textureSpec, pixels);
         }
 
-        cocoa::Unique<cocoa::Graphics::Framebuffer> CreateFramebuffer(
-            const cocoa::Graphics::FramebufferSpec& framebufferSpec) override
+        cocoa::Unique<cocoa::graphics::Framebuffer> CreateFramebuffer(
+            const cocoa::graphics::FramebufferSpec& framebufferSpec) override
         {
             return cocoa::CreateUnique<StubFramebuffer>(framebufferSpec);
         }
 
-        void DrawIndexed(const cocoa::Graphics::VertexArray& vertexArray, uint32_t indexCount) override { }
+        void DrawIndexed(const cocoa::graphics::VertexArray& vertexArray, uint32_t indexCount) override { }
 
     private:
-        cocoa::Graphics::Viewport m_viewport;
+        cocoa::graphics::Viewport m_viewport;
     };
 }

@@ -1,15 +1,15 @@
 #pragma once
 
-#include "scenes/Scene.hpp"
+#include <scenes/Scene.hpp>
 
-namespace Sandbox
+namespace sandbox
 {
-	class TestScene : public cocoa::Scenes::Scene
+	class TestScene : public cocoa::scenes::Scene
 	{
 	public:
 		TestScene() = default;
 		~TestScene() override;
-		void Load(cocoa::Assets::ResourceLoader& loader) override;
-		void Unload(cocoa::Assets::ResourceLoader& loader) override;
+		void Load(cocoa::assets::ResourceLoader& loader) override;
+		void Unload(cocoa::assets::ResourceLoader& loader) override;
 	};
 }

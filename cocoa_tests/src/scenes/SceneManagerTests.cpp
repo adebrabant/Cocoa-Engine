@@ -1,5 +1,5 @@
 #include "graphics/Viewport.hpp"
-#include "stubs/Graphics/StubGraphicsDevice.hpp"
+#include "stubs/graphics/StubGraphicsDevice.hpp"
 #include <assets/AssetManager.hpp>
 #include <assets/FilesystemAssetSource.hpp>
 #include <assets/JsonAssetDatabase.hpp>
@@ -13,51 +13,51 @@
 
 #include <gtest/gtest.h>
 
-namespace CocoaTests::Scenes
+namespace cocoa_tests::scenes
 {
-	struct TestScene : public cocoa::Scenes::Scene
+	struct TestScene : public cocoa::scenes::Scene
 	{
 		bool loaded = false;
 		bool unloaded = false;
 
-		void Load(cocoa::Assets::ResourceLoader& loader) override { loaded = true; }
-		void Unload(cocoa::Assets::ResourceLoader& loader) override { unloaded = true; }
+		void Load(cocoa::assets::ResourceLoader& loader) override { loaded = true; }
+		void Unload(cocoa::assets::ResourceLoader& loader) override { unloaded = true; }
 	};
 
-	struct AnotherTestScene : public cocoa::Scenes::Scene
+	struct AnotherTestScene : public cocoa::scenes::Scene
 	{
 		bool loaded = false;
 		bool unloaded = false;
 
-		void Load(cocoa::Assets::ResourceLoader& loader) override { loaded = true; }
-		void Unload(cocoa::Assets::ResourceLoader& loader) override { unloaded = true; }
+		void Load(cocoa::assets::ResourceLoader& loader) override { loaded = true; }
+		void Unload(cocoa::assets::ResourceLoader& loader) override { unloaded = true; }
 	};
 
-	struct CountingScene : public cocoa::Scenes::Scene
+	struct CountingScene : public cocoa::scenes::Scene
 	{
 		int loadCount = 0;
 		int unloadCount = 0;
 
-		void Load(cocoa::Assets::ResourceLoader& loader) override { ++loadCount; }
-		void Unload(cocoa::Assets::ResourceLoader& loader) override { ++unloadCount; }
+		void Load(cocoa::assets::ResourceLoader& loader) override { ++loadCount; }
+		void Unload(cocoa::assets::ResourceLoader& loader) override { ++unloadCount; }
 	};
 
 	struct ResourceLoaderTestContext
 	{
-		std::filesystem::path MetadataPath = "TestData/Metadata";
-		std::filesystem::path ResourcePath = "TestData/Resources";
+		std::filesystem::path metadataPath = "test_data/metadata";
+		std::filesystem::path ResourcePath = "test_data/Resources";
 
-		cocoa::Assets::JsonAssetDatabase JsonDatabase{ MetadataPath };
-		cocoa::Assets::FilesystemAssetSource AssetSource{ ResourcePath };
-		cocoa::Assets::AssetManager AssetManager;
+		cocoa::assets::JsonAssetDatabase JsonDatabase{ metadataPath };
+		cocoa::assets::FilesystemAssetSource AssetSource{ ResourcePath };
+		cocoa::assets::AssetManager AssetManager;
 
-		Stubs::StubGraphicsDevice GraphicsDevice;
-		cocoa::Graphics::TextureManager TextureManager{ GraphicsDevice };
-		cocoa::Graphics::ShaderManager ShaderManager{ GraphicsDevice };
-		cocoa::Graphics::MaterialManager MaterialManager;
-		cocoa::Graphics::SpriteManager SpriteManager;
+		stubs::StubGraphicsDevice GraphicsDevice;
+		cocoa::graphics::TextureManager TextureManager{ GraphicsDevice };
+		cocoa::graphics::ShaderManager ShaderManager{ GraphicsDevice };
+		cocoa::graphics::MaterialManager MaterialManager;
+		cocoa::graphics::SpriteManager SpriteManager;
 
-		cocoa::Assets::ResourceLoader ResourceLoader{
+		cocoa::assets::ResourceLoader ResourceLoader{
 			JsonDatabase,
 			AssetSource,
 			AssetManager,
@@ -71,7 +71,7 @@ namespace CocoaTests::Scenes
 	TEST(SceneManagerTests, SetScene_ShouldLoadNewScene_WhenNewSceneIsAdded)
 	{
 		ResourceLoaderTestContext loaderContext;
-		cocoa::Scenes::SceneManager manager(loaderContext.ResourceLoader);
+		cocoa::scenes::SceneManager manager(loaderContext.ResourceLoader);
 
 		manager.SetScene<TestScene>();
 		auto testScene = manager.GetScene<TestScene>();
@@ -84,7 +84,7 @@ namespace CocoaTests::Scenes
 	TEST(SceneManagerTests, SetScene_ShouldUnloadPreviousScene_WhenNewSceneIsAdded)
 	{
 		ResourceLoaderTestContext loaderContext;
-		cocoa::Scenes::SceneManager manager(loaderContext.ResourceLoader);
+		cocoa::scenes::SceneManager manager(loaderContext.ResourceLoader);
 
 		manager.SetScene<TestScene>();
 		manager.SetScene<AnotherTestScene>();
@@ -100,7 +100,7 @@ namespace CocoaTests::Scenes
 	TEST(SceneManagerTests, AddScene_ShouldCreateNewScene)
 	{
 		ResourceLoaderTestContext loaderContext;
-		cocoa::Scenes::SceneManager manager(loaderContext.ResourceLoader);
+		cocoa::scenes::SceneManager manager(loaderContext.ResourceLoader);
 
 		manager.AddScene<TestScene>();
 		const auto scene = manager.GetScene<TestScene>();
@@ -111,7 +111,7 @@ namespace CocoaTests::Scenes
 	TEST(SceneManagerTests, SetScene_ShouldNotCallUnload_WhenCurrentSceneEqualNewScene)
 	{
 		ResourceLoaderTestContext loaderContext;
-		cocoa::Scenes::SceneManager manager(loaderContext.ResourceLoader);
+		cocoa::scenes::SceneManager manager(loaderContext.ResourceLoader);
 
 		manager.SetScene<TestScene>();
 		const auto currentScene = dynamic_cast<TestScene*>(manager.GetCurrentScene());
@@ -124,7 +124,7 @@ namespace CocoaTests::Scenes
 	TEST(SceneManagerTests, AddScene_ShouldNotCreateNewScene_WhenSceneExists)
 	{
 		ResourceLoaderTestContext loaderContext;
-		cocoa::Scenes::SceneManager manager(loaderContext.ResourceLoader);
+		cocoa::scenes::SceneManager manager(loaderContext.ResourceLoader);
 
 		manager.AddScene<TestScene>();
 		manager.SetScene<TestScene>();
@@ -137,7 +137,7 @@ namespace CocoaTests::Scenes
 	TEST(SceneManagerTests, GetScene_ShouldReturnNullptrIfSceneNotAdded)
 	{
 		ResourceLoaderTestContext loaderContext;
-		cocoa::Scenes::SceneManager manager(loaderContext.ResourceLoader);
+		cocoa::scenes::SceneManager manager(loaderContext.ResourceLoader);
 
 		auto scene = manager.GetScene<TestScene>();
 
@@ -147,7 +147,7 @@ namespace CocoaTests::Scenes
 	TEST(SceneManagerTests, GetCurrentScene_ShouldReturnActiveScene)
 	{
 		ResourceLoaderTestContext loaderContext;
-		cocoa::Scenes::SceneManager manager(loaderContext.ResourceLoader);
+		cocoa::scenes::SceneManager manager(loaderContext.ResourceLoader);
 
 		manager.SetScene<TestScene>();
 		auto current = manager.GetCurrentScene();
@@ -159,7 +159,7 @@ namespace CocoaTests::Scenes
 	TEST(SceneManagerTests, Unload_ShouldBeCalledExactlyOnce_WhenSceneReplaced)
 	{
 		ResourceLoaderTestContext loaderContext;
-		cocoa::Scenes::SceneManager manager(loaderContext.ResourceLoader);
+		cocoa::scenes::SceneManager manager(loaderContext.ResourceLoader);
 
 		manager.SetScene<CountingScene>();
 		manager.SetScene<AnotherTestScene>();

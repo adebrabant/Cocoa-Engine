@@ -2,7 +2,7 @@
 
 #include <GL/glew.h>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	OpenGLIndexBuffer::OpenGLIndexBuffer(const uint32_t* indices, uint32_t count) :
 		m_ibo(0),

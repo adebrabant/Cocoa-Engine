@@ -3,17 +3,17 @@
 #include "inputs/InputHandler.hpp"
 #include "scenes/systems/System.hpp"
 
-namespace Sandbox::Systems
+namespace sandbox
 {
-	class InputSystem : public cocoa::Scenes::System
+	class InputSystem : public cocoa::scenes::System
 	{
 	public:
 		InputSystem();
 		~InputSystem() override = default;
-		void Update(cocoa::Scenes::World& world, float deltaTime) override;
-		void Render(cocoa::Scenes::World& world, cocoa::Graphics::Renderer2D& renderer, float alpha) override;
+		void Update(cocoa::scenes::World& world, float deltaTime) override;
+		void Render(cocoa::scenes::World& world, cocoa::graphics::Renderer2D& renderer, float alpha) override;
 
 	private:
-		cocoa::Inputs::InputHandler m_inputHandler;
+		cocoa::inputs::InputHandler m_inputHandler;
 	};
 }

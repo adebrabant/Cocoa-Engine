@@ -58,7 +58,7 @@ target_link_libraries(${SANDBOX_TARGET_NAME} PRIVATE
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
 
 set(COCOA_RESOURCE_DIR
-    "${CMAKE_SOURCE_DIR}/Cocoa/resources"
+    "${CMAKE_SOURCE_DIR}/cocoa/resources"
 )
 
 set(SANDBOX_RESOURCE_DIR

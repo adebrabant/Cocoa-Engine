@@ -6,7 +6,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace cocoa::Assets
+namespace cocoa::assets
 {
 	class JsonAssetDatabase : public AssetDatabase
 	{

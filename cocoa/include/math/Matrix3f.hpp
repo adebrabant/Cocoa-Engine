@@ -6,7 +6,7 @@
 #include <array>
 #include <cmath>
 
-namespace cocoa::Math
+namespace cocoa::math
 {
     /// <summary>
     /// Represents a three-dimensional square matrix using single-precision floating-point values.

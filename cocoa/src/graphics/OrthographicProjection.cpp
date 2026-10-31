@@ -1,9 +1,9 @@
 #include "graphics/OrthographicProjection.hpp"
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
     OrthographicProjection::OrthographicProjection() :
-        m_viewMatrix(Math::Matrix4f::Identity()),
+        m_viewMatrix(math::Matrix4f::Identity()),
         m_position(0.f, 0.0f, 0.0f),
         m_rotation(0.0f)
     {
@@ -15,8 +15,8 @@ namespace cocoa::Graphics
         const float bottom, const float top,
         const float near, const float far)
     :
-        m_projectionMatrix(Math::Matrix4f::Ortho(left, right, bottom, top, near, far)),
-        m_viewMatrix(Math::Matrix4f::Identity()),
+        m_projectionMatrix(math::Matrix4f::Ortho(left, right, bottom, top, near, far)),
+        m_viewMatrix(math::Matrix4f::Identity()),
         m_position(0.f, 0.0f, 0.0f),
         m_horizontalBounds(left, right),
         m_verticalBounds(bottom, top),
@@ -35,7 +35,7 @@ namespace cocoa::Graphics
             m_verticalBounds.X == bottom && m_verticalBounds.Y == top &&
             m_depthBounds.X == near && m_depthBounds.Y == far) return;
 
-        m_projectionMatrix = Math::Matrix4f::Ortho(left, right, bottom, top, near, far);
+        m_projectionMatrix = math::Matrix4f::Ortho(left, right, bottom, top, near, far);
         m_viewProjectionMatrix = m_projectionMatrix * m_viewMatrix;
 
         m_horizontalBounds.X = left;
@@ -48,7 +48,7 @@ namespace cocoa::Graphics
         m_depthBounds.Y = far;
     }
 
-    void OrthographicProjection::SetPosition(const Math::Vector3f& position)
+    void OrthographicProjection::SetPosition(const math::Vector3f& position)
     {
         if (m_position == position)
             return;
@@ -68,9 +68,9 @@ namespace cocoa::Graphics
 
     void OrthographicProjection::RecalculateViewProjectionMatrix()
     {
-        const Math::Matrix4f translation = Math::Matrix4f::Translation(m_position);
-        const Math::Matrix4f rotation = Math::Matrix4f::RotationZ(m_rotation);
-        const Math::Matrix4f transform = translation * rotation;
+        const math::Matrix4f translation = math::Matrix4f::Translation(m_position);
+        const math::Matrix4f rotation = math::Matrix4f::RotationZ(m_rotation);
+        const math::Matrix4f transform = translation * rotation;
 
         m_viewMatrix = transform.Inverse();
         m_viewProjectionMatrix = m_projectionMatrix * m_viewMatrix;

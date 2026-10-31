@@ -14,16 +14,16 @@
 #include <cstdint>
 #include <vector>
 
-namespace cocoa::Assets
+namespace cocoa::assets
 {
 	ResourceLoader::ResourceLoader(
-		AssetDatabase& assetDatabase, 
+		AssetDatabase& assetDatabase,
 		AssetSource& assetSource,
-		AssetManager& assetManager, 
-		Graphics::TextureManager& textureManager, 
-		Graphics::ShaderManager& shaderManager, 
-		Graphics::MaterialManager& materialManager,
-		Graphics::SpriteManager& spriteManager
+		AssetManager& assetManager,
+		graphics::TextureManager& textureManager,
+		graphics::ShaderManager& shaderManager,
+		graphics::MaterialManager& materialManager,
+		graphics::SpriteManager& spriteManager
 	) :
 		m_assetDatabase(assetDatabase),
 		m_assetSource(assetSource),
@@ -36,38 +36,38 @@ namespace cocoa::Assets
 
 	}
 
-	Graphics::TextureHandle ResourceLoader::LoadTexture(const std::string& textureId) const
+	graphics::TextureHandle ResourceLoader::LoadTexture(const std::string& textureId) const
 	{
 		const TextureRecord& record = m_assetDatabase.GetTextureInfo(textureId);
 
-		if (Graphics::TextureHandle handle; m_textureManager.TryGetHandle(record.id, handle))
+		if (graphics::TextureHandle handle; m_textureManager.TryGetHandle(record.id, handle))
 			return handle;
 
 		const Image& image = m_assetManager.LoadImage(
 			record.path,
 			m_assetSource.ReadBytes(record.path)
 		);
-		const Graphics::TextureSpec spec
+		const graphics::TextureSpec spec
 		{
 			.Id = record.id,
 			.Width = static_cast<uint32_t>(image.Width),
 			.Height = static_cast<uint32_t>(image.Height),
-			.Format = Graphics::TextureSpec::ParseFormat(record.Format, image.Channels),
-			.MinFilter = Graphics::TextureSpec::ParseFilter(record.MinFilter),
-			.MagFilter = Graphics::TextureSpec::ParseFilter(record.MagFilter),
-			.WrapS = Graphics::TextureSpec::ParseWrap(record.WrapS),
-			.WrapT = Graphics::TextureSpec::ParseWrap(record.WrapT),
+			.Format = graphics::TextureSpec::ParseFormat(record.Format, image.Channels),
+			.MinFilter = graphics::TextureSpec::ParseFilter(record.MinFilter),
+			.MagFilter = graphics::TextureSpec::ParseFilter(record.MagFilter),
+			.WrapS = graphics::TextureSpec::ParseWrap(record.WrapS),
+			.WrapT = graphics::TextureSpec::ParseWrap(record.WrapT),
 			.GenerateMipmaps = record.GenerateMipmaps
 		};
 
 		return m_textureManager.Load(spec, image.Pixels.data());
 	}
 
-	Graphics::ShaderHandle ResourceLoader::LoadShader(const std::string& shaderId) const
+	graphics::ShaderHandle ResourceLoader::LoadShader(const std::string& shaderId) const
 	{
 		const ShaderRecord& record = m_assetDatabase.GetShaderInfo(shaderId);
 
-		if (Graphics::ShaderHandle handle; m_shaderManager.TryGetHandle(record.Id, handle))
+		if (graphics::ShaderHandle handle; m_shaderManager.TryGetHandle(record.Id, handle))
 			return handle;
 
 		const ShaderSource& source = m_assetManager.LoadShader(
@@ -83,11 +83,11 @@ namespace cocoa::Assets
 		);
 	}
 
-	Graphics::MaterialHandle ResourceLoader::LoadMaterial(const std::string& materialId) const
+	graphics::MaterialHandle ResourceLoader::LoadMaterial(const std::string& materialId) const
 	{
 		const MaterialRecord& record = m_assetDatabase.GetMaterialInfo(materialId);
-		const Graphics::ShaderHandle shaderHandle = LoadShader(record.ShaderId);
-		
+		const graphics::ShaderHandle shaderHandle = LoadShader(record.ShaderId);
+
 		return m_materialManager.Load(
 			materialId,
 			shaderHandle,
@@ -96,12 +96,12 @@ namespace cocoa::Assets
 		);
 	}
 
-	Graphics::SpriteHandle ResourceLoader::LoadSprite(const std::string& spriteId) const
+	graphics::SpriteHandle ResourceLoader::LoadSprite(const std::string& spriteId) const
 	{
 		const SpriteRecord& record = m_assetDatabase.GetSpriteInfo(spriteId);
-		const Graphics::TextureHandle textureHandle = LoadTexture(record.TextureId);
-		const Graphics::Texture2D& texture2D = m_textureManager.Get(textureHandle);
-		const Math::Vector2f textureSize(
+		const graphics::TextureHandle textureHandle = LoadTexture(record.TextureId);
+		const graphics::Texture2D& texture2D = m_textureManager.Get(textureHandle);
+		const math::Vector2f textureSize(
 			static_cast<float>(texture2D.GetWidth()),
 			static_cast<float>(texture2D.GetHeight())
 		);

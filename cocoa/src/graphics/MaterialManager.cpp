@@ -10,7 +10,7 @@
 #include <string>
 #include <utility>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	static BlendMode ToBlendMode(const std::string& blendMode)
 	{
@@ -54,7 +54,7 @@ namespace cocoa::Graphics
 		const std::string& materialId,
 		const ShaderHandle shaderHandle,
 		const std::string& blendMode,
-		const Core::Color tint)
+		const core::Color tint)
 	{
 		if (const auto it = m_handles.find(materialId); it != m_handles.end())
 		{

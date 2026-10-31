@@ -1,6 +1,6 @@
 #pragma once
 
-namespace cocoa::Core
+namespace cocoa::core
 {
 	struct Color
 	{

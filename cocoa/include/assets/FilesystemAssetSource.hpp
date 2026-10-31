@@ -2,7 +2,7 @@
 
 #include "assets/AssetSource.hpp"
 
-namespace cocoa::Assets
+namespace cocoa::assets
 {
 	class FilesystemAssetSource : public AssetSource
 	{

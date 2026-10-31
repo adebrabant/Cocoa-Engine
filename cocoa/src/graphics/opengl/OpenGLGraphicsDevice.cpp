@@ -11,7 +11,7 @@
 
 #include <GL/glew.h>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	OpenGLGraphicsDevice::OpenGLGraphicsDevice() :
 		m_viewport(0, 0, 10, 10)

@@ -1,7 +1,7 @@
 #include "assets/AssetManager.hpp"
 #include "assets/AssetLoader.hpp"
 
-namespace cocoa::Assets
+namespace cocoa::assets
 {
 	AssetManager::AssetManager() :
 		m_assetLoader(),
@@ -28,7 +28,7 @@ namespace cocoa::Assets
 	}
 
 	const ShaderSource& AssetManager::LoadShader(
-		const std::string& shaderId, 
+		const std::string& shaderId,
 		const std::vector<std::byte>& vertexBytes,
 		const std::vector<std::byte>& fragmentBytes)
 	{
@@ -41,7 +41,7 @@ namespace cocoa::Assets
 		{
 			.Vertex = m_assetLoader.LoadText(vertexBytes),
 			.Fragment = m_assetLoader.LoadText(fragmentBytes)
-		}; 
+		};
 
 		auto [it, inserted] = m_shaderSources.emplace(shaderId, std::move(shaderSource));
 

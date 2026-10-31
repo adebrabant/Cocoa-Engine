@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
     inline uint32_t GetNextComponentTypeId() {
         static uint32_t nextId = 0;

@@ -7,7 +7,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	class GraphicsDevice;
 	class Texture2D;

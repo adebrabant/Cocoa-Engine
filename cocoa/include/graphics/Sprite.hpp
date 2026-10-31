@@ -5,13 +5,13 @@
 
 #include <string>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
     struct Sprite
     {
         std::string Id;
         TextureHandle Texture;
-        Math::Vector2f MinUV;
-        Math::Vector2f MaxUV;
+        math::Vector2f MinUV;
+        math::Vector2f MaxUV;
     };
 }

@@ -8,7 +8,7 @@
 #include <cmath>
 #include <cstddef>
 
-namespace cocoa::Math
+namespace cocoa::math
 {
     /// <summary>
     /// Represents a four-dimensional square matrix using single-precision floating-point values.

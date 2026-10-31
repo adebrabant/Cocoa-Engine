@@ -6,7 +6,7 @@
 #include <cstdint>
 #include <string>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
     class Shader;
     class IndexBuffer;

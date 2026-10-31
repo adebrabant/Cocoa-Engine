@@ -1,6 +1,6 @@
 #pragma once
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
 	struct CollisionComponent
 	{

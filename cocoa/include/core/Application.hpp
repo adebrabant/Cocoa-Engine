@@ -8,17 +8,17 @@
 
 #include <string>
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
 	class SceneManager;
 }
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	class GraphicsDevice;
 }
 
-namespace cocoa::Core
+namespace cocoa::core
 {
 	class Application
 	{
@@ -29,18 +29,18 @@ namespace cocoa::Core
 
 	protected:
 		// ToDo: Need to come back to this
-		virtual void ConfigureScenes(Scenes::SceneManager& sceneManager);
+		virtual void ConfigureScenes(scenes::SceneManager& sceneManager);
 
 	private:
 		void RegisterEventHandlers();
 		void UnregisterEventHandlers();
 
 	private:
-		Assets::AssetPathProvider m_assetPathProvider;
-		Chronos::FrameClock m_frameClock;
-		Platforms::WindowProperties m_windowProps;
-		Events::EventBus m_eventBus;
-		Unique<Graphics::GraphicsDevice> m_graphicsDevice;
-		Events::EventBus::SubscriptionToken m_FramebufferResizeEventToken;
+		assets::AssetPathProvider m_assetPathProvider;
+		FrameClock m_frameClock;
+		platforms::WindowProperties m_windowProps;
+		events::EventBus m_eventBus;
+		Unique<graphics::GraphicsDevice> m_graphicsDevice;
+		events::EventBus::SubscriptionToken m_FramebufferResizeEventToken;
 	};
 }

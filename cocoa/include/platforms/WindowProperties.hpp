@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <string>
 
-namespace cocoa::Platforms
+namespace cocoa::platforms
 {
 	class WindowProperties
 	{

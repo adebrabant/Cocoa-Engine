@@ -2,7 +2,7 @@
 
 #include "scenes/systems/System.hpp"
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
 	class World;
 
@@ -11,7 +11,7 @@ namespace cocoa::Scenes
 	public:
 		CollisionSystem() = default;
 		void Update(World& world, float deltaTime) override;
-		void BeginRender(World& world, Graphics::Renderer2D& renderer, float alpha) override;
-		void Render(World& world, Graphics::Renderer2D& renderer, float alpha) override;
+		void BeginRender(World& world, graphics::Renderer2D& renderer, float alpha) override;
+		void Render(World& world, graphics::Renderer2D& renderer, float alpha) override;
 	};
 }

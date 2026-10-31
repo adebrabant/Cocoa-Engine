@@ -1,13 +1,13 @@
 find_package(GTest CONFIG REQUIRED)
 
 set(COCOA_TEST_HEADERS
-    include/stubs/Graphics/StubGraphicsDevice.hpp
-    include/stubs/Graphics/StubShader.hpp
-    include/stubs/Graphics/StubTexture2D.hpp
-    include/stubs/Graphics/StubVertexArray.hpp
-    include/stubs/Graphics/StubVertexBuffer.hpp
-    include/stubs/Graphics/StubIndexBuffer.hpp
-    include/stubs/Graphics/StubFramebuffer.hpp
+    include/stubs/graphics/StubGraphicsDevice.hpp
+    include/stubs/graphics/StubShader.hpp
+    include/stubs/graphics/StubTexture2D.hpp
+    include/stubs/graphics/StubVertexArray.hpp
+    include/stubs/graphics/StubVertexBuffer.hpp
+    include/stubs/graphics/StubIndexBuffer.hpp
+    include/stubs/graphics/StubFramebuffer.hpp
     include/helpers/TestFileReader.hpp
 )
 
@@ -52,14 +52,14 @@ set(COCOA_TEST_SOURCES
 )
 
 set(COCOA_TEST_DATA
-    src/test_data/meta_data/textures.json
-    src/test_data/meta_data/badtextures.json
-    src/test_data/meta_data/shaders.json
-    src/test_data/meta_data/badshaders.json
-    src/test_data/meta_data/materials.json
-    src/test_data/meta_data/badmaterials.json
-    src/test_data/meta_data/sprites.json
-    src/test_data/meta_data/badsprites.json
+    src/test_data/metadata/textures.json
+    src/test_data/metadata/badtextures.json
+    src/test_data/metadata/shaders.json
+    src/test_data/metadata/badshaders.json
+    src/test_data/metadata/materials.json
+    src/test_data/metadata/badmaterials.json
+    src/test_data/metadata/sprites.json
+    src/test_data/metadata/badsprites.json
 )
 
 add_executable(${COCOA_TESTS_TARGET_NAME}
@@ -108,10 +108,10 @@ add_custom_command(TARGET ${COCOA_TESTS_TARGET_NAME} POST_BUILD
 )
 
 add_test(
-    NAME CocoaTests
+    NAME cocoa_tests
     COMMAND ${COCOA_TESTS_TARGET_NAME}
 )
 
-set_tests_properties(CocoaTests PROPERTIES
+set_tests_properties(cocoa_tests PROPERTIES
     WORKING_DIRECTORY "$<TARGET_FILE_DIR:${COCOA_TESTS_TARGET_NAME}>"
 )

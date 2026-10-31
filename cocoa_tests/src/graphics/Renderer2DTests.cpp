@@ -1,4 +1,4 @@
-#include "stubs/Graphics/StubGraphicsDevice.hpp"
+#include "stubs/graphics/StubGraphicsDevice.hpp"
 #include <graphics/MaterialManager.hpp>
 #include <graphics/RenderStatistics.hpp>
 #include <graphics/Renderer2D.hpp>
@@ -10,7 +10,7 @@
 #include <gtest/gtest.h>
 #include <cstring>
 
-namespace CocoaTests::Graphics
+namespace cocoa_tests::graphics
 {
     TEST(Renderer2DTests, EndDraw_ShouldSortDrawSubmissionOrder_WhenGivenDrawSubmissions)
     {
@@ -32,14 +32,14 @@ namespace CocoaTests::Graphics
             9.5f, 19.5f, 39.5f, 29.5f
         };
 
-        Stubs::StubGraphicsDevice stubGraphicsDevice;
+        stubs::StubGraphicsDevice stubGraphicsDevice;
 
-        cocoa::Graphics::SpriteManager spriteManager;
-        cocoa::Graphics::ShaderManager shaderManager(stubGraphicsDevice);
-        cocoa::Graphics::TextureManager textureManager(stubGraphicsDevice);
-        cocoa::Graphics::MaterialManager materialManager;
+        cocoa::graphics::SpriteManager spriteManager;
+        cocoa::graphics::ShaderManager shaderManager(stubGraphicsDevice);
+        cocoa::graphics::TextureManager textureManager(stubGraphicsDevice);
+        cocoa::graphics::MaterialManager materialManager;
 
-        cocoa::Graphics::Renderer2D sut(
+        cocoa::graphics::Renderer2D sut(
             stubGraphicsDevice,
             shaderManager,
             textureManager,
@@ -49,7 +49,7 @@ namespace CocoaTests::Graphics
 
         const auto shaderHandle = shaderManager.Load("test_shader", "", "");
 
-        const cocoa::Graphics::TextureSpec spec{
+        const cocoa::graphics::TextureSpec spec{
             .Id = "test_texture",
             .Width = 2,
             .Height = 2
@@ -68,17 +68,17 @@ namespace CocoaTests::Graphics
             "test_material",
             shaderHandle,
             "alpha",
-            cocoa::Core::Color{}
+            cocoa::core::Color{}
         );
 
-        constexpr cocoa::Math::Vector2f tilingFactor{};
+        constexpr cocoa::math::Vector2f tilingFactor{};
 
-        sut.BeginDraw(cocoa::Math::Matrix4f{});
+        sut.BeginDraw(cocoa::math::Matrix4f{});
 
         for (const auto& submission : submissions)
         {
-            const auto modelMatrix = cocoa::Math::Matrix4f::Translation(
-                cocoa::Math::Vector2f{submission.X, 0.0f}
+            const auto modelMatrix = cocoa::math::Matrix4f::Translation(
+                cocoa::math::Vector2f{submission.X, 0.0f}
             );
 
             sut.DrawQuad(
@@ -86,7 +86,7 @@ namespace CocoaTests::Graphics
                 materialHandle,
                 textureHandle,
                 tilingFactor,
-                cocoa::Graphics::SortLayer::Background,
+                cocoa::graphics::SortLayer::Background,
                 submission.SortingOrder
             );
         }
@@ -126,16 +126,16 @@ namespace CocoaTests::Graphics
         {
             float X;
             int SortingOrder;
-            cocoa::Graphics::SortLayer SortingLayer;
+            cocoa::graphics::SortLayer SortingLayer;
             TestDrawType DrawType;
         };
 
         constexpr std::array testSubmissions{
-            TestSubmission{10.0f, 2, cocoa::Graphics::SortLayer::World, TestDrawType::RawQuad},
-            TestSubmission{20.0f, 0, cocoa::Graphics::SortLayer::UI, TestDrawType::Sprite},
-            TestSubmission{30.0f, 1, cocoa::Graphics::SortLayer::Background, TestDrawType::Sprite},
-            TestSubmission{40.0f, 1, cocoa::Graphics::SortLayer::Background, TestDrawType::RawQuad},
-            TestSubmission{50.0f, 2, cocoa::Graphics::SortLayer::World, TestDrawType::Sprite}
+            TestSubmission{10.0f, 2, cocoa::graphics::SortLayer::World, TestDrawType::RawQuad},
+            TestSubmission{20.0f, 0, cocoa::graphics::SortLayer::UI, TestDrawType::Sprite},
+            TestSubmission{30.0f, 1, cocoa::graphics::SortLayer::Background, TestDrawType::Sprite},
+            TestSubmission{40.0f, 1, cocoa::graphics::SortLayer::Background, TestDrawType::RawQuad},
+            TestSubmission{50.0f, 2, cocoa::graphics::SortLayer::World, TestDrawType::Sprite}
         };
 
         // Expected submission indices: 2, 3, 0, 4, 1.
@@ -144,14 +144,14 @@ namespace CocoaTests::Graphics
             29.5f, 39.5f, 9.5f, 49.5f, 19.5f
         };
 
-        Stubs::StubGraphicsDevice stubGraphicsDevice;
+        stubs::StubGraphicsDevice stubGraphicsDevice;
 
-        cocoa::Graphics::SpriteManager spriteManager;
-        cocoa::Graphics::ShaderManager shaderManager(stubGraphicsDevice);
-        cocoa::Graphics::TextureManager textureManager(stubGraphicsDevice);
-        cocoa::Graphics::MaterialManager materialManager;
+        cocoa::graphics::SpriteManager spriteManager;
+        cocoa::graphics::ShaderManager shaderManager(stubGraphicsDevice);
+        cocoa::graphics::TextureManager textureManager(stubGraphicsDevice);
+        cocoa::graphics::MaterialManager materialManager;
 
-        cocoa::Graphics::Renderer2D sut(
+        cocoa::graphics::Renderer2D sut(
             stubGraphicsDevice,
             shaderManager,
             textureManager,
@@ -161,7 +161,7 @@ namespace CocoaTests::Graphics
 
         const auto shaderHandle = shaderManager.Load("test_shader", "", "");
 
-        const cocoa::Graphics::TextureSpec spec{
+        const cocoa::graphics::TextureSpec spec{
             .Id = "test_texture",
             .Width = 2,
             .Height = 2
@@ -180,25 +180,25 @@ namespace CocoaTests::Graphics
             "test_material",
             shaderHandle,
             "alpha",
-            cocoa::Core::Color{}
+            cocoa::core::Color{}
         );
 
         const auto spriteHandle = spriteManager.Load(
             "test_sprite",
             textureHandle,
-            cocoa::Math::Vector2f{0.0f, 0.0f},
-            cocoa::Math::Vector2f{2.0f, 2.0f},
-            cocoa::Math::Vector2f{2.0f, 2.0f}
+            cocoa::math::Vector2f{0.0f, 0.0f},
+            cocoa::math::Vector2f{2.0f, 2.0f},
+            cocoa::math::Vector2f{2.0f, 2.0f}
         );
 
-        constexpr cocoa::Math::Vector2f tilingFactor{};
+        constexpr cocoa::math::Vector2f tilingFactor{};
 
-        sut.BeginDraw(cocoa::Math::Matrix4f{});
+        sut.BeginDraw(cocoa::math::Matrix4f{});
 
         for (const auto& testSubmission : testSubmissions)
         {
-            const auto modelMatrix = cocoa::Math::Matrix4f::Translation(
-                cocoa::Math::Vector2f{testSubmission.X, 0.0f}
+            const auto modelMatrix = cocoa::math::Matrix4f::Translation(
+                cocoa::math::Vector2f{testSubmission.X, 0.0f}
             );
 
             switch (testSubmission.DrawType)

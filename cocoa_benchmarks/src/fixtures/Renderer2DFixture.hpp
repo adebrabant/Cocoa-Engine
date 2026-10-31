@@ -14,7 +14,7 @@
 #include <array>
 #include <benchmark/benchmark.h>
 
-namespace CocoaBenchmarks
+namespace cocoa_benchmarks
 {
     class Renderer2DFixture : public benchmark::Fixture
     {
@@ -23,7 +23,7 @@ namespace CocoaBenchmarks
         {
             m_shader = m_shaderManager.Load("benchmark_shader", "", "");
 
-            const cocoa::Graphics::TextureSpec spec{
+            const cocoa::graphics::TextureSpec spec{
                 .Id = "benchmark_texture",
                 .Width = 2,
                 .Height = 2
@@ -34,30 +34,30 @@ namespace CocoaBenchmarks
             };
             m_texture = m_textureManager.Load(spec, pixels.data());
             m_material = m_materialManager.Load(
-                "benchmark_material", m_shader, "alpha", cocoa::Core::Color{}
+                "benchmark_material", m_shader, "alpha", cocoa::core::Color{}
             );
             m_sprite = m_spriteManager.Load(
                 "benchmark_sprite", m_texture,
-                cocoa::Math::Vector2f{0.0f, 0.0f},
-                cocoa::Math::Vector2f{2.0f, 2.0f},
-                cocoa::Math::Vector2f{2.0f, 2.0f}
+                cocoa::math::Vector2f{0.0f, 0.0f},
+                cocoa::math::Vector2f{2.0f, 2.0f},
+                cocoa::math::Vector2f{2.0f, 2.0f}
             );
         }
 
     protected:
         StubGraphicsDevice m_device;
-        cocoa::Graphics::ShaderManager m_shaderManager{m_device};
-        cocoa::Graphics::TextureManager m_textureManager{m_device};
-        cocoa::Graphics::MaterialManager m_materialManager;
-        cocoa::Graphics::SpriteManager m_spriteManager;
-        cocoa::Graphics::Renderer2D m_renderer{
+        cocoa::graphics::ShaderManager m_shaderManager{m_device};
+        cocoa::graphics::TextureManager m_textureManager{m_device};
+        cocoa::graphics::MaterialManager m_materialManager;
+        cocoa::graphics::SpriteManager m_spriteManager;
+        cocoa::graphics::Renderer2D m_renderer{
             m_device, m_shaderManager, m_textureManager,
             m_materialManager, m_spriteManager
         };
 
-        cocoa::Graphics::ShaderHandle m_shader{};
-        cocoa::Graphics::TextureHandle m_texture{};
-        cocoa::Graphics::MaterialHandle m_material{};
-        cocoa::Graphics::SpriteHandle m_sprite{};
+        cocoa::graphics::ShaderHandle m_shader{};
+        cocoa::graphics::TextureHandle m_texture{};
+        cocoa::graphics::MaterialHandle m_material{};
+        cocoa::graphics::SpriteHandle m_sprite{};
     };
 }

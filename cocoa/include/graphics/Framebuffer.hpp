@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <vector>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
     enum class ColorFormat
     {

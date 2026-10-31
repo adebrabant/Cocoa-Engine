@@ -2,25 +2,25 @@
 
 #include <gtest/gtest.h>
 
-namespace CocoaTests::Math
+namespace cocoa_tests::math
 {
 	struct Vector3fTestCase
 	{
-		cocoa::Math::Vector3f Left;
-		cocoa::Math::Vector3f Right;
-		cocoa::Math::Vector3f Expected;
+		cocoa::math::Vector3f Left;
+		cocoa::math::Vector3f Right;
+		cocoa::math::Vector3f Expected;
 	};
 
 	struct Vector3fScalarTestCase
 	{
-		cocoa::Math::Vector3f Left;
+		cocoa::math::Vector3f Left;
 		float Scalar;
-		cocoa::Math::Vector3f Expected;
+		cocoa::math::Vector3f Expected;
 	};
 
 	TEST(Vector3fTests, Constructor_ShouldSetComponentsToZero_WhenUsingDefaultConstructor)
 	{
-		const cocoa::Math::Vector3f sut;
+		const cocoa::math::Vector3f sut;
 
 		EXPECT_FLOAT_EQ(sut.X, 0.0f);
 		EXPECT_FLOAT_EQ(sut.Y, 0.0f);
@@ -33,7 +33,7 @@ namespace CocoaTests::Math
 		const float expectedY = 3.0f;
 		const float expectedZ = 5.0f;
 
-		const cocoa::Math::Vector3f sut(expectedX, expectedY, expectedZ);
+		const cocoa::math::Vector3f sut(expectedX, expectedY, expectedZ);
 
 		EXPECT_FLOAT_EQ(sut.X, expectedX);
 		EXPECT_FLOAT_EQ(sut.Y, expectedY);
@@ -46,7 +46,7 @@ namespace CocoaTests::Math
 		Vector3fAddTests,
 		testing::Values
 		(
-			Vector3fTestCase 
+			Vector3fTestCase
 			{
 				.Left{ 1.0f, 2.0f, 6.0f },
 				.Right{ 3.0f, 4.0f, 10.5f },
@@ -71,7 +71,7 @@ namespace CocoaTests::Math
 	{
 		const Vector3fTestCase testCase = GetParam();
 
-		const cocoa::Math::Vector3f result = testCase.Left + testCase.Right;
+		const cocoa::math::Vector3f result = testCase.Left + testCase.Right;
 
 		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
 		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
@@ -81,9 +81,9 @@ namespace CocoaTests::Math
 	TEST_P(Vector3fAddTests, AddAssignOperator_ShouldMutateVector_WhenAddingOtherVector)
 	{
 		const Vector3fTestCase testCase = GetParam();
-		cocoa::Math::Vector3f sut = testCase.Left;
+		cocoa::math::Vector3f sut = testCase.Left;
 
-		cocoa::Math::Vector3f& result = sut += testCase.Right;
+		cocoa::math::Vector3f& result = sut += testCase.Right;
 
 		EXPECT_EQ(&result, &sut);
 		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
@@ -122,7 +122,7 @@ namespace CocoaTests::Math
 	{
 		const Vector3fTestCase testCase = GetParam();
 
-		const cocoa::Math::Vector3f result = testCase.Left - testCase.Right;
+		const cocoa::math::Vector3f result = testCase.Left - testCase.Right;
 
 		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
 		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
@@ -132,9 +132,9 @@ namespace CocoaTests::Math
 	TEST_P(Vector3fSubtractTests, SubtractAssignOperator_ShouldMutateVector_WhenSubtractingOtherVector)
 	{
 		const Vector3fTestCase testCase = GetParam();
-		cocoa::Math::Vector3f sut = testCase.Left;
+		cocoa::math::Vector3f sut = testCase.Left;
 
-		cocoa::Math::Vector3f& result = sut -= testCase.Right;
+		cocoa::math::Vector3f& result = sut -= testCase.Right;
 
 		EXPECT_EQ(&result, &sut);
 		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
@@ -173,7 +173,7 @@ namespace CocoaTests::Math
 	{
 		const Vector3fScalarTestCase testCase = GetParam();
 
-		const cocoa::Math::Vector3f result = testCase.Left * testCase.Scalar;
+		const cocoa::math::Vector3f result = testCase.Left * testCase.Scalar;
 
 		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
 		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
@@ -183,9 +183,9 @@ namespace CocoaTests::Math
 	TEST_P(Vector3fMultiplyScalarTests, MultiplyAssignOperator_ShouldMutateVector_WhenMultiplyByScalar)
 	{
 		const Vector3fScalarTestCase testCase = GetParam();
-		cocoa::Math::Vector3f sut = testCase.Left;
+		cocoa::math::Vector3f sut = testCase.Left;
 
-		cocoa::Math::Vector3f& result = sut *= testCase.Scalar;
+		cocoa::math::Vector3f& result = sut *= testCase.Scalar;
 
 		EXPECT_EQ(&result, &sut);
 		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
@@ -224,7 +224,7 @@ namespace CocoaTests::Math
 	{
 		const Vector3fScalarTestCase testCase = GetParam();
 
-		const cocoa::Math::Vector3f result = testCase.Left / testCase.Scalar;
+		const cocoa::math::Vector3f result = testCase.Left / testCase.Scalar;
 
 		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
 		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
@@ -233,12 +233,12 @@ namespace CocoaTests::Math
 
 	TEST(Vector3fTests, DivideOperator_ShouldAssert_WhenDividingByZeroScalar)
 	{
-		const cocoa::Math::Vector3f sut{ 10.0f, 20.0f, 2.0f };
+		const cocoa::math::Vector3f sut{ 10.0f, 20.0f, 2.0f };
 		const float scalar = 0.0f;
 
 		EXPECT_DEBUG_DEATH(
 			{
-				const cocoa::Math::Vector3f result = sut / scalar;
+				const cocoa::math::Vector3f result = sut / scalar;
 				(void)result;
 			},
 			"cannot divide by zero"
@@ -248,9 +248,9 @@ namespace CocoaTests::Math
 	TEST_P(Vector3fDivideScalarTests, DivideAssignOperator_ShouldMutateVector_WhenDividingByScalar)
 	{
 		const Vector3fScalarTestCase testCase = GetParam();
-		cocoa::Math::Vector3f sut = testCase.Left;
+		cocoa::math::Vector3f sut = testCase.Left;
 
-		cocoa::Math::Vector3f& result = sut /= testCase.Scalar;
+		cocoa::math::Vector3f& result = sut /= testCase.Scalar;
 
 		EXPECT_EQ(&sut, &result);
 		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
@@ -260,7 +260,7 @@ namespace CocoaTests::Math
 
 	TEST(Vector3fTests, DivideAssignOperator_ShouldAssert_WhenDividingByZeroScalar)
 	{
-		cocoa::Math::Vector3f sut{ 10.0f, 20.0f, 2.0f };
+		cocoa::math::Vector3f sut{ 10.0f, 20.0f, 2.0f };
 		const float scalar = 0.0f;
 
 		EXPECT_DEBUG_DEATH(
@@ -302,7 +302,7 @@ namespace CocoaTests::Math
 	{
 		const Vector3fTestCase testCase = GetParam();
 
-		const cocoa::Math::Vector3f result = testCase.Left.ComponentWiseMultiply(testCase.Right);
+		const cocoa::math::Vector3f result = testCase.Left.ComponentWiseMultiply(testCase.Right);
 
 		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
 		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
@@ -340,7 +340,7 @@ namespace CocoaTests::Math
 	{
 		const Vector3fTestCase testCase = GetParam();
 
-		const cocoa::Math::Vector3f result = testCase.Left.ComponentWiseDivide(testCase.Right);
+		const cocoa::math::Vector3f result = testCase.Left.ComponentWiseDivide(testCase.Right);
 
 		EXPECT_FLOAT_EQ(result.X, testCase.Expected.X);
 		EXPECT_FLOAT_EQ(result.Y, testCase.Expected.Y);
@@ -349,12 +349,12 @@ namespace CocoaTests::Math
 
 	TEST(Vector3fTests, ComponentWiseDivide_ShouldAssert_WhenDividingByZeroXComponent)
 	{
-		const cocoa::Math::Vector3f value{ 10.0f, 20.0f, 102.0f };
-		const cocoa::Math::Vector3f divisor{ 0.0f, 2.0f, 0.0f };
+		const cocoa::math::Vector3f value{ 10.0f, 20.0f, 102.0f };
+		const cocoa::math::Vector3f divisor{ 0.0f, 2.0f, 0.0f };
 
 		EXPECT_DEBUG_DEATH(
 			{
-				const cocoa::Math::Vector3f result = value.ComponentWiseDivide(divisor);
+				const cocoa::math::Vector3f result = value.ComponentWiseDivide(divisor);
 				(void)result;
 			},
 			"cannot divide by zero"
@@ -363,7 +363,7 @@ namespace CocoaTests::Math
 
 	TEST(Vector3fTests, Length_ShouldReturnMagnitude_WhenVectorHasComponent)
 	{
-		const cocoa::Math::Vector3f sut(2.0f, 3.0f, 6.0f);
+		const cocoa::math::Vector3f sut(2.0f, 3.0f, 6.0f);
 
 		const float result = sut.Length();
 
@@ -372,7 +372,7 @@ namespace CocoaTests::Math
 
 	TEST(Vector3fTests, LengthSquared_ShouldReturnSquaredMagnitude_WhenVectorHasComponents)
 	{
-		const cocoa::Math::Vector3f sut{ 3.0f, 4.0f, 3.0f };
+		const cocoa::math::Vector3f sut{ 3.0f, 4.0f, 3.0f };
 
 		const float result = sut.LengthSquared();
 
@@ -381,8 +381,8 @@ namespace CocoaTests::Math
 
 	TEST(Vector3fTests, Dot_ShouldReturnDotProduct_WhenProvidingOtherVector)
 	{
-		const cocoa::Math::Vector3f left{ 1.0f, 2.0f, 2.0f };
-		const cocoa::Math::Vector3f right{ 3.0f, 4.0f, 3.0f };
+		const cocoa::math::Vector3f left{ 1.0f, 2.0f, 2.0f };
+		const cocoa::math::Vector3f right{ 3.0f, 4.0f, 3.0f };
 
 		const float result = left.Dot(right);
 
@@ -391,10 +391,10 @@ namespace CocoaTests::Math
 
 	TEST(Vector3fTests, Cross_ShouldReturnCrossProduct_WhenProvidingOtherVector)
 	{
-		const cocoa::Math::Vector3f sut{ 2.0f, 3.0f, 4.0f };
-		const cocoa::Math::Vector3f other{ 5.0f, 6.0f, 7.0f };
+		const cocoa::math::Vector3f sut{ 2.0f, 3.0f, 4.0f };
+		const cocoa::math::Vector3f other{ 5.0f, 6.0f, 7.0f };
 
-		const cocoa::Math::Vector3f result = sut.Cross(other);
+		const cocoa::math::Vector3f result = sut.Cross(other);
 
 		EXPECT_FLOAT_EQ(result.X, -3.0f);
 		EXPECT_FLOAT_EQ(result.Y, 6.0f);
@@ -403,9 +403,9 @@ namespace CocoaTests::Math
 
 	TEST(Vector3fTests, Normalized_ShouldReturnUnitVector_WhenVectorIsNonZero)
 	{
-		const cocoa::Math::Vector3f sut{ 2.0f, 3.0f, 4.0f };
+		const cocoa::math::Vector3f sut{ 2.0f, 3.0f, 4.0f };
 
-		const cocoa::Math::Vector3f result = sut.Normalized();
+		const cocoa::math::Vector3f result = sut.Normalized();
 
 		EXPECT_FLOAT_EQ(result.X, 0.37139067f);
 		EXPECT_FLOAT_EQ(result.Y, 0.55708605f);
@@ -414,11 +414,11 @@ namespace CocoaTests::Math
 
 	TEST(Vector3fTests, Normalized_ShouldAssert_WhenLengthIsZero)
 	{
-		const cocoa::Math::Vector3f sut{ 0.f, 0.f, 0.0f };
+		const cocoa::math::Vector3f sut{ 0.f, 0.f, 0.0f };
 
 		EXPECT_DEBUG_DEATH(
 			{
-				const cocoa::Math::Vector3f result = sut.Normalized();
+				const cocoa::math::Vector3f result = sut.Normalized();
 				(void)result;
 			},
 			"cannot normalize a zero vector"
@@ -427,8 +427,8 @@ namespace CocoaTests::Math
 
 	TEST(Vector3fTests, EqualOperator_ShouldReturnTrue_WhenGivenEqualVectors)
 	{
-		constexpr cocoa::Math::Vector3f sut{ 10.f, 11.5f, 15.9f };
-		constexpr cocoa::Math::Vector3f other{ 10.f, 11.5f, 15.9f };
+		constexpr cocoa::math::Vector3f sut{ 10.f, 11.5f, 15.9f };
+		constexpr cocoa::math::Vector3f other{ 10.f, 11.5f, 15.9f };
 
 		const auto result = sut == other;
 
@@ -437,8 +437,8 @@ namespace CocoaTests::Math
 
 	TEST(Vector3fTests, EqualOperator_ShouldReturnFalse_WhenGivenNonEqualVectors)
 	{
-		constexpr cocoa::Math::Vector3f sut{ 10.0f, 11.5f, 15.9f };
-		constexpr cocoa::Math::Vector3f other{ 1.0f, 5.5f, 7.9f };
+		constexpr cocoa::math::Vector3f sut{ 10.0f, 11.5f, 15.9f };
+		constexpr cocoa::math::Vector3f other{ 1.0f, 5.5f, 7.9f };
 
 		const auto result = sut == other;
 

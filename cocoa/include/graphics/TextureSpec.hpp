@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <string>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	enum class TextureFormat
 	{

@@ -2,14 +2,14 @@
 
 #include "core/Application.hpp"
 
-namespace Sandbox
+namespace sandbox
 {
-	class GameApplication : public cocoa::Core::Application
+	class GameApplication : public cocoa::core::Application
 	{
 	public:
 		GameApplication();
 
 	protected:
-		void ConfigureScenes(cocoa::Scenes::SceneManager& sceneManager) override;
+		void ConfigureScenes(cocoa::scenes::SceneManager& sceneManager) override;
 	};
 }

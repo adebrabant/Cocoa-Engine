@@ -4,23 +4,23 @@
 #include <graphics/BufferLayout.hpp>
 #include <graphics/VertexBuffer.hpp>
 
-namespace CocoaBenchmarks
+namespace cocoa_benchmarks
 {
-    class StubVertexBuffer : public cocoa::Graphics::VertexBuffer
+    class StubVertexBuffer : public cocoa::graphics::VertexBuffer
     {
     public:
-        StubVertexBuffer(uint32_t size, const cocoa::Graphics::BufferLayout& bufferLayout)
+        StubVertexBuffer(uint32_t size, const cocoa::graphics::BufferLayout& bufferLayout)
             : m_bufferLayout(bufferLayout) { }
-        StubVertexBuffer(const void* vertices, uint32_t size, const cocoa::Graphics::BufferLayout& bufferLayout)
+        StubVertexBuffer(const void* vertices, uint32_t size, const cocoa::graphics::BufferLayout& bufferLayout)
             : m_bufferLayout(bufferLayout) { }
         ~StubVertexBuffer() override = default;
         void Bind() const override { }
         void Unbind() const override { }
         void SetData(const void* data, uint32_t size) const override { }
 
-        [[nodiscard]] const cocoa::Graphics::BufferLayout& GetLayout() const override { return m_bufferLayout;}
+        [[nodiscard]] const cocoa::graphics::BufferLayout& GetLayout() const override { return m_bufferLayout;}
 
     private:
-        cocoa::Graphics::BufferLayout m_bufferLayout;
+        cocoa::graphics::BufferLayout m_bufferLayout;
     };
 }

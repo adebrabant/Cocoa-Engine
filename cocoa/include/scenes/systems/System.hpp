@@ -1,11 +1,11 @@
 #pragma once
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	class Renderer2D;
 }
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
 	class World;
 
@@ -14,7 +14,7 @@ namespace cocoa::Scenes
 	public:
 		virtual ~System() = default;
 		virtual void Update(World& world, float deltaTime) = 0;
-		virtual void BeginRender(World& world, Graphics::Renderer2D& renderer, float alpha) = 0;
-		virtual void Render(World& world, Graphics::Renderer2D& renderer, float alpha) = 0;
+		virtual void BeginRender(World& world, graphics::Renderer2D& renderer, float alpha) = 0;
+		virtual void Render(World& world, graphics::Renderer2D& renderer, float alpha) = 0;
 	};
 }

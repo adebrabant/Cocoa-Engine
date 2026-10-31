@@ -4,7 +4,7 @@
 #include <GL/glew.h>
 #include <utility>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	OpenGLVertexBuffer::OpenGLVertexBuffer(const uint32_t size, const BufferLayout& bufferLayout) :
 		m_bufferLayout(bufferLayout),

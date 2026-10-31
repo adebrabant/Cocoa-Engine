@@ -2,7 +2,7 @@
 
 #include "graphics/Framebuffer.hpp"
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
     class OpenGLFramebuffer : public Framebuffer
     {

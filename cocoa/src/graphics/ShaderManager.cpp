@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <utility>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	ShaderManager::ShaderManager(GraphicsDevice& graphicsDevice) :
 		m_graphicsDevice(graphicsDevice),
@@ -19,8 +19,8 @@ namespace cocoa::Graphics
 	ShaderManager::~ShaderManager() = default;
 
 	ShaderHandle ShaderManager::Load(
-		const std::string& shaderId, 
-		const std::string& vertexSource, 
+		const std::string& shaderId,
+		const std::string& vertexSource,
 		const std::string& fragmentSource)
 	{
 		if (auto it = m_handles.find(shaderId); it != m_handles.end())

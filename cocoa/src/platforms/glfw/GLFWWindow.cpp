@@ -5,9 +5,9 @@
 #include <GLFW/glfw3.h>
 #include <stdexcept>
 
-namespace cocoa::Platforms
+namespace cocoa::platforms
 {
-	GLFWWindow::GLFWWindow(const cocoa::Events::EventBus& eventBus, const WindowProperties& properties) :
+	GLFWWindow::GLFWWindow(const cocoa::events::EventBus& eventBus, const WindowProperties& properties) :
 		m_eventBus(eventBus),
 		m_window(nullptr),
 		m_title(properties.GetTitle()),

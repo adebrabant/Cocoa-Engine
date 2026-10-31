@@ -2,12 +2,12 @@
 
 #include <graphics/Framebuffer.hpp>
 
-namespace CocoaBenchmarks
+namespace cocoa_benchmarks
 {
-    class StubFramebuffer : public cocoa::Graphics::Framebuffer
+    class StubFramebuffer : public cocoa::graphics::Framebuffer
     {
     public:
-        explicit StubFramebuffer(cocoa::Graphics::FramebufferSpec spec) { }
+        explicit StubFramebuffer(cocoa::graphics::FramebufferSpec spec) { }
         ~StubFramebuffer() override = default;
 
         void UnBind() const override { }

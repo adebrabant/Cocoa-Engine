@@ -5,11 +5,11 @@
 #include <gtest/gtest.h>
 #include <numbers>
 
-namespace CocoaTests::Math
+namespace cocoa_tests::math
 {
     TEST(Matrix4fTests, Constructor_ShouldSetElementsToZero_WhenUsingDefaultConstructor)
     {
-        constexpr cocoa::Math::Matrix4f sut;
+        constexpr cocoa::math::Matrix4f sut;
 
         for (std::size_t i = 0; i <= 15; ++i)
         {
@@ -26,7 +26,7 @@ namespace CocoaTests::Math
             26.0f, 28.0f, 30.0f, 32.0f
         };
 
-        constexpr cocoa::Math::Matrix4f sut(
+        constexpr cocoa::math::Matrix4f sut(
             expectedElements[0], expectedElements[1], expectedElements[2], expectedElements[3],
             expectedElements[4], expectedElements[5], expectedElements[6], expectedElements[7],
             expectedElements[8], expectedElements[9], expectedElements[10], expectedElements[11],
@@ -41,20 +41,20 @@ namespace CocoaTests::Math
 
     TEST(Matrix4fTests, AddOperator_ShouldReturnSum_WhenAddingTwoMatrices)
     {
-        constexpr cocoa::Math::Matrix4f sut(
+        constexpr cocoa::math::Matrix4f sut(
             2.0f, 3.0f, 4.0f, 5.0f,
             6.0f, 7.0f, 8.0f, 9.0f,
             10.0f, 11.0f, 12.0f, 13.0f,
             14.0f, 15.0f, 16.0f, 17.0f
         );
-        constexpr cocoa::Math::Matrix4f other(
+        constexpr cocoa::math::Matrix4f other(
             2.5f, 3.5f, 4.5f, 5.5f,
             6.5f, 7.5f, 8.5f, 9.5f,
             10.5f, 11.5f, 12.5f, 13.5f,
             14.5f, 15.5f, 16.5f, 17.5f
         );
 
-        constexpr cocoa::Math::Matrix4f result = sut + other;
+        constexpr cocoa::math::Matrix4f result = sut + other;
 
         EXPECT_FLOAT_EQ(result[0], 4.5f);
         EXPECT_FLOAT_EQ(result[1], 6.5f);
@@ -76,20 +76,20 @@ namespace CocoaTests::Math
 
     TEST(Matrix4fTests, SubtractOperator_ShouldReturnDifference_WhenSubtractingTwoMatrices)
     {
-        constexpr cocoa::Math::Matrix4f sut(
+        constexpr cocoa::math::Matrix4f sut(
             2.0f, 3.0f, 4.0f, 5.0f,
             6.0f, 7.0f, 8.0f, 9.0f,
             10.0f, 11.0f, 12.0f, 13.0f,
             14.0f, 15.0f, 16.0f, 17.0f
         );
-        constexpr cocoa::Math::Matrix4f other(
+        constexpr cocoa::math::Matrix4f other(
             2.5f, 3.5f, 4.5f, 5.5f,
             6.5f, 7.5f, 8.5f, 9.5f,
             10.5f, 11.5f, 12.5f, 13.5f,
             14.5f, 15.5f, 16.5f, 17.5f
         );
 
-        constexpr cocoa::Math::Matrix4f result = sut - other;
+        constexpr cocoa::math::Matrix4f result = sut - other;
 
         for (std::size_t i = 0; i < 16; ++i)
         {
@@ -99,7 +99,7 @@ namespace CocoaTests::Math
 
     TEST(Matrix4fTests, MultiplyOperator_ShouldScaleMatrix_WhenMultiplyingByScalar)
     {
-        constexpr cocoa::Math::Matrix4f sut(
+        constexpr cocoa::math::Matrix4f sut(
             2.0f, 3.0f, 4.0f, 5.0f,
             6.0f, 7.0f, 8.0f, 9.0f,
             10.0f, 11.0f, 12.0f, 13.0f,
@@ -107,7 +107,7 @@ namespace CocoaTests::Math
         );
         constexpr float scalar = 5.0f;
 
-        constexpr cocoa::Math::Matrix4f result = sut * scalar;
+        constexpr cocoa::math::Matrix4f result = sut * scalar;
 
         EXPECT_FLOAT_EQ(result[0], 10.0f);
         EXPECT_FLOAT_EQ(result[1], 15.0f);
@@ -129,20 +129,20 @@ namespace CocoaTests::Math
 
     TEST(Matrix4fTests, MultiplyOperator_ShouldReturnProduct_WhenMultiplyingTwoMatrices)
     {
-        constexpr cocoa::Math::Matrix4f sut(
+        constexpr cocoa::math::Matrix4f sut(
             1.0f, 2.0f, 3.0f, 4.0f,
             5.0f, 6.0f, 7.0f, 8.0f,
             9.0f, 10.0f, 11.0f, 12.0f,
             13.0f, 14.0f, 15.0f, 16.0f
         );
-        constexpr cocoa::Math::Matrix4f other(
+        constexpr cocoa::math::Matrix4f other(
             17.0f, 18.0f, 19.0f, 20.0f,
             21.0f, 22.0f, 23.0f, 24.0f,
             25.0f, 26.0f, 27.0f, 28.0f,
             29.0f, 30.0f, 31.0f, 32.0f
         );
 
-        constexpr cocoa::Math::Matrix4f result = sut * other;
+        constexpr cocoa::math::Matrix4f result = sut * other;
 
         EXPECT_FLOAT_EQ(result[0], 538.0f);
         EXPECT_FLOAT_EQ(result[1], 612.0f);
@@ -167,15 +167,15 @@ namespace CocoaTests::Math
 
     TEST(Matrix4fTests, MultiplyOperator_ShouldReturnVectorProduct_WhenMultiplyingByVector)
     {
-        constexpr cocoa::Math::Vector4f scale(2.0f, 3.0f, 4.0f, 1.0f);
-        constexpr cocoa::Math::Matrix4f sut(
+        constexpr cocoa::math::Vector4f scale(2.0f, 3.0f, 4.0f, 1.0f);
+        constexpr cocoa::math::Matrix4f sut(
             1.0f, 2.0f, 3.0f, 4.0f,
             5.0f, 6.0f, 7.0f, 8.0f,
             9.0f, 10.0f, 11.0f, 12.0f,
             13.0f, 14.0f, 15.0f, 16.0f
         );
 
-        constexpr cocoa::Math::Vector4f result = sut * scale;
+        constexpr cocoa::math::Vector4f result = sut * scale;
 
         EXPECT_FLOAT_EQ(result.X, 66.0f);
         EXPECT_FLOAT_EQ(result.Y, 76.0f);
@@ -185,7 +185,7 @@ namespace CocoaTests::Math
 
     TEST(Matrix4fTests, Identity_ShouldReturnDefaults_WhenCalled)
     {
-        constexpr cocoa::Math::Matrix4f result = cocoa::Math::Matrix4f::Identity();
+        constexpr cocoa::math::Matrix4f result = cocoa::math::Matrix4f::Identity();
 
         EXPECT_FLOAT_EQ(result[0], 1.0f);
         EXPECT_FLOAT_EQ(result[1], 0.0f);
@@ -207,9 +207,9 @@ namespace CocoaTests::Math
 
     TEST(Matrix4fTests, Scale_ShouldReturnScaleMatrix_WhenScaledByVector3f)
     {
-        constexpr cocoa::Math::Vector3f scale(2.0f, 3.0f, 4.0f);
+        constexpr cocoa::math::Vector3f scale(2.0f, 3.0f, 4.0f);
 
-        constexpr cocoa::Math::Matrix4f result = cocoa::Math::Matrix4f::Scale(scale);
+        constexpr cocoa::math::Matrix4f result = cocoa::math::Matrix4f::Scale(scale);
 
         EXPECT_FLOAT_EQ(result[0], scale.X);
         EXPECT_FLOAT_EQ(result[1], 0.0f);
@@ -231,9 +231,9 @@ namespace CocoaTests::Math
 
     TEST(Matrix4fTests, Scale_ShouldReturnScaleMatrix_WhenScaledByVector2f)
     {
-        constexpr cocoa::Math::Vector2f scale(2.0f, 3.0f);
+        constexpr cocoa::math::Vector2f scale(2.0f, 3.0f);
 
-        constexpr cocoa::Math::Matrix4f result = cocoa::Math::Matrix4f::Scale(scale);
+        constexpr cocoa::math::Matrix4f result = cocoa::math::Matrix4f::Scale(scale);
 
         EXPECT_FLOAT_EQ(result[0], scale.X);
         EXPECT_FLOAT_EQ(result[1], 0.0f);
@@ -256,10 +256,10 @@ namespace CocoaTests::Math
     TEST(Matrix4fTests, RotationX_ShouldRotateVectorCounterClockwise)
     {
         constexpr float angle = std::numbers::pi_v<float> / 2.0f;
-        constexpr cocoa::Math::Vector4f  vector(1.0f, 6.0f, 3.0f, 1.0f);
+        constexpr cocoa::math::Vector4f  vector(1.0f, 6.0f, 3.0f, 1.0f);
 
-        const cocoa::Math::Matrix4f sut = cocoa::Math::Matrix4f::RotationX(angle);
-        const cocoa::Math::Vector4f result = sut * vector;
+        const cocoa::math::Matrix4f sut = cocoa::math::Matrix4f::RotationX(angle);
+        const cocoa::math::Vector4f result = sut * vector;
 
         EXPECT_FLOAT_EQ(result.X, 1.0f);
         EXPECT_NEAR(result.Y, -3.0f, 0.0001f);
@@ -270,10 +270,10 @@ namespace CocoaTests::Math
     TEST(Matrix4fTests, RotationY_ShouldRotateVectorCounterClockwise)
     {
         constexpr float angle = std::numbers::pi_v<float> / 2.0f;
-        constexpr cocoa::Math::Vector4f  vector(1.0f, 6.0f, 3.0f, 1.0f);
+        constexpr cocoa::math::Vector4f  vector(1.0f, 6.0f, 3.0f, 1.0f);
 
-        const cocoa::Math::Matrix4f sut = cocoa::Math::Matrix4f::RotationY(angle);
-        const cocoa::Math::Vector4f result = sut * vector;
+        const cocoa::math::Matrix4f sut = cocoa::math::Matrix4f::RotationY(angle);
+        const cocoa::math::Vector4f result = sut * vector;
 
         EXPECT_NEAR(result.X, 3.0f, 0.0001f);
         EXPECT_FLOAT_EQ(result.Y, 6.0f);
@@ -284,10 +284,10 @@ namespace CocoaTests::Math
     TEST(Matrix4fTests, RotationZ_ShouldRotateVectorCounterClockwise)
     {
         constexpr float angle = std::numbers::pi_v<float> / 2.0f;
-        constexpr cocoa::Math::Vector4f  vector(1.0f, 6.0f, 3.0f, 1.0f);
+        constexpr cocoa::math::Vector4f  vector(1.0f, 6.0f, 3.0f, 1.0f);
 
-        const cocoa::Math::Matrix4f sut = cocoa::Math::Matrix4f::RotationZ(angle);
-        const cocoa::Math::Vector4f result = sut * vector;
+        const cocoa::math::Matrix4f sut = cocoa::math::Matrix4f::RotationZ(angle);
+        const cocoa::math::Vector4f result = sut * vector;
 
         EXPECT_NEAR(result.X, -6.0f, 0.0001f);
         EXPECT_NEAR(result.Y, 1.0f, 0.0001f);
@@ -297,11 +297,11 @@ namespace CocoaTests::Math
 
     TEST(Matrix4fTests, Translation_ShouldTranslatePointByVector3Amount)
     {
-        constexpr cocoa::Math::Vector3f translationAmount(5.0f, 8.0f, 3.0f);
-        constexpr cocoa::Math::Vector4f  point(2.0f, 3.0f, 4.0f, 1.0f);
+        constexpr cocoa::math::Vector3f translationAmount(5.0f, 8.0f, 3.0f);
+        constexpr cocoa::math::Vector4f  point(2.0f, 3.0f, 4.0f, 1.0f);
 
-        constexpr cocoa::Math::Matrix4f translation = cocoa::Math::Matrix4f::Translation(translationAmount);
-        constexpr cocoa::Math::Vector4f result = translation * point;
+        constexpr cocoa::math::Matrix4f translation = cocoa::math::Matrix4f::Translation(translationAmount);
+        constexpr cocoa::math::Vector4f result = translation * point;
 
         EXPECT_FLOAT_EQ(result.X, 7.0f);
         EXPECT_FLOAT_EQ(result.Y, 11.0f);
@@ -311,11 +311,11 @@ namespace CocoaTests::Math
 
     TEST(Matrix4fTests, Translation_ShouldTranslatePointByVector2Amount)
     {
-        constexpr cocoa::Math::Vector2f translationAmount(5.0f, 8.0f);
-        constexpr cocoa::Math::Vector4f  point(2.0f, 3.0f, 4.0f, 1.0f);
+        constexpr cocoa::math::Vector2f translationAmount(5.0f, 8.0f);
+        constexpr cocoa::math::Vector4f  point(2.0f, 3.0f, 4.0f, 1.0f);
 
-        constexpr cocoa::Math::Matrix4f translation = cocoa::Math::Matrix4f::Translation(translationAmount);
-        constexpr cocoa::Math::Vector4f result = translation * point;
+        constexpr cocoa::math::Matrix4f translation = cocoa::math::Matrix4f::Translation(translationAmount);
+        constexpr cocoa::math::Vector4f result = translation * point;
 
         EXPECT_FLOAT_EQ(result.X, 7.0f);
         EXPECT_FLOAT_EQ(result.Y, 11.0f);
@@ -325,14 +325,14 @@ namespace CocoaTests::Math
 
     TEST(Matrix4fTests, TransformHelpers_ShouldReturnCombinedTransform_WhenComposed)
     {
-        constexpr cocoa::Math::Vector4f  point(1.0f, 1.0f, 0.0f, 1.0f);
+        constexpr cocoa::math::Vector4f  point(1.0f, 1.0f, 0.0f, 1.0f);
 
-        constexpr cocoa::Math::Matrix4f scale = cocoa::Math::Matrix4f::Scale(cocoa::Math::Vector2f(2.0f, 3.0f));
-        const cocoa::Math::Matrix4f rotation = cocoa::Math::Matrix4f::RotationZ(std::numbers::pi_v<float> / 2.0f);
-        constexpr cocoa::Math::Matrix4f translation = cocoa::Math::Matrix4f::Translation(cocoa::Math::Vector2f(5.0f, 8.0f));
+        constexpr cocoa::math::Matrix4f scale = cocoa::math::Matrix4f::Scale(cocoa::math::Vector2f(2.0f, 3.0f));
+        const cocoa::math::Matrix4f rotation = cocoa::math::Matrix4f::RotationZ(std::numbers::pi_v<float> / 2.0f);
+        constexpr cocoa::math::Matrix4f translation = cocoa::math::Matrix4f::Translation(cocoa::math::Vector2f(5.0f, 8.0f));
 
-        const cocoa::Math::Matrix4f transform = translation * rotation * scale;
-        const cocoa::Math::Vector4f result = transform * point;
+        const cocoa::math::Matrix4f transform = translation * rotation * scale;
+        const cocoa::math::Vector4f result = transform * point;
 
         EXPECT_NEAR(result.X, 2.0f, 0.0001f);
         EXPECT_NEAR(result.Y, 10.0f, 0.0001f);
@@ -342,7 +342,7 @@ namespace CocoaTests::Math
 
     TEST(Matrix4fTests, Ortho_ShouldReturnOrthographicProjectMatrix_WhenGivenValidInput)
     {
-        constexpr cocoa::Math::Matrix4f result = cocoa::Math::Matrix4f::Ortho(
+        constexpr cocoa::math::Matrix4f result = cocoa::math::Matrix4f::Ortho(
             -2.0f, 6.0f,
             -4.0f, 2.0f,
             1.0f, 9.0f
@@ -369,14 +369,14 @@ namespace CocoaTests::Math
     TEST(Matrix4Tests, Inverse_ShouldReturnInversedMatrix)
     {
         constexpr int determinant = 78.0f;
-        cocoa::Math::Matrix4f sut(
+        cocoa::math::Matrix4f sut(
             4.0f, 5.0f, 6.0f, 10.0f,
             7.0f, 8.0f, 11.0f, 15.0f,
             9.0f, 12.0f, 14.0f, 17.0f,
             13.0f, 16.0f, 18.0f, 19.0f
         );
 
-        cocoa::Math::Matrix4f result = sut.Inverse();
+        cocoa::math::Matrix4f result = sut.Inverse();
 
         EXPECT_FLOAT_EQ(result[0], 44.0f / determinant);
         EXPECT_FLOAT_EQ(result[1], 16.0f / determinant);

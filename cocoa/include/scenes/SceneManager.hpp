@@ -6,27 +6,27 @@
 #include <vector>
 #include <type_traits>
 
-namespace cocoa::Assets
+namespace cocoa::assets
 {
 	class ResourceLoader;
 }
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	class Renderer2D;
 }
 
-namespace cocoa::Scenes
+namespace cocoa::scenes
 {
 	class SceneManager
 	{
 	public:
-		explicit SceneManager(Assets::ResourceLoader& loader);
+		explicit SceneManager(assets::ResourceLoader& loader);
 		~SceneManager() = default;
 		[[nodiscard]] Scene* GetCurrentScene() const;
 		void FixedUpdate(float fixedDeltaTime) const;
 		void Update(float deltaTime) const;
-		void Render(Graphics::Renderer2D& renderer, float alpha) const;
+		void Render(graphics::Renderer2D& renderer, float alpha) const;
 		template<typename TScene> void SetScene();
 		template<typename TScene> void AddScene();
 		template<typename TScene> TScene* GetScene();
@@ -36,7 +36,7 @@ namespace cocoa::Scenes
 
 	private:
 		std::vector<Unique<Scene>> m_scenes;
-		Assets::ResourceLoader& m_resourceLoader;
+		assets::ResourceLoader& m_resourceLoader;
 		Scene* m_currentScene = nullptr;
 	};
 

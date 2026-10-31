@@ -6,40 +6,40 @@
 #include <graphics/TextureManager.hpp>
 #include <graphics/TextureSpec.hpp>
 #include <gtest/gtest.h>
-#include <stubs/Graphics/StubGraphicsDevice.hpp>
+#include <stubs/graphics/StubGraphicsDevice.hpp>
 
 #include <vector>
 
-namespace CocoaTests::Graphics
+namespace cocoa_tests::graphics
 {
-    static std::vector<cocoa::Graphics::SpriteHandle> CreateSpritesWithUniqueTextures(
-        cocoa::Graphics::TextureManager& textureManager,
-        cocoa::Graphics::SpriteManager& spriteManager,
+    static std::vector<cocoa::graphics::SpriteHandle> CreateSpritesWithUniqueTextures(
+        cocoa::graphics::TextureManager& textureManager,
+        cocoa::graphics::SpriteManager& spriteManager,
         const int count)
     {
-        std::vector<cocoa::Graphics::SpriteHandle> handles;
+        std::vector<cocoa::graphics::SpriteHandle> handles;
         constexpr uint8_t pixelData[] {255, 255, 255, 255};
 
         for (auto i = 0; i < count; ++i)
         {
-            const cocoa::Graphics::TextureSpec textureSpec
+            const cocoa::graphics::TextureSpec textureSpec
             {
                 .Id = "test-texture-" + std::to_string(i),
                 .Width = 256,
                 .Height = 256
             };
 
-            const cocoa::Graphics::TextureHandle textureHandle = textureManager.Load(
+            const cocoa::graphics::TextureHandle textureHandle = textureManager.Load(
                 textureSpec,
                 pixelData
             );
 
-            const cocoa::Graphics::SpriteHandle spriteHandle = spriteManager.Load(
+            const cocoa::graphics::SpriteHandle spriteHandle = spriteManager.Load(
                 "sprite-" + std::to_string(i),
                 textureHandle,
-                cocoa::Math::Vector2f(0.0f, 0.0f),
-                cocoa::Math::Vector2f(256.0f, 256.0f),
-                cocoa::Math::Vector2f(256.0f, 256.0f)
+                cocoa::math::Vector2f(0.0f, 0.0f),
+                cocoa::math::Vector2f(256.0f, 256.0f),
+                cocoa::math::Vector2f(256.0f, 256.0f)
             );
 
             handles.emplace_back(spriteHandle);
@@ -50,20 +50,20 @@ namespace CocoaTests::Graphics
 
     TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenGivenDuplicateShaders)
     {
-        Stubs::StubGraphicsDevice graphicsDevice;
-        cocoa::Graphics::ShaderManager shaderManager(graphicsDevice);
-        cocoa::Graphics::TextureManager textureManager(graphicsDevice);
-        cocoa::Graphics::MaterialManager materialManager;
-        cocoa::Graphics::SpriteManager spriteManager;
-        cocoa::Graphics::RenderStatistics renderStats;
+        stubs::StubGraphicsDevice graphicsDevice;
+        cocoa::graphics::ShaderManager shaderManager(graphicsDevice);
+        cocoa::graphics::TextureManager textureManager(graphicsDevice);
+        cocoa::graphics::MaterialManager materialManager;
+        cocoa::graphics::SpriteManager spriteManager;
+        cocoa::graphics::RenderStatistics renderStats;
 
-        const cocoa::Graphics::ShaderHandle shaderHandle = shaderManager.Load(
+        const cocoa::graphics::ShaderHandle shaderHandle = shaderManager.Load(
             "test-shader",
             "vertex-source",
             "fragment-source"
         );
 
-        const cocoa::Graphics::TextureSpec textureSpec
+        const cocoa::graphics::TextureSpec textureSpec
         {
             .Id = "test-texture",
             .Width = 256,
@@ -75,36 +75,36 @@ namespace CocoaTests::Graphics
             255, 255, 255, 255
         };
 
-        const cocoa::Graphics::TextureHandle textureHandle = textureManager.Load(
+        const cocoa::graphics::TextureHandle textureHandle = textureManager.Load(
             textureSpec,
             pixelData
         );
 
-        constexpr cocoa::Core::Color tint;
+        constexpr cocoa::core::Color tint;
 
-        const cocoa::Graphics::MaterialHandle materialHandleA = materialManager.Load(
+        const cocoa::graphics::MaterialHandle materialHandleA = materialManager.Load(
             "material-a",
             shaderHandle,
             "opaque",
             tint
         );
 
-        const cocoa::Graphics::MaterialHandle materialHandleB = materialManager.Load(
+        const cocoa::graphics::MaterialHandle materialHandleB = materialManager.Load(
             "material-b",
             shaderHandle,
             "opaque",
             tint
         );
 
-        const cocoa::Graphics::SpriteHandle spriteHandle = spriteManager.Load(
+        const cocoa::graphics::SpriteHandle spriteHandle = spriteManager.Load(
             "default-sprite",
             textureHandle,
-            cocoa::Math::Vector2f(0.0f, 0.0f),
-            cocoa::Math::Vector2f(256.0f, 256.0f),
-            cocoa::Math::Vector2f(256.0f, 256.0f)
+            cocoa::math::Vector2f(0.0f, 0.0f),
+            cocoa::math::Vector2f(256.0f, 256.0f),
+            cocoa::math::Vector2f(256.0f, 256.0f)
         );
 
-        cocoa::Graphics::QuadBatch sut(
+        cocoa::graphics::QuadBatch sut(
             graphicsDevice,
             shaderManager,
             textureManager,
@@ -113,7 +113,7 @@ namespace CocoaTests::Graphics
             renderStats
         );
 
-        constexpr cocoa::Math::Matrix4f identity = cocoa::Math::Matrix4f::Identity();
+        constexpr cocoa::math::Matrix4f identity = cocoa::math::Matrix4f::Identity();
 
         sut.Draw(
             identity,
@@ -139,26 +139,26 @@ namespace CocoaTests::Graphics
 
     TEST(QuadBatchTests, Flush_ShouldDrawTwice_WhenShaderChanges)
     {
-        Stubs::StubGraphicsDevice graphicsDevice;
-        cocoa::Graphics::ShaderManager shaderManager(graphicsDevice);
-        cocoa::Graphics::TextureManager textureManager(graphicsDevice);
-        cocoa::Graphics::MaterialManager materialManager;
-        cocoa::Graphics::SpriteManager spriteManager;
-        cocoa::Graphics::RenderStatistics renderStats;
+        stubs::StubGraphicsDevice graphicsDevice;
+        cocoa::graphics::ShaderManager shaderManager(graphicsDevice);
+        cocoa::graphics::TextureManager textureManager(graphicsDevice);
+        cocoa::graphics::MaterialManager materialManager;
+        cocoa::graphics::SpriteManager spriteManager;
+        cocoa::graphics::RenderStatistics renderStats;
 
-        const cocoa::Graphics::ShaderHandle shaderHandleOne = shaderManager.Load(
+        const cocoa::graphics::ShaderHandle shaderHandleOne = shaderManager.Load(
             "test-shader-1",
             "vertex-source",
             "fragment-source"
         );
 
-        const cocoa::Graphics::ShaderHandle shaderHandleTwo = shaderManager.Load(
+        const cocoa::graphics::ShaderHandle shaderHandleTwo = shaderManager.Load(
             "test-shader-2",
             "vertex-source",
             "fragment-source"
         );
 
-        const cocoa::Graphics::TextureSpec textureSpec
+        const cocoa::graphics::TextureSpec textureSpec
         {
             .Id = "test-texture",
             .Width = 256,
@@ -170,36 +170,36 @@ namespace CocoaTests::Graphics
             255, 255, 255, 255
         };
 
-        const cocoa::Graphics::TextureHandle textureHandle = textureManager.Load(
+        const cocoa::graphics::TextureHandle textureHandle = textureManager.Load(
             textureSpec,
             pixelData
         );
 
-        constexpr cocoa::Core::Color tint;
+        constexpr cocoa::core::Color tint;
 
-        const cocoa::Graphics::MaterialHandle materialHandleA = materialManager.Load(
+        const cocoa::graphics::MaterialHandle materialHandleA = materialManager.Load(
             "material-a",
             shaderHandleOne,
             "opaque",
             tint
         );
 
-        const cocoa::Graphics::MaterialHandle materialHandleB = materialManager.Load(
+        const cocoa::graphics::MaterialHandle materialHandleB = materialManager.Load(
             "material-b",
             shaderHandleTwo,
             "opaque",
             tint
         );
 
-        const cocoa::Graphics::SpriteHandle spriteHandle = spriteManager.Load(
+        const cocoa::graphics::SpriteHandle spriteHandle = spriteManager.Load(
             "default-sprite",
             textureHandle,
-            cocoa::Math::Vector2f(0.0f, 0.0f),
-            cocoa::Math::Vector2f(256.0f, 256.0f),
-            cocoa::Math::Vector2f(256.0f, 256.0f)
+            cocoa::math::Vector2f(0.0f, 0.0f),
+            cocoa::math::Vector2f(256.0f, 256.0f),
+            cocoa::math::Vector2f(256.0f, 256.0f)
         );
 
-        cocoa::Graphics::QuadBatch sut(
+        cocoa::graphics::QuadBatch sut(
             graphicsDevice,
             shaderManager,
             textureManager,
@@ -208,7 +208,7 @@ namespace CocoaTests::Graphics
             renderStats
         );
 
-        constexpr cocoa::Math::Matrix4f identity = cocoa::Math::Matrix4f::Identity();
+        constexpr cocoa::math::Matrix4f identity = cocoa::math::Matrix4f::Identity();
 
         sut.Draw(
             identity,
@@ -234,27 +234,27 @@ namespace CocoaTests::Graphics
 
     TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenTextureChanges)
     {
-        Stubs::StubGraphicsDevice graphicsDevice;
-        cocoa::Graphics::ShaderManager shaderManager(graphicsDevice);
-        cocoa::Graphics::TextureManager textureManager(graphicsDevice);
-        cocoa::Graphics::MaterialManager materialManager;
-        cocoa::Graphics::SpriteManager spriteManager;
-        cocoa::Graphics::RenderStatistics renderStats;
+        stubs::StubGraphicsDevice graphicsDevice;
+        cocoa::graphics::ShaderManager shaderManager(graphicsDevice);
+        cocoa::graphics::TextureManager textureManager(graphicsDevice);
+        cocoa::graphics::MaterialManager materialManager;
+        cocoa::graphics::SpriteManager spriteManager;
+        cocoa::graphics::RenderStatistics renderStats;
 
-        const cocoa::Graphics::ShaderHandle shaderHandle = shaderManager.Load(
+        const cocoa::graphics::ShaderHandle shaderHandle = shaderManager.Load(
             "test-shader",
             "vertex-source",
             "fragment-source"
         );
 
-        const cocoa::Graphics::TextureSpec textureSpecOne
+        const cocoa::graphics::TextureSpec textureSpecOne
         {
             .Id = "test-texture-01",
             .Width = 256,
             .Height = 256
         };
 
-        const cocoa::Graphics::TextureSpec textureSpecTwo
+        const cocoa::graphics::TextureSpec textureSpecTwo
         {
             .Id = "test-texture-02",
             .Width = 256,
@@ -266,49 +266,49 @@ namespace CocoaTests::Graphics
             255, 255, 255, 255
         };
 
-        const cocoa::Graphics::TextureHandle textureHandleOne = textureManager.Load(
+        const cocoa::graphics::TextureHandle textureHandleOne = textureManager.Load(
             textureSpecOne,
             pixelData
         );
 
-        const cocoa::Graphics::TextureHandle textureHandleTwo = textureManager.Load(
+        const cocoa::graphics::TextureHandle textureHandleTwo = textureManager.Load(
             textureSpecTwo,
             pixelData
         );
 
-        constexpr cocoa::Core::Color tint;
+        constexpr cocoa::core::Color tint;
 
-        const cocoa::Graphics::MaterialHandle materialHandleA = materialManager.Load(
+        const cocoa::graphics::MaterialHandle materialHandleA = materialManager.Load(
             "material-a",
             shaderHandle,
             "opaque",
             tint
         );
 
-        const cocoa::Graphics::MaterialHandle materialHandleB = materialManager.Load(
+        const cocoa::graphics::MaterialHandle materialHandleB = materialManager.Load(
             "material-b",
             shaderHandle,
             "opaque",
             tint
         );
 
-        const cocoa::Graphics::SpriteHandle spriteHandleA = spriteManager.Load(
+        const cocoa::graphics::SpriteHandle spriteHandleA = spriteManager.Load(
             "default-sprite-a",
             textureHandleOne,
-            cocoa::Math::Vector2f(0.0f, 0.0f),
-            cocoa::Math::Vector2f(256.0f, 256.0f),
-            cocoa::Math::Vector2f(256.0f, 256.0f)
+            cocoa::math::Vector2f(0.0f, 0.0f),
+            cocoa::math::Vector2f(256.0f, 256.0f),
+            cocoa::math::Vector2f(256.0f, 256.0f)
         );
 
-        const cocoa::Graphics::SpriteHandle spriteHandleB = spriteManager.Load(
+        const cocoa::graphics::SpriteHandle spriteHandleB = spriteManager.Load(
             "default-sprite-b",
             textureHandleTwo,
-            cocoa::Math::Vector2f(0.0f, 0.0f),
-            cocoa::Math::Vector2f(256.0f, 256.0f),
-            cocoa::Math::Vector2f(256.0f, 256.0f)
+            cocoa::math::Vector2f(0.0f, 0.0f),
+            cocoa::math::Vector2f(256.0f, 256.0f),
+            cocoa::math::Vector2f(256.0f, 256.0f)
         );
 
-        cocoa::Graphics::QuadBatch sut(
+        cocoa::graphics::QuadBatch sut(
             graphicsDevice,
             shaderManager,
             textureManager,
@@ -317,7 +317,7 @@ namespace CocoaTests::Graphics
             renderStats
         );
 
-        constexpr cocoa::Math::Matrix4f identity = cocoa::Math::Matrix4f::Identity();
+        constexpr cocoa::math::Matrix4f identity = cocoa::math::Matrix4f::Identity();
 
         sut.Draw(
             identity,
@@ -343,20 +343,20 @@ namespace CocoaTests::Graphics
 
     TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenOnlyTintChanges)
     {
-        Stubs::StubGraphicsDevice graphicsDevice;
-        cocoa::Graphics::ShaderManager shaderManager(graphicsDevice);
-        cocoa::Graphics::TextureManager textureManager(graphicsDevice);
-        cocoa::Graphics::MaterialManager materialManager;
-        cocoa::Graphics::SpriteManager spriteManager;
-        cocoa::Graphics::RenderStatistics renderStats;
+        stubs::StubGraphicsDevice graphicsDevice;
+        cocoa::graphics::ShaderManager shaderManager(graphicsDevice);
+        cocoa::graphics::TextureManager textureManager(graphicsDevice);
+        cocoa::graphics::MaterialManager materialManager;
+        cocoa::graphics::SpriteManager spriteManager;
+        cocoa::graphics::RenderStatistics renderStats;
 
-        const cocoa::Graphics::ShaderHandle shaderHandle = shaderManager.Load(
+        const cocoa::graphics::ShaderHandle shaderHandle = shaderManager.Load(
             "test-shader",
             "vertex-source",
             "fragment-source"
         );
 
-        const cocoa::Graphics::TextureSpec textureSpec
+        const cocoa::graphics::TextureSpec textureSpec
         {
             .Id = "test-texture",
             .Width = 256,
@@ -368,34 +368,34 @@ namespace CocoaTests::Graphics
             255, 255, 255, 255
         };
 
-        const cocoa::Graphics::TextureHandle textureHandle = textureManager.Load(
+        const cocoa::graphics::TextureHandle textureHandle = textureManager.Load(
             textureSpec,
             pixelData
         );
 
-        const cocoa::Graphics::MaterialHandle materialHandleA = materialManager.Load(
+        const cocoa::graphics::MaterialHandle materialHandleA = materialManager.Load(
             "material-a",
             shaderHandle,
             "opaque",
-            cocoa::Core::Color{0.5, 1.0, 0.5, 1.0f}
+            cocoa::core::Color{0.5, 1.0, 0.5, 1.0f}
         );
 
-        const cocoa::Graphics::MaterialHandle materialHandleB = materialManager.Load(
+        const cocoa::graphics::MaterialHandle materialHandleB = materialManager.Load(
             "material-b",
             shaderHandle,
             "opaque",
-            cocoa::Core::Color{1.0f, 1.0f, 1.0f, 1.0f}
+            cocoa::core::Color{1.0f, 1.0f, 1.0f, 1.0f}
         );
 
-        const cocoa::Graphics::SpriteHandle spriteHandle = spriteManager.Load(
+        const cocoa::graphics::SpriteHandle spriteHandle = spriteManager.Load(
             "default-sprite-b",
             textureHandle,
-            cocoa::Math::Vector2f(0.0f, 0.0f),
-            cocoa::Math::Vector2f(256.0f, 256.0f),
-            cocoa::Math::Vector2f(256.0f, 256.0f)
+            cocoa::math::Vector2f(0.0f, 0.0f),
+            cocoa::math::Vector2f(256.0f, 256.0f),
+            cocoa::math::Vector2f(256.0f, 256.0f)
         );
 
-        cocoa::Graphics::QuadBatch sut(
+        cocoa::graphics::QuadBatch sut(
             graphicsDevice,
             shaderManager,
             textureManager,
@@ -404,7 +404,7 @@ namespace CocoaTests::Graphics
             renderStats
         );
 
-        constexpr cocoa::Math::Matrix4f identity = cocoa::Math::Matrix4f::Identity();
+        constexpr cocoa::math::Matrix4f identity = cocoa::math::Matrix4f::Identity();
 
         sut.Draw(
             identity,
@@ -430,20 +430,20 @@ namespace CocoaTests::Graphics
 
     TEST(QuadBatchTests, Flush_ShouldDrawTwice_WhenGivenDifferentBlendMode)
     {
-        Stubs::StubGraphicsDevice graphicsDevice;
-        cocoa::Graphics::ShaderManager shaderManager(graphicsDevice);
-        cocoa::Graphics::TextureManager textureManager(graphicsDevice);
-        cocoa::Graphics::MaterialManager materialManager;
-        cocoa::Graphics::SpriteManager spriteManager;
-        cocoa::Graphics::RenderStatistics renderStats;
+        stubs::StubGraphicsDevice graphicsDevice;
+        cocoa::graphics::ShaderManager shaderManager(graphicsDevice);
+        cocoa::graphics::TextureManager textureManager(graphicsDevice);
+        cocoa::graphics::MaterialManager materialManager;
+        cocoa::graphics::SpriteManager spriteManager;
+        cocoa::graphics::RenderStatistics renderStats;
 
-        const cocoa::Graphics::ShaderHandle shaderHandle = shaderManager.Load(
+        const cocoa::graphics::ShaderHandle shaderHandle = shaderManager.Load(
             "test-shader",
             "vertex-source",
             "fragment-source"
         );
 
-        const cocoa::Graphics::TextureSpec textureSpec
+        const cocoa::graphics::TextureSpec textureSpec
         {
             .Id = "test-texture",
             .Width = 256,
@@ -455,34 +455,34 @@ namespace CocoaTests::Graphics
             255, 255, 255, 255
         };
 
-        const cocoa::Graphics::TextureHandle textureHandle = textureManager.Load(
+        const cocoa::graphics::TextureHandle textureHandle = textureManager.Load(
             textureSpec,
             pixelData
         );
 
-        const cocoa::Graphics::MaterialHandle materialHandleA = materialManager.Load(
+        const cocoa::graphics::MaterialHandle materialHandleA = materialManager.Load(
             "material-a",
             shaderHandle,
             "opaque",
-            cocoa::Core::Color{0.5, 1.0, 0.5, 1.0f}
+            cocoa::core::Color{0.5, 1.0, 0.5, 1.0f}
         );
 
-        const cocoa::Graphics::MaterialHandle materialHandleB = materialManager.Load(
+        const cocoa::graphics::MaterialHandle materialHandleB = materialManager.Load(
             "material-b",
             shaderHandle,
             "alpha",
-            cocoa::Core::Color{1.0f, 1.0f, 1.0f, 1.0f}
+            cocoa::core::Color{1.0f, 1.0f, 1.0f, 1.0f}
         );
 
-        const cocoa::Graphics::SpriteHandle spriteHandle = spriteManager.Load(
+        const cocoa::graphics::SpriteHandle spriteHandle = spriteManager.Load(
             "default-sprite-b",
             textureHandle,
-            cocoa::Math::Vector2f(0.0f, 0.0f),
-            cocoa::Math::Vector2f(256.0f, 256.0f),
-            cocoa::Math::Vector2f(256.0f, 256.0f)
+            cocoa::math::Vector2f(0.0f, 0.0f),
+            cocoa::math::Vector2f(256.0f, 256.0f),
+            cocoa::math::Vector2f(256.0f, 256.0f)
         );
 
-        cocoa::Graphics::QuadBatch sut(
+        cocoa::graphics::QuadBatch sut(
             graphicsDevice,
             shaderManager,
             textureManager,
@@ -491,7 +491,7 @@ namespace CocoaTests::Graphics
             renderStats
         );
 
-        constexpr cocoa::Math::Matrix4f identity = cocoa::Math::Matrix4f::Identity();
+        constexpr cocoa::math::Matrix4f identity = cocoa::math::Matrix4f::Identity();
 
         sut.Draw(
             identity,
@@ -517,30 +517,30 @@ namespace CocoaTests::Graphics
 
     TEST(QuadBatchTests, Flush_ShouldDrawTwice_WhenGiven33UniqueTextures)
     {
-        Stubs::StubGraphicsDevice graphicsDevice;
-        cocoa::Graphics::ShaderManager shaderManager(graphicsDevice);
-        cocoa::Graphics::TextureManager textureManager(graphicsDevice);
-        cocoa::Graphics::MaterialManager materialManager;
-        cocoa::Graphics::SpriteManager spriteManager;
-        cocoa::Graphics::RenderStatistics renderStats;
+        stubs::StubGraphicsDevice graphicsDevice;
+        cocoa::graphics::ShaderManager shaderManager(graphicsDevice);
+        cocoa::graphics::TextureManager textureManager(graphicsDevice);
+        cocoa::graphics::MaterialManager materialManager;
+        cocoa::graphics::SpriteManager spriteManager;
+        cocoa::graphics::RenderStatistics renderStats;
 
-        const cocoa::Graphics::ShaderHandle shaderHandle = shaderManager.Load(
+        const cocoa::graphics::ShaderHandle shaderHandle = shaderManager.Load(
             "test-shader",
             "vertex-source",
             "fragment-source"
         );
 
-        const cocoa::Graphics::MaterialHandle materialHandle = materialManager.Load(
+        const cocoa::graphics::MaterialHandle materialHandle = materialManager.Load(
             "material-a",
             shaderHandle,
             "opaque",
-            cocoa::Core::Color{1.0f, 1.0f, 1.0f, 1.0f}
+            cocoa::core::Color{1.0f, 1.0f, 1.0f, 1.0f}
         );
 
-        const std::vector<cocoa::Graphics::SpriteHandle> spriteHandles =
+        const std::vector<cocoa::graphics::SpriteHandle> spriteHandles =
             CreateSpritesWithUniqueTextures(textureManager, spriteManager, 33);
 
-        cocoa::Graphics::QuadBatch sut(
+        cocoa::graphics::QuadBatch sut(
             graphicsDevice,
             shaderManager,
             textureManager,
@@ -549,7 +549,7 @@ namespace CocoaTests::Graphics
             renderStats
         );
 
-        constexpr cocoa::Math::Matrix4f identity = cocoa::Math::Matrix4f::Identity();
+        constexpr cocoa::math::Matrix4f identity = cocoa::math::Matrix4f::Identity();
 
         for (const auto& spriteHandle : spriteHandles)
         {
@@ -570,30 +570,30 @@ namespace CocoaTests::Graphics
 
     TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenGiven32UniqueTexturesAnd1Duplicate)
     {
-        Stubs::StubGraphicsDevice graphicsDevice;
-        cocoa::Graphics::ShaderManager shaderManager(graphicsDevice);
-        cocoa::Graphics::TextureManager textureManager(graphicsDevice);
-        cocoa::Graphics::MaterialManager materialManager;
-        cocoa::Graphics::SpriteManager spriteManager;
-        cocoa::Graphics::RenderStatistics renderStats;
+        stubs::StubGraphicsDevice graphicsDevice;
+        cocoa::graphics::ShaderManager shaderManager(graphicsDevice);
+        cocoa::graphics::TextureManager textureManager(graphicsDevice);
+        cocoa::graphics::MaterialManager materialManager;
+        cocoa::graphics::SpriteManager spriteManager;
+        cocoa::graphics::RenderStatistics renderStats;
 
-        const cocoa::Graphics::ShaderHandle shaderHandle = shaderManager.Load(
+        const cocoa::graphics::ShaderHandle shaderHandle = shaderManager.Load(
             "test-shader",
             "vertex-source",
             "fragment-source"
         );
 
-        const cocoa::Graphics::MaterialHandle materialHandle = materialManager.Load(
+        const cocoa::graphics::MaterialHandle materialHandle = materialManager.Load(
             "material-a",
             shaderHandle,
             "opaque",
-            cocoa::Core::Color{1.0f, 1.0f, 1.0f, 1.0f}
+            cocoa::core::Color{1.0f, 1.0f, 1.0f, 1.0f}
         );
 
-        const std::vector<cocoa::Graphics::SpriteHandle> spriteHandles =
+        const std::vector<cocoa::graphics::SpriteHandle> spriteHandles =
             CreateSpritesWithUniqueTextures(textureManager, spriteManager, 32);
 
-        cocoa::Graphics::QuadBatch sut(
+        cocoa::graphics::QuadBatch sut(
             graphicsDevice,
             shaderManager,
             textureManager,
@@ -602,7 +602,7 @@ namespace CocoaTests::Graphics
             renderStats
         );
 
-        constexpr cocoa::Math::Matrix4f identity = cocoa::Math::Matrix4f::Identity();
+        constexpr cocoa::math::Matrix4f identity = cocoa::math::Matrix4f::Identity();
 
         for (const auto& spriteHandle : spriteHandles)
         {
@@ -633,20 +633,20 @@ namespace CocoaTests::Graphics
     TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenGiven20000QuadsWithSameTexture)
     {
         constexpr int quadCount = 20000;
-        Stubs::StubGraphicsDevice graphicsDevice;
-        cocoa::Graphics::ShaderManager shaderManager(graphicsDevice);
-        cocoa::Graphics::TextureManager textureManager(graphicsDevice);
-        cocoa::Graphics::MaterialManager materialManager;
-        cocoa::Graphics::SpriteManager spriteManager;
-        cocoa::Graphics::RenderStatistics renderStats;
+        stubs::StubGraphicsDevice graphicsDevice;
+        cocoa::graphics::ShaderManager shaderManager(graphicsDevice);
+        cocoa::graphics::TextureManager textureManager(graphicsDevice);
+        cocoa::graphics::MaterialManager materialManager;
+        cocoa::graphics::SpriteManager spriteManager;
+        cocoa::graphics::RenderStatistics renderStats;
 
-        const cocoa::Graphics::ShaderHandle shaderHandle = shaderManager.Load(
+        const cocoa::graphics::ShaderHandle shaderHandle = shaderManager.Load(
             "test-shader",
             "vertex-source",
             "fragment-source"
         );
 
-        const cocoa::Graphics::TextureSpec textureSpec
+        const cocoa::graphics::TextureSpec textureSpec
         {
             .Id = "test-texture",
             .Width = 256,
@@ -658,27 +658,27 @@ namespace CocoaTests::Graphics
             255, 255, 255, 255
         };
 
-        const cocoa::Graphics::TextureHandle textureHandle = textureManager.Load(
+        const cocoa::graphics::TextureHandle textureHandle = textureManager.Load(
             textureSpec,
             pixelData
         );
 
-        const cocoa::Graphics::MaterialHandle materialHandle = materialManager.Load(
+        const cocoa::graphics::MaterialHandle materialHandle = materialManager.Load(
             "material-a",
             shaderHandle,
             "opaque",
-            cocoa::Core::Color{0.5, 1.0, 0.5, 1.0f}
+            cocoa::core::Color{0.5, 1.0, 0.5, 1.0f}
         );
 
-        const cocoa::Graphics::SpriteHandle spriteHandle = spriteManager.Load(
+        const cocoa::graphics::SpriteHandle spriteHandle = spriteManager.Load(
             "default-sprite",
             textureHandle,
-            cocoa::Math::Vector2f(0.0f, 0.0f),
-            cocoa::Math::Vector2f(256.0f, 256.0f),
-            cocoa::Math::Vector2f(256.0f, 256.0f)
+            cocoa::math::Vector2f(0.0f, 0.0f),
+            cocoa::math::Vector2f(256.0f, 256.0f),
+            cocoa::math::Vector2f(256.0f, 256.0f)
         );
 
-        cocoa::Graphics::QuadBatch sut(
+        cocoa::graphics::QuadBatch sut(
             graphicsDevice,
             shaderManager,
             textureManager,
@@ -687,7 +687,7 @@ namespace CocoaTests::Graphics
             renderStats
         );
 
-        constexpr cocoa::Math::Matrix4f identity = cocoa::Math::Matrix4f::Identity();
+        constexpr cocoa::math::Matrix4f identity = cocoa::math::Matrix4f::Identity();
 
         for (auto i = 0; i < quadCount; ++i)
         {
@@ -709,20 +709,20 @@ namespace CocoaTests::Graphics
     TEST(QuadBatchTests, Flush_ShouldDrawTwice_WhenGiven20001QuadsWithSameTexture)
     {
         constexpr int quadCount = 20001;
-        Stubs::StubGraphicsDevice graphicsDevice;
-        cocoa::Graphics::ShaderManager shaderManager(graphicsDevice);
-        cocoa::Graphics::TextureManager textureManager(graphicsDevice);
-        cocoa::Graphics::MaterialManager materialManager;
-        cocoa::Graphics::SpriteManager spriteManager;
-        cocoa::Graphics::RenderStatistics renderStats;
+        stubs::StubGraphicsDevice graphicsDevice;
+        cocoa::graphics::ShaderManager shaderManager(graphicsDevice);
+        cocoa::graphics::TextureManager textureManager(graphicsDevice);
+        cocoa::graphics::MaterialManager materialManager;
+        cocoa::graphics::SpriteManager spriteManager;
+        cocoa::graphics::RenderStatistics renderStats;
 
-        const cocoa::Graphics::ShaderHandle shaderHandle = shaderManager.Load(
+        const cocoa::graphics::ShaderHandle shaderHandle = shaderManager.Load(
             "test-shader",
             "vertex-source",
             "fragment-source"
         );
 
-        const cocoa::Graphics::TextureSpec textureSpec
+        const cocoa::graphics::TextureSpec textureSpec
         {
             .Id = "test-texture",
             .Width = 256,
@@ -734,27 +734,27 @@ namespace CocoaTests::Graphics
             255, 255, 255, 255
         };
 
-        const cocoa::Graphics::TextureHandle textureHandle = textureManager.Load(
+        const cocoa::graphics::TextureHandle textureHandle = textureManager.Load(
             textureSpec,
             pixelData
         );
 
-        const cocoa::Graphics::MaterialHandle materialHandle = materialManager.Load(
+        const cocoa::graphics::MaterialHandle materialHandle = materialManager.Load(
             "material-a",
             shaderHandle,
             "opaque",
-            cocoa::Core::Color{0.5, 1.0, 0.5, 1.0f}
+            cocoa::core::Color{0.5, 1.0, 0.5, 1.0f}
         );
 
-        const cocoa::Graphics::SpriteHandle spriteHandle = spriteManager.Load(
+        const cocoa::graphics::SpriteHandle spriteHandle = spriteManager.Load(
             "default-sprite",
             textureHandle,
-            cocoa::Math::Vector2f(0.0f, 0.0f),
-            cocoa::Math::Vector2f(256.0f, 256.0f),
-            cocoa::Math::Vector2f(256.0f, 256.0f)
+            cocoa::math::Vector2f(0.0f, 0.0f),
+            cocoa::math::Vector2f(256.0f, 256.0f),
+            cocoa::math::Vector2f(256.0f, 256.0f)
         );
 
-        cocoa::Graphics::QuadBatch sut(
+        cocoa::graphics::QuadBatch sut(
             graphicsDevice,
             shaderManager,
             textureManager,
@@ -763,7 +763,7 @@ namespace CocoaTests::Graphics
             renderStats
         );
 
-        constexpr cocoa::Math::Matrix4f identity = cocoa::Math::Matrix4f::Identity();
+        constexpr cocoa::math::Matrix4f identity = cocoa::math::Matrix4f::Identity();
 
         for (auto i = 0; i < quadCount; ++i)
         {
@@ -784,20 +784,20 @@ namespace CocoaTests::Graphics
 
     TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenGivenSameTextureFromSpriteAndDirectTexture)
     {
-        Stubs::StubGraphicsDevice graphicsDevice;
-        cocoa::Graphics::ShaderManager shaderManager(graphicsDevice);
-        cocoa::Graphics::TextureManager textureManager(graphicsDevice);
-        cocoa::Graphics::MaterialManager materialManager;
-        cocoa::Graphics::SpriteManager spriteManager;
-        cocoa::Graphics::RenderStatistics renderStats;
+        stubs::StubGraphicsDevice graphicsDevice;
+        cocoa::graphics::ShaderManager shaderManager(graphicsDevice);
+        cocoa::graphics::TextureManager textureManager(graphicsDevice);
+        cocoa::graphics::MaterialManager materialManager;
+        cocoa::graphics::SpriteManager spriteManager;
+        cocoa::graphics::RenderStatistics renderStats;
 
-        const cocoa::Graphics::ShaderHandle shaderHandle = shaderManager.Load(
+        const cocoa::graphics::ShaderHandle shaderHandle = shaderManager.Load(
             "test-shader",
             "vertex-source",
             "fragment-source"
         );
 
-        const cocoa::Graphics::TextureSpec textureSpec
+        const cocoa::graphics::TextureSpec textureSpec
         {
             .Id = "test-texture",
             .Width = 256,
@@ -809,27 +809,27 @@ namespace CocoaTests::Graphics
             255, 255, 255, 255
         };
 
-        const cocoa::Graphics::TextureHandle textureHandle = textureManager.Load(
+        const cocoa::graphics::TextureHandle textureHandle = textureManager.Load(
             textureSpec,
             pixelData
         );
 
-        const cocoa::Graphics::MaterialHandle materialHandle = materialManager.Load(
+        const cocoa::graphics::MaterialHandle materialHandle = materialManager.Load(
             "material-a",
             shaderHandle,
             "opaque",
-            cocoa::Core::Color{0.5, 1.0, 0.5, 1.0f}
+            cocoa::core::Color{0.5, 1.0, 0.5, 1.0f}
         );
 
-        const cocoa::Graphics::SpriteHandle spriteHandle = spriteManager.Load(
+        const cocoa::graphics::SpriteHandle spriteHandle = spriteManager.Load(
             "default-sprite",
             textureHandle,
-            cocoa::Math::Vector2f(0.0f, 0.0f),
-            cocoa::Math::Vector2f(256.0f, 256.0f),
-            cocoa::Math::Vector2f(256.0f, 256.0f)
+            cocoa::math::Vector2f(0.0f, 0.0f),
+            cocoa::math::Vector2f(256.0f, 256.0f),
+            cocoa::math::Vector2f(256.0f, 256.0f)
         );
 
-        cocoa::Graphics::QuadBatch sut(
+        cocoa::graphics::QuadBatch sut(
             graphicsDevice,
             shaderManager,
             textureManager,
@@ -838,7 +838,7 @@ namespace CocoaTests::Graphics
             renderStats
         );
 
-        constexpr cocoa::Math::Matrix4f identity = cocoa::Math::Matrix4f::Identity();
+        constexpr cocoa::math::Matrix4f identity = cocoa::math::Matrix4f::Identity();
 
         sut.Draw(
             identity,

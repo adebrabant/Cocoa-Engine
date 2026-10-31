@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace cocoa::Platforms
+namespace cocoa::platforms
 {
 	class Window
 	{

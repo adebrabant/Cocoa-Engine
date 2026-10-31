@@ -1,6 +1,6 @@
 {
   "dummy_shader": {
-    "vertexPath": "Shaders/Dummy.vert",
-    "fragmentPath": "Shaders/Dummy.frag"
+    "vertexPath": "shaders/dummy.vert",
+    "fragmentPath": "shaders/dummy.frag"
   }
 }

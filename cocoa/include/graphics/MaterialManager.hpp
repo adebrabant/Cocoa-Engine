@@ -7,12 +7,12 @@
 #include <string>
 #include <unordered_map>
 
-namespace cocoa::Core
+namespace cocoa::core
 {
 	struct Color;
 }
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	struct TextureHandle;
 	struct ShaderHandle;
@@ -30,7 +30,7 @@ namespace cocoa::Graphics
 			const std::string& materialId,
 			ShaderHandle shaderHandle,
 			const std::string& blendMode,
-			Core::Color tint
+			core::Color tint
 		);
 
 		const Material& Get(MaterialHandle handle) const;

@@ -2,7 +2,7 @@
 
 #include "graphics/Shader.hpp"
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	class OpenGLShader : public Shader
 	{
@@ -21,10 +21,10 @@ namespace cocoa::Graphics
 
 		void SetInt(const std::string& name, int value) const override;
 		void SetFloat(const std::string& name, float value) const override;
-		void SetVector4(const std::string& name, const Math::Vector4f& value) const override;
-		void SetMatrix4(const std::string& name, const Math::Matrix4f& value) const override;
+		void SetVector4(const std::string& name, const math::Vector4f& value) const override;
+		void SetMatrix4(const std::string& name, const math::Matrix4f& value) const override;
 		void SetIntArray(const std::string& name, const int* values, int count) const override;
-		void SetVector2fArray(const std::string& name, const Math::Vector2f* values, int count) const override;
+		void SetVector2fArray(const std::string& name, const math::Vector2f* values, int count) const override;
 
 	private:
 		void Destroy() const;

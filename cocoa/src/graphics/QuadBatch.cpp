@@ -16,7 +16,7 @@
 
 #include <algorithm>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
     QuadBatch::QuadBatch(
         GraphicsDevice& graphicsDevice,
@@ -74,13 +74,13 @@ namespace cocoa::Graphics
     QuadBatch::~QuadBatch() = default;
 
     void QuadBatch::Draw(
-        const Math::Matrix4f& modelMatrix,
+        const math::Matrix4f& modelMatrix,
         const MaterialHandle materialHandle,
         const TextureHandle textureHandle,
-        const Math::Vector2f& tilingFactor)
+        const math::Vector2f& tilingFactor)
     {
         const Material& material = m_materialManager.Get(materialHandle);
-        const Math::Vector4f color{ material.Tint.R, material.Tint.G, material.Tint.B, material.Tint.A };
+        const math::Vector4f color{ material.Tint.R, material.Tint.G, material.Tint.B, material.Tint.A };
         const std::array<QuadVertex, 4> vertices = BuildVertices(
             modelMatrix,
             color,
@@ -100,16 +100,16 @@ namespace cocoa::Graphics
     }
 
     void QuadBatch::Draw(
-        const Math::Matrix4f& modelMatrix,
+        const math::Matrix4f& modelMatrix,
         const MaterialHandle materialHandle,
         const SpriteHandle spriteHandle,
-        const Math::Vector2f& tilingFactor,
+        const math::Vector2f& tilingFactor,
         const bool flipVertical,
         const bool flipHorizontal)
     {
         const Material& material = m_materialManager.Get(materialHandle);
         const Sprite& sprite = m_spriteManager.Get(spriteHandle);
-        const Math::Vector4f color{ material.Tint.R, material.Tint.G, material.Tint.B, material.Tint.A };
+        const math::Vector4f color{ material.Tint.R, material.Tint.G, material.Tint.B, material.Tint.A };
         const std::array<QuadVertex, 4> vertices = BuildVertices(
             modelMatrix,
             color,
@@ -128,7 +128,7 @@ namespace cocoa::Graphics
         );
     }
 
-    void QuadBatch::Flush(const Math::Matrix4f& viewProjectionMatrix)
+    void QuadBatch::Flush(const math::Matrix4f& viewProjectionMatrix)
     {
         if (m_drawCommands.empty())
             return;
@@ -139,7 +139,7 @@ namespace cocoa::Graphics
         m_renderStatistics.BatchFlushCount++;
     }
 
-    void QuadBatch::BuildBatch(const Math::Matrix4f& viewProjectionMatrix)
+    void QuadBatch::BuildBatch(const math::Matrix4f& viewProjectionMatrix)
     {
         uint32_t batchCounter{ 0 };
         BatchData batchData
@@ -210,7 +210,7 @@ namespace cocoa::Graphics
 
     void QuadBatch::ExecuteBatch(
         const BatchData& batchData,
-        const Math::Matrix4f& viewProjectionMatrix) const
+        const math::Matrix4f& viewProjectionMatrix) const
     {
         const Shader& shader = m_shaderManager.Get(batchData.Shader);
         const std::array samplerUnits = CreateSamplerUnits();
@@ -228,7 +228,7 @@ namespace cocoa::Graphics
             samplerUnits.size()
         );
 
-        std::array<Math::Vector2f, TextureSlots::MaxCount> textureHalfTexels{};
+        std::array<math::Vector2f, TextureSlots::MaxCount> textureHalfTexels{};
         for (uint32_t i = 0; i < batchData.Textures.Count; ++i)
         {
             const Texture2D& texture = m_textureManager.Get(batchData.Textures.Data[i]);
@@ -268,31 +268,31 @@ namespace cocoa::Graphics
     }
 
     std::array<QuadBatch::QuadVertex, 4> QuadBatch::BuildVertices(
-        const Math::Matrix4f& modelMatrix,
-        const Math::Vector4f& color,
-        const Math::Vector2f& minUV,
-        const Math::Vector2f& maxUV,
-        const Math::Vector2f& tilingFactor,
+        const math::Matrix4f& modelMatrix,
+        const math::Vector4f& color,
+        const math::Vector2f& minUV,
+        const math::Vector2f& maxUV,
+        const math::Vector2f& tilingFactor,
         const bool flipVertical,
         const bool flipHorizontal)
     {
         // Transform the quad's local-space corners into world space.
-        const Math::Vector4f worldBottomLeft =
-            modelMatrix * Math::Vector4f{-0.5f, -0.5f, 0.0f, 1.0f };
+        const math::Vector4f worldBottomLeft =
+            modelMatrix * math::Vector4f{-0.5f, -0.5f, 0.0f, 1.0f };
 
-        const Math::Vector4f worldBottomRight =
-            modelMatrix * Math::Vector4f{ 0.5f, -0.5f, 0.0f, 1.0f };
+        const math::Vector4f worldBottomRight =
+            modelMatrix * math::Vector4f{ 0.5f, -0.5f, 0.0f, 1.0f };
 
-        const Math::Vector4f worldTopRight =
-            modelMatrix * Math::Vector4f{ 0.5f, 0.5f, 0.0f, 1.0f };
+        const math::Vector4f worldTopRight =
+            modelMatrix * math::Vector4f{ 0.5f, 0.5f, 0.0f, 1.0f };
 
-        const Math::Vector4f worldTopLeft =
-            modelMatrix * Math::Vector4f{ -0.5f, 0.5f, 0.0f, 1.0f };
+        const math::Vector4f worldTopLeft =
+            modelMatrix * math::Vector4f{ -0.5f, 0.5f, 0.0f, 1.0f };
 
-        Math::Vector2f bottomLeftUV(0.0f, 0.0f);
-        Math::Vector2f bottomRightUV(1.0f, 0.0f);
-        Math::Vector2f topRightUV(1.0f, 1.0f);
-        Math::Vector2f topLeftUV(0.0f, 1.0f);
+        math::Vector2f bottomLeftUV(0.0f, 0.0f);
+        math::Vector2f bottomRightUV(1.0f, 0.0f);
+        math::Vector2f topRightUV(1.0f, 1.0f);
+        math::Vector2f topLeftUV(0.0f, 1.0f);
 
         if (flipHorizontal)
         {

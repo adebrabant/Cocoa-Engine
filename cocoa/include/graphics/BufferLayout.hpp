@@ -5,7 +5,7 @@
 #include <initializer_list>
 #include <vector>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	class BufferLayout
 	{

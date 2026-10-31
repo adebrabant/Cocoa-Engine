@@ -7,7 +7,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	class GraphicsDevice;
 	class Shader;
@@ -22,8 +22,8 @@ namespace cocoa::Graphics
 		ShaderManager& operator=(const ShaderManager&) = delete;
 
 		ShaderHandle Load(
-			const std::string& shaderId, 
-			const std::string& vertexSource, 
+			const std::string& shaderId,
+			const std::string& vertexSource,
 			const std::string& fragmentSource
 		);
 		const Shader& Get(ShaderHandle handle) const;

@@ -2,18 +2,18 @@
 #include <graphics/SpriteManager.hpp>
 #include <gtest/gtest.h>
 
-namespace CocoaTests::Graphics
+namespace cocoa_tests::graphics
 {
 	TEST(SpriteManagerTests, Load_ShouldReturnSpriteHandle_WhenProvidingValidId)
 	{
 		const std::string spriteId{ "test-sprite" };
-		constexpr cocoa::Graphics::TextureHandle textureHandle{ .Id = 1 };
-		constexpr cocoa::Math::Vector2f minPixel(0.0f, 0.0f);
-		constexpr cocoa::Math::Vector2f maxPixel(256.0f, 256.0f);
-		constexpr cocoa::Math::Vector2f textureSize(256.0f, 256.0f);
-		cocoa::Graphics::SpriteManager sut;
+		constexpr cocoa::graphics::TextureHandle textureHandle{ .Id = 1 };
+		constexpr cocoa::math::Vector2f minPixel(0.0f, 0.0f);
+		constexpr cocoa::math::Vector2f maxPixel(256.0f, 256.0f);
+		constexpr cocoa::math::Vector2f textureSize(256.0f, 256.0f);
+		cocoa::graphics::SpriteManager sut;
 
-		cocoa::Graphics::SpriteHandle result = sut.Load(
+		cocoa::graphics::SpriteHandle result = sut.Load(
 			spriteId,
 			textureHandle,
 			minPixel,
@@ -27,13 +27,13 @@ namespace CocoaTests::Graphics
 	TEST(SpriteManagerTests, Load_ShouldReturnSameSpriteHandle_WhenProvidingSameSpriteId)
 	{
 		const std::string spriteId{ "test-sprite" };
-		constexpr cocoa::Graphics::TextureHandle textureHandle{ .Id = 1 };
-		constexpr cocoa::Math::Vector2f minPixel(0.0f, 0.0f);
-		constexpr cocoa::Math::Vector2f maxPixel(256.0f, 256.0f);
-		constexpr cocoa::Math::Vector2f textureSize(256.0f, 256.0f);
-		cocoa::Graphics::SpriteManager sut;
+		constexpr cocoa::graphics::TextureHandle textureHandle{ .Id = 1 };
+		constexpr cocoa::math::Vector2f minPixel(0.0f, 0.0f);
+		constexpr cocoa::math::Vector2f maxPixel(256.0f, 256.0f);
+		constexpr cocoa::math::Vector2f textureSize(256.0f, 256.0f);
+		cocoa::graphics::SpriteManager sut;
 
-		const cocoa::Graphics::SpriteHandle result1 = sut.Load(
+		const cocoa::graphics::SpriteHandle result1 = sut.Load(
 			spriteId,
 			textureHandle,
 			minPixel,
@@ -41,7 +41,7 @@ namespace CocoaTests::Graphics
 			textureSize
 		);
 
-		const cocoa::Graphics::SpriteHandle result2 = sut.Load(
+		const cocoa::graphics::SpriteHandle result2 = sut.Load(
 			spriteId,
 			textureHandle,
 			minPixel,
@@ -54,13 +54,13 @@ namespace CocoaTests::Graphics
 
 	TEST(SpriteManagerTests, Load_ShouldReturnDifferentSpriteHandle_WhenProvidingDifferentSpriteId)
 	{
-		constexpr cocoa::Graphics::TextureHandle textureHandle{ .Id = 1 };
-		constexpr cocoa::Math::Vector2f minPixel(0.0f, 0.0f);
-		constexpr cocoa::Math::Vector2f maxPixel(256.0f, 256.0f);
-		constexpr cocoa::Math::Vector2f textureSize(256.0f, 256.0f);
-		cocoa::Graphics::SpriteManager sut;
+		constexpr cocoa::graphics::TextureHandle textureHandle{ .Id = 1 };
+		constexpr cocoa::math::Vector2f minPixel(0.0f, 0.0f);
+		constexpr cocoa::math::Vector2f maxPixel(256.0f, 256.0f);
+		constexpr cocoa::math::Vector2f textureSize(256.0f, 256.0f);
+		cocoa::graphics::SpriteManager sut;
 
-		const cocoa::Graphics::SpriteHandle result1 = sut.Load(
+		const cocoa::graphics::SpriteHandle result1 = sut.Load(
 			"test-sprite",
 			textureHandle,
 			minPixel,
@@ -68,7 +68,7 @@ namespace CocoaTests::Graphics
 			textureSize
 		);
 
-		const cocoa::Graphics::SpriteHandle result2 = sut.Load(
+		const cocoa::graphics::SpriteHandle result2 = sut.Load(
 			"some-sprite",
 			textureHandle,
 			minPixel,
@@ -82,13 +82,13 @@ namespace CocoaTests::Graphics
 	TEST(SpriteManagerTests, Get_ShouldReturnSprite_WhenProvidingValidHandle)
 	{
 		const std::string spriteId{ "test-sprite" };
-		constexpr cocoa::Graphics::TextureHandle textureHandle{ .Id = 1 };
-		constexpr cocoa::Math::Vector2f minPixel(250.0f, 400.0f);
-		constexpr cocoa::Math::Vector2f maxPixel(500.0f, 800.0f);
-		constexpr cocoa::Math::Vector2f textureSize(1000.0f, 800.0f);
-		cocoa::Graphics::SpriteManager sut;
+		constexpr cocoa::graphics::TextureHandle textureHandle{ .Id = 1 };
+		constexpr cocoa::math::Vector2f minPixel(250.0f, 400.0f);
+		constexpr cocoa::math::Vector2f maxPixel(500.0f, 800.0f);
+		constexpr cocoa::math::Vector2f textureSize(1000.0f, 800.0f);
+		cocoa::graphics::SpriteManager sut;
 
-		const cocoa::Graphics::SpriteHandle handle = sut.Load(
+		const cocoa::graphics::SpriteHandle handle = sut.Load(
 			spriteId,
 			textureHandle,
 			minPixel,
@@ -96,7 +96,7 @@ namespace CocoaTests::Graphics
 			textureSize
 		);
 
-		const cocoa::Graphics::Sprite& result = sut.Get(handle);
+		const cocoa::graphics::Sprite& result = sut.Get(handle);
 
 		EXPECT_EQ(spriteId, result.Id);
 		EXPECT_EQ(textureHandle.Id, result.Texture.Id);
@@ -109,13 +109,13 @@ namespace CocoaTests::Graphics
 	TEST(SpriteManagerTests, Get_ShouldReturnSameSprite_WhenProvidingSameHandle)
 	{
 		const std::string spriteId{ "test-sprite" };
-		constexpr cocoa::Graphics::TextureHandle textureHandle{ .Id = 1 };
-		constexpr cocoa::Math::Vector2f minPixel(0.0f, 0.0f);
-		constexpr cocoa::Math::Vector2f maxPixel(256.0f, 256.0f);
-		constexpr cocoa::Math::Vector2f textureSize(256.0f, 256.0f);
-		cocoa::Graphics::SpriteManager sut;
+		constexpr cocoa::graphics::TextureHandle textureHandle{ .Id = 1 };
+		constexpr cocoa::math::Vector2f minPixel(0.0f, 0.0f);
+		constexpr cocoa::math::Vector2f maxPixel(256.0f, 256.0f);
+		constexpr cocoa::math::Vector2f textureSize(256.0f, 256.0f);
+		cocoa::graphics::SpriteManager sut;
 
-		const cocoa::Graphics::SpriteHandle handle = sut.Load(
+		const cocoa::graphics::SpriteHandle handle = sut.Load(
 			spriteId,
 			textureHandle,
 			minPixel,
@@ -123,27 +123,27 @@ namespace CocoaTests::Graphics
 			textureSize
 		);
 
-		const cocoa::Graphics::Sprite& result1 = sut.Get(handle);
-		const cocoa::Graphics::Sprite& result2 = sut.Get(handle);
+		const cocoa::graphics::Sprite& result1 = sut.Get(handle);
+		const cocoa::graphics::Sprite& result2 = sut.Get(handle);
 
 		EXPECT_EQ(&result1, &result2);
 	}
 
 	TEST(SpriteManagerTests, Get_ShouldReturnDifferentSprite_WhenProvidingDifferentHandle)
 	{
-		constexpr cocoa::Graphics::TextureHandle textureHandle{ .Id = 1 };
-		constexpr cocoa::Math::Vector2f minPixel(0.0f, 0.0f);
-		constexpr cocoa::Math::Vector2f maxPixel(256.0f, 256.0f);
-		constexpr cocoa::Math::Vector2f textureSize(256.0f, 256.0f);
-		cocoa::Graphics::SpriteManager sut;
-		const cocoa::Graphics::SpriteHandle handle1 = sut.Load(
+		constexpr cocoa::graphics::TextureHandle textureHandle{ .Id = 1 };
+		constexpr cocoa::math::Vector2f minPixel(0.0f, 0.0f);
+		constexpr cocoa::math::Vector2f maxPixel(256.0f, 256.0f);
+		constexpr cocoa::math::Vector2f textureSize(256.0f, 256.0f);
+		cocoa::graphics::SpriteManager sut;
+		const cocoa::graphics::SpriteHandle handle1 = sut.Load(
 			"test-sprite",
 			textureHandle,
 			minPixel,
 			maxPixel,
 			textureSize
 		);
-		const cocoa::Graphics::SpriteHandle handle2 = sut.Load(
+		const cocoa::graphics::SpriteHandle handle2 = sut.Load(
 			"mock-sprite",
 			textureHandle,
 			minPixel,
@@ -151,16 +151,16 @@ namespace CocoaTests::Graphics
 			textureSize
 		);
 
-		const cocoa::Graphics::Sprite& result1 = sut.Get(handle1);
-		const cocoa::Graphics::Sprite& result2 = sut.Get(handle2);
+		const cocoa::graphics::Sprite& result1 = sut.Get(handle1);
+		const cocoa::graphics::Sprite& result2 = sut.Get(handle2);
 
 		EXPECT_NE(&result1, &result2);
 	}
 
 	TEST(SpriteManagerTests, Get_ShouldThrowError_WhenProvidingMissingHandle)
 	{
-		const cocoa::Graphics::SpriteManager sut;
-		constexpr cocoa::Graphics::SpriteHandle handle{ .Id = 9999 };
+		const cocoa::graphics::SpriteManager sut;
+		constexpr cocoa::graphics::SpriteHandle handle{ .Id = 9999 };
 
 		EXPECT_THROW(
 			{

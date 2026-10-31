@@ -1,7 +1,7 @@
 #include "graphics/BufferLayout.hpp"
 #include "graphics/BufferElement.hpp"
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	BufferLayout::BufferLayout(std::initializer_list<BufferElement> elements) :
 		m_elements(elements)

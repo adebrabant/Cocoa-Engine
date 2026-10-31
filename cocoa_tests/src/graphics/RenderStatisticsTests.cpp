@@ -2,11 +2,11 @@
 #include <graphics/RenderStatistics.hpp>
 #include <gtest/gtest.h>
 
-namespace CocoaTests::Graphics
+namespace cocoa_tests::graphics
 {
     TEST(RenderStatisticsTests, Reset_ShouldSetAllCountsToZero_WhenCalled)
     {
-        cocoa::Graphics::RenderStatistics sut;
+        cocoa::graphics::RenderStatistics sut;
         sut.VertexCount = 3;
         sut.IndexCount = 6;
         sut.DrawCount = 10;

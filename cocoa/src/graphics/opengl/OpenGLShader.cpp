@@ -7,7 +7,7 @@
 #include <iostream>
 #include <vector>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	OpenGLShader::OpenGLShader(const std::string& vertexSource, const std::string& fragmentSource)
 		: m_rendererId(0)
@@ -115,7 +115,7 @@ namespace cocoa::Graphics
 		glUniform1f(location, value);
 	}
 
-	void OpenGLShader::SetVector4(const std::string& name, const Math::Vector4f& value) const
+	void OpenGLShader::SetVector4(const std::string& name, const math::Vector4f& value) const
 	{
 		const GLint location = glGetUniformLocation(
 			static_cast<GLuint>(m_rendererId),
@@ -125,7 +125,7 @@ namespace cocoa::Graphics
 		glUniform4f(location, value.X, value.Y, value.Z, value.W);
 	}
 
-	void OpenGLShader::SetMatrix4(const std::string& name, const Math::Matrix4f& value) const
+	void OpenGLShader::SetMatrix4(const std::string& name, const math::Matrix4f& value) const
 	{
 		const GLint location = glGetUniformLocation(
 			static_cast<GLuint>(m_rendererId),
@@ -145,7 +145,7 @@ namespace cocoa::Graphics
 		glUniform1iv(location, count, values);
 	}
 
-	void OpenGLShader::SetVector2fArray(const std::string &name, const Math::Vector2f* values, const int count) const
+	void OpenGLShader::SetVector2fArray(const std::string &name, const math::Vector2f* values, const int count) const
 	{
 		std::vector<GLfloat> flattened(static_cast<size_t>(count) * 2);
 		for (auto i = 0; i < count; ++i)

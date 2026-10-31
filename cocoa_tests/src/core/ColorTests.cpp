@@ -1,11 +1,11 @@
 #include <core/Color.hpp>
 #include <gtest/gtest.h>
 
-namespace CocoaTests::Core
+namespace cocoa_tests::core
 {
     struct ColorTestCase
     {
-        cocoa::Core::Color Other;
+        cocoa::core::Color Other;
         bool Expected;
     };
     class ColorOperatorTests : public testing::TestWithParam<ColorTestCase> {};
@@ -44,7 +44,7 @@ namespace CocoaTests::Core
     TEST_P(ColorOperatorTests, BoolOperator_ShouldReturnExpectedValue)
     {
         const ColorTestCase testCase = GetParam();
-        constexpr cocoa::Core::Color sut{1.0f, 0.5f, 0.2f, 1.0f};
+        constexpr cocoa::core::Color sut{1.0f, 0.5f, 0.2f, 1.0f};
 
         const bool result = sut == testCase.Other;
 

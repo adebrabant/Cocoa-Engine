@@ -2,9 +2,9 @@
 
 #include <graphics/Shader.hpp>
 
-namespace CocoaTests::Stubs
+namespace cocoa_tests::stubs
 {
-	class StubShader : public cocoa::Graphics::Shader
+	class StubShader : public cocoa::graphics::Shader
 	{
 	public:
 		StubShader() = default;
@@ -13,9 +13,9 @@ namespace CocoaTests::Stubs
 		void Unbind() const override;
 		void SetInt(const std::string& name, int value) const override;
 		void SetFloat(const std::string& name, float value) const override;
-		void SetVector4(const std::string& name, const cocoa::Math::Vector4f& value) const override;
-		void SetMatrix4(const std::string& name, const cocoa::Math::Matrix4f& value) const override;
+		void SetVector4(const std::string& name, const cocoa::math::Vector4f& value) const override;
+		void SetMatrix4(const std::string& name, const cocoa::math::Matrix4f& value) const override;
 		void SetIntArray(const std::string& name, const int* values, int count) const override;
-		void SetVector2fArray(const std::string &name, const cocoa::Math::Vector2f *values, int count) const override;
+		void SetVector2fArray(const std::string &name, const cocoa::math::Vector2f *values, int count) const override;
 	};
 }

@@ -3,7 +3,7 @@
 #include <cassert>
 #include <cmath>
 
-namespace cocoa::Math
+namespace cocoa::math
 {
     /// <summary>
     /// Represents a four-dimensional vector using single-precision floating-point components.

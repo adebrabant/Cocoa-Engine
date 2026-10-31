@@ -3,11 +3,11 @@
 #include <gtest/gtest.h>
 #include <thread>
 
-namespace CocoaTests::Chronos
+namespace cocoa_tests::core
 {
     TEST(FrameClockTests, Tick_ShouldIncreaseAccumulator_WhenCalled)
     {
-        cocoa::Chronos::FrameClock sut(0.25f, 0.1f);
+        cocoa::core::FrameClock sut(0.25f, 0.1f);
         float alphaBefore = sut.GetAlpha();
 
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -18,7 +18,7 @@ namespace CocoaTests::Chronos
 
     TEST(FrameClockTests, CanUpdate_ShouldReturnTrue_WhenAccumulatorExceedsFixedDelta)
     {
-        cocoa::Chronos::FrameClock sut(0.25f, 0.05f);
+        cocoa::core::FrameClock sut(0.25f, 0.05f);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(60));
         sut.Tick();
@@ -28,7 +28,7 @@ namespace CocoaTests::Chronos
 
     TEST(FrameClockTests, CanUpdate_ShouldReturnFalse_WhenAccumulatorIsBelowFixedDelta)
     {
-        cocoa::Chronos::FrameClock sut(0.25f, 0.5f);
+        cocoa::core::FrameClock sut(0.25f, 0.5f);
 
         sut.Tick();
 
@@ -37,7 +37,7 @@ namespace CocoaTests::Chronos
 
     TEST(FrameClockTests, ConsumeUpdate_ShouldReduceAccumulator_WhenCanUpdate)
     {
-        cocoa::Chronos::FrameClock sut(0.25f, 0.05f);
+        cocoa::core::FrameClock sut(0.25f, 0.05f);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(60));
         sut.Tick();
@@ -51,7 +51,7 @@ namespace CocoaTests::Chronos
 
     TEST(FrameClockTests, GetDelta_ShouldReturnDelta_WhenPositive)
     {
-        cocoa::Chronos::FrameClock sut(0.25f, 1.0f / 60.0f);
+        cocoa::core::FrameClock sut(0.25f, 1.0f / 60.0f);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
         sut.Tick();
@@ -62,14 +62,14 @@ namespace CocoaTests::Chronos
 
     TEST(FrameClockTests, GetFixedDelta_ShouldReturnFixedDelta_WhenPositive)
     {
-        cocoa::Chronos::FrameClock sut(0.25f, 0.1f);
+        cocoa::core::FrameClock sut(0.25f, 0.1f);
 
         EXPECT_FLOAT_EQ(sut.GetFixedDelta(), 0.1f);
     }
 
     TEST(FrameClockTests, GetFixedDelta_ShouldReturnDeltaTime_WhenFixedDeltaZero)
     {
-        cocoa::Chronos::FrameClock sut(0.25f, 0.0f);
+        cocoa::core::FrameClock sut(0.25f, 0.0f);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
         sut.Tick();
@@ -79,7 +79,7 @@ namespace CocoaTests::Chronos
 
     TEST(FrameClockTests, GetAlpha_ShouldClampBetweenZeroAndOne)
     {
-        cocoa::Chronos::FrameClock sut(0.25f, 0.05f);
+        cocoa::core::FrameClock sut(0.25f, 0.05f);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         sut.Tick();
@@ -91,7 +91,7 @@ namespace CocoaTests::Chronos
 
     TEST(FrameClockTests, Reset_ShouldZeroAccumulatorAndDeltaTime)
     {
-        cocoa::Chronos::FrameClock sut(0.25f, 0.05f);
+        cocoa::core::FrameClock sut(0.25f, 0.05f);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
         sut.Tick();
@@ -103,7 +103,7 @@ namespace CocoaTests::Chronos
 
     TEST(FrameClockTests, GetElapsed_ShouldIncreaseOverTime)
     {
-        cocoa::Chronos::FrameClock sut(0.25f, 0.05f);
+        cocoa::core::FrameClock sut(0.25f, 0.05f);
 
         auto elapsed1 = sut.GetElapsed();
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -114,7 +114,7 @@ namespace CocoaTests::Chronos
 
     TEST(FrameClockTests, SleepNextFrame_ShouldSleepAtLeastTargetTime_WhenDeltaLessThanTarget)
     {
-        cocoa::Chronos::FrameClock sut(0.25f, 0.05f, 1.0f / 60.0f);
+        cocoa::core::FrameClock sut(0.25f, 0.05f, 1.0f / 60.0f);
 
         auto start = std::chrono::high_resolution_clock::now();
         sut.SleepNextFrame();
@@ -127,7 +127,7 @@ namespace CocoaTests::Chronos
 
     TEST(FrameClockTests, GetRemainingFrameTime_ShouldReturnRemainingFrameTime_WhenTargetFrameTimeIsGreaterThanZero)
     {
-        cocoa::Chronos::FrameClock sut(0.25f, 0.05f, 1.0f/ 60.0f);
+        cocoa::core::FrameClock sut(0.25f, 0.05f, 1.0f/ 60.0f);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
         sut.Tick();
@@ -138,8 +138,8 @@ namespace CocoaTests::Chronos
 
     TEST(FrameClockTests, GetRemainingFrameTime_ShouldReturnZero_WhenTargetFrameTimeIsEqualOrLessThanZero)
     {
-        const cocoa::Chronos::FrameClock sut(0.25f, 0.05f, 0.0f);
-        
+        const cocoa::core::FrameClock sut(0.25f, 0.05f, 0.0f);
+
         const auto result = sut.GetRemainingFrameTime();
 
         EXPECT_TRUE(result <= 0.0f);

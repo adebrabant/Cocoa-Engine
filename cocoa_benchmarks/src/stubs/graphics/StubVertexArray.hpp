@@ -2,15 +2,15 @@
 
 #include <graphics/VertexArray.hpp>
 
-namespace CocoaBenchmarks
+namespace cocoa_benchmarks
 {
-    class StubVertexArray : public cocoa::Graphics::VertexArray
+    class StubVertexArray : public cocoa::graphics::VertexArray
     {
     public:
         ~StubVertexArray() override = default;
         void Bind() const override { }
         void Unbind() const override { }
-        void AddVertexBuffer(const cocoa::Graphics::VertexBuffer& vertexBuffer) override { }
-        void SetIndexBuffer(const cocoa::Graphics::IndexBuffer& indexBuffer) override { }
+        void AddVertexBuffer(const cocoa::graphics::VertexBuffer& vertexBuffer) override { }
+        void SetIndexBuffer(const cocoa::graphics::IndexBuffer& indexBuffer) override { }
     };
 }

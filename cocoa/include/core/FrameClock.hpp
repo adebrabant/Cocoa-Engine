@@ -2,13 +2,13 @@
 
 #include <chrono>
 
-namespace cocoa::Chronos
+namespace cocoa::core
 {
 	class FrameClock
 	{
 	public:
 		FrameClock(float maxDelta, float fixedDelta, float targetFrameRate = 1.0f / 60.0f);
-		void Reset();            
+		void Reset();
 		void Tick();
 		void ConsumeUpdate();
 		void SleepNextFrame() const;

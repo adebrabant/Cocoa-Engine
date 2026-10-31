@@ -5,7 +5,7 @@
 
 #include <string>
 
-namespace cocoa::Assets
+namespace cocoa::assets
 {
 	struct TextureRecord
 	{
@@ -31,15 +31,15 @@ namespace cocoa::Assets
 		std::string Id;
 		std::string ShaderId;
 		std::string BlendMode;
-		Core::Color Tint;
+		core::Color Tint;
 	};
 
 	struct SpriteRecord
 	{
 		std::string Id;
 		std::string TextureId;
-		Math::Vector2f MinPixel;
-		Math::Vector2f MaxPixel;
+		math::Vector2f MinPixel;
+		math::Vector2f MaxPixel;
 	};
 
 	class AssetDatabase

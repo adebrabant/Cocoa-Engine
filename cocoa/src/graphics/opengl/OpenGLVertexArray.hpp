@@ -4,7 +4,7 @@
 
 #include <cstdint>
 
-namespace cocoa::Graphics
+namespace cocoa::graphics
 {
 	class OpenGLVertexArray : public VertexArray
 	{
