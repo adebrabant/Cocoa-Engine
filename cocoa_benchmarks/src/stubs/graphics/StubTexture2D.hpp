@@ -1,0 +1,16 @@
+#pragma once
+
+#include <graphics/Texture2D.hpp>
+
+namespace cocoa_benchmarks
+{
+	class StubTexture2D : public cocoa::graphics::Texture2D
+	{
+	public:
+		StubTexture2D(cocoa::graphics::TextureSpec textureSpec, const unsigned char* pixels) { }
+		~StubTexture2D() override = default;
+		void bind(uint32_t slot) const override { }
+		[[nodiscard]] uint32_t getWidth() const override { return 32; }
+		[[nodiscard]] uint32_t getHeight() const override { return 32; }
+	};
+}

@@ -1,0 +1,6 @@
+{
+  "dummy_shader": {
+    "vertexPath": "shaders/sprite.vert",
+    "fragmentPath": "shaders/sprite.frag"
+  }
+}

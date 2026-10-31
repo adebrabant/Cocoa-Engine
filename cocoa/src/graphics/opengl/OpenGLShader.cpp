@@ -1,0 +1,171 @@
+#include "graphics/opengl/OpenGLShader.hpp"
+#include "math/Matrix4f.hpp"
+#include "math/Vector2f.hpp"
+#include "math/Vector4f.hpp"
+
+#include <GL/glew.h>
+#include <iostream>
+#include <vector>
+
+namespace cocoa::graphics
+{
+	OpenGLShader::OpenGLShader(const std::string& vertexSource, const std::string& fragmentSource)
+		: m_rendererId(0)
+	{
+		const char* vertexShaderCStr = vertexSource.c_str();
+		const GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+		glShaderSource(vertexShader, 1, &vertexShaderCStr, nullptr);
+		glCompileShader(vertexShader);
+
+		GLint vertexCompileSuccess = 0;
+		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &vertexCompileSuccess);
+
+		if (!vertexCompileSuccess)
+		{
+			char infoLog[512];
+			glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
+			std::cerr << "Vertex shader comp failed: " << infoLog << std::endl;
+		}
+
+		const char* fragmentShaderCStr = fragmentSource.c_str();
+		const GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+		glShaderSource(fragmentShader, 1, &fragmentShaderCStr, nullptr);
+		glCompileShader(fragmentShader);
+
+		GLint fragmentCompileSuccess = 0;
+		glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &fragmentCompileSuccess);
+
+		if (!fragmentCompileSuccess)
+		{
+			char infoLog[512];
+			glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
+			std::cerr << "Fragment shader comp failed: " << infoLog << std::endl;
+		}
+
+		const GLuint shaderProgram = glCreateProgram();
+		glAttachShader(shaderProgram, vertexShader);
+		glAttachShader(shaderProgram, fragmentShader);
+		glLinkProgram(shaderProgram);
+
+		GLint linkSuccess = 0;
+		glGetProgramiv(shaderProgram, GL_LINK_STATUS, &linkSuccess);
+
+		if (!linkSuccess)
+		{
+			char infoLog[512];
+			glGetProgramInfoLog(shaderProgram, 512, nullptr, infoLog);
+			std::cerr << "Shader program link failed: " << infoLog << std::endl;
+		}
+
+		glDeleteShader(vertexShader);
+		glDeleteShader(fragmentShader);
+		m_rendererId = static_cast<uint32_t>(shaderProgram);
+	}
+
+	OpenGLShader::~OpenGLShader()
+	{
+		Destroy();
+	}
+
+	OpenGLShader::OpenGLShader(OpenGLShader&& other) noexcept :
+		m_rendererId(other.m_rendererId)
+	{
+		other.m_rendererId = 0;
+	}
+
+	OpenGLShader& OpenGLShader::operator==(OpenGLShader&& other) noexcept
+	{
+		if (this == &other)
+			return *this;
+
+		Destroy();
+		m_rendererId = other.m_rendererId;
+		other.m_rendererId = 0;
+
+		return *this;
+	}
+
+	void OpenGLShader::bind() const
+	{
+		glUseProgram(static_cast<GLuint>(m_rendererId));
+	}
+
+	void OpenGLShader::unbind() const
+	{
+		glUseProgram(0);
+	}
+
+	void OpenGLShader::setInt(const std::string& name, int value) const
+	{
+		const GLint location = glGetUniformLocation(
+			static_cast<GLuint>(m_rendererId),
+			name.c_str()
+		);
+
+		glUniform1i(location, value);
+	}
+
+	void OpenGLShader::setFloat(const std::string& name, float value) const
+	{
+		const GLint location = glGetUniformLocation(
+			static_cast<GLuint>(m_rendererId),
+			name.c_str()
+		);
+
+		glUniform1f(location, value);
+	}
+
+	void OpenGLShader::setVector4(const std::string& name, const math::Vector4f& value) const
+	{
+		const GLint location = glGetUniformLocation(
+			static_cast<GLuint>(m_rendererId),
+			name.c_str()
+		);
+
+		glUniform4f(location, value.x, value.y, value.z, value.w);
+	}
+
+	void OpenGLShader::setMatrix4(const std::string& name, const math::Matrix4f& value) const
+	{
+		const GLint location = glGetUniformLocation(
+			static_cast<GLuint>(m_rendererId),
+			name.c_str()
+		);
+
+		glUniformMatrix4fv(location, 1, GL_FALSE, &value[0]);
+	}
+
+	void OpenGLShader::setIntArray(const std::string& name, const int* values, const int count) const
+	{
+		const GLint location = glGetUniformLocation(
+			static_cast<GLuint>(m_rendererId),
+			name.c_str()
+		);
+
+		glUniform1iv(location, count, values);
+	}
+
+	void OpenGLShader::setVector2fArray(const std::string &name, const math::Vector2f* values, const int count) const
+	{
+		std::vector<GLfloat> flattened(static_cast<size_t>(count) * 2);
+		for (auto i = 0; i < count; ++i)
+		{
+			flattened[2*i] = values[i].x;
+			flattened[2*i+1] = values[i].y;
+		}
+		const GLint location = glGetUniformLocation(
+			static_cast<GLuint>(m_rendererId),
+			name.c_str()
+		);
+
+		glUniform2fv(location, count, flattened.data());
+	}
+
+	void OpenGLShader::Destroy() const
+	{
+		if (m_rendererId <= 0)
+			return;
+
+		glDeleteProgram(static_cast<GLuint>(m_rendererId));
+	}
+}
