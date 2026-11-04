@@ -38,6 +38,11 @@ namespace Cocoa::Graphics
 
         void Draw(
             const Math::Matrix4f& modelMatrix,
+            const Math::Vector4f& color,
+            MaterialHandle materialHandle
+        );
+        void Draw(
+            const Math::Matrix4f& modelMatrix,
             MaterialHandle materialHandle,
             TextureHandle textureHandle,
             const Math::Vector2f& tilingFactor
@@ -111,5 +116,6 @@ namespace Cocoa::Graphics
         Unique<IndexBuffer> m_ibo{ nullptr};
         std::vector<QuadDrawCommand> m_drawCommands;
         uint32_t m_maxQuadCount;
+        TextureHandle m_whiteTextureHandle;
     };
 }

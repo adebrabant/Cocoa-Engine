@@ -4,8 +4,10 @@
 #include "Scenes/ECS/View.hpp"
 #include "Scenes/Components/SpriteComponent.hpp"
 #include "Scenes/Components/TransformComponent.hpp"
-#include "Math/Matrix4f.hpp"
+#include "Scenes/Components/ColorQuadComponent.hpp"
 #include "Scenes/Components/QuadComponent.hpp"
+#include "Math/Matrix4f.hpp"
+#include "Math/Vector4f.hpp"
 
 namespace Cocoa::Scenes
 {
@@ -21,6 +23,27 @@ namespace Cocoa::Scenes
 
 	void Render2DSystem::Render(World& world, Graphics::Renderer2D& renderer, float alpha)
 	{
+		View<TransformComponent, ColorQuadComponent> colorQuadView(world);
+		for (auto [transform, colorQuadComponent] : colorQuadView)
+		{
+			Math::Matrix4f translation = Math::Matrix4f::Translation(transform.Position);
+			Math::Matrix4f zRotation = Math::Matrix4f::RotationZ(transform.Rotation.Z);
+			Math::Matrix4f scale = Math::Matrix4f::Scale(transform.Scale);
+
+			Math::Matrix4f modelMatrix = translation * zRotation * scale;
+			renderer.DrawQuad(
+				modelMatrix,
+				Math::Vector4f(
+					colorQuadComponent.Color.R,
+					colorQuadComponent.Color.G,
+					colorQuadComponent.Color.B,
+					colorQuadComponent.Color.A),
+				colorQuadComponent.Material,
+				colorQuadComponent.SortingLayer,
+				colorQuadComponent.SortingOrder
+			);
+		}
+
 		View<TransformComponent, QuadComponent> quadView(world);
 		for (auto [transform, quadComponent] : quadView)
 		{

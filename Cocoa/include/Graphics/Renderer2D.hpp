@@ -32,12 +32,19 @@ namespace Cocoa::Graphics
 		void BeginDraw(const Math::Matrix4f& viewProjectionMatrix);
 		void DrawQuad(
 			const Math::Matrix4f& modelMatrix,
+			const Math::Vector4f& color,
+			MaterialHandle materialHandle,
+			SortLayer sortingLayer,
+			int sortingOrder
+		);
+		void DrawQuad(
+			const Math::Matrix4f& modelMatrix,
 			MaterialHandle materialHandle,
 			TextureHandle textureHandle,
 			const Math::Vector2f& tilingFactor,
 			SortLayer sortingLayer,
-			int sortingOrder);
-
+			int sortingOrder
+		);
 		void DrawQuad(
 			const Math::Matrix4f& modelMatrix,
 			MaterialHandle materialHandle,
@@ -74,6 +81,12 @@ namespace Cocoa::Graphics
 			bool FlipVertical{};
 			bool FlipHorizontal{};
 		};
+		struct ColorQuadDrawSubmission
+		{
+			Math::Matrix4f ModelMatrix{};
+			Math::Vector4f Color{};
+			MaterialHandle Material{};
+		};
 		struct DrawSubmission
 		{
 			SortLayer SortingLayer{};
@@ -81,7 +94,8 @@ namespace Cocoa::Graphics
 			BatchType Batch{};
 			std::variant<
 				QuadDrawSubmission,
-				SpriteDrawSubmission> Data;
+				SpriteDrawSubmission,
+				ColorQuadDrawSubmission> Data;
 		};
 	
 	private:
