@@ -73,7 +73,7 @@ namespace Cocoa::Graphics
         delete[] quadIndices;
         constexpr uint32_t whiteTextureData{0xffffffff};
         m_whiteTextureHandle = m_textureManager.Load(
-            {.Width = 1, .Height = 1},
+            {.Id = "default-white-01", .Width = 1, .Height = 1},
             &whiteTextureData
         );
     }
