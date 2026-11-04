@@ -82,6 +82,7 @@ set(COCOA_PUBLIC_HEADERS
 
     include/Events/EventBus.hpp
     include/Scenes/Components/ProjectionComponent.hpp
+    include/Scenes/Components/ColorQuadComponent.hpp
 )
 
 set(COCOA_PRIVATE_SOURCES

@@ -119,7 +119,8 @@ namespace CocoaTests::Graphics
         enum class TestDrawType
         {
             RawQuad,
-            Sprite
+            Sprite,
+            RawColorQuad,
         };
 
         struct TestSubmission
@@ -135,13 +136,14 @@ namespace CocoaTests::Graphics
             TestSubmission{20.0f, 0, Cocoa::Graphics::SortLayer::UI, TestDrawType::Sprite},
             TestSubmission{30.0f, 1, Cocoa::Graphics::SortLayer::Background, TestDrawType::Sprite},
             TestSubmission{40.0f, 1, Cocoa::Graphics::SortLayer::Background, TestDrawType::RawQuad},
-            TestSubmission{50.0f, 2, Cocoa::Graphics::SortLayer::World, TestDrawType::Sprite}
+            TestSubmission{50.0f, 2, Cocoa::Graphics::SortLayer::World, TestDrawType::Sprite},
+            TestSubmission{60.0f, 1, Cocoa::Graphics::SortLayer::World, TestDrawType::RawColorQuad}
         };
 
         // Expected submission indices: 2, 3, 0, 4, 1.
         // Equal sorting keys must retain insertion order.
         constexpr std::array expectedX{
-            29.5f, 39.5f, 9.5f, 49.5f, 19.5f
+            29.5f, 39.5f, 59.5f, 9.5f, 49.5f, 19.5f
         };
 
         Stubs::StubGraphicsDevice stubGraphicsDevice;
@@ -221,6 +223,15 @@ namespace CocoaTests::Graphics
                     tilingFactor,
                     false,
                     false,
+                    testSubmission.SortingLayer,
+                    testSubmission.SortingOrder
+                );
+                break;
+            case TestDrawType::RawColorQuad:
+                sut.DrawQuad(
+                    modelMatrix,
+                    Cocoa::Math::Vector4f(1.0f, 1.0f, 0.0f, 1.0f),
+                    materialHandle,
                     testSubmission.SortingLayer,
                     testSubmission.SortingOrder
                 );

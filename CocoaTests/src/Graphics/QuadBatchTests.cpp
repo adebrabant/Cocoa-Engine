@@ -859,4 +859,45 @@ namespace CocoaTests::Graphics
 
         EXPECT_EQ(1, renderStats.DrawCount);
     }
+
+    TEST(QuadBatchTests, Flush_ShouldDrawOnce_WhenGivenColorOnlyCommand)
+    {
+        Stubs::StubGraphicsDevice graphicsDevice;
+        Cocoa::Graphics::ShaderManager shaderManager(graphicsDevice);
+        Cocoa::Graphics::TextureManager textureManager(graphicsDevice);
+        Cocoa::Graphics::MaterialManager materialManager;
+        Cocoa::Graphics::SpriteManager spriteManager;
+        Cocoa::Graphics::RenderStatistics renderStats;
+
+        Cocoa::Graphics::QuadBatch sut(
+            graphicsDevice,
+            shaderManager,
+            textureManager,
+            materialManager,
+            spriteManager,
+            renderStats
+        );
+
+        const Cocoa::Graphics::ShaderHandle shaderHandle = shaderManager.Load(
+            "test-shader",
+            "vertex-source",
+            "fragment-source"
+        );
+
+        const Cocoa::Graphics::MaterialHandle materialHandle = materialManager.Load(
+            "material-a",
+            shaderHandle,
+            "opaque",
+            Cocoa::Core::Color{1.0f, 1.0f, 1.0f, 1.0f}
+        );
+
+        constexpr auto identity = Cocoa::Math::Matrix4f::Identity();
+        constexpr auto color = Cocoa::Math::Vector4f(1.0, 0.0, 1.0, 1.0);
+
+        sut.Draw(identity, color, materialHandle);
+
+        sut.Flush(identity);
+
+        EXPECT_EQ(1, renderStats.DrawCount);
+    }
 }

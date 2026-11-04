@@ -13,6 +13,7 @@
 #include "Graphics/RenderStatistics.hpp"
 #include "Graphics/Material.hpp"
 #include "Graphics/Sprite.hpp"
+#include "Graphics/TextureSpec.hpp"
 
 #include <algorithm>
 
@@ -32,7 +33,8 @@ namespace Cocoa::Graphics
         m_materialManager(materialManager),
         m_spriteManager(spriteManager),
         m_renderStatistics(renderStatistics),
-        m_maxQuadCount(20000)
+        m_maxQuadCount(20000),
+        m_whiteTextureHandle()
     {
         const uint32_t maxVertices{ m_maxQuadCount * 4 };
         const uint32_t maxIndices{ m_maxQuadCount * 6 };
@@ -69,9 +71,38 @@ namespace Cocoa::Graphics
         m_vao->SetIndexBuffer(*m_ibo);
 
         delete[] quadIndices;
+        constexpr uint32_t whiteTextureData{0xffffffff};
+        m_whiteTextureHandle = m_textureManager.Load(
+            {.Width = 1, .Height = 1},
+            &whiteTextureData
+        );
     }
 
     QuadBatch::~QuadBatch() = default;
+
+    void QuadBatch::Draw(
+        const Math::Matrix4f& modelMatrix,
+        const Math::Vector4f& color,
+        const MaterialHandle materialHandle)
+    {
+        const Material& material = m_materialManager.Get(materialHandle);
+        const std::array<QuadVertex, 4> vertices = BuildVertices(
+            modelMatrix,
+            color,
+            {0.0f, 0.0f},
+            {1.0f, 1.0f},
+            {1.0f, 1.0f},
+            false,
+            false
+        );
+
+        m_drawCommands.emplace_back(
+            material.Shader,
+            m_whiteTextureHandle,
+            material.Blend,
+            vertices
+        );
+    }
 
     void QuadBatch::Draw(
         const Math::Matrix4f& modelMatrix,

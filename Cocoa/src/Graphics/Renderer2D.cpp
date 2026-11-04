@@ -42,6 +42,26 @@ namespace Cocoa::Graphics
 
 	void Renderer2D::DrawQuad(
 		const Math::Matrix4f& modelMatrix,
+		const Math::Vector4f& color,
+		const MaterialHandle materialHandle,
+		const SortLayer sortingLayer,
+		const int sortingOrder)
+	{
+		m_drawSubmissions.emplace_back(
+			sortingLayer,
+			sortingOrder,
+			BatchType::Quad,
+			ColorQuadDrawSubmission
+			{
+				modelMatrix,
+				color,
+				materialHandle
+			}
+		);
+	}
+
+	void Renderer2D::DrawQuad(
+		const Math::Matrix4f& modelMatrix,
 		const MaterialHandle materialHandle,
 		const TextureHandle textureHandle,
 		const Math::Vector2f& tilingFactor,
@@ -140,6 +160,14 @@ namespace Cocoa::Graphics
 					spriteData->TilingFactor,
 					spriteData->FlipVertical,
 					spriteData->FlipHorizontal
+				);
+			}
+			else if (const auto* colorQuadData = std::get_if<ColorQuadDrawSubmission>(&drawSubmission.Data))
+			{
+				m_quadBatch.Draw(
+					colorQuadData->ModelMatrix,
+					colorQuadData->Color,
+					colorQuadData->Material
 				);
 			}
 
