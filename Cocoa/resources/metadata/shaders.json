@@ -2,5 +2,9 @@
   "sprite_default_shader": {
     "vertexPath": "shaders/sprite_default.vert",
     "fragmentPath": "shaders/sprite_default.frag"
+  },
+  "circle_default_shader": {
+    "vertexPath": "shaders/circle_default.vert",
+    "fragmentPath": "shaders/circle_default.frag"
   }
 }

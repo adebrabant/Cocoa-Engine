@@ -26,6 +26,11 @@ namespace Cocoa::Graphics
 			materialManager,
 			spriteManager,
 			m_renderStatistics),
+		m_circleBatch(
+			graphicsDevice,
+			materialManager,
+			shaderManager,
+			m_renderStatistics),
 		m_viewProjectionMatrix()
 	{
 
@@ -104,6 +109,29 @@ namespace Cocoa::Graphics
 		);
 	}
 
+	void Renderer2D::DrawCircle(
+		const Math::Matrix4f& modelMatrix,
+		const Math::Vector4f& color,
+		const MaterialHandle materialHandle,
+		const float thickness,
+		const float fade,
+		const SortLayer sortingLayer,
+		const int sortingOrder)
+	{
+		m_drawSubmissions.emplace_back(
+			sortingLayer,
+			sortingOrder,
+			BatchType::Circle,
+			CircleDrawSubmission {
+				modelMatrix,
+				color,
+				materialHandle,
+				thickness,
+				fade
+			}
+		);
+	}
+
 	void Renderer2D::EndDraw()
 	{
 		if (m_drawSubmissions.empty())
@@ -170,6 +198,16 @@ namespace Cocoa::Graphics
 					colorQuadData->Material
 				);
 			}
+			else if (const auto* circleData = std::get_if<CircleDrawSubmission>(&drawSubmission.Data))
+			{
+				m_circleBatch.Draw(
+					circleData->ModelMatrix,
+					circleData->Material,
+					circleData->Color,
+					circleData->Thickness,
+					circleData->Fade
+				);
+			}
 
 			if (i == m_drawSubmissions.size() - 1 ||
 				drawSubmission.Batch != m_drawSubmissions[sortedDrawSubmissions[i+1].Index].Batch)
@@ -178,6 +216,9 @@ namespace Cocoa::Graphics
 				{
 				case BatchType::Quad:
 					m_quadBatch.Flush(m_viewProjectionMatrix);
+					break;
+				case BatchType::Circle:
+					m_circleBatch.Flush(m_viewProjectionMatrix);
 					break;
 				}
 			}

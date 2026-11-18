@@ -8,6 +8,7 @@
 #include <Scenes/Systems/Render2DSystem.hpp>
 #include <Assets/ResourceLoader.hpp>
 
+#include "Scenes/Components/CircleComponent.hpp"
 
 namespace Sandbox
 {
@@ -21,7 +22,7 @@ namespace Sandbox
 		m_world.AddComponent(cameraEntity, Cocoa::Scenes::TransformComponent{});
         m_world.AddSystem<Cocoa::Scenes::CameraSystem>();
 
-		const auto defaultMaterial = loader.LoadMaterial("default_material");
+		const auto spriteDefaultMaterial = loader.LoadMaterial("sprite_default_material");
 
 		const auto sunEntity = m_world.CreateEntity();
 		m_world.AddComponent(
@@ -37,7 +38,7 @@ namespace Sandbox
 			sunEntity,
 			Cocoa::Scenes::SpriteComponent
 			{
-				.Material = defaultMaterial,
+				.Material = spriteDefaultMaterial,
 				.Sprite = loader.LoadSprite("sunset_background_01_sprite"),
 				.SortingLayer = Cocoa::Graphics::SortLayer::Background,
 				.SortingOrder = 0
@@ -58,7 +59,7 @@ namespace Sandbox
 			mountainBackgroundEntity,
 			Cocoa::Scenes::SpriteComponent
 			{
-				.Material = defaultMaterial,
+				.Material = spriteDefaultMaterial,
 				.Sprite = loader.LoadSprite("mountains_background_01_sprite"),
 				.SortingLayer = Cocoa::Graphics::SortLayer::Background,
 				.SortingOrder = 1
@@ -78,7 +79,7 @@ namespace Sandbox
 			forestFogBackground01Entity,
 			Cocoa::Scenes::SpriteComponent
 			{
-				.Material = defaultMaterial,
+				.Material = spriteDefaultMaterial,
 				.Sprite = loader.LoadSprite("forest_fog_background_01_sprite"),
 				.SortingLayer = Cocoa::Graphics::SortLayer::Background,
 				.SortingOrder = 2
@@ -99,7 +100,7 @@ namespace Sandbox
 			forestFogBackground02Entity,
 			Cocoa::Scenes::SpriteComponent
 			{
-				.Material = defaultMaterial,
+				.Material = spriteDefaultMaterial,
 				.Sprite = loader.LoadSprite("forest_fog_background_02_sprite"),
 				.SortingLayer = Cocoa::Graphics::SortLayer::Background,
 				.SortingOrder = 3
@@ -120,7 +121,7 @@ namespace Sandbox
 			cherryBlossomTree02Entity,
 			Cocoa::Scenes::SpriteComponent
 			{
-				.Material = defaultMaterial,
+				.Material = spriteDefaultMaterial,
 				.Sprite = loader.LoadSprite("cherry_blossom_tree_02_sprite"),
 				.FlipVertical = false,
 				.FlipHorizontal = true,
@@ -142,7 +143,7 @@ namespace Sandbox
 			darkFloorTile01Entity,
 			Cocoa::Scenes::SpriteComponent
 			{
-				.Material = defaultMaterial,
+				.Material = spriteDefaultMaterial,
 				.Sprite = loader.LoadSprite("dark_floor_tile_01_sprite"),
 				.TilingFactor = Cocoa::Math::Vector2f(4.0f, 1.0f),
 				.SortingLayer = Cocoa::Graphics::SortLayer::World,
@@ -162,7 +163,7 @@ namespace Sandbox
 			cherryBlossomTree01Entity,
 			Cocoa::Scenes::SpriteComponent
 			{
-				.Material = defaultMaterial,
+				.Material = spriteDefaultMaterial,
 				.Sprite = loader.LoadSprite("cherry_blossom_tree_01_sprite"),
 				.SortingLayer = Cocoa::Graphics::SortLayer::World,
 				.SortingOrder = 0
@@ -183,8 +184,51 @@ namespace Sandbox
 			solidColorQuadEntity,
 			Cocoa::Scenes::ColorQuadComponent
 			{
-				.Material = defaultMaterial,
+				.Material = spriteDefaultMaterial,
 				.Color = {.R = 0.0f, .G = 1.0f, .B = 1.0f, .A = 1.0f},
+				.SortingLayer = Cocoa::Graphics::SortLayer::Foreground,
+				.SortingOrder = 1
+			}
+		);
+
+		const auto circleDefaultMaterial = loader.LoadMaterial("circle_default_material");
+		const auto solidColorCircleEntity = m_world.CreateEntity();
+		m_world.AddComponent(
+			solidColorCircleEntity,
+			Cocoa::Scenes::TransformComponent
+			{
+				.Position = { -1.5f, 0.8f, 0.0f },
+				.Rotation =  { 0.0f, 0.0f, 0.0f },
+				.Scale = { 0.4f, 0.4f, 1.0f }
+			}
+		);
+		m_world.AddComponent(
+			solidColorCircleEntity,
+			Cocoa::Scenes::CircleComponent
+			{
+				.Material = circleDefaultMaterial,
+				.Color = { 1.0f, 0.0f, 0.0f, 1.0f },
+				.SortingLayer = Cocoa::Graphics::SortLayer::Foreground,
+				.SortingOrder = 0
+			}
+		);
+
+		const auto solidColorCircleEntity02 = m_world.CreateEntity();
+		m_world.AddComponent(
+			solidColorCircleEntity02,
+			Cocoa::Scenes::TransformComponent
+			{
+				.Position = { 0.0f, 0.0f, 0.0f },
+				.Rotation =  { 0.0f, 0.0f, 0.0f },
+				.Scale = { 0.9f, 0.9f, 1.0f }
+			}
+		);
+		m_world.AddComponent(
+			solidColorCircleEntity02,
+			Cocoa::Scenes::CircleComponent
+			{
+				.Material = circleDefaultMaterial,
+				.Color = { 0.0f, 1.0f, 0.0f, 1.0f },
 				.SortingLayer = Cocoa::Graphics::SortLayer::Foreground,
 				.SortingOrder = 0
 			}

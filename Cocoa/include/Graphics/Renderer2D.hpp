@@ -2,12 +2,15 @@
 
 #include "Math/Matrix4f.hpp"
 #include "Graphics/QuadBatch.hpp"
+#include "Graphics/CircleBatch.hpp"
 #include "Graphics/SortLayer.hpp"
 #include "Graphics/GraphicsHandles.hpp"
 #include "Graphics/RenderStatistics.hpp"
 #include "Graphics/Viewport.hpp"
 
 #include <variant>
+
+#include "Scenes/Components/CircleComponent.hpp"
 
 namespace Cocoa::Graphics
 {
@@ -55,6 +58,15 @@ namespace Cocoa::Graphics
 			SortLayer sortingLayer,
 			int sortingOrder
 		);
+		void DrawCircle(
+			const Math::Matrix4f& modelMatrix,
+			const Math::Vector4f& color,
+			MaterialHandle materialHandle,
+			float thickness,
+			float fade,
+			SortLayer sortingLayer,
+			int sortingOrder
+		);
 		void EndDraw();
 
 		[[nodiscard]] const RenderStatistics& GetRenderStatistics() const { return m_renderStatistics; }
@@ -63,7 +75,8 @@ namespace Cocoa::Graphics
 	private:
 		enum class BatchType
 		{
-			Quad
+			Quad,
+			Circle
 		};
 		struct QuadDrawSubmission
 		{
@@ -87,6 +100,14 @@ namespace Cocoa::Graphics
 			Math::Vector4f Color{};
 			MaterialHandle Material{};
 		};
+		struct CircleDrawSubmission
+		{
+			Math::Matrix4f ModelMatrix{};
+			Math::Vector4f Color{};
+			MaterialHandle Material{};
+			float Thickness{};
+			float Fade{};
+		};
 		struct DrawSubmission
 		{
 			SortLayer SortingLayer{};
@@ -95,7 +116,8 @@ namespace Cocoa::Graphics
 			std::variant<
 				QuadDrawSubmission,
 				SpriteDrawSubmission,
-				ColorQuadDrawSubmission> Data;
+				ColorQuadDrawSubmission,
+				CircleDrawSubmission> Data;
 		};
 	
 	private:
@@ -103,6 +125,7 @@ namespace Cocoa::Graphics
 		RenderStatistics m_renderStatistics;
 		GraphicsDevice& m_graphicsDevice;
 		QuadBatch m_quadBatch;
+		CircleBatch m_circleBatch;
 		Math::Matrix4f m_viewProjectionMatrix;
 	};
 }
