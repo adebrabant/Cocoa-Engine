@@ -49,6 +49,7 @@ set(COCOA_TEST_SOURCES
     src/Events/EventBusTests.cpp
 
     src/Core/ColorTests.cpp
+    src/Graphics/CircleBatchTests.cpp
 )
 
 set(COCOA_TEST_DATA

@@ -6,6 +6,7 @@
 #include "Scenes/Components/TransformComponent.hpp"
 #include "Scenes/Components/ColorQuadComponent.hpp"
 #include "Scenes/Components/QuadComponent.hpp"
+#include "Scenes/Components/CircleComponent.hpp"
 #include "Math/Matrix4f.hpp"
 #include "Math/Vector4f.hpp"
 
@@ -23,6 +24,29 @@ namespace Cocoa::Scenes
 
 	void Render2DSystem::Render(World& world, Graphics::Renderer2D& renderer, float alpha)
 	{
+		View<TransformComponent, CircleComponent> circleView(world);
+		for (auto [transform, circleComponent] : circleView)
+		{
+			Math::Matrix4f translation = Math::Matrix4f::Translation(transform.Position);
+			Math::Matrix4f zRotation = Math::Matrix4f::RotationZ(transform.Rotation.Z);
+			Math::Matrix4f scale = Math::Matrix4f::Scale(transform.Scale);
+
+			Math::Matrix4f modelMatrix = translation * zRotation * scale;
+			renderer.DrawCircle(
+				modelMatrix,
+				Math::Vector4f(
+					circleComponent.Color.R,
+					circleComponent.Color.G,
+					circleComponent.Color.B,
+					circleComponent.Color.A),
+				circleComponent.Material,
+				circleComponent.Thickness,
+				circleComponent.Fade,
+				circleComponent.SortingLayer,
+				circleComponent.SortingOrder
+			);
+		}
+
 		View<TransformComponent, ColorQuadComponent> colorQuadView(world);
 		for (auto [transform, colorQuadComponent] : colorQuadView)
 		{
