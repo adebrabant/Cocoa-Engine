@@ -15,7 +15,7 @@ void main() {
 
     if (v_Fade <= 0.0) {
         // no fade is set do a hard cut
-        if (distance <= innerRadius && distance >= outerRadius) {
+        if (distance >= innerRadius && distance <= outerRadiu) {
             alpha = 1.0;
         }
     } else {
