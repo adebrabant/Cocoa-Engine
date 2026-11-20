@@ -197,7 +197,7 @@ namespace Sandbox
 			solidColorCircleEntity,
 			Cocoa::Scenes::TransformComponent
 			{
-				.Position = { -1.5f, 0.8f, 0.0f },
+				.Position = { 1.5f, 0.8f, 0.0f },
 				.Rotation =  { 0.0f, 0.0f, 0.0f },
 				.Scale = { 0.4f, 0.4f, 1.0f }
 			}
@@ -208,27 +208,6 @@ namespace Sandbox
 			{
 				.Material = circleDefaultMaterial,
 				.Color = { 1.0f, 0.0f, 0.0f, 1.0f },
-				.SortingLayer = Cocoa::Graphics::SortLayer::Foreground,
-				.SortingOrder = 0
-			}
-		);
-
-		const auto solidColorCircleEntity02 = m_world.CreateEntity();
-		m_world.AddComponent(
-			solidColorCircleEntity02,
-			Cocoa::Scenes::TransformComponent
-			{
-				.Position = { 0.0f, 0.0f, 0.0f },
-				.Rotation =  { 0.0f, 0.0f, 0.0f },
-				.Scale = { 0.9f, 0.9f, 1.0f }
-			}
-		);
-		m_world.AddComponent(
-			solidColorCircleEntity02,
-			Cocoa::Scenes::CircleComponent
-			{
-				.Material = circleDefaultMaterial,
-				.Color = { 0.0f, 1.0f, 0.0f, 1.0f },
 				.SortingLayer = Cocoa::Graphics::SortLayer::Foreground,
 				.SortingOrder = 0
 			}
