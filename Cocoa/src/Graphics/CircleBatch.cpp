@@ -88,8 +88,8 @@ namespace Cocoa::Graphics
             // Bottom-Left
             CircleVertex
             {
-                .Position = { worldBottomLeft.X, worldBottomLeft.Y, worldBottomLeft.Z },
-                .Location = { -0.5f, -0.5f, },
+                .WorldPosition = { worldBottomLeft.X, worldBottomLeft.Y, worldBottomLeft.Z },
+                .LocalPosition = { -0.5f, -0.5f, },
                 .Color = color,
                 .Thickness = thickness,
                 .Fade = fade
@@ -97,8 +97,8 @@ namespace Cocoa::Graphics
             // Bottom-Right
             CircleVertex
             {
-                .Position = { worldBottomRight.X, worldBottomRight.Y, worldBottomRight.Z },
-                .Location = { 0.5f, -0.5f },
+                .WorldPosition = { worldBottomRight.X, worldBottomRight.Y, worldBottomRight.Z },
+                .LocalPosition = { 0.5f, -0.5f },
                 .Color = color,
                 .Thickness = thickness,
                 .Fade = fade
@@ -106,8 +106,8 @@ namespace Cocoa::Graphics
             // Top-Right
             CircleVertex
             {
-                .Position = { worldTopRight.X, worldTopRight.Y, worldTopRight.Z },
-                .Location = { 0.5f, 0.5f },
+                .WorldPosition = { worldTopRight.X, worldTopRight.Y, worldTopRight.Z },
+                .LocalPosition = { 0.5f, 0.5f },
                 .Color = color,
                 .Thickness = thickness,
                 .Fade = fade
@@ -115,8 +115,8 @@ namespace Cocoa::Graphics
             // Top-Left
             CircleVertex
             {
-                .Position = { worldTopLeft.X, worldTopLeft.Y, worldTopLeft.Z },
-                .Location { -0.5f, 0.5f },
+                .WorldPosition = { worldTopLeft.X, worldTopLeft.Y, worldTopLeft.Z },
+                .LocalPosition { -0.5f, 0.5f },
                 .Color = color,
                 .Thickness = thickness,
                 .Fade = fade
