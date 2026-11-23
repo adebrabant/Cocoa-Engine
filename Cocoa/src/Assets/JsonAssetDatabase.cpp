@@ -107,7 +107,7 @@ namespace Cocoa::Assets
 		if (it == m_materialRecords.end())
 		{
 			throw std::runtime_error(
-				"No Material records found with the texture id: " +
+				"No Material records found with the material id: " +
 				id
 			);
 		}

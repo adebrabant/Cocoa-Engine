@@ -141,7 +141,7 @@ namespace Cocoa::Graphics
         m_renderStatistics.BatchFlushCount++;
     }
 
-    void CircleBatch::BuildBatch(const Math::Matrix4f& viewProjectionMatrix)
+    void CircleBatch::BuildBatch(const Math::Matrix4f& viewProjectionMatrix) const
     {
         uint32_t batchCounter{ 0 };
         CircleBatchData batchData
@@ -150,7 +150,7 @@ namespace Cocoa::Graphics
             .Blend = m_drawCommands[0].Blend
         };
 
-        for (CircleDrawCommand& command : m_drawCommands)
+        for (const CircleDrawCommand& command : m_drawCommands)
         {
             if (command.Shader.Id != batchData.Shader.Id ||
                 command.Blend != batchData.Blend ||

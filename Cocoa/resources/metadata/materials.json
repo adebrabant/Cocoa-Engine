@@ -8,5 +8,10 @@
     "shader": "circle_default_shader",
     "blendMode": "alpha",
     "tint": [ 1.0, 1.0, 1.0, 1.0 ]
+  },
+  "line_default_material" : {
+    "shader": "line_default_shader",
+    "blendMode": "alpha",
+    "tint": [ 1.0, 1.0, 1.0, 1.0 ]
   }
 }

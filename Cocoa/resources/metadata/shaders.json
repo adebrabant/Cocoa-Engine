@@ -6,5 +6,9 @@
   "circle_default_shader": {
     "vertexPath": "shaders/circle_default.vert",
     "fragmentPath": "shaders/circle_default.frag"
+  },
+  "line_default_shader": {
+    "vertexPath": "shaders/line_default.vert",
+    "fragmentPath": "shaders/line_default.frag"
   }
 }

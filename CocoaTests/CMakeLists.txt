@@ -37,6 +37,8 @@ set(COCOA_TEST_SOURCES
     src/Graphics/OrthographicProjectionTests.cpp
     src/Graphics/RenderStatisticsTests.cpp
     src/Graphics/QuadBatchTests.cpp
+    src/Graphics/CircleBatchTests.cpp
+    src/Graphics/LineBatchTests.cpp
     src/Graphics/Renderer2DTests.cpp
 
     src/Stubs/Graphics/StubGraphicsDevice.cpp
@@ -49,7 +51,6 @@ set(COCOA_TEST_SOURCES
     src/Events/EventBusTests.cpp
 
     src/Core/ColorTests.cpp
-    src/Graphics/CircleBatchTests.cpp
 )
 
 set(COCOA_TEST_DATA

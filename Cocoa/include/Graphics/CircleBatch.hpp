@@ -61,7 +61,7 @@ namespace Cocoa::Graphics
             BlendMode Blend;
             std::vector<CircleVertex> Vertices;
         };
-        void BuildBatch(const Math::Matrix4f& viewProjectionMatrix);
+        void BuildBatch(const Math::Matrix4f& viewProjectionMatrix) const;
         void ExecuteBatch(
             const CircleBatchData& batchData,
             const Math::Matrix4f& viewProjectionMatrix) const;

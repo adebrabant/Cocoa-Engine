@@ -7,6 +7,7 @@
 #include "Scenes/Components/ColorQuadComponent.hpp"
 #include "Scenes/Components/QuadComponent.hpp"
 #include "Scenes/Components/CircleComponent.hpp"
+#include "Scenes/Components/LineComponent.hpp"
 #include "Math/Matrix4f.hpp"
 #include "Math/Vector4f.hpp"
 
@@ -103,6 +104,31 @@ namespace Cocoa::Scenes
 				spriteComponent.FlipHorizontal,
 				spriteComponent.SortingLayer,
 				spriteComponent.SortingOrder
+			);
+		}
+
+		View<TransformComponent, LineComponent> lineView(world);
+		for (auto [transform, lineComponent] : lineView)
+		{
+			Math::Matrix4f translation = Math::Matrix4f::Translation(transform.Position);
+			Math::Matrix4f zRotation = Math::Matrix4f::RotationZ(transform.Rotation.Z);
+			Math::Matrix4f scale = Math::Matrix4f::Scale(transform.Scale);
+			Math::Matrix4f modelMatrix = translation * zRotation * scale;
+
+			renderer.DrawLine(
+				lineComponent.Material,
+				modelMatrix,
+				Math::Vector4f(
+					lineComponent.Color.R,
+					lineComponent.Color.G,
+					lineComponent.Color.B,
+					lineComponent.Color.A),
+				lineComponent.StartPoint,
+				lineComponent.EndPoint,
+				lineComponent.Thickness,
+				lineComponent.Fade,
+				lineComponent.SortingLayer,
+				lineComponent.SortingOrder
 			);
 		}
 	}
