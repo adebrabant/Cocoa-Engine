@@ -48,7 +48,7 @@ namespace Cocoa::Graphics
 
         m_vao = m_graphicsDevice.CreateVertexArray();
         m_vbo = m_graphicsDevice.CreateVertexBuffer(maxVertices * sizeof(LineVertex), layout);
-        m_ibo = m_graphicsDevice.CreateIndexBuffer(lineIndices, maxVertices);
+        m_ibo = m_graphicsDevice.CreateIndexBuffer(lineIndices, maxIndices);
         m_vao->AddVertexBuffer(*m_vbo);
         m_vao->SetIndexBuffer(*m_ibo);
 

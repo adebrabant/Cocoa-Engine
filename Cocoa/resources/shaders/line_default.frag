@@ -14,7 +14,7 @@ void main() {
 
         float dx = abs(v_LocalPosition.x);
         float widthFade = 1.0 - smoothstep(
-            edge - clamp(v_Fade.x, 0.002, edge),
+            edge - v_Fade.x,
             edge,
             dx
         );
