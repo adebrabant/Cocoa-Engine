@@ -222,7 +222,7 @@ namespace Sandbox
 			{
 				.Position = { 0.0f, 0.0f, 0.0f },
 				.Rotation =  { 0.0f, 0.0f, 0.0f },
-				.Scale = { 0.4f, 0.4f, 1.0f }
+				.Scale = { 0.3f, 0.3f, 1.0f }
 			}
 		);
 		m_world.AddComponent(

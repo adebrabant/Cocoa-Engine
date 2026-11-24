@@ -46,7 +46,7 @@ namespace Cocoa::Graphics
             Math::Vector3f WorldPosition{};
             Math::Vector2f LocalPosition{};
             Math::Vector4f Color{};
-            float Fade{};
+            Math::Vector2f Fade{};
         };
         struct LineDrawCommand
         {

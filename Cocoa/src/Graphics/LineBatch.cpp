@@ -43,7 +43,7 @@ namespace Cocoa::Graphics
             { 0, ShaderDataType::Float3, "a_WorldPosition" },
             { 1, ShaderDataType::Float2, "a_LocalPosition" },
             { 2, ShaderDataType::Float4, "a_Color" },
-            { 3, ShaderDataType::Float, "a_Fade" }
+            { 3, ShaderDataType::Float2, "a_Fade" }
         };
 
         m_vao = m_graphicsDevice.CreateVertexArray();
@@ -69,6 +69,8 @@ namespace Cocoa::Graphics
         const auto normalizedDirection = direction.Normalized();
         const Math::Vector2f perpendicular(-normalizedDirection.Y, normalizedDirection.X);
         const auto offset = perpendicular * (thickness / 2);
+        // Apply proportional scaling for x-axis
+        const auto calculatedFade = Math::Vector2f(fade * (thickness/direction.Length()), fade);
 
         const auto v0 = startPoint + offset;
         const Math::Vector4f worldTopLeft =
@@ -94,7 +96,7 @@ namespace Cocoa::Graphics
                 .WorldPosition = { worldBottomLeft.X, worldBottomLeft.Y, worldBottomLeft.Z },
                 .LocalPosition = { -0.5f, -0.5f },
                 .Color = color,
-                .Fade = fade
+                .Fade = calculatedFade
             },
             // Bottom-Right
             LineVertex
@@ -102,7 +104,7 @@ namespace Cocoa::Graphics
                 .WorldPosition = { worldBottomRight.X, worldBottomRight.Y, worldBottomRight.Z },
                 .LocalPosition = { 0.5f, -0.5f },
                 .Color = color,
-                .Fade = fade
+                .Fade = calculatedFade
             },
             // Top-Right
             LineVertex
@@ -110,7 +112,7 @@ namespace Cocoa::Graphics
                 .WorldPosition = { worldTopRight.X, worldTopRight.Y, worldTopRight.Z },
                 .LocalPosition = { 0.5f, 0.5f },
                 .Color = color,
-                .Fade = fade
+                .Fade = calculatedFade
             },
             // Top-Left
             LineVertex
@@ -118,7 +120,7 @@ namespace Cocoa::Graphics
                 .WorldPosition = { worldTopLeft.X, worldTopLeft.Y, worldTopLeft.Z },
                 .LocalPosition = { -0.5f, 0.5f },
                 .Color = color,
-                .Fade = fade
+                .Fade = calculatedFade
             }
         };
 

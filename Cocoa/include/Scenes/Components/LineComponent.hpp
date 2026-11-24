@@ -14,7 +14,7 @@ namespace Cocoa::Scenes
         Math::Vector2f EndPoint{0.5f, 0.0f};
         Core::Color Color{};
         float Thickness{0.05f};
-        float Fade{0.02f};
+        float Fade{0.1f};
         Graphics::SortLayer SortingLayer{Graphics::SortLayer::World};
         int SortingOrder{0};
     };
