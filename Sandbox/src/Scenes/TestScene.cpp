@@ -9,6 +9,7 @@
 #include <Assets/ResourceLoader.hpp>
 
 #include "Scenes/Components/CircleComponent.hpp"
+#include "Scenes/Components/LineComponent.hpp"
 
 namespace Sandbox
 {
@@ -208,6 +209,28 @@ namespace Sandbox
 			{
 				.Material = circleDefaultMaterial,
 				.Color = { 1.0f, 0.0f, 0.0f, 1.0f },
+				.SortingLayer = Cocoa::Graphics::SortLayer::Foreground,
+				.SortingOrder = 0
+			}
+		);
+
+		const auto lineDefaultMaterial = loader.LoadMaterial("line_default_material");
+		const auto solidLineEntity = m_world.CreateEntity();
+		m_world.AddComponent(
+			solidLineEntity,
+			Cocoa::Scenes::TransformComponent
+			{
+				.Position = { 0.0f, 0.0f, 0.0f },
+				.Rotation =  { 0.0f, 0.0f, 0.0f },
+				.Scale = { 0.3f, 0.3f, 1.0f }
+			}
+		);
+		m_world.AddComponent(
+			solidLineEntity,
+			Cocoa::Scenes::LineComponent
+			{
+				.Material = lineDefaultMaterial,
+				.Color = { 1.0f, 0.0f, 1.0f, 1.0f },
 				.SortingLayer = Cocoa::Graphics::SortLayer::Foreground,
 				.SortingOrder = 0
 			}

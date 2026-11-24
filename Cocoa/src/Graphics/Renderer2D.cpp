@@ -31,6 +31,11 @@ namespace Cocoa::Graphics
 			materialManager,
 			shaderManager,
 			m_renderStatistics),
+		m_lineBatch(
+			graphicsDevice,
+			materialManager,
+			shaderManager,
+			m_renderStatistics),
 		m_viewProjectionMatrix()
 	{
 
@@ -132,6 +137,33 @@ namespace Cocoa::Graphics
 		);
 	}
 
+	void Renderer2D::DrawLine(
+		const MaterialHandle materialHandle,
+		const Math::Matrix4f& modelMatrix,
+		const Math::Vector4f& color,
+		const Math::Vector2f& startPoint,
+		const Math::Vector2f& endPoint,
+		const float thickness,
+		const float fade,
+		const SortLayer sortingLayer,
+		const int sortingOrder)
+	{
+		m_drawSubmissions.emplace_back(
+			sortingLayer,
+			sortingOrder,
+			BatchType::Line,
+			LineDrawSubmission {
+				materialHandle,
+				modelMatrix,
+				color,
+				startPoint,
+				endPoint,
+				thickness,
+				fade
+			}
+		);
+	}
+
 	void Renderer2D::EndDraw()
 	{
 		if (m_drawSubmissions.empty())
@@ -208,6 +240,18 @@ namespace Cocoa::Graphics
 					circleData->Fade
 				);
 			}
+			else if (const auto* lineData = std::get_if<LineDrawSubmission>(&drawSubmission.Data))
+			{
+				m_lineBatch.Draw(
+					lineData->Material,
+					lineData->ModelMatrix,
+					lineData->Color,
+					lineData->StartPoint,
+					lineData->EndPoint,
+					lineData->Thickness,
+					lineData->Fade
+				);
+			}
 
 			if (i == m_drawSubmissions.size() - 1 ||
 				drawSubmission.Batch != m_drawSubmissions[sortedDrawSubmissions[i+1].Index].Batch)
@@ -219,6 +263,9 @@ namespace Cocoa::Graphics
 					break;
 				case BatchType::Circle:
 					m_circleBatch.Flush(m_viewProjectionMatrix);
+					break;
+				case BatchType::Line:
+					m_lineBatch.Flush(m_viewProjectionMatrix);
 					break;
 				}
 			}

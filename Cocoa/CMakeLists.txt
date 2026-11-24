@@ -38,6 +38,7 @@ set(COCOA_PUBLIC_HEADERS
     include/Graphics/SortLayer.hpp
     include/Graphics/Framebuffer.hpp
     include/Graphics/CircleBatch.hpp
+    include/Graphics/LineBatch.hpp
 
     include/Assets/AssetManager.hpp
     include/Assets/AssetLoader.hpp
@@ -85,6 +86,7 @@ set(COCOA_PUBLIC_HEADERS
     include/Scenes/Components/ProjectionComponent.hpp
     include/Scenes/Components/ColorQuadComponent.hpp
     include/Scenes/Components/CircleComponent.hpp
+    include/Scenes/Components/LineComponent.hpp
 )
 
 set(COCOA_PRIVATE_SOURCES
@@ -121,6 +123,7 @@ set(COCOA_PRIVATE_SOURCES
     src/Graphics/OrthographicProjection.cpp
     src/Graphics/QuadBatch.cpp
     src/Graphics/CircleBatch.cpp
+    src/Graphics/LineBatch.cpp
 
     src/Assets/AssetManager.cpp
     src/Assets/AssetLoader.cpp

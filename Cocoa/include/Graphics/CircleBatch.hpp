@@ -43,8 +43,8 @@ namespace Cocoa::Graphics
     private:
         struct CircleVertex
         {
-            Math::Vector3f Position{};
-            Math::Vector2f Location{};
+            Math::Vector3f WorldPosition{};
+            Math::Vector2f LocalPosition{};
             Math::Vector4f Color{};
             float Thickness{};
             float Fade{};
@@ -61,7 +61,7 @@ namespace Cocoa::Graphics
             BlendMode Blend;
             std::vector<CircleVertex> Vertices;
         };
-        void BuildBatch(const Math::Matrix4f& viewProjectionMatrix);
+        void BuildBatch(const Math::Matrix4f& viewProjectionMatrix) const;
         void ExecuteBatch(
             const CircleBatchData& batchData,
             const Math::Matrix4f& viewProjectionMatrix) const;
