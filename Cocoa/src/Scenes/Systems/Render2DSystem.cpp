@@ -13,6 +13,22 @@
 
 namespace Cocoa::Scenes
 {
+	namespace
+	{
+		void CalculateModelMatrix(
+			Math::Matrix4f& modelMatrix,
+			const Math::Vector3f& position,
+			const float rotation,
+			const Math::Vector3f& scale)
+		{
+			const Math::Matrix4f translation = Math::Matrix4f::Translation(position);
+			const Math::Matrix4f zRotation = Math::Matrix4f::RotationZ(rotation);
+			const Math::Matrix4f scaleMatrix = Math::Matrix4f::Scale(scale);
+
+			modelMatrix = translation * zRotation * scaleMatrix;
+		}
+	}
+
 	void Render2DSystem::Update(World& world, float deltaTime)
 	{
 
@@ -28,11 +44,14 @@ namespace Cocoa::Scenes
 		View<TransformComponent, CircleComponent> circleView(world);
 		for (auto [transform, circleComponent] : circleView)
 		{
-			Math::Matrix4f translation = Math::Matrix4f::Translation(transform.Position);
-			Math::Matrix4f zRotation = Math::Matrix4f::RotationZ(transform.Rotation.Z);
-			Math::Matrix4f scale = Math::Matrix4f::Scale(transform.Scale);
+			Math::Matrix4f modelMatrix{};
+			CalculateModelMatrix(
+				modelMatrix,
+				transform.Position,
+				transform.Rotation.Z,
+				transform.Scale
+			);
 
-			Math::Matrix4f modelMatrix = translation * zRotation * scale;
 			renderer.DrawCircle(
 				modelMatrix,
 				Math::Vector4f(
@@ -51,11 +70,14 @@ namespace Cocoa::Scenes
 		View<TransformComponent, ColorQuadComponent> colorQuadView(world);
 		for (auto [transform, colorQuadComponent] : colorQuadView)
 		{
-			Math::Matrix4f translation = Math::Matrix4f::Translation(transform.Position);
-			Math::Matrix4f zRotation = Math::Matrix4f::RotationZ(transform.Rotation.Z);
-			Math::Matrix4f scale = Math::Matrix4f::Scale(transform.Scale);
+			Math::Matrix4f modelMatrix{};
+			CalculateModelMatrix(
+				modelMatrix,
+				transform.Position,
+				transform.Rotation.Z,
+				transform.Scale
+			);
 
-			Math::Matrix4f modelMatrix = translation * zRotation * scale;
 			renderer.DrawQuad(
 				modelMatrix,
 				Math::Vector4f(
@@ -72,11 +94,14 @@ namespace Cocoa::Scenes
 		View<TransformComponent, QuadComponent> quadView(world);
 		for (auto [transform, quadComponent] : quadView)
 		{
-			Math::Matrix4f translation = Math::Matrix4f::Translation(transform.Position);
-			Math::Matrix4f zRotation = Math::Matrix4f::RotationZ(transform.Rotation.Z);
-			Math::Matrix4f scale = Math::Matrix4f::Scale(transform.Scale);
+			Math::Matrix4f modelMatrix{};
+			CalculateModelMatrix(
+				modelMatrix,
+				transform.Position,
+				transform.Rotation.Z,
+				transform.Scale
+			);
 
-			Math::Matrix4f modelMatrix = translation * zRotation * scale;
 			renderer.DrawQuad(
 				modelMatrix,
 				quadComponent.Material,
@@ -90,11 +115,14 @@ namespace Cocoa::Scenes
 		View<TransformComponent, SpriteComponent> spriteView(world);
 		for (auto [transform, spriteComponent] : spriteView)
 		{
-			Math::Matrix4f translation = Math::Matrix4f::Translation(transform.Position);
-			Math::Matrix4f zRotation = Math::Matrix4f::RotationZ(transform.Rotation.Z);
-			Math::Matrix4f scale = Math::Matrix4f::Scale(transform.Scale);
+			Math::Matrix4f modelMatrix{};
+			CalculateModelMatrix(
+				modelMatrix,
+				transform.Position,
+				transform.Rotation.Z,
+				transform.Scale
+			);
 
-			Math::Matrix4f modelMatrix = translation * zRotation * scale;
 			renderer.DrawQuad(
 				modelMatrix,
 				spriteComponent.Material,
@@ -110,10 +138,13 @@ namespace Cocoa::Scenes
 		View<TransformComponent, LineComponent> lineView(world);
 		for (auto [transform, lineComponent] : lineView)
 		{
-			Math::Matrix4f translation = Math::Matrix4f::Translation(transform.Position);
-			Math::Matrix4f zRotation = Math::Matrix4f::RotationZ(transform.Rotation.Z);
-			Math::Matrix4f scale = Math::Matrix4f::Scale(transform.Scale);
-			Math::Matrix4f modelMatrix = translation * zRotation * scale;
+			Math::Matrix4f modelMatrix{};
+			CalculateModelMatrix(
+				modelMatrix,
+				transform.Position,
+				transform.Rotation.Z,
+				transform.Scale
+			);
 
 			renderer.DrawLine(
 				lineComponent.Material,
